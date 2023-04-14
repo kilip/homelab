@@ -98,6 +98,7 @@ Clone **your new repo** to you local workstation and `cd` into it.
 5. [Homebrew] Install workstation dependencies
 
     ```sh
+
     task init
     ```
 

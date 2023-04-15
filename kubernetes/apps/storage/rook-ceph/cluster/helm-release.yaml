@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: rook-ceph-cluster
-      version: v1.11.3
+      version: v1.11.4
       sourceRef:
         kind: HelmRepository
         name: rook-ceph
@@ -77,9 +77,10 @@ spec:
         urlPrefix: /
         ssl: false
       storage:
-        storage:
-          useAllNodes: true
-          useAllDevices: true
+        useAllNodes: true
+        useAllDevices: true
+        config:
+          osdsPerDevice: "1"
         #useAllNodes: true
         #useAllDevices: false
         #config:

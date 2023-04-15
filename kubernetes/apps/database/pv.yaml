@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Delete
   storageClassName: database-pv
   local:
-    path: /tank/database
+    path: /tank/k8s
   nodeAffinity:
     required:
       nodeSelectorTerms:

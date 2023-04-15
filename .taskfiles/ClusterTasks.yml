@@ -87,3 +87,16 @@ tasks:
       - task: certificates
       - task: ingresses
       - task: pods
+
+  gitops:pass:
+    desc: Generates gitops password
+    cmds:
+      - gitops get bcrypt-hash
+
+  gitops:cluster:auth:
+    desc: Create gitops cluster-user-auth
+    cmds:
+      - kubectl create secret generic cluster-user-auth \
+        --namespace flux-system \
+        --from-literal=username=admin \
+        --from-literal=password='${BOOTSTRAP_WEAVE_GITOPS_ADMIN_PASSWORD}'

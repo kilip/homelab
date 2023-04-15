@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./nfs/ks.yaml
-  - ./rook-ceph/ks.yaml
+  #- ./rook-ceph/ks.yaml

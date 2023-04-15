@@ -15,6 +15,7 @@ env:
 includes:
   an: .taskfiles/AnsibleTasks.yml
   cl: .taskfiles/ClusterTasks.yml
+  fl: .taskfiles/FluxTasks.yml
   precommit: .taskfiles/PrecommitTasks.yml
   terraform: .taskfiles/TerraformTasks.yml
 

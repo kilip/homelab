@@ -88,6 +88,11 @@ tasks:
       - task: ingresses
       - task: pods
 
+  watch-pods:
+    desc: Watch all pods
+    cmds:
+      - watch -n 1 kubectl get pods -A
+
   gitops:pass:
     desc: Generates gitops password
     cmds:

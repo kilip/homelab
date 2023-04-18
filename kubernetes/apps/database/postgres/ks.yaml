@@ -1,0 +1,44 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-database-postgres
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-storage-longhorn
+  path: ./kubernetes/apps/database/postgres/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: postgresql
+      namespace: database
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-database-pgadmin
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-database-postgres
+  path: ./kubernetes/apps/database/postgres/pgadmin
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: pgadmin
+      namespace: database
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m

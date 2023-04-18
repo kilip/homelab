@@ -91,7 +91,7 @@ tasks:
   watch-pods:
     desc: Watch all pods
     cmds:
-      - watch -n 1 kubectl get pods -A {{.CLI_ARGS}}
+      - watch -n 1 kubectl get pods {{.CLI_ARGS}}
 
   gitops:pass:
     desc: Generates gitops password

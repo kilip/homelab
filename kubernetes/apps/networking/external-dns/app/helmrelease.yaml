@@ -45,7 +45,7 @@ spec:
       - --annotation-filter=external-dns.alpha.kubernetes.io/target
     policy: sync
     sources: ["ingress"]
-    txtPrefix: k8s.
+    txtPrefix: "k8s.${SECRET_DOMAIN}"
     txtOwnerId: default
     domainFilters: ["${SECRET_DOMAIN}"]
     serviceMonitor:

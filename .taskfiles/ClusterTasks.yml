@@ -11,10 +11,10 @@ tasks:
   install:
     desc: Install Flux into your cluster
     cmds:
-      #- kubectl apply --kustomize {{.KUBERNETES_DIR}}/bootstrap
-      #- cat {{.SOPS_AGE_KEY_FILE}} | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
-      #- sops --decrypt {{.KUBERNETES_DIR}}/flux/config/{{.DEPLOY}}/vars/cluster-secrets.sops.yaml | kubectl apply -f -
-      #- kubectl apply -f {{.KUBERNETES_DIR}}/flux/config/{{.DEPLOY}}/vars/cluster-settings.yaml
+      - kubectl apply --kustomize {{.KUBERNETES_DIR}}/bootstrap
+      - cat {{.SOPS_AGE_KEY_FILE}} | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
+      - sops --decrypt {{.KUBERNETES_DIR}}/flux/config/{{.DEPLOY}}/vars/cluster-secrets.sops.yaml | kubectl apply -f -
+      - kubectl apply -f {{.KUBERNETES_DIR}}/flux/config/{{.DEPLOY}}/vars/cluster-settings.yaml
       - kubectl apply --kustomize {{.KUBERNETES_DIR}}/flux/config/{{.DEPLOY}}
     preconditions:
       - sh: test -f {{.SOPS_AGE_KEY_FILE}}
@@ -91,7 +91,7 @@ tasks:
   watch-pods:
     desc: Watch all pods
     cmds:
-      - watch -n 1 kubectl get pods -A
+      - watch -n 1 kubectl get pods -A {{.CLI_ARGS}}
 
   gitops:pass:
     desc: Generates gitops password

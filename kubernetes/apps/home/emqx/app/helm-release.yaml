@@ -33,6 +33,7 @@ spec:
     emqxConfig:
       EMQX_ALLOW_ANONYMOUS: "false"
       EMQX_AUTH__MNESIA__PASSWORD_HASH: plain
+      EMQX_LISTENERS__TCP__DEFAULT__PROXY_PROTOCOL: "true"
     service:
       type: LoadBalancer
       externalIPs: ["${EMQX_IPV4_ADDR}"]

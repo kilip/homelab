@@ -35,7 +35,7 @@ spec:
       EMQX_AUTH__MNESIA__PASSWORD_HASH: plain
     service:
       type: LoadBalancer
-      # externalIPs: ["${SVC_EMQX_ADDR_V4}"]
+      externalIPs: ["${EMQX_IPV4_ADDR}"]
       # externalTrafficPolicy: Local
       annotations:
         external-dns.alpha.kubernetes.io/hostname: mqtt.${SECRET_DOMAIN}

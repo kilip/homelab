@@ -26,8 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    imagePullSecrets:
-      - name: github-pull-secret
+    #imagePullSecrets:
+    #  - name: github-pull-secret
     image:
       repository: ghcr.io/kilip/openhab
       tag: 3.4.3-config01

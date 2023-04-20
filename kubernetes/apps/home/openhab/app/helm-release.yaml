@@ -25,10 +25,10 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  imagePullSecrets:
+    - name: github-pull-secret
+      namespace: default
   values:
-    imagePullSecrets:
-      - name: github-pull-secret
-        namespace: default
     image:
       repository: ghcr.io/kilip/openhab
       tag: 3.4.3-rc1

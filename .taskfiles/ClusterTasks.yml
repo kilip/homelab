@@ -114,11 +114,8 @@ tasks:
   github:pull-secret:
     desc: Add github pull secret
     cmds:
-      - kubectl create secret generic -n flux-system github-pull-secret
-          --from-file=.dockerconfigjson={{.HOME}}/.docker/config.json
-          --type=kubernetes.io/dockerconfigjson
-      #- kubectl create secret generic github-pull-secret
-      #    --from-file=.dockerconfigjson={{.HOME}}/.docker/config.json
-      #    --type=kubernetes.io/dockerconfigjson
-      # flux create secret oci ghcr-auth --url=ghcr.io --username=kilip --password=$(pass github/pull-token)
-      #- kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "github-pull-secret"}]}'
+      - kubectl create secret docker-registry github-pull-secret
+          --docker-username=$(pass github/username)
+          --docker-password=$(pass github/pull-token)
+          --docker-email=$(pass github/email)
+          --docker-server=https://ghcr.io

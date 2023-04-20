@@ -1,0 +1,20 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openhab-test
+  namespace: home
+spec:
+  template:
+    metadata:
+      labels:
+        app: openhab-test
+    spec:
+      containers:
+        - name: openhab-test
+          image: ghcr.io/kilip/openhab:3.4.3-config01
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP

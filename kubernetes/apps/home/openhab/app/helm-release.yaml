@@ -8,8 +8,8 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: openhab
-      version: 5.0.23
+      chart: olympus
+      version: 3.4.3-rc1
       sourceRef:
         kind: HelmRepository
         name: olympus
@@ -31,7 +31,7 @@ spec:
     image:
       repository: ghcr.io/kilip/openhab
       tag: 3.4.3-rc1
-      imagePullPolicy: Always
+      imagePullPolicy: IfNotPresent
     openhab:
       user_id: 1000
       group_id: 1000

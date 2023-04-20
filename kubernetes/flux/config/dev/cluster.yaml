@@ -8,7 +8,7 @@ spec:
   interval: 30m
   ref:
     branch: dev
-  url: "https://github.com/kilip/olympus"
+  url: "https://github.com/kilip/olympus-cluster"
   ignore: |
     # exclude all
     /*

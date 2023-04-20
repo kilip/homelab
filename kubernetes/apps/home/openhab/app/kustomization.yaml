@@ -4,4 +4,6 @@ kind: Kustomization
 resources:
   - ./secrets.sops.yaml
   - ./pvc.yaml
-  - ./helm-release.yaml
+  - ./repository.yaml
+  - ./deployment.yaml
+#  - ./helm-release.yaml

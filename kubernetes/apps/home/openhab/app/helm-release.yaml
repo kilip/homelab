@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: openhab
-      version: 3.4.3-rc1
+      version: 3.4.3-rc2
       sourceRef:
         kind: HelmRepository
         name: olympus

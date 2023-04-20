@@ -8,7 +8,7 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: olympus
+      chart: openhab
       version: 3.4.3-rc1
       sourceRef:
         kind: HelmRepository

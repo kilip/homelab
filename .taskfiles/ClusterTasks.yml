@@ -110,3 +110,10 @@ tasks:
     desc: Kubernetes dashboard
     cmds:
       - kubectl -n monitoring get secret kubernetes-dashboard -o jsonpath='{.data.token}' | base64 -d
+
+  github:pull-secret:
+    desc: Add github pull secret
+    cmds:
+      - kubectl create secret generic github-pull-secret
+          --from-file=.dockerconfigjson={{.HOME}}/.docker/config.json
+          --type=kubernetes.io/dockerconfigjson

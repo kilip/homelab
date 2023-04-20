@@ -36,6 +36,11 @@ spec:
       user_id: 1000
       group_id: 1000
       timezone: Asia/Makassar
+    persistence:
+      userdata:
+        existingClaim: openhab-userdata-pvc
+      config:
+        existingClaim: openhab-config-pvc
 
   valuesFrom:
     - targetPath: openhab.cloud_uuid

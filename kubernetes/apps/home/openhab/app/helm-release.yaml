@@ -29,8 +29,8 @@ spec:
     imagePullSecrets:
       - name: github-pull-secret
     image:
-      repository: ghcr.io/kilip/openhab #{"$imagepolicy": "flux-system:openhab:name"}
-      tag: 3.4.3-config01
+      repository: ghcr.io/kilip/openhab # {"$imagepolicy": "flux-system:openhab:name"}
+      tag: 3.4.3-config01 # {"$imagepolicy": "flux-system:openhab:tag"}
       imagePullPolicy: IfNotPresent
     openhab:
       user_id: 1000

@@ -5,5 +5,5 @@ resources:
   - ./secrets.sops.yaml
   - ./pvc.yaml
   - ./repository.yaml
-#  - ./deployment.yaml
-  - ./helm-release.yaml
+  - ./deployment.yaml
+#  - ./helm-release.yaml

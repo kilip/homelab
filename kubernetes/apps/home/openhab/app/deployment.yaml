@@ -2,17 +2,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: openhab-test
+  name: openhab
   namespace: home
 spec:
   template:
     metadata:
       labels:
-        app: openhab-test
+        app: openhab
     spec:
       containers:
-        - name: openhab-test
-          image: ghcr.io/kilip/openhab:3.4.3-config01
+        - name: openhab
+          image: ghcr.io/kilip/openhab:3.4.3-config01 # {"$imagepolicy": "flux-system:openhab"}
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

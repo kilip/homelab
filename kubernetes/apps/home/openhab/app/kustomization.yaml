@@ -6,4 +6,4 @@ resources:
   - ./pvc.yaml
   - ./repository.yaml
 #  - ./deployment.yaml
-  - ./helm-release.yaml
+#  - ./helm-release.yaml

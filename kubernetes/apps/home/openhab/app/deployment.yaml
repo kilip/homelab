@@ -5,6 +5,9 @@ metadata:
   name: openhab
   namespace: home
 spec:
+  selector:
+    matchLabels:
+      app: openhab
   template:
     metadata:
       labels:

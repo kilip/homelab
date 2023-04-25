@@ -17,7 +17,7 @@ metadata:
   namespace: flux-system
 spec:
   filterTags:
-    pattern: '.*-rc.*'
+    pattern: '*.*'
   imageRepositoryRef:
     name: openhab
   policy:

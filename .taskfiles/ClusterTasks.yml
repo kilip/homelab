@@ -110,3 +110,12 @@ tasks:
     desc: Kubernetes dashboard
     cmds:
       - kubectl -n monitoring get secret kubernetes-dashboard -o jsonpath='{.data.token}' | base64 -d
+
+  github:pull-secret:
+    desc: Add github pull secret
+    cmds:
+      - kubectl create secret docker-registry github-pull-secret
+          --docker-username=$(pass github/username)
+          --docker-password=$(pass github/pull-token)
+          --docker-email=$(pass github/email)
+          --docker-server=https://ghcr.io

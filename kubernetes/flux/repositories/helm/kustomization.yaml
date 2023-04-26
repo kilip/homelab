@@ -16,6 +16,7 @@ resources:
   - ./metrics-server.yaml
   - ./nextcloud.yaml
   - ./nfs-provisioner.yaml
+  - ./olympus.yaml
   - ./rook-ceph.yaml
   - ./runix.yaml
   - ./stakater.yaml

@@ -71,6 +71,15 @@ spec:
         tls:
           - hosts:
               - *host
+    persistence:
+      deploy-key:
+        enabled: true
+        type: secret
+        name: home-assistant-secret
+        defaultMode: 256
+        subPath:
+          - path: GH_DEPLOY_KEY
+            mountPath: /root/.ssh/id_rsa
     probes:
       liveness:
         enabled: false

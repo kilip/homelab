@@ -1,0 +1,23 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-hass
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-base-echo-server
+    - name: cluster-db-postgres
+    - name: cluster-apps-emqx
+  path: ./kubernetes/staging/default/home-assistant/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: home-assistant
+  interval: 30m
+  retryInterval: 1m
+  timeout: 10m

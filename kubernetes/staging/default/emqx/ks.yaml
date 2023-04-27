@@ -2,13 +2,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-home-emqx
+  name: cluster-apps-emqx
   namespace: flux-system
 spec:
   dependsOn:
     - name: cluster-base-echo-server
     - name: cluster-db-postgres
-  path: ./kubernetes/staging/home/emqx/app
+  path: ./kubernetes/staging/default/emqx/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -17,7 +17,6 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: emqx
-      namespace: home
   interval: 30m
   retryInterval: 1m
   timeout: 10m

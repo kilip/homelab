@@ -22,7 +22,13 @@ resource "cloudflare_tunnel_config" "echo-dev" {
     ingress_rule {
       hostname = "k8s-dev.itstoni.com"
       path = "/"
-      service = "https://echo-server.dev.itstoni.com"
+      service = "http://echo-server.default.svc.cluster.local:8080"
+    }
+
+    ingress_rule {
+      hostname = "fw-dev.itstoni.com"
+      path = "/"
+      service = "http://webhook-receiver.flux-system.svc.cluster.local:80"
     }
 
     ingress_rule {
@@ -31,12 +37,18 @@ resource "cloudflare_tunnel_config" "echo-dev" {
   }
 }
 
-
-
 # Creates the CNAME record that routes ssh_app.${var.cloudflare_zone} to the tunnel.
 resource "cloudflare_record" "k8s-dev" {
   zone_id = var.cloudflare_zone_id
   name    = "k8s-dev"
+  value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
+  type    = "CNAME"
+  proxied = true
+}
+
+resource "cloudflare_record" "fw-dev" {
+  zone_id = var.cloudflare_zone_id
+  name    = "fw-dev"
   value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
   type    = "CNAME"
   proxied = true

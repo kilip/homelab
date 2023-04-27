@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-echo-server
+    - name: cluster-base-echo-server
     - name: cluster-database-postgres
   path: ./kubernetes/staging/home/emqx/app
   prune: true

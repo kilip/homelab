@@ -19,6 +19,12 @@
     - HandleSuspendKey=ignore
   notify: restart logind
 
+- name: Ensure zfs configured
+  community.general.zfs:
+    name: "{{ item  }}"
+    state: present
+  loop: "{{ zfs }}"
+
 - name: Ensure nfs configured
   ansible.builtin.include_role:
     name: geerlingguy.nfs

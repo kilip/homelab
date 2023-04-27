@@ -15,5 +15,7 @@ xanmanning.k3s*
 .terraform
 .terraform.tfstate*
 terraform.tfstate*
+tf_ansible_vars_file.yml
+*.tfvars
 .secrets
 .env

@@ -9,6 +9,12 @@ tasks:
     cmds:
       - terraform init {{.CLI_ARGS}}
 
+  import:
+    desc: Initialize terraform dependencies
+    dir: "{{.TERRAFORM_DIR}}/cloudflare"
+    cmds:
+      - terraform import cloudflare_tunnel_config.example 7198c697a46adf002aad31e3156a612b/6f5620a8-50b9-43d6-8abb-0c38b32f8c3e
+
   plan:
     desc: Show the changes terraform will make
     dir: "{{.TERRAFORM_DIR}}/cloudflare"

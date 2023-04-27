@@ -4,7 +4,7 @@ version: "3"
 vars:
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
   ANSIBLE_DIR: "{{.ROOT_DIR}}/provision/ansible"
-  TERRAFORM_DIR: "{{.ROOT_DIR}}/terraform"
+  TERRAFORM_DIR: "{{.ROOT_DIR}}/provision/terraform"
 
 dotenv: [".config.env"]
 
@@ -17,7 +17,7 @@ includes:
   cl: .taskfiles/ClusterTasks.yml
   fl: .taskfiles/FluxTasks.yml
   precommit: .taskfiles/PrecommitTasks.yml
-  terraform: .taskfiles/TerraformTasks.yml
+  cf: .taskfiles/CloudFlareTasks.yml
 
 tasks:
 

@@ -27,20 +27,20 @@ spec:
     keepHistory: false
   values:
     hajimari:
-      title: Apps
+      title: Olympus Cluster Applications
       darkTheme: espresso
       alwaysTargetBlank: true
       showGreeting: true
-      showAppGroups: true
+      showAppGroups: false
       showAppStatus: true
       showBookmarkGroups: true
       showGlobalBookmarks: true
       showAppUrls: true
       defaultEnable: true
-      namespaceSelector:
-        matchNames:
-          - default
-          - flux-system
+      #namespaceSelector:
+      #  matchNames:
+      #    - default
+      #    - flux-system
     ingress:
       main:
         enabled: true

@@ -1,0 +1,23 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./bitnami.yaml
+  - ./bjw-s.yaml
+  - ./emqx.yaml
+  - ./external-dns.yaml
+  - ./hajimari.yaml
+  - ./ingress-nginx.yaml
+  - ./jetstack.yaml
+  - ./k8s-gateway.yaml
+  - ./kubernetes-dashboard.yaml
+  - ./longhorn.yaml
+  - ./metallb.yaml
+  - ./metrics-server.yaml
+  - ./nextcloud.yaml
+  - ./nfs-provisioner.yaml
+  - ./olympus.yaml
+  - ./rook-ceph.yaml
+  - ./runix.yaml
+  - ./stakater.yaml
+  - ./weave-gitops.yaml

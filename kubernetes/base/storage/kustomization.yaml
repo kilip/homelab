@@ -4,5 +4,5 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./nfs/ks.yaml
-  - ./vol-sync/ks.yaml
+  - ./volsync/ks.yaml
   - ./longhorn/ks.yaml

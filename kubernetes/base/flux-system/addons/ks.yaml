@@ -2,19 +2,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-base-external-dns
+  name: cluster-base-flux-webhooks
   namespace: flux-system
 spec:
-  path: ./kubernetes/base/networking/external-dns/app
+  path: ./kubernetes/base/flux-system/addons/webhooks
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: external-dns
-      namespace: networking
+  wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m

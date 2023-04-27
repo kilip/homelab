@@ -79,7 +79,7 @@ spec:
         defaultMode: 256
         subPath:
           - path: GH_DEPLOY_KEY
-            mountPath: /root/.ssh/id_rsa
+            mountPath: /config/.ssh/id_rsa
     probes:
       liveness:
         enabled: false

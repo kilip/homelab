@@ -37,10 +37,12 @@ spec:
       showGlobalBookmarks: true
       showAppUrls: true
       defaultEnable: true
-      #namespaceSelector:
-      #  matchNames:
-      #    - default
-      #    - flux-system
+      namespaceSelector:
+        matchNames:
+          - default
+          - storage
+          - database
+          - flux-system
     ingress:
       main:
         enabled: true

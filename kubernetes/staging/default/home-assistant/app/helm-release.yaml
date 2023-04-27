@@ -34,6 +34,8 @@ spec:
         envFrom:
           - secretRef:
               name: home-assistant-secret
+        env:
+          POSTGRES_SUPER_PASS: "${POSTGRES_ADMIN_PASS}"
     controller:
       type: statefulset
       annotations:

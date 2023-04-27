@@ -29,7 +29,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-db-postgres
-  path: ./kubernetes/base/database/postgres/pgadmin
+  path: ./kubernetes/base/db/postgres/pgadmin
   prune: true
   sourceRef:
     kind: GitRepository

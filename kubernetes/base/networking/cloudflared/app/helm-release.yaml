@@ -61,7 +61,7 @@ spec:
         type: secret
         name: *app
         mountPath: /etc/cloudflared/tunnel.json
-        subPath: tunnel
+        subPath: tunnel.json
         readOnly: true
     #podAnnotations:
     #  configmap.reloader.stakater.com/reload: *app

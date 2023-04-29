@@ -41,7 +41,7 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     image:
-      repository: ghcr.io/home-assistant/home-assistant
+      repository: ghcr.io/kilip/home-assistant
       tag: 2023.4.6
     env:
       TZ: "${TIMEZONE}"

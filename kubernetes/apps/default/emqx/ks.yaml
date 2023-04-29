@@ -7,7 +7,6 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-base-echo-server
-    - name: cluster-db-postgres
   path: ./kubernetes/apps/default/emqx/app
   prune: true
   sourceRef:

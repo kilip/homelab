@@ -48,6 +48,8 @@ spec:
       POSTGRES_HOST: postgresql.database.svc.cluster.local
       POSTGRES_DB: home_assistant
       POSTGRES_SUPER_PASS: "${POSTGRES_ADMIN_PASS}"
+      PUID: 1000
+      PGID: 1000
     envFrom:
       - secretRef:
           name: home-assistant-secret

@@ -4,7 +4,7 @@ metadata:
     name: cloudflared
     namespace: networking
 stringData:
-    tunnel: ENC[AES256_GCM,data:OEUhv15BV/qcyfEp5jXtalh0VuGwDjSg7U8h2xgmB1LQo8fEwMQScbwxuVOiTnBfVqmPbI3sy1Udz2g+PnBIeumCloT7qqW0exq0G0rjevdPY9KzO8PE3Q7vebO7f4F8jrfjEuOGohaFRcKx9CoyjRRTF6N4uLeIKpo3rloNWQjYuZz+PiXAqvFw3A3eXikIVMBX3CKpBBLZYkLTIUfneVA4g4ft,iv:1/ZxuqpofOO/mcmwaQ0diAUOxgRq5LeWJkMil4ZiUDg=,tag:Til2vUQWRV2bEj9YT5kz5w==,type:str]
+    tunnel: ENC[AES256_GCM,data:HasZ2jxO5ZcB7PypU4H/5gnEKYlvfTwT2pQhGWbp0s9d2TJ/p7IpbS7BQB1YI5hjE2+StK430KBMdwnNryYNbs8XnhpmQvMwFA58FJFjX0FWD71u+8rgrSv4telbeQ0IP5DFg9E8bUT81xXyMjZyeugo0YLXmAS9zPe4+llBppMdtGEqBn9waZeIFFWAnmu09ltnymtRNfiOFMPWpLT8qbBXCEhh9a5BfdCVCv0h69w=,iv:6BICKdsJkH+J9AnVGjT1/bSxWCAICD5Rsby39C6mI7Q=,tag:VYqerfE5ANH4LJGm0BBuIg==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -20,8 +20,8 @@ sops:
             cXRuRE03aFMrM2ZBQVVPRDRXUHZPazAKVcttirwYIW20XGipuRqdwZlsKI9fyCNs
             JXDLN34K8boXH3rt4mV/quhsIT0oRugqf0tuze8g7FmzasijV1/TWw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-04-29T06:52:05Z"
-    mac: ENC[AES256_GCM,data:S3pKYn9LhuGr2/XmDU2cpeE+QPOi9ks79nsfhpz7rlKLM+BZUgw7LRnpAYLuNsW0nOcqhmv6K/wxsp+ho56pC2aCrKs6azH3a0nxjtn0fEFKK3zprkibktQ5Ud9Tcx6Z4FpF3c8xuyTPu1k93lmrvGrs2xhPJhHX5aKKlMXFLbs=,iv:drxl9MYwN770xJ5kerZ/yEikWMHOe8vJSWSuLEP2Sa4=,tag:j1rkQEgMHA59sDQzYsWxnw==,type:str]
+    lastmodified: "2023-04-29T07:10:17Z"
+    mac: ENC[AES256_GCM,data:vlw3Lb7ofhY1bbGPJZzpKBxcbDVnfLG4YefH8/kCCJg65KA5A6jaxeHUUWljTVbX+iIgQu2wDkou+fxOCq+MnZL44954nn/VxzUEguOMcpM07YUoNgLRD5XBIs/3EkV7VQ2BYBHYS1Lf72u5tzFpjSYYNStBt1g9vNCT9Y97tCA=,iv:oB7yAKgn+K8gXITPeHdti5zxQ3ezx98AULBkm/mbi8Q=,tag:PSx65SwH+p62vZzrlmyj+A==,type:str]
     pgp: []
     encrypted_regex: ^(data|stringData)$
     version: 3.7.3

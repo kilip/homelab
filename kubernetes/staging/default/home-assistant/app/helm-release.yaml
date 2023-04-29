@@ -43,7 +43,6 @@ spec:
     image:
       repository: ghcr.io/kilip/home-assistant
       tag: test-02
-    imagePullPolicy: always
     env:
       TZ: "${TIMEZONE}"
       POSTGRES_HOST: postgresql.database.svc.cluster.local
@@ -65,7 +64,7 @@ spec:
           #external-dns.alpha.kubernetes.io/target: ipv4.devbu.io
           hajimari.io/icon: mdi:home-assistant
         hosts:
-          - host: &host hass.${SECRET_DOMAIN}
+          - host: &host "hass.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

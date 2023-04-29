@@ -59,7 +59,8 @@ spec:
       tunnel:
         enabled: true
         type: secret
-        name: *app
+        name: cluster-secrets
+        namespace: flux-system
         mountPath: /etc/cloudflared/tunnel.json
         subPath: tunnel.json
         readOnly: true

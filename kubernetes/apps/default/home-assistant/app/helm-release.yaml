@@ -81,6 +81,14 @@ spec:
         subPath:
           - path: GH_DEPLOY_KEY
             mountPath: /config/.ssh/id_rsa
+      ga-service-account:
+        enabled: true
+        type: secret
+        name: home-assistant-secret
+        defaultMode: 256
+        subPath:
+          - path: GA_SERVICE_ACCOUNT
+            mountPath: /config/ga-service-account.json
     probes:
       liveness:
         enabled: false

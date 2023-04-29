@@ -1,3 +1,14 @@
 ---
 nfs_exports: []
 zfs: []
+zfs_pools: []
+zfs_pool_options:
+  - -o ashift=12
+  - -o autotrim=on
+  - -O acltype=posixacl
+  - -O xattr=sa
+  - -O dnodesize=auto
+  - -O compression=lz4
+  - -O normalization=formD
+  - -O relatime=on
+  - -O canmount=off

@@ -1,0 +1,13 @@
+[Unit]
+Description=Power Management
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=/usr/bin/pm-monitor.sh
+
+[Install]
+WantedBy=multi-user.target

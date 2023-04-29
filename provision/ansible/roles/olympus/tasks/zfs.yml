@@ -1,0 +1,17 @@
+---
+- name: Ensure zfs utils installed
+  ansible.builtin.package:
+    name: zfsutils-linux
+
+- name: Ensure zfs pools configured
+  ansible.builtin.include_tasks:
+    file: 'zfs-pool.yml'
+  loop: "{{ zfs_pools }}"
+  loop_control:
+    loop_var: zpool
+
+- name: Ensure zfs configured
+  community.general.zfs:
+    name: "{{ item  }}"
+    state: present
+  loop: "{{ zfs }}"

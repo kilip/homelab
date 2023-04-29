@@ -32,13 +32,13 @@ tasks:
     dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - ansible-playbook -i {{.ANSIBLE_INVENTORY}}  {{.ANSIBLE_PLAYBOOK_DIR}}/prepare.yml {{.CLI_ARGS}} || exit 0
-      - ansible-playbook -i {{.ANSIBLE_INVENTORY}} kilip.k3s_cluster.prepare {{.CLI_ARGS}} || exit 0
+      #- ansible-playbook -i {{.ANSIBLE_INVENTORY}} kilip.k3s_cluster.prepare {{.CLI_ARGS}} || exit 0
 
   install:
     desc: Install Kubernetes on the nodes
     dir: "{{.ANSIBLE_DIR}}"
     cmds:
-      - ansible-playbook -i {{.ANSIBLE_INVENTORY}} kilip.k3s_cluster.install {{.CLI_ARGS}}
+      - ansible-playbook -i {{.ANSIBLE_INVENTORY}} kilip.k3s_cluster.nuke {{.CLI_ARGS}} || exit 0
 
   nuke:
     desc: Uninstall Kubernetes on the nodes
@@ -72,10 +72,28 @@ tasks:
     desc: Shutdown all the k8s nodes
     dir: "{{.ANSIBLE_DIR}}"
     cmds:
-      - ansible kubernetes -i {{.ANSIBLE_INVENTORY}} -a '/usr/bin/systemctl poweroff' --become -l kubernetes
+      - ansible kubernetes -i {{.ANSIBLE_INVENTORY}} -a 'poweroff -p' --become -l kubernetes
 
   test:
     desc: Test vars
     dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - ansible-playbook -i {{.ANSIBLE_INVENTORY}} kilip.k3s_cluster.cluster-test
+
+  k3s-stop:
+    desc: Stop k3s service
+    dir: "{{.ANSIBLE_DIR}}"
+    cmds:
+      - ansible kubernetes -i {{.ANSIBLE_INVENTORY}} -a 'service k3s stop' --become -l kubernetes
+
+  k3s-start:
+    desc: Start k3s service
+    dir: "{{.ANSIBLE_DIR}}"
+    cmds:
+      - ansible kubernetes -i {{.ANSIBLE_INVENTORY}} -a 'service k3s start' --become -l kubernetes
+
+  k3s-status:
+    desc: Check k3s service status
+    dir: "{{.ANSIBLE_DIR}}"
+    cmds:
+      - ansible kubernetes -i {{.ANSIBLE_INVENTORY}} -a 'service k3s status' --become -l kubernetes

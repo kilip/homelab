@@ -1,31 +1,28 @@
 ---
-- name: Add ansible user to sudoers
-  community.general.sudoers:
-    name: "ansible-user-sudoers"
-    user: "{{ ansible_user }}"
-    nopassword: true
-    commands: ALL
+- name: Ensure base task executed
+  ansible.builtin.include_tasks:
+    file: base.yml
+    apply:
+      tags: base
+  tags: base
 
-- name: Ensure logind configured
-  ansible.builtin.lineinfile:
-    path: /etc/systemd/logind.conf
-    regexp: "^{{ item }}"
-    line: "{{ item }}"
-    backup: true
-  loop:
-    - HandleLidSwitch=ignore
-    - HandleLidSwitchDocked=ignore
-    - HandleLidSwitchExternalPower=ignore
-    - HandleSuspendKey=ignore
-  notify: restart logind
+- name: Ensure zfs task executed
+  ansible.builtin.include_tasks:
+    file: zfs.yml
+    apply:
+      tags: zfs
+  tags: zfs
 
-- name: Ensure zfs configured
-  community.general.zfs:
-    name: "{{ item  }}"
-    state: present
-  loop: "{{ zfs }}"
+- name: Ensure nfs task executed
+  ansible.builtin.include_tasks:
+    file: nfs.yml
+    apply:
+      tags: nfs
+  tags: nfs
 
-- name: Ensure nfs configured
-  ansible.builtin.include_role:
-    name: geerlingguy.nfs
-  when: nfs_exports|length
+- name: Ensure wakeonlan task executed
+  ansible.builtin.include_tasks:
+    file: wakeonlan.yml
+    apply:
+      tags: wakeonlan
+  tags: wakeonlan

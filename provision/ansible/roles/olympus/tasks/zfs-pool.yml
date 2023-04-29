@@ -1,0 +1,41 @@
+---
+- name: check ZFS pool existance
+  ansible.builtin.command:
+    cmd: zpool list -Ho name {{ zpool.name }}
+  register: result_pool_list
+  failed_when: false
+  changed_when: false
+  check_mode: false
+
+- name: Ensure zfs facts configured
+  ansible.builtin.set_fact:
+    zpool_command: >-
+      zpool create
+      {{ zfs_pool_options | join(' ') }}
+      {{ '-m ' + zpool.mountpoint if zpool.mountpoint else '/tank' }}
+      {{ zpool.name }}
+      {{ zpool.devices | join(' ') }}
+    zpool_exists: "{{ result_pool_list.rc == 0 }}"
+
+- name: Show zfs facts
+  debug:
+    var: "{{ item }}"
+  loop:
+    - zpool
+    - zpool_command
+    - zpool_exists
+#    - result_pool_list
+
+- name: create ZFS pool
+  ansible.builtin.command:
+    cmd: "{{ zpool_command }}"
+  when:
+    - zpool.state | default('present') == 'present'
+    - not zpool_exists
+
+- name: destroy ZFS pool
+  ansible.builtin.command:
+    cmd: zpool destroy {{ zpool.name }}
+  when:
+    - zpool.state | default('present') == 'absent'
+    - zpool_exists

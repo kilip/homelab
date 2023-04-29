@@ -1,0 +1,3 @@
+#!/bin/sh -e
+ethtool -s {{inet_device}} wol g
+exit 0

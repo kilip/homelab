@@ -7,3 +7,14 @@
 - name: restart logind
   ansible.builtin.service:
     service: systemd-logind
+    state: restarted
+
+- name: restart tlp
+  ansible.builtin.service:
+    service: tlp
+    state: restarted
+
+- name: restart networkd
+  ansible.builtin.service:
+    service: networkd-dispatcher
+    state: restarted

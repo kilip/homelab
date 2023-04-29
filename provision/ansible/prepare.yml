@@ -1,4 +1,8 @@
 ---
-- hosts: servers
+- hosts: all
+  gather_facts: true
+  become: true
   roles:
     - olympus
+
+- ansible.builtin.import_playbook: kilip.k3s_cluster.prepare

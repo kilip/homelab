@@ -1,0 +1,26 @@
+---
+- name: Ensure upgraded
+  ansible.builtin.apt:
+    upgrade: dist
+    update_cache: true
+    cache_valid_time: 600
+
+- name: Add ansible user to sudoers
+  community.general.sudoers:
+    name: "ansible-user-sudoers"
+    user: "{{ ansible_user }}"
+    nopassword: true
+    commands: ALL
+
+- name: Ensure logind configured
+  ansible.builtin.lineinfile:
+    path: /etc/systemd/logind.conf
+    regexp: "^{{ item }}"
+    line: "{{ item }}"
+    backup: true
+  loop:
+    - HandleLidSwitch=ignore
+    - HandleLidSwitchDocked=ignore
+    - HandleLidSwitchExternalPower=ignore
+    - HandleSuspendKey=ignore
+  notify: restart logind

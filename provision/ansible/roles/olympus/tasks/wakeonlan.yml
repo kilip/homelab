@@ -1,0 +1,51 @@
+---
+# https://linrunner.de/tlp/installation/ubuntu.html
+- name: Ensure tlp package installed
+  ansible.builtin.apt:
+    package:
+      - tlp
+      - tlp-rdw
+      - smartmontools
+    state: present
+
+- name: Ensure tlp service enabled and started
+  ansible.builtin.service:
+    name: tlp
+    state: started
+    enabled: true
+
+- name: Ensure tlp configured
+  ansible.builtin.template:
+    src: 99-olympus.tpl
+    dest: '/etc/tlp.d/99-olympus.conf'
+    mode: 0644
+  notify: restart tlp
+
+- name: Ensure wol script configured
+  ansible.builtin.template:
+    src: 99-wakeonlan
+    dest: '/etc/networkd-dispatcher/routable.d/99-wakeonlan'
+    mode: 0755
+  notify: restart networkd
+
+- name: Ensure power monitor configured
+  block:
+    - name: Ensure pm-monitor
+      ansible.builtin.template:
+        src: pm-monitor.sh
+        dest: "/usr/bin/pm-monitor.sh"
+        mode: 0775
+
+    - name: Ensure pm-monitor service copied
+      ansible.builtin.template:
+        src: pm-monitor.service
+        dest: "/etc/systemd/system/pm-monitor.service"
+        mode: 0664
+
+    - name: Ensure pm-monitor service started
+      ansible.builtin.service:
+        name: pm-monitor
+        enabled: true
+        state: started
+      when: not ansible_check_mode
+  when: "'laptops' in group_names"

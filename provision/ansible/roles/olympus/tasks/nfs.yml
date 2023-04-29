@@ -1,0 +1,5 @@
+---
+- name: Ensure nfs configured
+  ansible.builtin.include_role:
+    name: geerlingguy.nfs
+  when: nfs_exports|length

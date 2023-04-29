@@ -42,7 +42,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/kilip/home-assistant
-      tag: test-10
+      tag: 2023.4.6-c1
     env:
       TZ: "${TIMEZONE}"
       POSTGRES_HOST: postgresql.database.svc.cluster.local

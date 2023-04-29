@@ -41,8 +41,8 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     image:
-      repository: ghcr.io/kilip/home-assistant
-      tag: test-03
+      repository: ghcr.io/home-assistant/home-assistant
+      tag: 2023.4.6
     env:
       TZ: "${TIMEZONE}"
       POSTGRES_HOST: postgresql.database.svc.cluster.local
@@ -92,12 +92,12 @@ spec:
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: OnRootMismatch
-    #volumeClaimTemplates:
-    #  - name: config
-    #    mountPath: /config
-    #    accessMode: ReadWriteMany
-    #    size: 1Gi
-    #    storageClass: longhorn
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteMany
+        size: 1Gi
+        storageClass: longhorn
     resources:
       requests:
         cpu: 10m

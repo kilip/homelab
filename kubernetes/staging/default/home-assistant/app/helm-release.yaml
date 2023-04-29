@@ -51,6 +51,8 @@ spec:
       POSTGRES_SUPER_PASS: "${POSTGRES_ADMIN_PASS}"
       HASS_CONFIG_GIT: https://github.com/kilip/hass-config
       HASS_HACS_INSTALL: "true"
+      PUID: 1000
+      PGID: 1000
     envFrom:
       - secretRef:
           name: home-assistant-secret

@@ -29,7 +29,7 @@ spec:
   values:
     initContainers:
       01-init-db:
-        image: ghcr.io/kilip/home-assistant:test-02
+        image: ghcr.io/onedr0p/postgres-initdb:14.7
         imagePullPolicy: IfNotPresent
         envFrom:
           - secretRef:
@@ -42,7 +42,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/kilip/home-assistant
-      tag: 2023.4.6
+      tag: test-02
     imagePullPolicy: always
     env:
       TZ: "${TIMEZONE}"

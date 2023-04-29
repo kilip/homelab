@@ -42,7 +42,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/kilip/home-assistant
-      tag: &config-version test-04
+      tag: test-10
     env:
       TZ: "${TIMEZONE}"
       POSTGRES_HOST: postgresql.database.svc.cluster.local
@@ -63,7 +63,6 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          #external-dns.alpha.kubernetes.io/target: ipv4.devbu.io
           hajimari.io/icon: mdi:home-assistant
         hosts:
           - host: &host "hass.${SECRET_DOMAIN}"
@@ -97,7 +96,7 @@ spec:
     volumeClaimTemplates:
       - name: config
         mountPath: /config
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: longhorn
     resources:

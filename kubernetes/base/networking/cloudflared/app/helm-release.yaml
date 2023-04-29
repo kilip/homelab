@@ -59,10 +59,9 @@ spec:
       tunnel:
         enabled: true
         type: secret
-        name: cluster-secrets
-        namespace: flux-system
+        name: *app
         mountPath: /etc/cloudflared/tunnel.json
-        subPath: TUNNEL_JSON
+        subPath: tunnel
         readOnly: true
     #podAnnotations:
     #  configmap.reloader.stakater.com/reload: *app

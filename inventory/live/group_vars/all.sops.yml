@@ -5,6 +5,7 @@ install_packages:
     - ENC[AES256_GCM,data:QtdHZ42bPLtJC0CEN3sW,iv:1FXymlfRuZW9DrohIOzgNxEGIsdV+/nV5xpxESxeuxM=,tag:3v9g/LcdVBNeoZf9vgEVIA==,type:str]
     - ENC[AES256_GCM,data:mhouhA==,iv:8FjsD1CNGfbkpOvAqUy0SCBJYNlHd4oheoicQZ6rhmM=,tag:oaig9m6SxvVUHraZcN8xOw==,type:str]
     - ENC[AES256_GCM,data:PtYr,iv:7Up3Owg+/E/lcXx4o5L1SxXqur8Ik18blFZUcvSWaNg=,tag:dBmEU725x4Jf/+Cu+UGImg==,type:str]
+kubevip_address: ENC[AES256_GCM,data:A0KXPGfXRcBmaQ==,iv:0opO98f8C9MBuqi7UA4ZcxLC6vvzUyOaVQpThghUy/w=,tag:3KzyDauusprjl0MPv2D1tw==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -20,8 +21,8 @@ sops:
             bWREdmpHbTFQZXRQdlVSaFVSRWdYcFkKotwiDiy8f4HdzUhUxBM7hNxFis59SGWA
             VGDuyhF1xdlH7XEdLqvhvMVulwLjhYTcfSpFZvNyUwdCu+WDtRdjCw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-04-29T03:49:12Z"
-    mac: ENC[AES256_GCM,data:HZGjuFsbX3uCc0cWwvEXERHR1Jhuf60BVoUu79aKJ+I0deedcOyG4VQmDq42i0r/uFrIw/wRM24V0oAD64h+3Fhihe/4KOMKuDfpiRuGJTX0TjZFGIfeUaq6IuoL23D7N/Ciln0x5iOXf+glASA5jaCpsXk9ai/6Wg0X3rZQhqY=,iv:z0nmKAwPrjh91TXdXKhguzmt5qCHqJDkvqF2u3Putw4=,tag:T2NBBAJ1nn2xSz/nbGQ7QQ==,type:str]
+    lastmodified: "2023-04-29T20:09:35Z"
+    mac: ENC[AES256_GCM,data:bAMqh9bDdhmjUbft/SrfhILyjG9+bwVkydbHY/+RwvuwaMkr3NUprfHt0CAFtjuscHXWsB2XfwP5+sOTgAvlsR7KFUlFiz6UsG/fXz9ThW7a8DrIl892omgYOF896+5mlzk8jJ7eAJvBKAH78rF6GNCMm10WL18EsEviTyGHnTU=,iv:zqv8Oq0yE7kiamegyjdYBO2znQcIF8eMj0eSR8F3rf8=,tag:kOsvUWq/QPsDv6Rxu2+HDQ==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.7.3

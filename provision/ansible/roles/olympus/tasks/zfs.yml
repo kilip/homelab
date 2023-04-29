@@ -2,6 +2,7 @@
 - name: Ensure zfs utils installed
   ansible.builtin.package:
     name: zfsutils-linux
+  when: zfs_pools|length
 
 - name: Ensure zfs pools configured
   ansible.builtin.include_tasks:

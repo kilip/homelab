@@ -15,6 +15,7 @@
       {{ '-m ' + zpool.mountpoint if zpool.mountpoint else '/tank' }}
       {{ zpool.name }}
       {{ zpool.devices | join(' ') }}
+      -f
     zpool_exists: "{{ result_pool_list.rc == 0 }}"
 
 - name: Show zfs facts

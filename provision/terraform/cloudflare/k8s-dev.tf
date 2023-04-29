@@ -14,10 +14,17 @@ resource "cloudflare_tunnel_config" "echo-dev" {
   account_id  = var.cloudflare_account_id
   tunnel_id = cloudflare_tunnel.k8s_dev_tunnel.id
   config {
-    #origin_request {
-    #  http_host_header   = "echo-server.dev.itstoni.com"
-    #  origin_server_name = "echo-server.dev.itstoni.com"
-    #}
+
+    origin_request {
+      connect_timeout          = "1m0s"
+      tls_timeout              = "1m0s"
+      tcp_keep_alive           = "1m0s"
+      no_happy_eyeballs        = false
+      keep_alive_connections   = 1024
+      keep_alive_timeout       = "1m0s"
+      http_host_header         = "${var.cloudflare_zone}"
+      origin_server_name       = "${var.cloudflare_zone}"
+    }
 
     ingress_rule {
       hostname = "k8s-dev.itstoni.com"
@@ -26,9 +33,16 @@ resource "cloudflare_tunnel_config" "echo-dev" {
     }
 
     ingress_rule {
+
       hostname = "fw-dev.itstoni.com"
       path = "/"
       service = "http://webhook-receiver.flux-system.svc.cluster.local:80"
+    }
+
+    ingress_rule {
+      hostname = "emqx-dev.itstoni.com"
+      path = "/"
+      service = "http://emqx.default.svc.cluster.local:18083"
     }
 
     ingress_rule {
@@ -52,4 +66,36 @@ resource "cloudflare_record" "fw-dev" {
   value   = "${cloudflare_tunnel.k8s_dev_tunnel.id}.cfargotunnel.com"
   type    = "CNAME"
   proxied = true
+}
+
+resource "cloudflare_record" "emqx-dev" {
+  zone_id = var.cloudflare_zone_id
+  name    = "emqx-dev"
+  value   = "${cloudflare_tunnel.k8s_dev_tunnel.id}.cfargotunnel.com"
+  type    = "CNAME"
+  proxied = true
+}
+
+#resource "local_file" "tf_ansible_vars_file" {
+#  content = <<-DOC
+#    # Ansible vars_file containing variable values from Terraform.
+#    tunnel_id: ${cloudflare_tunnel.k8s_dev_tunnel.id}
+#    account: ${var.cloudflare_account_id}
+#    tunnel_name: ${cloudflare_tunnel.k8s_dev_tunnel.name}
+#    secret: ${random_id.tunnel_secret.b64_std}
+#    zone: ${var.cloudflare_zone}
+#    DOC
+#
+#  filename = "./k8s-dev-tunnel.json"
+#}
+
+resource "local_file" "tf_tunnel" {
+  content = <<-DOC
+    {
+      "AccountTag":"${var.cloudflare_account_id}",
+      "TunnelSecret":"${random_id.tunnel_secret.b64_std}",
+      "TunnelID":"${cloudflare_tunnel.k8s_dev_tunnel.id}"
+    }
+    DOC
+  filename = "./k8s-dev-tunnel.json"
 }

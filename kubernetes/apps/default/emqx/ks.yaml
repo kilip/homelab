@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: cluster-base-echo-server
     - name: cluster-db-postgres
-  path: ./kubernetes/staging/default/emqx/app
+  path: ./kubernetes/apps/default/emqx/app
   prune: true
   sourceRef:
     kind: GitRepository

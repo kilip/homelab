@@ -1,7 +1,0 @@
----
-# yaml-language-server: $schema=https://json.schemastore.org/kustomization
-kind: Kustomization
-resources:
-  - ./cluster-settings.yaml
-  - ./cluster-secrets.sops.yaml
-  - ./cloudflared.sops.yaml

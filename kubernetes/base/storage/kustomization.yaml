@@ -3,7 +3,7 @@
 kind: Kustomization
 resources:
   - ./namespace.yaml
-  - ./nfs/ks.yaml
+#  - ./nfs/ks.yaml
   - ./rook-ceph/ks.yaml
 #  - ./volsync/ks.yaml
 #  - ./longhorn/ks.yaml

@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-base-echo-server
-    - name: cluster-storage-nfs-provisioner
+    #- name: cluster-storage-nfs-provisioner
   path: ./kubernetes/base/storage/rook-ceph/app
   prune: true
   sourceRef:

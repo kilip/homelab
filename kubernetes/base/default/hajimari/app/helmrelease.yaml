@@ -45,6 +45,7 @@ spec:
           - database
           - monitoring
           - flux-system
+          - rook-ceph
           - home
     ingress:
       main:

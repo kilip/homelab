@@ -15,6 +15,7 @@ spec:
         kind: HelmRepository
         name: rook-ceph
         namespace: flux-system
+  timeout: 600s
   maxHistory: 2
   install:
     createNamespace: true

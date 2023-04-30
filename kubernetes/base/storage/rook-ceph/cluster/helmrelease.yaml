@@ -73,7 +73,7 @@ spec:
           - name: hera
             devices:
               - name: /dev/disk/by-id/ata-Samsung_SSD_850_PRO_256GB_S251NX0H621411M
-              #- name: /dev/disk/by-id/scsi-1ATA_ST2000LX001-1RG174_WDZFAN8P
+              - name: /dev/disk/by-id/scsi-1ATA_ST2000LX001-1RG174_WDZFAN8P
           - name: mars
             devices:
               - name: /dev/disk/by-id/ata-TEAML5Lite3D120G_AA20181016A0100546

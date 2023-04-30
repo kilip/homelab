@@ -5,7 +5,7 @@
     package:
       - tlp
       - tlp-rdw
-      - smartmontools
+      - ethtool
     state: present
 
 - name: Ensure tlp service enabled and started

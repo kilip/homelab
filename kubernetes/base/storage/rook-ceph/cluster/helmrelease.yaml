@@ -73,14 +73,14 @@ spec:
         nodes:
           - name: hera
             devices:
-              - name: /dev/disk/by-id/ata-Samsung_SSD_850_PRO_256GB_S251NX0H621411M
-              - name: /dev/disk/by-id/scsi-1ATA_ST2000LX001-1RG174_WDZFAN8P
+              - name: /dev/disk/by-id/scsi-1ATA_Samsung_SSD_850_PRO_256GB_S251NX0H621411M-part3
+              - name: /dev/disk/by-id/scsi-0ATA_ST2000LX001-1RG1_WDZFAN8P
           - name: mars
             devices:
-              - name: /dev/disk/by-id/ata-TEAML5Lite3D120G_AA20181016A0100546
+              - name: /dev/disk/by-id/scsi-0ATA_TEAML5Lite3D120G_AA20181016A0100546-part3
           - name: iris
             devices:
-              - name: /dev/disk/by-id/ata-HGST_HTS541075A9E680_JD12021A0DWVKL
+              - name: /dev/disk/by-id/scsi-0ATA_HGST_HTS541075A9_JD12021A0DWVKL-part3
 
     cephBlockPools:
       - name: ceph-blockpool

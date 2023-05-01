@@ -13,6 +13,7 @@
   ansible.builtin.service:
     service: tlp
     state: restarted
+  when: "'tlp' in ansible_facts.services"
 
 - name: restart networkd
   ansible.builtin.service:

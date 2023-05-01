@@ -13,6 +13,7 @@
     name: tlp
     state: started
     enabled: true
+  when: "'tlp' in ansible_facts.services"
 
 - name: Ensure tlp configured
   ansible.builtin.template:

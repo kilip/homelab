@@ -1,4 +1,7 @@
 ---
+- name: Ensure service facts gathered
+  ansible.builtin.service_facts:
+
 - name: Ensure upgraded
   ansible.builtin.apt:
     upgrade: dist

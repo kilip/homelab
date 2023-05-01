@@ -2,12 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-db-postgres
+  name: cluster-apps-postgresql
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-storage-longhorn
-  path: ./kubernetes/base/db/postgres/app
+    - name: cluster-apps-rook-ceph-cluster
+  path: ./kubernetes/apps/db/postgres/app
   prune: true
   sourceRef:
     kind: GitRepository

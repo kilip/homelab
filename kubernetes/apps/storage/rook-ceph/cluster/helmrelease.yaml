@@ -6,8 +6,7 @@ metadata:
   name: rook-ceph-cluster
   namespace: rook-ceph
 spec:
-  interval: 60m
-  timeout: 600s
+  interval: 15m
   chart:
     spec:
       chart: rook-ceph-cluster
@@ -35,6 +34,7 @@ spec:
       dashboard:
         ingressClassName: nginx
         annotations:
+          nginx.ingress.kubernetes.io/backend-protocol: HTTP
           nginx.ingress.kubernetes.io/server-snippet: |
             proxy_ssl_verify off;
           nginx.ingress.kubernetes.io/whitelist-source-range: |
@@ -72,11 +72,11 @@ spec:
             enabled: false
       crashCollector:
         disable: false
-      dashboard:
-        enabled: true
-        urlPrefix: /
-        ssl:
-        port: 8443
+      #dashboard:
+      #  enabled: true
+      #  urlPrefix: /
+      #  ssl:
+      #  port: 8443
       cleanupPolicy:
         confirmation: ""
         sanitizeDisks:

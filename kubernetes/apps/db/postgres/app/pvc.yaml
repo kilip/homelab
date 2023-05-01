@@ -2,7 +2,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: postgresql-data
+  name: postgresql-v1
   namespace: database
   #labels:
   #  benji-backup.me/instance: "benji-k8s"
@@ -15,4 +15,4 @@ spec:
   storageClassName: ceph-block
   resources:
     requests:
-      storage: 5Gi
+      storage: 1Gi

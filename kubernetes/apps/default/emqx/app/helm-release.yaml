@@ -33,6 +33,7 @@ spec:
     replicaCount: 1
     recreatePods: true
     emqxConfig:
+      EMQX_NODE_NAME: "emqx@mqtt2.lan"
       EMQX_ALLOW_ANONYMOUS: "false"
       EMQX_AUTH__MNESIA__PASSWORD_HASH: plain
       #EMQX_LISTENERS__TCP__DEFAULT__PROXY_PROTOCOL: "true"

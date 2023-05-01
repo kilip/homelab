@@ -95,7 +95,6 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
-        port: 8443
       cleanupPolicy:
         confirmation: ""
         sanitizeDisks:

@@ -2,8 +2,8 @@ Olympus Cluster
 ====
 Highly opinionated a single [k3s](https://k3s.io) cluster with [Ansible](https://www.ansible.com) and [Terraform](https://www.terraform.io) backed by [Flux](https://toolkit.fluxcd.io/) and [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/).
 
-[![Cluster-Internet](https://img.shields.io/uptimerobot/status/m794263735-348debae056e127588fd93e5?color=brightgreeen&label=Home%20Internet&style=for-the-badge&logo=v&logoColor=white)](https://uptimerobot.com)
-[![Uptime](https://img.shields.io/uptimerobot/ratio/7/m794263735-348debae056e127588fd93e5?logo=V&logoColor=white&style=for-the-badge)](https://uptimerobot.com)
+[![Cluster-Internet](https://img.shields.io/uptimerobot/status/m794263735-348debae056e127588fd93e5?color=brightgreeen&label=Home%20Internet&style=for-the-badge&logo=v&logoColor=white)](https://k8s.itstoni.com)
+[![Uptime](https://img.shields.io/uptimerobot/ratio/7/m794263735-348debae056e127588fd93e5?logo=V&logoColor=white&style=for-the-badge)](https://k8s.itstoni.com)
 
 
 # TL;DR

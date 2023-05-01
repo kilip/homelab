@@ -111,14 +111,13 @@ spec:
         nodes:
           - name: hera
             devices:
-              - name: /dev/disk/by-id/scsi-1ATA_Samsung_SSD_850_PRO_256GB_S251NX0H621411M-part3
-              - name: /dev/disk/by-id/scsi-0ATA_ST2000LX001-1RG1_WDZFAN8P
+              - name: /dev/mapper/ubuntu--vg-lv--0
           - name: mars
             devices:
-              - name: /dev/disk/by-id/scsi-0ATA_TEAML5Lite3D120G_AA20181016A0100546-part3
+              - name: /dev/mapper/ubuntu--vg-cephfs
           - name: iris
             devices:
-              - name: /dev/disk/by-id/scsi-0ATA_HGST_HTS541075A9_JD12021A0DWVKL-part3
+              - name: /dev/mapper/ubuntu--vg-chepfs
 
     cephBlockPools:
       - name: ceph-blockpool

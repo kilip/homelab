@@ -42,6 +42,8 @@ spec:
         enabled: true
         existingClaim: postgresql-v1
         storageClass: ceph-block
+        accessModes:
+          - ReadWriteOnce
         size: 1Gi
       initdb:
         scriptsSecret: postgresql-init

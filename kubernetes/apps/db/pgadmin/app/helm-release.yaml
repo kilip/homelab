@@ -46,7 +46,7 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: simple-icons:postgresql
       hosts:
-        - host: &host pgadmin.itstoni.com
+        - host: &host "pgadmin.${SECRET_DOMAIN}"
           paths:
             - path: /
               pathType: Prefix
@@ -57,7 +57,7 @@ spec:
       enabled: false
     persistentVolume:
       enabled: true
-      storageClass: longhorn
+      storageClass: ceph-block
       accessModes:
         - ReadWriteOnce
       size: 1Gi

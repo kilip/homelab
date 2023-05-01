@@ -5,4 +5,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./postgres/ks.yaml
-#  - ./pgadmin/ks.yaml
+  - ./pgadmin/ks.yaml

@@ -46,7 +46,7 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: simple-icons:postgresql
       hosts:
-        - host: &host "pgadmin.${SECRET_DOMAIN}"
+        - host: &host "pgadmin.itstoni.com"
           paths:
             - path: /
               pathType: Prefix

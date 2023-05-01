@@ -33,7 +33,7 @@ spec:
     replicaCount: 1
     recreatePods: true
     emqxConfig:
-      EMQX_CLUSTER__DISCOVERY: "static"
+      #EMQX_CLUSTER__DISCOVERY: "static"
       EMQX_CLUSTER__STATIC__SEEDS: "emqx@mqtt1.lan, emqx@emqx-0.emqx-headless.default.svc.cluster.local"
       #EMQX_RPC__PORT_DISCOVERY: "manual"
       EMQX_ALLOW_ANONYMOUS: "false"

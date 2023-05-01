@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: cluster-base-echo-server
     #- name: cluster-storage-nfs-provisioner
-  path: ./kubernetes/base/storage/rook-ceph/app
+  path: ./kubernetes/apps/storage/rook-ceph/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -32,7 +32,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-storage-rook-ceph
-  path: ./kubernetes/base/storage/rook-ceph/cluster
+  path: ./kubernetes/apps/storage/rook-ceph/cluster
   prune: true
   sourceRef:
     kind: GitRepository

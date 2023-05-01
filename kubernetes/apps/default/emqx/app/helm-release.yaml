@@ -39,7 +39,7 @@ spec:
     service:
       type: LoadBalancer
       externalIPs: ["${EMQX_IPV4_ADDR}"]
-      # externalTrafficPolicy: Local
+      externalTrafficPolicy: Local
       annotations:
         external-dns.alpha.kubernetes.io/hostname: mqtt.${SECRET_DOMAIN}
     ingress:
@@ -58,11 +58,11 @@ spec:
           - hosts:
               - *host
     metrics:
-      enabled: false
+      enabled: true
     persistence:
       enabled: true
       storageClass: ceph-block
-      size: 100Mi
+      size: 512Mi
     resources:
       requests:
         cpu: 10m

@@ -53,6 +53,15 @@ spec:
       bdev_async_discard = true
       osd_class_update_on_start = false
     cephClusterSpec:
+      waitTimeoutForHealthyOSDInMinutes: 10
+      mon:
+        count: 3
+        allowMultiplePerNode: false
+      mgr:
+        count: 1
+        modules:
+          - name: pg_autoscaler
+            enabled: true
       network:
         provider: host
         connections:
@@ -64,7 +73,15 @@ spec:
       dashboard:
         enabled: true
         urlPrefix: /
-        ssl: false
+        ssl:
+        port: 8443
+      cleanupPolicy:
+        confirmation: ""
+        sanitizeDisks:
+          method: quick
+          dataSource: zero
+          iteration: 1
+        allowUninstallWithVolumes: false
       storage:
         useAllNodes: false
         useAllDevices: false

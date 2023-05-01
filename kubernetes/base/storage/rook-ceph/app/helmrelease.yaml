@@ -15,18 +15,29 @@ spec:
         kind: HelmRepository
         name: rook-ceph
         namespace: flux-system
-  timeout: 600s
   maxHistory: 2
   install:
     createNamespace: true
     remediation:
-      retries: 3
+      retries: 5
   upgrade:
     cleanupOnFail: true
     remediation:
-      retries: 3
+      retries: 5
   uninstall:
     keepHistory: false
   values:
+    crds:
+      enabled: true
     monitoring:
       enabled: true
+    pspEnable: false
+    csi:
+      enableCephfsDriver: false
+      enableCephfsSnapshotter: false
+    resources:
+      requests:
+        cpu: 92m
+        memory: 164Mi
+      limits:
+        memory: 217Mi

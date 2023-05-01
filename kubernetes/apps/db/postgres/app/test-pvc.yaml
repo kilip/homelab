@@ -2,7 +2,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: postgresql-config-v1
+  name: postgresql-data
   namespace: database
   #labels:
   #  benji-backup.me/instance: "benji-k8s"

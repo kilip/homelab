@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: cluster-base-echo-server
     #- name: cluster-storage-nfs-provisioner
-  path: ./kubernetes/operator/storage/rook-ceph/operator
+  path: ./kubernetes/apps/storage/rook-ceph/operator
   prune: true
   sourceRef:
     kind: GitRepository

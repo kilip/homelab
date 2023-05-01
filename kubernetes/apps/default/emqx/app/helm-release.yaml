@@ -61,7 +61,8 @@ spec:
       enabled: false
     persistence:
       enabled: true
-      storageClass: longhorn
+      existingClaim: emqx-v1
+      storageClass: ceph-block
       size: 100Mi
     resources:
       requests:

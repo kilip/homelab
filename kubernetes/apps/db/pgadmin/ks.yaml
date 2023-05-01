@@ -2,12 +2,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-db-pgadmin
+  name: cluster-apps-pgadmin
   namespace: flux-system
 spec:
-  #dependsOn:
-  #  - name: cluster-db-postgres
-  path: ./kubernetes/base/db/pgadmin
+  dependsOn:
+    - name: cluster-apps-postgresql
+  path: ./kubernetes/apps/db/pgadmin
   prune: true
   sourceRef:
     kind: GitRepository

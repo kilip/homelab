@@ -1,0 +1,15 @@
+kind: Secret
+ansible_host: 10.0.0.12
+inet_device: enp3s0
+zfs_pools:
+    - name: tank
+      mountpoint: /tank
+      devices:
+        - scsi-1ExternalUSB3.0_201703310007F
+      state: present
+zfs:
+    - tank/backups
+    - tank/media
+nfs_exports:
+    - /tank/backups   10.0.0.0/8(rw,async,no_subtree_check,no_root_squash)
+    - /tank/media     10.0.0.0/8(rw,async,no_subtree_check,no_root_squash)

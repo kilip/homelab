@@ -33,12 +33,9 @@ spec:
     replicaCount: 1
     recreatePods: true
     emqxConfig:
-      #EMQX_CLUSTER__DISCOVERY: "static"
-      EMQX_CLUSTER__STATIC__SEEDS: "emqx@mqtt1.lan, emqx@emqx-0.emqx-headless.default.svc.cluster.local"
-      #EMQX_RPC__PORT_DISCOVERY: "manual"
       EMQX_ALLOW_ANONYMOUS: "false"
       EMQX_AUTH__MNESIA__PASSWORD_HASH: plain
-      #EMQX_LISTENERS__TCP__DEFAULT__PROXY_PROTOCOL: "true"
+      EMQX_CLUSTER___DISCOVERY__STRATEGY: "manual"
       EMQX_NODE__COOKIE: "olympus_mqtt"
     service:
       type: LoadBalancer

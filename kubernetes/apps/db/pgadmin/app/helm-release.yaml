@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: pgadmin4
-      version: 1.14.7
+      version: 1.15.0
       sourceRef:
         kind: HelmRepository
         name: runix
@@ -27,9 +27,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: dpage/pgadmin4
-      tag: 7.0
     nameOverride: pgadmin
     strategy:
       type: Recreate

@@ -1,0 +1,13 @@
+---
+apiVersion: kind.x-k8s.io/v1alpha4
+kind: Cluster
+name: olympus-dev
+nodes:
+  - name: k8s-1
+    role: control-plane
+  - name: k8s-2
+    role: worker
+  - name: k8s-3
+    role: worker
+networking:
+  disableDefaultCNI: true

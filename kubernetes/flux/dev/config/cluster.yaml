@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 30m
   ref:
-    branch: main
+    branch: dev
   url: "https://github.com/kilip/olympus-cluster"
   ignore: |
     # exclude all
@@ -24,7 +24,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
-  path: ./kubernetes/flux
+  path: ./kubernetes/flux/dev
   prune: true
   wait: false
   sourceRef:

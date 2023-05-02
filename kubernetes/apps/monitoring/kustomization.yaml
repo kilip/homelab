@@ -2,9 +2,9 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-  - ./namespace.yaml
-  - ./kubernetes-dashboard/ks.yaml
+resources: []
+#  - ./namespace.yaml
+#  - ./kubernetes-dashboard/ks.yaml
 #  - ./grafana/ks.yaml
 #  - ./kube-prometheus-stack/ks.yaml
 #  - ./loki/ks.yaml

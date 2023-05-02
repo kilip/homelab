@@ -26,3 +26,11 @@
     apply:
       tags: wakeonlan
   tags: wakeonlan
+
+- name: Ensure emqx tasks executed
+  ansible.builtin.include_tasks:
+    file: emqx.yml
+    apply:
+      tags: emqx
+  tags: emqx
+  when: "'emqx' in group_names"

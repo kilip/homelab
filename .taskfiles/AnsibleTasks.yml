@@ -97,3 +97,6 @@ tasks:
     dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - ansible kubernetes -i {{.ANSIBLE_INVENTORY}} -a 'service k3s status' --become -l kubernetes
+
+  emqx:join:
+    desc: Join emqx cluster

@@ -1,0 +1,24 @@
+---
+- name: Ensure package facts gathered
+  ansible.builtin.package_facts:
+
+- name: Ensure emqx install facts configured
+  ansible.builtin.set_fact:
+    emqx_installed: "{{ 'emqx' in ansible_facts.packages }}"
+
+- name: Ensure emqx installed
+  ansible.builtin.apt:
+    deb: https://www.emqx.com/en/downloads/broker/5.0.21/emqx-5.0.21-ubuntu22.04-amd64.deb
+  when: not emqx_installed
+
+- name: Ensure emqx service started
+  ansible.builtin.service:
+    name: emqx
+    state: started
+
+- name: Ensure emqx configured
+  ansible.builtin.template:
+    src: emqx.conf
+    dest: /etc/emqx/emqx.conf
+    mode: 0644
+  notify: restart emqx

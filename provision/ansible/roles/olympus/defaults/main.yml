@@ -1,4 +1,6 @@
 ---
+emqx_version: "https://www.emqx.com/en/downloads/broker/5.0.21/emqx-5.0.21-ubuntu22.04-amd64.deb"
+emqx_users: []
 nfs_exports: []
 zfs: []
 zfs_pools: []

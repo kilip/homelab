@@ -115,9 +115,9 @@ spec:
           - name: mars
             devices:
               - name: /dev/mapper/ubuntu--vg-cephfs
-          - name: iris
-            devices:
-              - name: /dev/mapper/ubuntu--vg-chepfs
+          #- name: iris
+          #  devices:
+          #    - name: /dev/mapper/ubuntu--vg-chepfs
 
     cephBlockPools:
       - name: ceph-blockpool

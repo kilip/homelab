@@ -38,7 +38,7 @@ spec:
         env:
           POSTGRES_SUPER_PASS: "${POSTGRES_ADMIN_PASS}"
       02-init-config:
-        image: registry.k8s.io/git-sync/git-sync:v4.0.0
+        image: registry.k8s.io/git-sync/git-sync:v3.6.5
         envFrom:
           - secretRef:
               name: home-assistant-secret

@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: cluster-base-ingress-nginx
     - name: cluster-fs-nfs-provisioner
-  path: ./kubernetes/base/fs/longhorn/app
+  path: ./kubernetes/apps/fs/longhorn/app
   prune: true
   sourceRef:
     kind: GitRepository

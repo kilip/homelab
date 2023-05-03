@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-base-ingress-nginx
-  path: ./kubernetes/apps/filesystem/nfs/app
+  path: ./kubernetes/apps/fs/nfs/app
   prune: true
   sourceRef:
     kind: GitRepository

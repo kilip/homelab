@@ -46,6 +46,9 @@ spec:
           GIT_SYNC_LINK: current
           GIT_SYNC_ONE_TIME: "true"
           GIT_SYNC_ADD_USER: "true"
+        envFrom:
+          - secretRef:
+              name: home-assistant-secret
         args:
           - "-depth=1"
           - "-v=3"

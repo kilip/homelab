@@ -43,7 +43,7 @@ spec:
           - secretRef:
               name: home-assistant-secret
         volumeMounts:
-          - name: git-secret
+          - name: GH_DEPLOY_KEY
             mountPath: /etc/git-secret
         volumeClaimTemplates:
           - name: &config-pvc config-v1
@@ -52,11 +52,10 @@ spec:
             size: 1Gi
             storageClass: ceph-block
     volumes:
-      - git-secret:
+      - GH_DEPLOY_KEY:
         secret:
           defaultMode: 256
           secretName: home-assistant-secret
-          name: GH_DEPLOY_KEY
     controller:
       type: statefulset
       annotations:

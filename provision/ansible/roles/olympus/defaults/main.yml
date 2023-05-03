@@ -1,4 +1,9 @@
 ---
+default_packages:
+  - bash-completion
+  - lvm2
+  - nano
+packages: []
 nfs_exports: []
 zfs: []
 zfs_pools: []

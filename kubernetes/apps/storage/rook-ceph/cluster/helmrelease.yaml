@@ -89,8 +89,6 @@ spec:
           compression:
             # TODO: Test out enabling this on next cluster rebuild
             enabled: false
-      crashCollector:
-        disable: false
       dashboard:
         enabled: true
         urlPrefix: /
@@ -118,6 +116,56 @@ spec:
           #- name: iris
           #  devices:
           #    - name: /dev/mapper/ubuntu--vg-chepfs
+
+      resources:
+        mgr:
+          limits:
+            memory: "512Mi"
+          requests:
+            cpu: "500m"
+            memory: "256Mi"
+        mon:
+          limits:
+            memory: "512Mi"
+          requests:
+            cpu: "1000m"
+            memory: "256Mi"
+        osd:
+          limits:
+            memory: "512Mi"
+          requests:
+            cpu: "1000m"
+            memory: "256Mi"
+        prepareosd:
+          limits:
+            memory: "512Mi"
+          requests:
+            cpu: "500m"
+            memory: "64Mi"
+        mgr-sidecar:
+          limits:
+            memory: "100Mi"
+          requests:
+            cpu: "100m"
+            memory: "40Mi"
+        crashcollector:
+          limits:
+            memory: "60Mi"
+          requests:
+            cpu: "100m"
+            memory: "60Mi"
+        logcollector:
+          limits:
+            memory: "246Mi"
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
+        cleanup:
+          limits:
+            memory: "512Mi"
+          requests:
+            cpu: "500m"
+            memory: "256Mi"
 
     cephBlockPools:
       - name: ceph-blockpool
@@ -177,6 +225,7 @@ spec:
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
+
     cephObjectStores:
       - name: ceph-objectstore
         spec:
@@ -194,7 +243,6 @@ spec:
             port: 80
             resources:
               requests:
-                cpu: 1000m
                 memory: 256Mi
               limits:
                 memory: 512Mi

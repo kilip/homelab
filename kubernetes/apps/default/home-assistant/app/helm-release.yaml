@@ -51,13 +51,6 @@ spec:
             accessMode: ReadWriteOnce
             size: 1Gi
             storageClass: ceph-block
-    volumes:
-      - name: git-secret
-        secret:
-          defaultMode: 256
-          name: home-assistant-secret
-          secretName: GH_DEPLOY_KEY
-
     controller:
       type: statefulset
       annotations:
@@ -93,6 +86,12 @@ spec:
           - hosts:
               - *host
     persistence:
+      volumes:
+        - name: git-secret
+          secret:
+            defaultMode: 256
+            name: home-assistant-secret
+            secretName: GH_DEPLOY_KEY
       ga-service-account:
         enabled: true
         type: secret

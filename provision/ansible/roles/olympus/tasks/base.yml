@@ -1,13 +1,4 @@
 ---
-- name: Ensure service facts gathered
-  ansible.builtin.service_facts:
-
-- name: Ensure upgraded
-  ansible.builtin.apt:
-    upgrade: dist
-    update_cache: true
-    cache_valid_time: 600
-
 - name: Ensure required package installed
   ansible.builtin.package:
     name: "{{ default_packages + install_packages }}"

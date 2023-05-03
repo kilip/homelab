@@ -6,6 +6,17 @@
       tags: base
   tags: base
 
+- name: Ensure service facts gathered
+  ansible.builtin.service_facts:
+  tags: always
+
+- name: Ensure upgrade task executed
+  ansible.builtin.include_tasks:
+    file: upgrade.yml
+    apply:
+      tags: upgrade
+  tags: upgrade
+
 - name: Ensure zfs task executed
   ansible.builtin.include_tasks:
     file: zfs.yml

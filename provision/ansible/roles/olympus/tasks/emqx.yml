@@ -1,39 +1,41 @@
 ---
-- name: Ensure package facts gathered
+- name: emqx~> Ensure package facts gathered
   ansible.builtin.package_facts:
 
-- name: Ensure emqx_installed fact configured
+- name: emqx~> Ensure emqx_installed fact configured
   ansible.builtin.set_fact:
     emqx_installed: "{{ 'emqx' in ansible_facts.packages }}"
 
-- name: Ensure emqx installed
+- name: emqx~> Ensure emqx installed
   block:
-    - name: Ensure install script downloaded
+    - name: emqx~> Ensure install script downloaded
       ansible.builtin.get_url:
         url: https://assets.emqx.com/scripts/install-emqx-deb.sh
         dest: '/tmp/emqx.sh'
         mode: '0777'
-    - name: Ensure install script executed
+    - name: emqx~> Ensure install script executed
       ansible.builtin.command:
         cmd: '/tmp/emqx.sh'
       failed_when: false
       changed_when: false
-    - name: Ensure emqx installed
+    - name: emqx~> Ensure emqx installed
       ansible.builtin.apt:
         name: emqx
         state: present
+        update_cache: true
       when: not ansible_check_mode
   when: not emqx_installed
 
-- name: Ensure service started
+- name: emqx~> Ensure service started
   ansible.builtin.service:
     name: emqx
     state: started
   when: not ansible_check_mode
 
-- name: Ensure configured
+- name: emqx~> Ensure configured
   ansible.builtin.template:
     src: emqx.conf
     dest: /etc/emqx/emqx.conf
     mode: '0644'
     backup: true
+  notify: restart emqx

@@ -20,7 +20,6 @@ emqx_static_seeds:
     - ENC[AES256_GCM,data:0Td9ngIqr++hHYnoguE=,iv:OIUVzDFV029BqjVnhUVDdRgLiZxQ1MwL3UTqraj2E4c=,tag:j7ePSLoDW4xjrBZV5ePeKA==,type:str]
     - ENC[AES256_GCM,data:srz1eM1K/H2tnLxH6gw=,iv:bJculZfDjL0bYboznIoiq0+MQdPOzrJCzSPbYtPlC+Y=,tag:3oahpA9+PSjLuRWPKqpBVQ==,type:str]
     - ENC[AES256_GCM,data:WpUwQ52vRW+mQFVD6YM=,iv:sTeXy2+0XqDnoa8ikZ7v6ub3ZPb9Rb5okRz9UDj6HK8=,tag:d2qEbWoEnvKNBa2TdM/cPA==,type:str]
-    - ENC[AES256_GCM,data:YilNN1hhKNXEoV97Z1c=,iv:I6M3AM/vpfgmXZrxeNQgge38PKB5afggpaI3Vh9NvA4=,tag:HbqVREcYWAXBI8eHRiJSqA==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -36,8 +35,8 @@ sops:
             bWREdmpHbTFQZXRQdlVSaFVSRWdYcFkKotwiDiy8f4HdzUhUxBM7hNxFis59SGWA
             VGDuyhF1xdlH7XEdLqvhvMVulwLjhYTcfSpFZvNyUwdCu+WDtRdjCw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-05-03T15:07:39Z"
-    mac: ENC[AES256_GCM,data:j4FzQwdufpOfQrnkJeyrRqKUCp5q50D8eGh7pqITuz++gAIgZo+atTxHOLWIqSarehuhmMu9tSusUnLbpmyeYRzWF2kQu6jeDLFWwWL3VUwclTZXT+oY7EPOjRV11V6aGbIRK8yJRVgVlhugSC5N+5YDNau2vzYa8BE1Brs19FY=,iv:4Ut1CiZc0Dn6ZvPHd0BfuUn6uwFAK25xFUZ9tW7Q+u8=,tag:Rcq25cBYXUFi3Via6lPuuw==,type:str]
+    lastmodified: "2023-05-03T17:04:29Z"
+    mac: ENC[AES256_GCM,data:ys2fNk6AkHniyR/4PnfFx+Iq00z7ty2P7OJxL7tE0VFNYBWDARw23Fn+NiFdCrhSWew3HbQOf5nZWoj4I6UYNGj2+zVXTMy37x1e3tiFxfcaJZ/lu4RiMI9OMw4Oiv02WQyg5v3RWW/FbEW3f1oF7yF7eagz2/CtdthYD+OXf5E=,iv:Posd9zYgdzO1DPVAs+WlSxeTULc0tEY0uMi1cgkdbkU=,tag:gwNQEiJgql89dZpgIATeKg==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.7.3

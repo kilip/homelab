@@ -19,3 +19,9 @@
   ansible.builtin.service:
     service: networkd-dispatcher
     state: restarted
+
+- name: restart emqx
+  ansible.builtin.service:
+    name: emqx
+    state: restarted
+  when: not ansible_check_mode

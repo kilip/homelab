@@ -104,7 +104,7 @@ spec:
             mountPath: /etc/git-secret/ssh/id_rsa
       git-known-hosts:
         enabled: true
-        type: secrett
+        type: secret
         name: home-assistant-secret
         defaultMode: 256
         subPath:

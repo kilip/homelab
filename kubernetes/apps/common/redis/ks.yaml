@@ -3,14 +3,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-base-echo-server
+  name: cluster-common-redis
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-base-ingress-nginx
-    #- name: cluster-storage-longhorn
-    #- name: cluster-storage-nfs-provisioner
-  path: ./kubernetes/base/default/echo-server/app
+    - name: cluster-base-echo-server
+  path: ./kubernetes/apps/common/redis/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -18,8 +16,8 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: echo-server
-      namespace: default
-  interval: 30m
+      name: redis
+      namespace: common
+  interval: 15m
   retryInterval: 1m
   timeout: 3m

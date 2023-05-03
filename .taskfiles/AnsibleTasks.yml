@@ -7,8 +7,8 @@ env:
 
 vars:
   ANSIBLE_PLAYBOOK_DIR: "{{.ROOT_DIR}}/provision/ansible"
-  ANSIBLE_INVENTORY_DIR: "{{.ROOT_DIR}}/inventory/{{.DEPLOY}}"
-  ANSIBLE_INVENTORY: "{{.ROOT_DIR}}/inventory/{{.DEPLOY}}/hosts.ini"
+  ANSIBLE_INVENTORY_DIR: "{{.ROOT_DIR}}/inventory"
+  ANSIBLE_INVENTORY: "{{.ROOT_DIR}}/inventory/hosts.ini"
 
 tasks:
 
@@ -44,7 +44,7 @@ tasks:
     desc: Uninstall Kubernetes on the nodes
     interactive: true
     cmds:
-      - ansible-playbook -i {{.ANSIBLE_INVENTORY}} kilip.k3s_cluster.nuke
+      - ansible-playbook -i {{.ANSIBLE_INVENTORY}} kilip.k3s_cluster.nuke {{.CLI_ARGS}}
       - task: reboot
 
   ping:

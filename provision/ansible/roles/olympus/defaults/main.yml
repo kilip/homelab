@@ -17,3 +17,8 @@ zfs_pool_options:
   - -O normalization=formD
   - -O relatime=on
   - -O canmount=off
+
+emqx_dashboard_username: "admin"
+emqx_dashboard_password: "public"
+emqx_users: []
+emqx_static_seeds: []

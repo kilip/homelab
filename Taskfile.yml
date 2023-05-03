@@ -64,3 +64,5 @@ tasks:
 
   push-dev:
     desc: Push to development
+    cmds:
+      - git add . -A && git commit -am "development" && git push origin dev && task fl:ks-watch

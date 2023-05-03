@@ -109,7 +109,7 @@ spec:
         defaultMode: 256
         subPath:
           - path: GIT_SYNC_KNOWN_HOSTS
-            mountPath: /etc/known_hosts
+            mountPath: /etc/git-secret/known_hosts
     probes:
       liveness:
         enabled: false

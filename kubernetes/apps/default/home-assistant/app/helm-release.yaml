@@ -110,8 +110,6 @@ spec:
         subPath:
           - path: GIT_SYNC_KNOWN_HOSTS
             mountPath: /etc/git-secret/known_hosts
-      config:
-        existingClaim: *config-pvc
     probes:
       liveness:
         enabled: false
@@ -124,6 +122,12 @@ spec:
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: OnRootMismatch
+    volumeClaimTemplates:
+      - name: *config-pvc
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: ceph-block
     resources:
       requests:
         cpu: 10m

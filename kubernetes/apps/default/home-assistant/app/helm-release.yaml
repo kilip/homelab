@@ -55,8 +55,8 @@ spec:
       - name: git-secret
         secret:
           defaultMode: 256
-          secretName: home-assistant-secret
-          path: GH_DEPLOY_KEY
+          name: home-assistant-secret
+          secretName: GH_DEPLOY_KEY
 
     controller:
       type: statefulset

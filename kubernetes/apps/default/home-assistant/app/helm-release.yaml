@@ -93,15 +93,6 @@ spec:
         tls:
           - hosts:
               - *host
-    persistence:
-      ga-service-account:
-        enabled: true
-        type: secret
-        name: home-assistant-secret
-        defaultMode: 256
-        subPath:
-          - path: GA_SERVICE_ACCOUNT
-            mountPath: /config/ga-service-account.json
     probes:
       liveness:
         enabled: false
@@ -117,7 +108,7 @@ spec:
     volumeClaimTemplates:
       - name: *config-pvc
         mountPath: /config
-        subPath: hass-config/config
+        subPath: hass-config
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: ceph-block

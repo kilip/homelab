@@ -56,10 +56,6 @@ spec:
           runAsUser: 568
           runAsGroup: 568
         volumeMounts:
-          - name: git-secret
-            mountPath: /etc/git-secret/ssh
-          - name: git-known-hosts
-            mountPath: /etc/git-secret/known_hosts
           - name: &config-pvc config-v1
             mountPath: /config
 

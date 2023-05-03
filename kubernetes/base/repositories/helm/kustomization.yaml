@@ -19,6 +19,7 @@ resources:
   - ./nextcloud.yaml
   - ./nfs-provisioner.yaml
   - ./olympus.yaml
+  - ./prometheus-community.yaml
   - ./rook-ceph.yaml
   - ./runix.yaml
   - ./stakater.yaml

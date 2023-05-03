@@ -98,6 +98,8 @@ tasks:
     cmds:
       - ansible kubernetes -i {{.ANSIBLE_INVENTORY}} -a 'service k3s status' --become -l kubernetes
 
+  exec:
+    desc: Execute command into kubernetes hosts
   rook:cleanup-dir:
     desc: Cleanup rook dir
     dir: "{{.ANSIBLE_DIR}}"

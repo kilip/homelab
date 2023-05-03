@@ -44,7 +44,7 @@ spec:
               name: home-assistant-secret
         volumeMounts:
           - name: git-secret
-            mountPath: /etc/git-secret/ssh
+            mountPath: /etc/git-secret/ssh/id_rsa
         volumeClaimTemplates:
           - name: &config-pvc config-v1
             mountPath: /config
@@ -101,7 +101,15 @@ spec:
         defaultMode: 256
         subPath:
           - path: GH_DEPLOY_KEY
-            mountPath: /etc/git-secret
+            mountPath: /etc/git-secret/ssh/id_rsa
+      git-known-hosts:
+        enabled: true
+        type: secrett
+        name: home-assistant-secret
+        defaultMode: 256
+        subPath:
+          - path: GIT_SYNC_KNOWN_HOSTS
+            mountPath: /etc/known_hosts
     probes:
       liveness:
         enabled: false

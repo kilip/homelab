@@ -24,7 +24,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-base-ingress-nginx-certificates
+    #- name: cluster-base-ingress-nginx-certificates
     - name: cluster-base-metallb-config
   path: ./kubernetes/base/networking/ingress-nginx/app
   prune: true

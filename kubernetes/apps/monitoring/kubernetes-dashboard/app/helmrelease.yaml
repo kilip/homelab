@@ -49,3 +49,6 @@ spec:
       enabled: true
     serviceMonitor:
       enabled: false
+
+    cephFileSystems: null
+    cephObjectStores: null

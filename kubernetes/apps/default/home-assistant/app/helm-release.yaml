@@ -43,7 +43,7 @@ spec:
           - secretRef:
               name: home-assistant-secret
         volumeMounts:
-          - name: GH_DEPLOY_KEY
+          - name: git-secret
             mountPath: /etc/git-secret
         volumeClaimTemplates:
           - name: &config-pvc config-v1
@@ -51,11 +51,6 @@ spec:
             accessMode: ReadWriteOnce
             size: 1Gi
             storageClass: ceph-block
-    volumes:
-      - GH_DEPLOY_KEY:
-        secret:
-          defaultMode: 256
-          secretName: home-assistant-secret
     controller:
       type: statefulset
       annotations:
@@ -99,6 +94,14 @@ spec:
         subPath:
           - path: GA_SERVICE_ACCOUNT
             mountPath: /config/ga-service-account.json
+      git-secret:
+        enabled: true
+        type: secret
+        name: home-assistant-secret
+        defaultMode: 256
+        subPath:
+          - path: GH_DEPLOY_KEY
+            mountPath: /etc/git-secret
     probes:
       liveness:
         enabled: false

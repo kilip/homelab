@@ -111,7 +111,7 @@ spec:
         subPath: hass-config
         accessMode: ReadWriteOnce
         size: 1Gi
-        storageClass: ceph-block
+        storageClass: longhorn
     resources:
       requests:
         cpu: 10m

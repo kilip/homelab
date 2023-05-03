@@ -44,7 +44,7 @@ spec:
               name: home-assistant-secret
         volumeMounts:
           - name: git-secret
-            mountPath: /etc/git-secret
+            mountPath: /etc/git-secret/ssh/id_rsa
         volumeClaimTemplates:
           - name: &config-pvc config-v1
             mountPath: /config

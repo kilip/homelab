@@ -39,18 +39,27 @@ spec:
           POSTGRES_SUPER_PASS: "${POSTGRES_ADMIN_PASS}"
       02-init-config:
         image: registry.k8s.io/git-sync/git-sync:v3.6.5
-        runAsUser: 568
-        runAsGroup: 568
-        envFrom:
-          - secretRef:
-              name: home-assistant-secret
+        env:
+          GIT_SYNC_REPO: https://github.com/kilip/hass-config
+          GIT_SYNC_BRANCH: main
+          GIT_SYNC_ROOT: /config
+          GIT_SYNC_LINK: current
+          GIT_SYNC_ONE_TIME: "true"
+          GIT_SYNC_ADD_USER: "true"
+        args:
+          - "-depth=1"
+          - "-v=3"
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
         volumeMounts:
           - name: git-secret
-            mountPath: /etc/git-secret/ssh/id_rsa
+            mountPath: /etc/git-secret/ssh
           - name: git-known-hosts
             mountPath: /etc/git-secret/known_hosts
           - name: &config-pvc config-v1
             mountPath: /config
+
     controller:
       type: statefulset
       annotations:
@@ -94,22 +103,6 @@ spec:
         subPath:
           - path: GA_SERVICE_ACCOUNT
             mountPath: /config/ga-service-account.json
-      git-secret:
-        enabled: true
-        type: secret
-        name: home-assistant-secret
-        defaultMode: 256
-        subPath:
-          - path: GH_DEPLOY_KEY
-            mountPath: /etc/git-secret/ssh/id_rsa
-      git-known-hosts:
-        enabled: true
-        type: secret
-        name: home-assistant-secret
-        defaultMode: 256
-        subPath:
-          - path: GIT_SYNC_KNOWN_HOSTS
-            mountPath: /etc/git-secret/known_hosts
     probes:
       liveness:
         enabled: false
@@ -125,6 +118,7 @@ spec:
     volumeClaimTemplates:
       - name: *config-pvc
         mountPath: /config
+        subPath: hass-config/config
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: ceph-block

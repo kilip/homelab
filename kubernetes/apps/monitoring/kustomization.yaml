@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./kubernetes-dashboard/ks.yaml
-#  - ./grafana/ks.yaml
+  - ./grafana/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
 #  - ./loki/ks.yaml
 #  - ./snmp-exporter/ks.yaml

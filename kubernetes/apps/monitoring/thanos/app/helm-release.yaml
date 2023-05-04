@@ -80,7 +80,7 @@ spec:
       persistence:
         enabled: true
         storageClass: local-path
-        size: 20Gi
+        size: 10Gi
     ruler:
       enabled: true
       replicaCount: 3

@@ -42,10 +42,6 @@ spec:
         secretName: *name
         usernameKey: POSTGRES_USER
         passwordKey: POStGRES_PASS
-    redis:
-      enabled: true
-      auth:
-        enabled: false
     cronjob:
       enabled: true
 

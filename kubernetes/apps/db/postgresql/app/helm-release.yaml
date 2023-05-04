@@ -31,7 +31,7 @@ spec:
       tag: 15.2.0
     auth:
       enablePostgresUser: true
-      postgresPassword: "${POSTGRES_ADMIN_PASS}"
+      postgresPassword: "${POSTGRES_SUPER_PASS}"
       database: postgres
     primary:
       service:

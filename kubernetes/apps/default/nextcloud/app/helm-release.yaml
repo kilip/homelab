@@ -29,8 +29,7 @@ spec:
   values:
     image:
       repository: nextcloud
-      tag: 26.0.1-fpm-alpine
-      flavor: fpm-alpine
+      tag: 26.0.1-apache
     nginx:
       enabled: true
     internalDatabase:

@@ -28,6 +28,8 @@ spec:
     keepHistory: false
   values:
     image:
+      repository: nextcloud
+      tag: 26.0.1-fpm-alpine
       flavor: fpm-alpine
     nginx:
       enabled: true

@@ -26,10 +26,11 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    serviceMonitor:
-      enabled: true
-      params:
-        - module:
-            - if_mib
-          name: ares
-          target: 10.0.0.1
+    fullnameOverride: *app
+    # serviceMonitor:
+    #  enabled: true
+    #  params:
+    #    - module:
+    #        - if_mib
+    #      name: ares
+    #      target: 10.0.0.1

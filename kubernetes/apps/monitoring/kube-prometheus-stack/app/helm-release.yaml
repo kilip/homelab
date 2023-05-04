@@ -34,43 +34,6 @@ spec:
       config:
         global:
           resolve_timeout: 5m
-        receivers:
-          #- name: heartbeat
-          #  webhook_configs:
-          #    - url: "https://heartbeat.uptimerobot.com/${SECRET_ALERTMANAGER_UPTIMEROBOT_HEARTBEAT_TOKEN}"
-          #      send_resolved: true
-          - name: "null" # quote
-          - name: pushover
-            pushover_configs:
-              - url_title: View in Alertmanager
-                token: "${SECRET_ALERTMANAGER_PUSHOVER_TOKEN}"
-                user_key: "${SECRET_ALERTMANAGER_PUSHOVER_USER_KEY}"
-                send_resolved: true
-                html: true
-                sound: gamelan
-                priority: |-
-                  {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
-                title: |-
-                   {{ .CommonLabels.alertname }} [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]
-                message: |-
-                  {{- range .Alerts }}
-                    {{- if ne .Annotations.description "" }}
-                      {{ .Annotations.description }}
-                    {{- else if ne .Annotations.summary "" }}
-                      {{ .Annotations.summary }}
-                    {{- else if ne .Annotations.message "" }}
-                      {{ .Annotations.message }}
-                    {{- else }}
-                      Alert description not available
-                    {{- end }}
-                    {{- if gt (len .Labels.SortedPairs) 0 }}
-                      <small>
-                      {{- range .Labels.SortedPairs }}
-                        <b>{{ .Name }}:</b> {{ .Value }}
-                      {{- end }}
-                      </small>
-                    {{- end }}
-                  {{- end }}
         route:
           group_by: ["alertname", "job"]
           group_wait: 1m
@@ -101,7 +64,7 @@ spec:
           hajimari.io/appName: "Alert Manager"
           hajimari.io/icon: mdi:alert-decagram-outline
         hosts:
-          - &host alert-manager.devbu.io
+          - &host alert-manager.itstoni.com
         tls:
           - hosts:
               - *host
@@ -227,4 +190,18 @@ spec:
               resources:
                 requests:
                   storage: 5Gi
-        # additionalScrapeConfigs:
+        additionalScrapeConfigs:
+          - job_name: 'snmp'
+            static_configs:
+              - targets:
+                  - 10.0.0.1  # SNMP device.
+            metrics_path: /snmp
+            params:
+              module: [if_mib]
+            relabel_configs:
+              - source_labels: [__address__]
+                target_label: __param_target
+              - source_labels: [__param_target]
+                target_label: instance
+              - target_label: __address__
+                replacement: snmp-exporter.monitoring.svc.cluster.local:9116

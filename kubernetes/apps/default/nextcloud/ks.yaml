@@ -8,9 +8,10 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-fs-nfs-provisioner
+    - name: cluster-fs-longhorn
     - name: cluster-common-redis
     - name: cluster-apps-postgresql
-  path: ./kubernetes/apps/default/nexcloud/app
+  path: ./kubernetes/apps/default/nextcloud/app
   prune: true
   sourceRef:
     kind: GitRepository

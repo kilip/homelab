@@ -7,5 +7,5 @@ resources:
   - pvc-config.yaml
   - pvc-data.yaml
   - helm-release.yaml
-patchesStrategicMerge:
-  - postgres.yaml
+#patchesStrategicMerge:
+#  - postgres.yaml

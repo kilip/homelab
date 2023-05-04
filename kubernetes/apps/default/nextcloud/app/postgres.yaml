@@ -7,24 +7,3 @@ metadata:
 spec:
   values:
     nextcloud:
-      extraInitContainers:
-        - name: init-db
-          image: ghcr.io/onedr0p/postgres-initdb:14.6
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: POSTGRES_HOST
-              value: postgresql.database.svc.cluster.local
-            - name: POSTGRES_DB
-              value: nextcloud
-            - name: POSTGRES_SUPER_PASS
-              valueFrom: "${POSTGRES_SUPER_PASS}"
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: nextcloud
-                  key: POSTGRES_USER
-            - name: POSTGRES_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: nextcloud
-                  key: POSTGRES_PASS

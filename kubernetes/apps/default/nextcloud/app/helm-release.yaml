@@ -56,6 +56,8 @@ spec:
             name: nextcloud
         env:
           POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
+    env:
+      TRUSTED_PROXIES: "10.0.0.0/8, 172.16.0.0/16"
     nextcloud:
       host: &host "cloud.${SECRET_DOMAIN}"
       extraEnv:
@@ -84,7 +86,7 @@ spec:
           <?php
           $CONFIG = array (
             'trusted_proxies' => array(
-              0 => '10.0.0.0/24',
+              0 => '10.0.0.0/8',
             ),
             'forwarded_for_headers' => array (
               0 => 'HTTP_X_FORWARDED_FOR',

@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-postgresql
+    - name: cluster-db-postgresql
   path: ./kubernetes/apps/db/pgadmin
   prune: true
   sourceRef:

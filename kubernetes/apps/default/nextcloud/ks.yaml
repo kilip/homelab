@@ -10,7 +10,7 @@ spec:
     - name: cluster-fs-nfs-provisioner
     - name: cluster-fs-longhorn
     - name: cluster-common-redis
-    - name: cluster-apps-postgresql
+    - name: cluster-db-postgresql
   path: ./kubernetes/apps/default/nextcloud/app
   prune: true
   sourceRef:

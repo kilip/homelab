@@ -15,7 +15,6 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  timeout: 600s
   maxHistory: 2
   install:
     createNamespace: true

@@ -34,7 +34,7 @@ spec:
         env:
           GIT_SYNC_REPO: https://github.com/kilip/openhab
           GIT_SYNC_BRANCH: main
-          GIT_SYNC_ROOT: /
+          GIT_SYNC_ROOT: /openhab
           GIT_SYNC_LINK: current
           GIT_SYNC_ONE_TIME: "true"
           GIT_SYNC_ADD_USER: "true"
@@ -48,7 +48,7 @@ spec:
           runAsGroup: 1000
         volumeMounts:
           - name: &config-pvc openhab-pvc-v1
-            mountPath: /config
+            mountPath: /openhab
 
     image:
       repository: openhab/openhab
@@ -91,6 +91,11 @@ spec:
         enabled: false
       startup:
         enabled: false
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: OnRootMismatch
 
     volumeClaimTemplates:
       - name: *config-pvc

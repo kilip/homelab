@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: cluster-fs-nfs-provisioner
     - name: cluster-common-redis
-    - name: cluster-db-postgresql
+    - name: cluster-apps-postgresql
   path: ./kubernetes/apps/default/nexcloud/app
   prune: true
   sourceRef:

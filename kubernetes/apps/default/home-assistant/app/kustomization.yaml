@@ -2,6 +2,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 kind: Kustomization
 resources:
+  - ./pvc.yaml
   - ./secrets.sops.yaml
   - ./config-sync.yaml
   - ./helm-release.yaml

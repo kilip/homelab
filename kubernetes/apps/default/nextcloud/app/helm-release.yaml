@@ -47,6 +47,15 @@ spec:
     cronjob:
       enabled: true
 
+    initContainers:
+      01-init-db:
+        image: ghcr.io/onedr0p/postgres-initdb:14.7
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+            name: nextcloud
+        env:
+          POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
     nextcloud:
       host: &host "cloud.${SECRET_DOMAIN}"
       extraEnv:
@@ -61,20 +70,25 @@ spec:
         passwordKey: ADMIN_PASS
         smtpUsernameKey: SMTP_USER
         smtpPasswordKey: SMTP_PASSWORD
-      extraInitContainers:
-        01-init-db:
-          image: ghcr.io/onedr0p/postgres-initdb:14.7
-          imagePullPolicy: IfNotPresent
-          envFrom:
-            - secretRef:
-              name: nextcloud
-          env:
-            POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
     ingress:
       enabled: true
       className: nginx
       annotations:
-        hajimari.io/icon: mdi:nextcloud
+        hajimari.io/icon: mdi:cloud-download
+        nginx.ingress.kubernetes.io/proxy-body-size: 10G
+        nginx.ingress.kubernetes.io/proxy-buffering: "off"
+        nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+        nginx.ingress.kubernetes.io/server-snippet: |
+          server_tokens off;
+          location ^~ /.well-known {
+            location = /.well-known/carddav { return 301 /remote.php/dav/; }
+            location = /.well-known/caldav { return 301 /remote.php/dav/; }
+            location = /.well-known/acme-challenge { try_files $uri $uri/ =404; }
+            location = /.well-known/pki-validation { try_files $uri $uri/ =404; }
+            return 301 /index.php$request_uri;
+          }
+          location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)(?:$|/)  { return 404; }
+          location ~ ^/(?:\.|autotest|occ|issue|indie|db_|console)                { return 404; }
       hosts:
         - host: *host
           paths:

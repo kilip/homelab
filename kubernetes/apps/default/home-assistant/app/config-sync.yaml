@@ -27,7 +27,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image: registry.k8s.io/git-sync/git-sync:v3.6.5
+    image:
+      repository: registry.k8s.io/git-sync/git-sync
+      tag: v3.6.5
     env:
       GIT_SYNC_REPO: https://github.com/kilip/hass-config
       GIT_SYNC_BRANCH: main
@@ -38,6 +40,10 @@ spec:
     envFrom:
       - secretRef:
           name: home-assistant-secret
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     args:
       - "-depth=1"
       - "-v=3"

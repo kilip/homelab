@@ -104,6 +104,11 @@ spec:
             'bulkupload.enabled' => false,
           );
 
+      extraVolumes:
+        - name: media
+          nfs:
+            server: "${CONFIG_NFS_SERVER_IP}"
+            path: "/tank/media"
     ingress:
       enabled: true
       className: nginx

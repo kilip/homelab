@@ -102,7 +102,7 @@ spec:
       - name: *config-pvc
         mountPath: /openhab/userdata
         subPath: openhab/userdata
-        accessMode: ReadWriteONce
+        accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: longhorn
     resources:

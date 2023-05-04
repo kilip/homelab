@@ -228,6 +228,6 @@ spec:
                 requests:
                   storage: 5Gi
         additionalScrapeConfig:
-          - job_name: 'mikrotik'
+          - job_name: 'mktxp'
             static_configs:
               - targets: ['snmp-exporter-mikrotik.monitoring.svc.cluster.local:49090']

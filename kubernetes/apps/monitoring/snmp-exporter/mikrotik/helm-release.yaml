@@ -41,6 +41,14 @@ spec:
         subPath:
           - path: mktxp.conf
             mountPath: /root/mktxp/mktxp.conf
+      _mktxp.conf:
+        enabled: true
+        type: secret
+        name: mikrotik
+        defaultMode: 0777
+        subPath:
+          - path: mktxp.conf
+            mountPath: /root/mktxp/_mktxp.conf
     service:
       main:
         ports:

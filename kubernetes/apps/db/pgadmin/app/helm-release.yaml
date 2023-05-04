@@ -57,10 +57,16 @@ spec:
       enabled: false
     persistentVolume:
       enabled: true
-      storageClass: ceph-block
+      storageClass: longhorn
       accessModes:
-        - ReadWriteOnce
+        - ReadWriteMany
       size: 1Gi
+    livenessProbe:
+      enabled: false
+    startupProbe:
+      enabled: false
+    readinessProbe:
+      enabled: false
     resources:
       requests:
         cpu: 15m

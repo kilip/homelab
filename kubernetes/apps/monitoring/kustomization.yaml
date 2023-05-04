@@ -7,7 +7,7 @@ resources:
   - ./kubernetes-dashboard/ks.yaml
   - ./thanos/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
-  - ./grafana/ks.yaml
+#  - ./grafana/ks.yaml
 #  - ./loki/ks.yaml
 #  - ./snmp-exporter/ks.yaml
 #  - ./thanos/ks.yaml

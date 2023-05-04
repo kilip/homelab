@@ -47,6 +47,7 @@ spec:
           - flux-system
           - rook-ceph
           - home
+          - filesystem
     ingress:
       main:
         enabled: true

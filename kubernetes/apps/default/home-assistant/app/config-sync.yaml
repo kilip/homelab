@@ -53,3 +53,15 @@ spec:
     persistence:
       - name: config-v1
         mountPath: /hass-config
+    probes:
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
+    service:
+      main:
+        ports:
+          http:
+            port: 8080

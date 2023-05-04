@@ -54,6 +54,11 @@ spec:
         ports:
           http:
             port: 49090
+
+    podSecurityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroupChangePolicy: OnRootMismatch
     probes:
       liveness:
         enabled: false

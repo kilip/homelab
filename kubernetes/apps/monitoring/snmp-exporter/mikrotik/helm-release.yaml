@@ -32,7 +32,7 @@ spec:
       tag: stable-20230320065317
     env:
       TZ: "${TIMEZONE}"
-    persisence:
+    persistence:
       mktxp.conf:
         enabled: true
         type: secret

@@ -40,4 +40,3 @@ spec:
     service:
       type: LoadBalancer
       port: 8086
-      loadBalancerSourceRanges: [10.0.0.222]

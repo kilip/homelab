@@ -7,8 +7,8 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    #- name: cluster-apps-cloudnative-pg
-    #- name: cluster-apps-external-secrets-stores
+    - name: cluster-fs-nfs-provisioner
+    - name: cluster-common-redis
     - name: cluster-db-postgresql
   path: ./kubernetes/apps/default/nexcloud/app
   prune: true

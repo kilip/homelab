@@ -34,8 +34,6 @@ spec:
         envFrom:
           - secretRef:
               name: home-assistant-secret
-        env:
-          POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
       02-init-config:
         image: registry.k8s.io/git-sync/git-sync:v3.6.5
         env:
@@ -69,7 +67,7 @@ spec:
       TZ: "${TIMEZONE}"
       POSTGRES_HOST: postgresql.database.svc.cluster.local
       POSTGRES_DB: home_assistant
-      POSTGRES_SUPER_PASS: "${POSTGRES_ADMIN_PASS}"
+      POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
     envFrom:
       - secretRef:
           name: home-assistant-secret

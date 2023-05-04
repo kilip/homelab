@@ -60,9 +60,6 @@ spec:
               name: nextcloud
           env:
             POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
-            POSTGRES_RESET: "true"
-            POSTGRES_RESET_CONFIRM: "YES"
-
       extraEnv:
         - name: REDIS_HOST
           value: redis.common.svc.cluster.local

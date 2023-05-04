@@ -227,8 +227,4 @@ spec:
               resources:
                 requests:
                   storage: 5Gi
-        additionalScrapeConfigs:
-          - job_name: 'mktxp'
-            metrics_path: "/"
-            static_configs:
-              - targets: ['snmp-exporter-mikrotik.monitoring.svc.cluster.local:49090']
+        # additionalScrapeConfigs:

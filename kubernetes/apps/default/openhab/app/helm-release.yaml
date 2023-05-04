@@ -90,13 +90,13 @@ spec:
     volumeClaimTemplates:
       - name: *config-pvc
         mountPath: /openhab/conf
-        subPath: current/config
+        subPath: openhab/config
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: longhorn
       - name: *config-pvc
         mountPath: /openhab/userdata
-        subPath: current/userdata
+        subPath: openhab/userdata
         accessMode: ReadWriteONce
         size: 1Gi
         storageClass: longhorn

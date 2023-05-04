@@ -33,21 +33,21 @@ spec:
     env:
       TZ: "${TIMEZONE}"
     persistence:
-      mktxp.conf:
+      router_conf:
         enabled: true
         type: secret
         name: mikrotik
         defaultMode: 0777
         subPath:
-          - path: mktxp.conf
+          - path: router_conf
             mountPath: /root/mktxp/mktxp.conf
-      _mktxp.conf:
+      mktxp_conf:
         enabled: true
         type: secret
         name: mikrotik
         defaultMode: 0777
         subPath:
-          - path: mktxp.conf
+          - path: mktxp_conf
             mountPath: /root/mktxp/_mktxp.conf
     service:
       main:

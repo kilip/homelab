@@ -58,6 +58,11 @@ spec:
       USER_ID: "1000"
       GROUP_ID: "1000"
 
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+
     service:
       main:
         ports:

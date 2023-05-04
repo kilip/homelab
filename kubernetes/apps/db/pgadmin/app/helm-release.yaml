@@ -34,7 +34,7 @@ spec:
     strategy:
       type: Recreate
     env:
-      email: "${CONFIG_ADMIN_EMAIL}"
+      email: "me@itstoni.com"
     existingSecret: pgadmin-secrets
     secretKeys:
       pgadminPasswordKey: password

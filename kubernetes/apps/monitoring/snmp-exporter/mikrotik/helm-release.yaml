@@ -41,6 +41,11 @@ spec:
         subPath:
           - path: mktxp.conf
             mountPath: /root/mktxp/mktxp.conf
+    service:
+      main:
+        ports:
+          http:
+            port: 49090
     probes:
       liveness:
         enabled: false

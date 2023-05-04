@@ -230,4 +230,4 @@ spec:
         additionalScrapeConfig:
           - job_name: 'mikrotik'
             static_configs:
-              - targets: ['mikrotik.monitoring.svc.cluster.local:49090']
+              - targets: ['snmp-exporter-mikrotik.monitoring.svc.cluster.local:49090']

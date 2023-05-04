@@ -114,6 +114,10 @@ spec:
               implementation: prometheus
     dashboards:
       default:
+        # Ref: https://grafana.com/grafana/dashboards/13679-mikrotik-mktxp-exporter/
+        mikrotik:
+          gnetId: 13679
+          datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/11312-unifi-poller-usw-insights-prometheus/
         # unifi-usw:
         #   gnetId: 11312

@@ -2,7 +2,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: config-v1
+  name: hass-config-v1
   namespace: default
 spec:
   accessModes:

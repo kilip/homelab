@@ -57,7 +57,7 @@ spec:
           runAsUser: 568
           runAsGroup: 568
         volumeMounts:
-          - name: &config-pvc config-v1
+          - name: &config-pvc hass-config-v1
             mountPath: /config
 
     controller:

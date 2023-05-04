@@ -31,7 +31,7 @@ spec:
       repository: nextcloud
       tag: 26.0.1-apache
     nginx:
-      enabled: true
+      enabled: false
     internalDatabase:
       enabled: false
     externalDatabase:

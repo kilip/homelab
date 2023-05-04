@@ -57,6 +57,7 @@ spec:
           POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
     env:
       TRUSTED_PROXIES: "10.0.0.0/8, 172.16.0.0/16"
+
     nextcloud:
       host: &host "cloud.${SECRET_DOMAIN}"
       extraEnv:

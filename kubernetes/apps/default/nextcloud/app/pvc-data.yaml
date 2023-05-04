@@ -10,15 +10,15 @@ spec:
   storageClassName: nextcloud-nfs
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: expanse.turbo.ac
-    path: /eros/Apps/Nextcloud
+    server: "10.0.0.11"
+    path: "/tank/cloud"
   # Note: The first two options are strictly for NFSv4.2
   mountOptions: ["nfsvers=4.2", "nconnect=8", "hard", "noatime"]
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nextcloud-nfs
+  name: nextcloud-data-v1
   namespace: default
 spec:
   accessModes: ["ReadWriteMany"]

@@ -48,8 +48,8 @@ spec:
       - "-depth=1"
       - "-v=3"
     securityContext:
-      runAsUser: 568
-      runAsGroup: 568
+      runAsUser: 0
+      runAsGroup: 0
     persistence:
       - name: config-v1
         mountPath: /hass-config

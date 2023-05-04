@@ -52,7 +52,7 @@ spec:
     nextcloud:
       host: &host "cloud.${SECRET_DOMAIN}"
       extraInitContainers:
-        01-init-db:
+        - name: 01-init-db
           image: ghcr.io/onedr0p/postgres-initdb:14.7
           imagePullPolicy: IfNotPresent
           envFrom:

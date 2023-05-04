@@ -1,0 +1,108 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: openhab
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    initContainers:
+      # init config
+      01-init-config:
+        image: registry.k8s.io/git-sync/git-sync:v3.6.5
+        env:
+          GIT_SYNC_REPO: https://github.com/kilip/openhab
+          GIT_SYNC_BRANCH: main
+          GIT_SYNC_ROOT: /
+          GIT_SYNC_LINK: current
+          GIT_SYNC_ONE_TIME: "true"
+          GIT_SYNC_ADD_USER: "true"
+          GIT_SYNC_USERNAME: "${GIT_SYNC_USERNAME}"
+          GIT_SYNC_PASSWORD: "${GIT_SYNC_PASSWORD}"
+        args:
+          - "-depth=1"
+          - "-v=3"
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        volumeMounts:
+          - name: &config-pvc openhab-pvc-v1
+            mountPath: /config
+
+    image:
+      repository: openhab/openhab
+      tag: 3.4.3-alpine
+    env:
+      TZ: "${TIMEZONE}"
+      USER_ID: "1000"
+      GROUP_ID: "1000"
+
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          hajimari.io/icon: mdi:openhab
+        hosts:
+          - host: &host "oh.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+
+    probes:
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
+
+    volumeClaimTemplates:
+      - name: *config-pvc
+        mountPath: /openhab/conf
+        subPath: current/config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: longhorn
+      - name: *config-pvc
+        mountPath: /openhab/userdata
+        subPath: current/userdata
+        accessMode: ReadWriteONce
+        size: 1Gi
+        storageClass: longhorn
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100Mi
+      limits:
+        memory: 750Mi

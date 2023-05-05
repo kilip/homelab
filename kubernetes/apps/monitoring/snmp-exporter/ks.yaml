@@ -3,10 +3,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-monitoring-snmp-exporter
+  name: cluster-monitoring-snmp-exporter-mikrotik
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/monitoring/snmp-exporter/app
+  path: ./kubernetes/apps/monitoring/snmp-exporter/mikrotik
   prune: true
   sourceRef:
     kind: GitRepository
@@ -14,7 +14,7 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: snmp-exporter
+      name: snmp-exporter-mikrotik
       namespace: monitoring
   interval: 15m
   retryInterval: 1m

@@ -37,19 +37,21 @@ spec:
       GIT_SYNC_LINK: current
       GIT_SYNC_ONE_TIME: "false"
       GIT_SYNC_ADD_USER: "true"
+      GIT_SYNC_USERNAME: "${GIT_SYNC_USERNAME}"
+      GIT_SYNC_PASSWORD: "${GIT_SYNC_PASSWORD}"
     envFrom:
       - secretRef:
           name: home-assistant-secret
+
     controller:
       type: statefulset
       annotations:
         reloader.stakater.com/auto: "true"
+
     args:
       - "-depth=1"
       - "-v=3"
-    securityContext:
-      runAsUser: 568
-      runAsGroup: 568
+
     persistence:
       - name: hass-config-v1
         mountPath: /hass-config

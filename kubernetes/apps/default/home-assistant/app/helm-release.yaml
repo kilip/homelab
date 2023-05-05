@@ -39,7 +39,7 @@ spec:
       02-init-config:
         image: registry.k8s.io/git-sync/git-sync:v3.6.5
         env:
-          GIT_SYNC_REPO: https://github.com/kilip/openhab
+          GIT_SYNC_REPO: https://github.com/kilip/hass-config
           GIT_SYNC_BRANCH: main
           GIT_SYNC_ROOT: /tmp/hass-config
           GIT_SYNC_DEST: latest
@@ -56,7 +56,7 @@ spec:
           runAsUser: 568
           runAsGroup: 568
         volumeMounts:
-          - name: &config-pvc hass-config-v1
+          - name: &config-pvc hass-config-v2
             mountPath: /tmp/hass-config
 
     controller:

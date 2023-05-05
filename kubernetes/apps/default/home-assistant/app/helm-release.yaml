@@ -112,7 +112,7 @@ spec:
     volumeClaimTemplates:
       - name: *config-pvc
         mountPath: /config
-        subPath: current
+        subPath: latest
         accessMode: ReadWriteMany
         size: 1Gi
         storageClass: longhorn

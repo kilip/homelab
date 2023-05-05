@@ -35,7 +35,7 @@ spec:
           GIT_SYNC_REPO: https://github.com/kilip/openhab
           GIT_SYNC_BRANCH: main
           GIT_SYNC_ROOT: /openhab
-          GIT_SYNC_DEST: current
+          GIT_SYNC_DEST: latest
           GIT_SYNC_ONE_TIME: "true"
           GIT_SYNC_ADD_USER: "true"
           GIT_SYNC_USERNAME: "${GITSYNC_USERNAME}"
@@ -101,13 +101,13 @@ spec:
     volumeClaimTemplates:
       - name: *config-pvc
         mountPath: /openhab/conf
-        subPath: current/config
+        subPath: latest/config
         accessMode: ReadWriteMany
         size: 1Gi
         storageClass: longhorn
       - name: *config-pvc
         mountPath: /openhab/userdata
-        subPath: current/userdata
+        subPath: latest/userdata
         accessMode: ReadWriteMany
         size: 1Gi
         storageClass: longhorn

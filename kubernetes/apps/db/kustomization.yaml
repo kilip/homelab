@@ -5,5 +5,5 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./postgresql/ks.yaml
-  - ./influxdb/ks.yaml
+#  - ./influxdb/ks.yaml
 #  - ./pgadmin/ks.yaml

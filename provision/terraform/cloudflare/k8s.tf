@@ -41,7 +41,7 @@ resource "cloudflare_tunnel_config" "echo" {
     ingress_rule {
       hostname = "hass.itstoni.com"
       path = "/"
-      service = "http://hass.default.svc.cluster.local:8123"
+      service = "http://home-assistant.default.svc.cluster.local:8123"
     }
 
     ingress_rule {
@@ -64,6 +64,15 @@ resource "cloudflare_record" "flux-webhook" {
   allow_overwrite = true
   zone_id = var.cloudflare_zone_id
   name    = "fw"
+  value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
+  type    = "CNAME"
+  proxied = true
+}
+
+resource "cloudflare_record" "hass" {
+  allow_overwrite = true
+  zone_id = var.cloudflare_zone_id
+  name    = "hass"
   value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
   type    = "CNAME"
   proxied = true

@@ -13,7 +13,7 @@ spec:
       version: 2.1.1
       sourceRef:
         kind: HelmRepository
-        name: influxdata
+        name: bitnami
         namespace: flux-system
   maxHistory: 3
   install:
@@ -27,17 +27,31 @@ spec:
     keepHistory: false
   values:
     fullnameOverride: *app
-    adminUser:
-      organization: "influxdata"
-      bucket: "default"
-      user: "${INFLUXDB_USER}"
-      password: "${INFLUXDB_PASS}"
-      retention_policy: "0s"
+    auth:
+      admin:
+        username: "${INFLUXDB_USER}"
+        password: "${INFLUXDB_PASS}"
+
     persistence:
       enabled: true
+      existingClaim: influxdb-v1
+      storageClass: longhorn
       accessMode: ReadWriteOnce
-      storageClassName: longhorn
-      size: 10Gi
-    service:
-      type: LoadBalancer
-      port: 8086
+      persistenceSize: 5Gi
+
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        hajimari.io/enable: "true"
+        hajimari.io/icon: simple-icons:influxdb
+        hajimari.io/info: InfluxDB
+        hajimari.io/group: tools
+      hosts:
+        - host: &host "influxdb.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - *host

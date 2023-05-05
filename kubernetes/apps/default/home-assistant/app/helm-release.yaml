@@ -41,7 +41,7 @@ spec:
         env:
           GIT_SYNC_REPO: https://github.com/kilip/hass-config
           GIT_SYNC_BRANCH: main
-          GIT_SYNC_ROOT: /tmp/hass-config
+          GIT_SYNC_ROOT: /tmp/hass-config/config
           GIT_SYNC_DEST: latest
           GIT_SYNC_ONE_TIME: "true"
           GIT_SYNC_ADD_USER: "true"
@@ -110,7 +110,7 @@ spec:
     volumeClaimTemplates:
       - name: *config-pvc
         mountPath: /config
-        subPath: latest
+        subPath: config/latest
         accessMode: ReadWriteMany
         size: 1Gi
         storageClass: longhorn

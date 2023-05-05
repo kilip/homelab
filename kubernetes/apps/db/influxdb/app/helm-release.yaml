@@ -55,3 +55,11 @@ spec:
       tls:
         - hosts:
             - *host
+
+    influxdb:
+      livenessProbe:
+        enabled: false
+      startupProbe:
+        enabled: false
+      readinessProbe:
+        enabled: false

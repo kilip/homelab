@@ -113,6 +113,7 @@ spec:
       - name: config
         existingClaim: hass-config-v1
         mountPath: /config
+        accessMode: ReadWriteMany
         subPath: current
 
     resources:

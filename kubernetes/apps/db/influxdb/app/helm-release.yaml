@@ -35,9 +35,6 @@ spec:
     persistence:
       enabled: true
       existingClaim: influxdb-v1
-      storageClass: longhorn
-      accessMode: ReadWriteOnce
-      persistenceSize: 5Gi
 
     ingress:
       enabled: true

@@ -109,11 +109,10 @@ spec:
       fsGroup: 568
       fsGroupChangePolicy: OnRootMismatch
 
-    volumeClaimTemplates:
+    persistences:
       - name: config
         existingClaim: hass-config-v1
         mountPath: /config
-        accessMode: ReadWriteMany
         subPath: current
 
     resources:

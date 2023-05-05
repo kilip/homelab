@@ -33,10 +33,15 @@ resource "cloudflare_tunnel_config" "echo" {
     }
 
     ingress_rule {
-
       hostname = "fw.itstoni.com"
       path = "/"
       service = "http://webhook-receiver.flux-system.svc.cluster.local:80"
+    }
+
+    ingress_rule {
+      hostname = "hass.itstoni.com"
+      path = "/"
+      service = "http://hass.default.svc.cluster.local:8123"
     }
 
     ingress_rule {
@@ -47,6 +52,7 @@ resource "cloudflare_tunnel_config" "echo" {
 
 # Creates the CNAME record that routes ssh_app.${var.cloudflare_zone} to the tunnel.
 resource "cloudflare_record" "k8s" {
+  allow_overwrite = true
   zone_id = var.cloudflare_zone_id
   name    = "k8s"
   value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
@@ -55,6 +61,7 @@ resource "cloudflare_record" "k8s" {
 }
 
 resource "cloudflare_record" "flux-webhook" {
+  allow_overwrite = true
   zone_id = var.cloudflare_zone_id
   name    = "fw"
   value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"

@@ -33,19 +33,6 @@ resource "cloudflare_tunnel_config" "echo-dev" {
     }
 
     ingress_rule {
-
-      hostname = "fw-dev.itstoni.com"
-      path = "/"
-      service = "http://webhook-receiver.flux-system.svc.cluster.local:80"
-    }
-
-    ingress_rule {
-      hostname = "emqx-dev.itstoni.com"
-      path = "/"
-      service = "http://emqx.default.svc.cluster.local:18083"
-    }
-
-    ingress_rule {
       service = "http_status:404"
     }
   }
@@ -53,6 +40,7 @@ resource "cloudflare_tunnel_config" "echo-dev" {
 
 # Creates the CNAME record that routes ssh_app.${var.cloudflare_zone} to the tunnel.
 resource "cloudflare_record" "k8s-dev" {
+  allow_overwrite = true
   zone_id = var.cloudflare_zone_id
   name    = "k8s-dev"
   value   = "${cloudflare_tunnel.k8s_dev_tunnel.id}.cfargotunnel.com"
@@ -61,6 +49,7 @@ resource "cloudflare_record" "k8s-dev" {
 }
 
 resource "cloudflare_record" "fw-dev" {
+  allow_overwrite = true
   zone_id = var.cloudflare_zone_id
   name    = "fw-dev"
   value   = "${cloudflare_tunnel.k8s_dev_tunnel.id}.cfargotunnel.com"
@@ -69,6 +58,7 @@ resource "cloudflare_record" "fw-dev" {
 }
 
 resource "cloudflare_record" "emqx-dev" {
+  allow_overwrite = true
   zone_id = var.cloudflare_zone_id
   name    = "emqx-dev"
   value   = "${cloudflare_tunnel.k8s_dev_tunnel.id}.cfargotunnel.com"

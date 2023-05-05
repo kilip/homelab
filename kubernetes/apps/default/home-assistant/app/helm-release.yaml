@@ -38,6 +38,29 @@ spec:
               name: home-assistant-secret
         env:
           POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
+      02-init-config:
+        image: registry.k8s.io/git-sync/git-sync:v3.6.5
+        env:
+          GIT_SYNC_REPO: https://github.com/kilip/openhab
+          GIT_SYNC_BRANCH: main
+          GIT_SYNC_ROOT: /tmp/hass-config
+          GIT_SYNC_DEST: latest
+          GIT_SYNC_ONE_TIME: "true"
+          GIT_SYNC_ADD_USER: "true"
+          GIT_SYNC_USERNAME: "${GITSYNC_USERNAME}"
+          GIT_SYNC_PASSWORD: "${GITSYNC_PASSWORD}"
+          UID: 568
+          GID: 568
+        args:
+          - "-depth=1"
+          - "-v=3"
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+        volumeMounts:
+          - name: &config-pvc hass-config-v1
+            mountPath: /tmp/hass-config
+
     controller:
       type: statefulset
       annotations:
@@ -90,7 +113,7 @@ spec:
       - name: config
         existingClaim: hass-config-v1
         mountPath: /config
-        subPath: hass-config
+        subPath: current
 
     resources:
       requests:

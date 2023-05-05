@@ -27,8 +27,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    dependsOn:
-      - name: home-assistant-config
     initContainers:
       01-init-db:
         image: ghcr.io/onedr0p/postgres-initdb:14.7

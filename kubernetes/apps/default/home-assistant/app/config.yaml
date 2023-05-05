@@ -53,6 +53,7 @@ spec:
     persistence:
       - name: hass-config-v1
         mountPath: /hass-config
+        existingclaim: hass-config-v1
     probes:
       liveness:
         enabled: false

@@ -27,8 +27,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    #dependsOn:
-    #  - name: home-assistant-config
+    dependsOn:
+      - name: home-assistant-config
     initContainers:
       01-init-db:
         image: ghcr.io/onedr0p/postgres-initdb:14.7
@@ -38,28 +38,6 @@ spec:
               name: home-assistant-secret
         env:
           POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
-      02-init-config:
-        image: registry.k8s.io/git-sync/git-sync:v3.6.5
-        env:
-          GIT_SYNC_REPO: https://github.com/kilip/hass-config
-          GIT_SYNC_BRANCH: main
-          GIT_SYNC_ROOT: /config
-          GIT_SYNC_LINK: current
-          GIT_SYNC_ONE_TIME: "true"
-          GIT_SYNC_ADD_USER: "true"
-        envFrom:
-          - secretRef:
-              name: home-assistant-secret
-        args:
-          - "-depth=1"
-          - "-v=3"
-        securityContext:
-          runAsUser: 568
-          runAsGroup: 568
-        volumeMounts:
-          - name: &config-pvc hass-config-v1
-            mountPath: /config
-
     controller:
       type: statefulset
       annotations:
@@ -101,16 +79,19 @@ spec:
         enabled: false
       startup:
         enabled: false
+
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568
       fsGroup: 568
       fsGroupChangePolicy: OnRootMismatch
+
     volumeClaimTemplates:
-      - name: *config-pvc
-        existingClaim: *config-pvc
+      - name: config
+        existingClaim: hass-config-v1
         mountPath: /config
         subPath: hass-config
+
     resources:
       requests:
         cpu: 10m

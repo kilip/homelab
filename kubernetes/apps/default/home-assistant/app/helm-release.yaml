@@ -108,11 +108,9 @@ spec:
       fsGroupChangePolicy: OnRootMismatch
     volumeClaimTemplates:
       - name: *config-pvc
+        existingClaim: *config-pvc
         mountPath: /config
         subPath: hass-config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: longhorn
     resources:
       requests:
         cpu: 10m

@@ -31,14 +31,16 @@ spec:
       repository: registry.k8s.io/git-sync/git-sync
       tag: v3.6.5
     env:
-      GIT_SYNC_REPO: https://github.com/kilip/hass-config
-      GIT_SYNC_BRANCH: main
-      GIT_SYNC_ROOT: /hass-config
-      GIT_SYNC_LINK: current
-      GIT_SYNC_ONE_TIME: "false"
-      GIT_SYNC_ADD_USER: "true"
-      GIT_SYNC_USERNAME: "${GIT_SYNC_USERNAME}"
-      GIT_SYNC_PASSWORD: "${GIT_SYNC_PASSWORD}"
+      GITSYNC_REPO: https://github.com/kilip/hass-config
+      GITSYNC_BRANCH: main
+      GITSYNC_ROOT: /hass-config
+      GITSYNC_LINK: current
+      GITSYNC_ONE_TIME: "false"
+      GITSYNC_ADD_USER: "true"
+      GITSYNC_USERNAME: "${GITSYNC_USERNAME}"
+      GITSYNC_PASSWORD: "${GITSYNC_PASSWORD}"
+      UID: 568
+      GID: 568
     envFrom:
       - secretRef:
           name: home-assistant-secret

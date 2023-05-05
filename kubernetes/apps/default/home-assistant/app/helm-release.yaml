@@ -113,7 +113,7 @@ spec:
       - name: *config-pvc
         mountPath: /config
         subPath: current
-        accessMode: ReadWriteOnce
+        accessMode: ReadWriteMany
         size: 1Gi
         storageClass: longhorn
 

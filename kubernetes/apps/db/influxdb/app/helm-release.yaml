@@ -53,10 +53,10 @@ spec:
         - hosts:
             - *host
 
-    influxdb:
-      livenessProbe:
-        enabled: false
-      startupProbe:
-        enabled: false
-      readinessProbe:
-        enabled: false
+    # influxdb:
+    #   livenessProbe:
+    #     enabled: false
+    #   startupProbe:
+    #     enabled: false
+    #   readinessProbe:
+    #     enabled: false

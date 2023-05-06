@@ -40,13 +40,14 @@ spec:
     ingress:
       enabled: true
       ingressClassName: nginx
+      hostname: &host "influxdb.${SECRET_DOMAIN}"
       annotations:
         hajimari.io/enable: "true"
         hajimari.io/icon: simple-icons:influxdb
         hajimari.io/info: InfluxDB
         hajimari.io/group: tools
       hosts:
-        - host: &host "influxdb.${SECRET_DOMAIN}"
+        - host: *host
           paths:
             - path: /
               pathType: Prefix

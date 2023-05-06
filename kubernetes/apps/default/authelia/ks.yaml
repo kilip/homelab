@@ -6,6 +6,8 @@ metadata:
   name: cluster-apps-authelia
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-db-postgresql
   path: ./kubernetes/apps/default/authelia/app
   prune: true
   sourceRef:

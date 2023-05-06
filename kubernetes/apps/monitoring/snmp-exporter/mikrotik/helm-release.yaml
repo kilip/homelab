@@ -46,6 +46,14 @@ spec:
           module:
             - mikrotik
           target: 10.0.0.1
+        - name: mars
+          module:
+            - mikrotik
+          target: 10.0.0.2
+        - name: venus
+          module:
+            - mikrotik
+          target: 10.0.0.3
       path: /snmp
       scrapeTimeout: 10s
       relabelings:

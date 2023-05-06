@@ -37,7 +37,7 @@ spec:
         env:
           POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
       02-init-config:
-        image: registry.k8s.io/git-sync/git-sync:v3.6.5
+        image: registry.k8s.io/git-sync/git-sync:v3.6.6
         env:
           GIT_SYNC_REPO: https://github.com/kilip/hass-config
           GIT_SYNC_BRANCH: main

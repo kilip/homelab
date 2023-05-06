@@ -30,7 +30,7 @@ spec:
     initContainers:
       # init config
       01-init-config:
-        image: registry.k8s.io/git-sync/git-sync:v3.6.5
+        image: registry.k8s.io/git-sync/git-sync:v3.6.6
         env:
           GIT_SYNC_REPO: https://github.com/kilip/openhab
           GIT_SYNC_BRANCH: main

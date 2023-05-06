@@ -37,7 +37,7 @@ spec:
       type: Recreate
 
     env:
-      INFLUX_HOST: "http://influxdb.default.svc.cluster.local:8086"
+      INFLUX_HOST: "http://influxdb.database.svc.cluster.local:8086"
       USER: "${INFLUXDB_USER}"
       INFLUX_TOKEN: "${INFLUXDB_TOKEN}"
       INFLUX_BUCKET: "mqtt"

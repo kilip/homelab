@@ -55,10 +55,11 @@ spec:
         - hosts:
             - *host
 
-    # influxdb:
-    #   livenessProbe:
-    #     enabled: false
-    #   startupProbe:
-    #     enabled: false
-    #   readinessProbe:
-    #     enabled: false
+    metrics:
+      enabled: true
+
+    influxdb:
+      initdbScripts:
+        test.sh: |
+          influx org create -n olympus
+          influx bucket create -n mqtt -o olympus

@@ -61,5 +61,5 @@ spec:
     influxdb:
       initdbScripts:
         test.sh: |
-          influx org create -n olmpus
+          influx org create -n olympus
           influx bucket create -n mqtt -o olympus

@@ -29,24 +29,24 @@
     mode: 0755
   notify: restart networkd
 
-- name: Ensure power monitor configured
-  block:
-    - name: Ensure pm-monitor
-      ansible.builtin.template:
-        src: pm-monitor.sh
-        dest: "/usr/bin/pm-monitor.sh"
-        mode: 0775
+# - name: Ensure power monitor configured
+#  block:
+#    - name: Ensure pm-monitor
+#      ansible.builtin.template:
+#        src: pm-monitor.sh
+#        dest: "/usr/bin/pm-monitor.sh"
+#        mode: 0775
+#
+#    - name: Ensure pm-monitor service copied
+#      ansible.builtin.template:
+#        src: pm-monitor.service
+#        dest: "/etc/systemd/system/pm-monitor.service"
+#        mode: 0664
 
-    - name: Ensure pm-monitor service copied
-      ansible.builtin.template:
-        src: pm-monitor.service
-        dest: "/etc/systemd/system/pm-monitor.service"
-        mode: 0664
-
-    - name: Ensure pm-monitor service started
-      ansible.builtin.service:
-        name: pm-monitor
-        enabled: true
-        state: started
-      when: not ansible_check_mode
-  when: "'laptops' in group_names"
+#    - name: Ensure pm-monitor service started
+#      ansible.builtin.service:
+#        name: pm-monitor
+#        enabled: true
+#        state: started
+#      when: not ansible_check_mode
+#  when: "'laptops' in group_names"

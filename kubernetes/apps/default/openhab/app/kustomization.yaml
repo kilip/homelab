@@ -3,5 +3,5 @@
 kind: Kustomization
 resources:
   - ./config.yaml
-  - ./secrets.yaml
+  - ./secrets.sops.yaml
   - ./helm-release.yaml

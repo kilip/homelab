@@ -73,7 +73,7 @@ spec:
         storageClassName: standard
 
     initContainers:
-      01-init-config:
+      01-sync-init:
         image: registry.k8s.io/git-sync/git-sync:v3.6.6
         envFrom:
           - secretRef:
@@ -94,7 +94,7 @@ spec:
             mountPath: /bin/post-sync.sh
 
     sidecars:
-      01-config-sync:
+      01-sync-config:
         image: registry.k8s.io/git-sync/git-sync:v3.6.6
         args:
           - "-depth=1"

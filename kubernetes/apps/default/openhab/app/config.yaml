@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: openhab
+  namespace: default
 data:
   post-sync.sh: |
     #!/bin/sh -ex

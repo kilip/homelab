@@ -8,7 +8,7 @@ data:
     #!/bin/sh -ex
     mkdir -p /tmp/openhab/config
     cp -avr /tmp/openhab/latest/config/* /tmp/openhab/config/
-    exit 0
+
   40-openhabcloud.sh: |
     #!/bin/bash -ex
 

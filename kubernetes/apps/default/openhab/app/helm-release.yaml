@@ -62,13 +62,13 @@ spec:
       - name: &config-pvc openhab-config
         mountPath: /openhab/conf
         subPath: config
-        accessMode: ReadWriteOnce
+        accessMode: ReadWriteMany
         size: 1Gi
         storageClassName: standard
       - name: &userdata-pvc openhab-userdata
         mountPath: /openhab/userdata
         subPath: userdata
-        accessMode: ReadWriteOnce
+        accessMode: ReadWriteMany
         size: 1Gi
         storageClassName: standard
 

@@ -74,7 +74,7 @@ spec:
 
     initContainers:
       01-sync-init:
-        image: registry.k8s.io/git-sync/git-sync:v3.6.6
+        image: registry.k8s.io/git-sync/git-sync:v3.6.5
         envFrom:
           - secretRef:
               name: openhab
@@ -95,7 +95,7 @@ spec:
 
     sidecars:
       01-sync-config:
-        image: registry.k8s.io/git-sync/git-sync:v3.6.6
+        image: registry.k8s.io/git-sync/git-sync:v3.6.5
         args:
           - "-depth=1"
           - "--one-time=false"

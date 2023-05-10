@@ -68,6 +68,7 @@ spec:
         storageClassName: longhorn
 
       openhab-userdata:
+        enabled: true
         mountPath: /openhab/userdata
         subPath: userdata
         accessMode: ReadWriteMany

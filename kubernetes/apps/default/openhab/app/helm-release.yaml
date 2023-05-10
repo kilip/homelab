@@ -52,25 +52,27 @@ spec:
         subPath:
           - path: 40-openhabcloud.sh
             mountPath: /etc/cont-init.d/40-openhabcloud.sh
+
       post-sync:
         enabled: true
         type: configMap
         name: openhab
         defaultMode: 0777
 
-    volumeClaimTemplates:
-      - name: &config-pvc openhab-config
+      openhab-config:
+        enabled: true
         mountPath: /openhab/conf
         subPath: config
         accessMode: ReadWriteMany
         size: 1Gi
-        storageClassName: standard
-      - name: &userdata-pvc openhab-userdata
+        storageClassName: longhorn
+
+      openhab-userdata:
         mountPath: /openhab/userdata
         subPath: userdata
         accessMode: ReadWriteMany
         size: 1Gi
-        storageClassName: standard
+        storageClassName: longhorn
 
     initContainers:
       01-sync-init:
@@ -87,7 +89,7 @@ spec:
           runAsUser: 1000
           runAsGroup: 1000
         volumeMounts:
-          - name: *config-pvc
+          - name: openhab-config
             mountPath: /tmp/openhab
           - name: post-sync
             subPath: post-sync.sh
@@ -109,14 +111,14 @@ spec:
           runAsUser: 1000
           runAsGroup: 1000
         volumeMounts:
-          - name: *config-pvc
+          - name: openhab-config
             mountPath: /tmp/openhab
           - name: post-sync
             subPath: post-sync.sh
             mountPath: /bin/post-sync.sh
 
     controller:
-      type: statefulset
+      type: deployment
       annotations:
         reloader.stakater.com/auto: "true"
 
@@ -158,4 +160,4 @@ spec:
         cpu: 10m
         memory: 100Mi
       limits:
-        memory: 512Mi
+        memory: 1024Mi

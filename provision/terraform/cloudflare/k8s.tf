@@ -41,7 +41,8 @@ resource "cloudflare_tunnel_config" "echo" {
     ingress_rule {
       hostname = "hass.itstoni.com"
       path = "/"
-      service = "http://home-assistant.default.svc.cluster.local:8123"
+      service = "http://10.0.0.14:8123"
+      # service = "http://home-assistant.default.svc.cluster.local:8123"
     }
 
     ingress_rule {

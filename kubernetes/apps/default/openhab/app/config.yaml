@@ -7,7 +7,7 @@ data:
   post-sync.sh: |
     #!/bin/sh -ex
     mkdir -p /tmp/openhab/config
-    cp -avr /tmp/openhab/latest/config/* /tmp/openhab/config/
+    cp -av /tmp/openhab/latest/config/* /tmp/openhab/config/
 
   40-openhabcloud.sh: |
     #!/bin/bash -ex

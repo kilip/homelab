@@ -1,5 +1,5 @@
 ---
-- name: Ensure base task executed
+- name: Ensure base tasks executed
   ansible.builtin.include_tasks:
     file: base.yml
     apply:
@@ -10,28 +10,35 @@
   ansible.builtin.service_facts:
   tags: always
 
-- name: Ensure upgrade task executed
+- name: Ensure upgrade tasks executed
   ansible.builtin.include_tasks:
     file: upgrade.yml
     apply:
       tags: upgrade
   tags: upgrade
 
-- name: Ensure zfs task executed
+- name: Ensure fish tasks executed
+  ansible.builtin.include_tasks:
+    file: fish.yml
+    apply:
+      tags: fish
+  tags: fish
+
+- name: Ensure zfs tasks executed
   ansible.builtin.include_tasks:
     file: zfs.yml
     apply:
       tags: zfs
   tags: zfs
 
-- name: Ensure nfs task executed
+- name: Ensure nfs tasks executed
   ansible.builtin.include_tasks:
     file: nfs.yml
     apply:
       tags: nfs
   tags: nfs
 
-- name: Ensure wakeonlan task executed
+- name: Ensure wakeonlan tasks executed
   ansible.builtin.include_tasks:
     file: wakeonlan.yml
     apply:

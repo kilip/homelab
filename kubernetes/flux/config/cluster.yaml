@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 30m
   ref:
-    branch: dev
+    branch: main
   url: "https://github.com/kilip/olympus-cluster"
   ignore: |
     # exclude all

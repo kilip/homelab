@@ -3,6 +3,7 @@ default_packages:
   - bash-completion
   - lvm2
   - nano
+  - git
 packages: []
 nfs_exports: []
 zfs: []
@@ -22,3 +23,7 @@ emqx_dashboard_username: "admin"
 emqx_dashboard_password: "public"
 emqx_users: []
 emqx_static_seeds: []
+emqx_mqtt_port: 1883
+
+omf_theme: "bobthefish"
+omf_local_path: "/home/{{ ansible_user }}/.local/share/omf"

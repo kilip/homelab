@@ -2,4 +2,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 kind: Kustomization
 resources:
+  - ./config.yaml
+  - ./secrets.sops.yaml
   - ./helm-release.yaml

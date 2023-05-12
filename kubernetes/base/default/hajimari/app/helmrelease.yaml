@@ -30,9 +30,9 @@ spec:
     hajimari:
       title: Olympus Cluster Applications
       darkTheme: espresso
-      alwaysTargetBlank: true
+      alwaysTargetBlank: false
       showGreeting: true
-      showAppGroups: false
+      showAppGroups: true
       showAppStatus: true
       showBookmarkGroups: true
       showGlobalBookmarks: true

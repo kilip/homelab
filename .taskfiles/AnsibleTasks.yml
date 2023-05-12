@@ -100,8 +100,7 @@ tasks:
 
   exec:
     desc: Execute command into kubernetes hosts
-  rook:cleanup-dir:
-    desc: Cleanup rook dir
     dir: "{{.ANSIBLE_DIR}}"
     cmds:
-      - ansible kubernetes -i {{.ANSIBLE_INVENTORY}} -a 'rm -rf /var/lib/rook' --become -l kubernetes
+      - echo {{.CLI_ARGS}}
+      - ansible servers -i {{.ANSIBLE_INVENTORY}} {{.CLI_ARGS}}

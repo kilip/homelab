@@ -1,0 +1,54 @@
+---
+- name: Ensure omf required facts configured
+  ansible.builtin.set_fact:
+    omf_theme_path: "{{ omf_local_path }}/themes/{{ omf_theme }}"
+
+- name: Ensure omf stat gathered
+  ansible.builtin.stat:
+    path: "{{ omf_local_path }}"
+  register: stat_omf
+
+- name: Ensure omf theme stat gathered
+  ansible.builtin.stat:
+    path: "{{ omf_theme_path }}"
+  register: stat_omf_theme
+
+- name: Ensure fish package installed
+  ansible.builtin.apt:
+    name: fish
+    state: present
+
+- name: Ensure fish as the default shell
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    shell: "/usr/bin/fish"
+
+- name: Ensure ohmyfish installed
+  block:
+    - name: Ensure omf script downloaded
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install
+        dest: /tmp/omf-install
+        mode: 0775
+
+    - name: Ensure omf installed
+      ansible.builtin.command:
+        cmd: fish /tmp/omf-install --yes --verbose --noninteractive
+        creates: "{{ omf_local_path }}}"
+  when: not stat_omf.stat.exists
+  become_user: "{{ ansible_user }}"
+
+- name: Ensure omf theme configured
+  block:
+    - name: Ensure omf theme {{ omf_theme }} installed
+      ansible.builtin.shell:
+        cmd: "omf install {{ omf_theme }}"
+        executable: "/usr/bin/fish"
+        creates: "{{ omf_theme_path }}"
+      when: not stat_omf_theme.stat.exists
+    - name: Ensure omf theme {{ omf_theme }} applied
+      ansible.builtin.shell:
+        cmd: "omf theme {{ omf_theme }}"
+        executable: "/usr/bin/fish"
+      changed_when: false
+  become_user: "{{ ansible_user }}"

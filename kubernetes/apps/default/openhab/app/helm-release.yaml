@@ -27,70 +27,11 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    initContainers:
-      # init config
-      01-init-config:
-        image: registry.k8s.io/git-sync/git-sync:v3.6.6
-        env:
-          GIT_SYNC_REPO: https://github.com/kilip/openhab
-          GIT_SYNC_BRANCH: main
-          GIT_SYNC_ROOT: /openhab
-          GIT_SYNC_DEST: latest
-          GIT_SYNC_ONE_TIME: "true"
-          GIT_SYNC_ADD_USER: "true"
-          GIT_SYNC_USERNAME: "${GITSYNC_USERNAME}"
-          GIT_SYNC_PASSWORD: "${GITSYNC_PASSWORD}"
-        args:
-          - "-depth=1"
-          - "-v=3"
-        securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
-        volumeMounts:
-          - name: &config-pvc openhab-pvc-v1
-            mountPath: /openhab
-
+    global:
+      fullnameOverride: openhab
     image:
       repository: openhab/openhab
       tag: 3.4.3-alpine
-    env:
-      TZ: "${TIMEZONE}"
-      USER_ID: "1000"
-      GROUP_ID: "1000"
-
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-
-    service:
-      main:
-        ports:
-          http:
-            port: 8080
-
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: nginx
-        annotations:
-          hajimari.io/icon: mdi:openhab
-        hosts:
-          - host: &host "oh.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *host
-
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
-      startup:
-        enabled: false
 
     podSecurityContext:
       runAsUser: 0
@@ -98,22 +39,127 @@ spec:
       fsGroup: 0
       fsGroupChangePolicy: OnRootMismatch
 
-    volumeClaimTemplates:
-      - name: *config-pvc
+    envFrom:
+      - secretRef:
+          name: openhab
+
+    persistence:
+      ohc-script:
+        enabled: true
+        type: configMap
+        name: openhab
+        defaultMode: 0777
+        subPath:
+          - path: 40-openhabcloud.sh
+            mountPath: /etc/cont-init.d/40-openhabcloud.sh
+
+      post-sync:
+        enabled: true
+        type: configMap
+        name: openhab
+        defaultMode: 0777
+
+      openhab-config:
+        enabled: true
         mountPath: /openhab/conf
-        subPath: latest/config
+        subPath: config
         accessMode: ReadWriteMany
         size: 1Gi
-        storageClass: longhorn
-      - name: *config-pvc
+        storageClassName: longhorn
+
+      openhab-userdata:
+        enabled: true
         mountPath: /openhab/userdata
-        subPath: latest/userdata
+        subPath: userdata
         accessMode: ReadWriteMany
         size: 1Gi
-        storageClass: longhorn
+        storageClassName: longhorn
+
+    initContainers:
+      01-sync-init:
+        image: registry.k8s.io/git-sync/git-sync:v3.6.5
+        envFrom:
+          - secretRef:
+              name: openhab
+        args:
+          - "-depth=1"
+          - "--one-time=true"
+          - "-v=3"
+          - "--exechook-command=/bin/post-sync.sh"
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        volumeMounts:
+          - name: openhab-config
+            mountPath: /tmp/openhab
+          - name: post-sync
+            subPath: post-sync.sh
+            mountPath: /bin/post-sync.sh
+
+    sidecars:
+      01-sync-config:
+        image: registry.k8s.io/git-sync/git-sync:v3.6.5
+        args:
+          - "-depth=1"
+          - "--one-time=false"
+          - "--wait=30"
+          - "-v=3"
+          - "--exechook-command=/bin/post-sync.sh"
+        envFrom:
+          - secretRef:
+              name: openhab
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+        volumeMounts:
+          - name: openhab-config
+            mountPath: /tmp/openhab
+          - name: post-sync
+            subPath: post-sync.sh
+            mountPath: /bin/post-sync.sh
+
+    controller:
+      type: deployment
+      annotations:
+        reloader.stakater.com/auto: "true"
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          hajimari.io/icon: mdi:openhab
+          hajimari.io/group: Home
+        hosts:
+          - host: &host "oh.itstoni.com"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+
+    probes:
+      liveness:
+        enabled: false
+        type: HTTP
+        #enabled: false
+      readiness:
+        enabled: false
+        type: HTTP
+      startup:
+        enabled: false
+        type: HTTP
+
     resources:
       requests:
         cpu: 10m
         memory: 100Mi
       limits:
-        memory: 512Mi
+        memory: 1024Mi

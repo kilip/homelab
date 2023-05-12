@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telegraf-consumers
+  namespace: database
+data:
+  mqtt.conf: |
+    [[inputs.mqtt_consumer]]
+      servers = ["tcp://10.0.0.14:1883"]
+      username = "$MQTT_USERNAME"
+      password = "$MQTT_PASSWORD"
+      topics = [
+        "tele/+/SENSOR",
+      ]
+
+      data_format = "json_v2"
+      [[inputs.mqtt_consumer.topic_parsing]]
+        topic = "tele/+/SENSOR"
+        tags = "_/sensor_id/_"
+        measurement = "_/measurement/_"
+
+      [[inputs.mqtt_consumer.json_v2]]
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path = "ENERGY.Power"
+          type = "int"
+      [[inputs.mqtt_consumer.json_v2]]
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path = "ENERGY.Today"
+          type = "float"
+      [[inputs.mqtt_consumer.json_v2]]
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path = "ENERGY.Total"
+          type = "float"
+      [[inputs.mqtt_consumer.json_v2]]
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path = "ENERGY.Yesterday"
+          type = "float"
+      [[inputs.mqtt_consumer.json_v2]]
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path = "ENERGY.Voltage"
+          type = "integer"
+      [[inputs.mqtt_consumer.json_v2]]
+        [[inputs.mqtt_consumer.json_v2.field]]
+          path = "ENERGY.Current"
+          type = "float"

@@ -47,7 +47,7 @@ spec:
       existingClaim: influxdb-v2
 
     ingress:
-      enabled: false
+      enabled: true
       ingressClassName: nginx
       hostname: &host "influxdb.${SECRET_DOMAIN}"
       annotations:

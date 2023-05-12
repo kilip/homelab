@@ -29,23 +29,31 @@ spec:
     fullnameOverride: *app
     auth:
       admin:
-        username: "${INFLUXDB_USER}"
-        password: "${INFLUXDB_PASS}"
-        token: "${INFLUXDB_TOKEN}"
+        username: "influxdb"
+        org: primary
+        bucket: primary
+      user:
+        username: "toni"
+        org: olympus
+        bucket: olympus
+      readuser:
+        username: reader
+      writeUser:
+        username: writer
+      existingSecret: influxdb-secrets
 
     persistence:
       enabled: true
-      existingClaim: influxdb-v1
+      existingClaim: influxdb-v2
 
     ingress:
-      enabled: true
+      enabled: false
       ingressClassName: nginx
       hostname: &host "influxdb.${SECRET_DOMAIN}"
       annotations:
         hajimari.io/enable: "true"
         hajimari.io/icon: simple-icons:influxdb
         hajimari.io/info: InfluxDB
-        hajimari.io/group: tools
       hosts:
         - host: *host
           paths:
@@ -61,5 +69,15 @@ spec:
     influxdb:
       initdbScripts:
         test.sh: |
-          influx org create -n olympus
           influx bucket create -n mqtt -o olympus
+          influx bucket create -n hass -o olympus
+          influx bucket create -n openhab -o olympus
+
+    backup:
+      enabled: true
+      cron:
+        schedule: 0 16 * * * # 16:00 UTC = 24:00
+      uploadProviders:
+        aws:
+          enabled: true
+          existingSecret: influxdb-secrets

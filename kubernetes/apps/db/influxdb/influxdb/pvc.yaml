@@ -2,7 +2,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: influxdb-v1
+  name: influxdb-v2
   namespace: database
 spec:
   accessModes:

@@ -38,24 +38,30 @@ spec:
 
     env:
       INFLUX_HOST: "http://influxdb.database.svc.cluster.local:8086"
-      USER: "${INFLUXDB_USER}"
-      INFLUX_TOKEN: "${INFLUXDB_TOKEN}"
       INFLUX_BUCKET: "mqtt"
       INFLUX_ORG: "olympus"
       HOSTNAME: "telegraf"
+      INFLUX_TOKEN:
+        valueFrom:
+          secretKeyRef:
+            name: influxdb-secrets
+            key: admin-user-token
+
+    envFrom:
+      - secretRef:
+          name: telegraf-secrets
 
     persistence:
-      config:
+      telegraf:
         enabled: true
-        type: secret
+        type: configMap
         mountPath: "/etc/telegraf"
         name: telegraf-config
       consumers:
         enabled: true
-        type: secret
+        type: configMap
         mountPath: "/etc/telegraf/telegraf.d"
         name: telegraf-consumers
-
     service:
       main:
         ports:

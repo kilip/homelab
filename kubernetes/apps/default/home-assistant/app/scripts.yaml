@@ -20,5 +20,5 @@ data:
   post-sync.sh: |
     #!/bin/sh -ex
     mkdir -p /tmp/hass-config/config
-    cp -avr /tmp/hass-config/gitsync/latest/* /tmp/hass-config/config/
+    cp -rT /tmp/hass-config/gitsync/latest/* /tmp/hass-config/config/
     exit 0

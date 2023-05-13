@@ -86,10 +86,10 @@ spec:
         memory: 1024Mi
 
     volumeClaimTemplates:
-      - name: &hass-config hass-config-v2
+      - name: &hass-config hass-config-v1
         mountPath: /config
         subPath: config
-        accessMode: ReadWriteOnce
+        accessMode: ReadWriteMany
         size: 1Gi
         storageClass: longhorn
 

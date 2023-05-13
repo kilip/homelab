@@ -24,6 +24,7 @@ resource "cloudflare_tunnel_config" "echo" {
       keep_alive_timeout       = "1m0s"
       http_host_header         = "${var.cloudflare_zone}"
       origin_server_name       = "${var.cloudflare_zone}"
+      no_tls_verify            = true
     }
 
     ingress_rule {
@@ -42,6 +43,18 @@ resource "cloudflare_tunnel_config" "echo" {
       hostname = "hass.itstoni.com"
       path = "/"
       service = "http://home-assistant.default.svc.cluster.local:8123"
+    }
+
+    ingress_rule {
+      hostname = "eros.itstoni.com"
+      path = "/"
+      service = "https://10.0.0.14:9443"
+    }
+
+    ingress_rule {
+      hostname = "testing.itstoni.com"
+      path = "/"
+      service = "http://10.0.0.14:2080"
     }
 
     ingress_rule {
@@ -73,6 +86,24 @@ resource "cloudflare_record" "hass" {
   allow_overwrite = true
   zone_id = var.cloudflare_zone_id
   name    = "hass"
+  value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
+  type    = "CNAME"
+  proxied = true
+}
+
+resource "cloudflare_record" "eros" {
+  allow_overwrite = true
+  zone_id = var.cloudflare_zone_id
+  name    = "eros"
+  value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
+  type    = "CNAME"
+  proxied = true
+}
+
+resource "cloudflare_record" "testing" {
+  allow_overwrite = true
+  zone_id = var.cloudflare_zone_id
+  name    = "testing"
   value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
   type    = "CNAME"
   proxied = true

@@ -19,10 +19,10 @@ spec:
   values:
     persistence:
       defaultClass: true
-      defaultClassReplicaCount: 3
+      defaultClassReplicaCount: 2
       defaultFsType: ext4
     defaultSettings:
-      defaultReplicaCount: 3
+      defaultReplicaCount: 2
       defaultLonghornStaticStorageClass: longhorn
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
       concurrentAutomaticEngineUpgradePerNodeLimit: 1

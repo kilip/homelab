@@ -7,7 +7,7 @@ metadata:
 data:
   GIT_SYNC_REPO: https://github.com/kilip/hass-config
   GIT_SYNC_BRANCH: main
-  GIT_SYNC_ROOT: /tmp/hass-config
+  GIT_SYNC_ROOT: /tmp/hass-config/gitsync
   GIT_SYNC_DEST: latest
   GIT_SYNC_ADD_USER: "true"
   GIT_SYNC_HTTP_BIND: "0.0.0.0:8080"

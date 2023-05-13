@@ -127,7 +127,6 @@ spec:
         envFrom:
           - configMapRef:
               name: hass-sync-env
-        command: ["/do-sync.sh"]
         securityContext:
           runAsUser: 568
           runAsGroup: 568

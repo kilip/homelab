@@ -12,7 +12,7 @@ data:
     if [ ! -f "${CONFIG_FILE}" ]; then
         mkdir -p ${HASS_DIR}
         touch ${CONFIG_FILE}
-        echo "default:" > ${CONFIG_FILE}
+        echo "default_config:" > ${CONFIG_FILE}
     fi
 
 

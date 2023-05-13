@@ -119,7 +119,7 @@ spec:
           POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
 
       02-gitsync-init:
-        image: ghcr.io/kilip/git-sync-init:3.6.6
+        image: ghcr.io/kilip/git-sync-init:3.6.6@sha256:7b06eecd674e65da2ac435fcba250ced8ec9b7ab8304e5b3c73c0c10867a4510
         env:
           GIT_SYNC_ONE_TIME: "true"
         envFrom:

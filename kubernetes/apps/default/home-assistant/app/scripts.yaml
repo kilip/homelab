@@ -5,17 +5,8 @@ metadata:
   name: hass-scripts
   namespace: default
 data:
-  do-sync.sh: |
-    #!/bin/sh -ex
-    HASS_DIR="/tmp/hass-config/config"
-    CONFIG_FILE="$HASS_DIR/configuration.yaml"
-    if [ ! -f $CONFIG_FILE ]; then
-      /git-sync
-    fi
-    exit 0
-
   post-sync.sh: |
     #!/bin/sh -ex
     mkdir -p /tmp/hass-config/config
-    cp -rT /tmp/hass-config/gitsync/latest/* /tmp/hass-config/config/
+    cp -av /tmp/hass-config/gitsync/latest/. /tmp/hass-config/config/
     exit 0

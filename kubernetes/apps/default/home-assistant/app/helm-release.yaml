@@ -119,10 +119,8 @@ spec:
           POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
 
       02-gitsync-init:
-        image: registry.k8s.io/git-sync/git-sync:v3.6.6
+        image: docker pull ghcr.io/kilip/git-sync-init:3.6.6
         env:
-          GIT_SYNC_USERNAME: "${GITSYNC_USERNAME}"
-          GIT_SYNC_PASSWORD: "${GITSYNC_PASSWORD}"
           GIT_SYNC_ONE_TIME: "true"
         envFrom:
           - configMapRef:
@@ -134,9 +132,6 @@ spec:
         volumeMounts:
           - name: *hass-config
             mountPath: /tmp/hass-config
-          - name: scripts
-            subPath: do-sync.sh
-            mountPath: /do-sync.sh
           - name: scripts
             subPath: post-sync.sh
             mountPath: /post-sync.sh

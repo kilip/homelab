@@ -86,7 +86,7 @@ spec:
         memory: 1024Mi
 
     volumeClaimTemplates:
-      - name: &hass-config hass-config-v1
+      - name: &hass-config hass-config-v2
         mountPath: /config
         subPath: config
         accessMode: ReadWriteOnce

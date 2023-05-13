@@ -66,3 +66,8 @@ tasks:
     desc: Push to development
     cmds:
       - git add . -A && git commit -am "development" && git push origin dev && task fl:ks-watch
+
+  push-main:
+    desc: Push to main development
+    cmds:
+      - git add . -A && git commit -am "{{.CLI_ARGS}}" && git push origin main && task fl:ks-watch

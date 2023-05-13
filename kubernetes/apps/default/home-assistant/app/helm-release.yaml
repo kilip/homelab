@@ -151,4 +151,4 @@ spec:
             mountPath: /tmp/hass-config
           - name: scripts
             subPath: post-sync.sh
-            mountPath: /bin/post-sync.sh
+            mountPath: /post-sync.sh

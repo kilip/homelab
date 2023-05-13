@@ -7,12 +7,10 @@ metadata:
 data:
   fake-config.sh: |
     #!/bin/sh -ex
-    HASS_DIR="/tmp/hass-config/config"
-    CONFIG_FILE="$HASS_DIR/configuration.yaml"
-    if [ ! -f $CONFIG_FILE ]; then
-        mkdir -p $HASS_DIR
-        touch $CONFIG_FILE
-        echo "default_config:" > $CONFIG_FILE
+    if [ ! -f "/tmp/hass-config/config/configuration.yaml" ]; then
+        mkdir -p /tmp/hass-config/config
+        touch /tmp/hass-config/config/configuration.yaml
+        echo "default_config:" > /tmp/hass-config/config/configuration.yaml
     fi
     exit 0
 

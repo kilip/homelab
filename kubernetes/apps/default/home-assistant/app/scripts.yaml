@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hass-scripts
+  namespace: default
+data:
+  do-sync.sh: |
+    #!/bin/sh -ex
+    if [ ! -e "/tmp/hass-config/config/configuration.yaml" ]; then
+        /git-sync -v=3
+    fi
+    exit 0
+
+
+  post-sync.sh: |
+    #!/bin/sh -ex
+    mkdir -p /tmp/hass-config/config
+    cp -avr /tmp/hass-config/latest/* /tmp/hass-config/config/
+    exit 0

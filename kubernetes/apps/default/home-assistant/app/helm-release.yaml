@@ -27,38 +27,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    initContainers:
-      01-init-db:
-        image: ghcr.io/onedr0p/postgres-initdb:14.7
-        imagePullPolicy: IfNotPresent
-        envFrom:
-          - secretRef:
-              name: home-assistant-secret
-        env:
-          POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
-      02-init-config:
-        image: registry.k8s.io/git-sync/git-sync:v3.6.6
-        env:
-          GIT_SYNC_REPO: https://github.com/kilip/hass-config
-          GIT_SYNC_BRANCH: main
-          GIT_SYNC_ROOT: /tmp/hass-config/config
-          GIT_SYNC_DEST: latest
-          GIT_SYNC_ONE_TIME: "true"
-          GIT_SYNC_ADD_USER: "true"
-          GIT_SYNC_USERNAME: "${GITSYNC_USERNAME}"
-          GIT_SYNC_PASSWORD: "${GITSYNC_PASSWORD}"
-          UID: 568
-          GID: 568
-        args:
-          - "-depth=1"
-          - "-v=3"
-        securityContext:
-          runAsUser: 568
-          runAsGroup: 568
-        volumeMounts:
-          - name: &config-pvc hass-config-v2
-            mountPath: /tmp/hass-config
-
     controller:
       type: statefulset
       annotations:
@@ -71,6 +39,9 @@ spec:
       POSTGRES_HOST: postgresql.database.svc.cluster.local
       POSTGRES_DB: home_assistant
       POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
+      INFLUXDB_HOST: influxdb.database.svc.cluster.local
+      INFLUXDB_PORT: 8086
+      INFLUXDB_SOURCE: "k8s"
     envFrom:
       - secretRef:
           name: home-assistant-secret
@@ -107,17 +78,87 @@ spec:
       fsGroup: 568
       fsGroupChangePolicy: OnRootMismatch
 
-    volumeClaimTemplates:
-      - name: *config-pvc
-        mountPath: /config
-        subPath: config/latest
-        accessMode: ReadWriteMany
-        size: 1Gi
-        storageClass: longhorn
-
     resources:
       requests:
         cpu: 10m
         memory: 100Mi
       limits:
-        memory: 512Mi
+        memory: 1024Mi
+
+    volumeClaimTemplates:
+      - name: &hass-config hass-config-v1
+        mountPath: /config
+        subPath: config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: longhorn
+
+    persistence:
+      scripts:
+        enabled: true
+        type: configMap
+        name: hass-scripts
+        defaultMode: 0777
+      ga-service-account:
+        enabled: true
+        type: secret
+        name: home-assistant-secret
+        defaultMode: 256
+        subPath:
+          - path: GA_SERVICE_ACCOUNT
+            mountPath: /config/packages/integrations/ga-service-account.json
+
+    initContainers:
+      01-init-db:
+        image: ghcr.io/onedr0p/postgres-initdb:14.7
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: home-assistant-secret
+        env:
+          POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
+
+      02-gitsync-init:
+        image: registry.k8s.io/git-sync/git-sync:v3.6.6
+        env:
+          GIT_SYNC_USERNAME: "${GITSYNC_USERNAME}"
+          GIT_SYNC_PASSWORD: "${GITSYNC_PASSWORD}"
+          GIT_SYNC_ONE_TIME: "true"
+        envFrom:
+          - configMapRef:
+              name: hass-sync-env
+        command: ["/bin/do-sync.sh"]
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+        volumeMounts:
+          - name: *hass-config
+            mountPath: /tmp/hass-config
+          - name: scripts
+            subPath: post-sync.sh
+            mountPath: /bin/post-sync.sh
+          - name: scripts
+            subPath: do-sync.sh
+            mountPath: /bin/do-sync.sh
+
+    sidecars:
+      02-gitsync-watch:
+        image: registry.k8s.io/git-sync/git-sync:v3.6.6
+        env:
+          GIT_SYNC_USERNAME: "${GITSYNC_USERNAME}"
+          GIT_SYNC_PASSWORD: "${GITSYNC_PASSWORD}"
+        envFrom:
+          - configMapRef:
+              name: hass-sync-env
+        args:
+          - "-depth=1"
+          - "-v=3"
+        securityContext:
+          runAsUser: 568
+          runAsGroup: 568
+        volumeMounts:
+          - name: *hass-config
+            mountPath: /tmp/hass-config
+          - name: scripts
+            subPath: post-sync.sh
+            mountPath: /bin/post-sync.sh

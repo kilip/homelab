@@ -7,10 +7,8 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-base-echo-server
     - name: cluster-db-postgresql
-    - name: cluster-fs-longhorn
-  path: ./kubernetes/apps/default/home-assistant/app
+  path: ./kubernetes/default/apps/default/home-assistant/app
   prune: true
   sourceRef:
     kind: GitRepository

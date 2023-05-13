@@ -16,7 +16,6 @@ data:
     fi
     exit 0
 
-
   post-sync.sh: |
     #!/bin/sh -ex
     mkdir -p /tmp/hass-config/config

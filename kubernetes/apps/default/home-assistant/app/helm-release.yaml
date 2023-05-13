@@ -57,7 +57,7 @@ spec:
         annotations:
           hajimari.io/icon: mdi:home-assistant
         hosts:
-          - host: &host "hass.${SECRET_DOMAIN}"
+          - host: &host "vesta.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -86,7 +86,7 @@ spec:
         memory: 512Mi
 
     volumeClaimTemplates:
-      - name: &hass-config hass-config
+      - name: &hass-config hass-config-v1
         mountPath: /config
         subPath: config
         accessMode: ReadWriteOnce
@@ -124,6 +124,7 @@ spec:
         securityContext:
           runAsUser: 568
           runAsGroup: 568
+          fsGroup: 568
         volumeMounts:
           - name: *hass-config
             mountPath: /tmp/hass-config
@@ -146,6 +147,7 @@ spec:
         securityContext:
           runAsUser: 568
           runAsGroup: 568
+          fsGroup: 568
         volumeMounts:
           - name: *hass-config
             mountPath: /tmp/hass-config

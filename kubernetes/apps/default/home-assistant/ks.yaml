@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-db-postgresql
-  path: ./kubernetes/default/apps/default/home-assistant/app
+  path: ./kubernetes/apps/default/home-assistant/app
   prune: true
   sourceRef:
     kind: GitRepository

@@ -65,9 +65,13 @@ tasks:
   push-dev:
     desc: Push to development
     cmds:
-      - git add . -A && git commit -am "development" && git push origin dev && task fl:ks-watch
+      - git add . -A && git commit -am "{{.CLI_ARGS}}" && git push origin dev && task fl:ks-watch
 
   push-main:
     desc: Push to main development
     cmds:
       - git add . -A && git commit -am "{{.CLI_ARGS}}" && git push origin main && task fl:ks-watch
+
+  gen:secrets:
+    cmds:
+      - docker run authelia/authelia:latest authelia crypto rand --length 64 --charset alphanumeric

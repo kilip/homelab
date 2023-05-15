@@ -5,6 +5,9 @@ default_packages:
   - nano
   - git
 packages: []
+
+install_docker: false
+
 nfs_exports: []
 zfs: []
 zfs_pools: []

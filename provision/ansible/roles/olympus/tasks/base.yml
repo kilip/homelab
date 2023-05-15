@@ -23,3 +23,11 @@
     - HandleLidSwitchExternalPower=ignore
     - HandleSuspendKey=ignore
   notify: restart logind
+  when: "'laptops' in group_names"
+
+- name: Ensure docker installed
+  block:
+    - name: Ensure docker roles included
+      ansible.builtin.include_role:
+        name: geerlingguy.docker
+  when: install_docker

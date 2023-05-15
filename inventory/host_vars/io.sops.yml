@@ -1,5 +1,9 @@
 kind: ENC[AES256_GCM,data:QEnnuKp3,iv:h1xuOI2c3QUKju6IaWdJA4dXdo1nHZGfCCaD9KlCKJU=,tag:NuXHzGc/gDU6zhC/C7dUWw==,type:str]
 ansible_host: ENC[AES256_GCM,data:ci63vvuTq1jd,iv:SIpSaQvw4wB7Y4WeWDXkcp9TKMop3HzKFhFoN+oQa70=,tag:f+YYJLNzeGdqLDp+zurGMw==,type:str]
+install_docker: ENC[AES256_GCM,data:E7uaUQ==,iv:6QLnfvxaMz/17g7zB8yDh/1ODUZFLGzuNacyIZyoNKA=,tag:m5qTd6FRxEXcHQbg8nuRsQ==,type:bool]
+install_haproxy: ENC[AES256_GCM,data:1Sq14w==,iv:5pfBrmnXA6WGDNTX8p+c3EWB84W1oW0uE4re937Nm5g=,tag:/b/Wa8xHkXKIfFtxx1AkBA==,type:bool]
+install_pihole: ENC[AES256_GCM,data:D/a5RA==,iv:Ze2CWUTQ4kqgVWxtP87a7ZVwU9gipV1QQejAOXuGYxk=,tag:Ipc5U0ndBd+MCp1elCLIvQ==,type:bool]
+docker_install_compose_plugin: ENC[AES256_GCM,data:oR2evCc=,iv:R4x9vFUEhdJg2xE1vMazAF4nlMA6kH7kL+GVq9s+itc=,tag:p0PlC9i8kKwMKGgPPnWgOQ==,type:bool]
 sops:
     kms: []
     gcp_kms: []
@@ -15,8 +19,8 @@ sops:
             WDJPZnRtSjZEeUs4aCtLTnZNeTJoaFkKIY6zZPMhJH94SSd1EfQ+f9qEYyU0gwNe
             2nKEUARtpQVnG7FJrs0oNycH/TKICicu3R4MiHk6a123Zljhg+QWGQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-05-15T02:02:48Z"
-    mac: ENC[AES256_GCM,data:W0O09LEAnGlBRgjYf4lEOcwQIykZLYRJuZLSvj3iVC3cjnvRlNvJNUD+LCwERPGeBSaUBgipYNmo5GA5SosuV3PQUBCT8Npsp5lh9Kox4MSU/2FE/+JJQDk+ayKmozJYGwoV9Bog1pJFZpglECL7Gh0elifvAIJZCs97SvGcHA4=,iv:yLXawTS6unq60d+71GplnVNXLDIsb/jYZFLnbRQ2x7E=,tag:eCvwWQbtm6VJM6np22Q1Wg==,type:str]
+    lastmodified: "2023-05-15T02:13:54Z"
+    mac: ENC[AES256_GCM,data:8A6Nrz2Vv0pjrDUJt/oBhNvEavEuYHaQ/xXPkICL3HxvfQjXirYglbVzmyC1+rYImQOflMRTrY8ED8kpY+PLG8y3qBJbqONFC6/VkIBoNH/oOQHsm0bh1AGjHNKZddD+RNxVEuhY89XaZ4HbSm+/zctKg4fer6bYDDvTbTqIZ6Y=,iv:lsD86Bueuo8jJ8pow3VUsbmTExIsgdX9mIYS2WchSkI=,tag:f3nS/nNO2ajVDpDkAiiMPw==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.7.3

@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: cluster-base-echo-server
     - name: cluster-db-postgresql
-  path: ./kubernetes/apps/default/lldap/app
+  path: ./kubernetes/apps/security/lldap/app
   prune: true
   sourceRef:
     kind: GitRepository

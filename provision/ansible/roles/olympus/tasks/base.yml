@@ -1,4 +1,9 @@
 ---
+- name: Ensure haproxy installed
+  ansible.builtin.set_fact:
+    default_packages: "{{ default_packages + ['haproxy'] }}"
+  when: install_haproxy
+
 - name: Ensure required package installed
   ansible.builtin.package:
     name: "{{ default_packages + install_packages }}"

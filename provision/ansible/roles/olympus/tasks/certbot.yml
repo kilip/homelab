@@ -1,0 +1,59 @@
+---
+- name: Ensure certbot package installed
+  ansible.builtin.apt:
+    name:
+      - python3-certbot
+      - python3-certbot-dns-cloudflare
+    state: present
+
+- name: Ensure certbot directory exists
+  ansible.builtin.file:
+    path: /srv/certbot
+    mode: 0775
+    state: directory
+
+- name: Ensure cloudflare.ini configured
+  ansible.builtin.template:
+    src: cloudflare.ini
+    dest: /srv/certbot/cloudflare.ini
+    mode: 0644
+
+- name: Ensure certificate created
+  ansible.builtin.command:
+    argv:
+      - certbot
+      - certonly
+      - -m me@itstoni.com
+      - --agree-tos
+      - --dns-cloudflare
+      - --dns-cloudflare-credentials /srv/certbot/cloudflare.ini
+      - -d "*.{{ certbot_domain }}"
+    creates: '/etc/letsencrypt/live/{{ certbot_domain }}/privkey.pem'
+
+- name: Ensure certbot auto renewal cron added
+  ansible.builtin.cron:
+    name: Certbot automatic renewal
+    job: "certbot renew"
+    minute: "00"
+    hour: "00"
+    user: "root"
+
+- name: Ensure haproxy certs configured
+  block:
+    - name: Ensure cron scripts created
+      ansible.builtin.template:
+        src: haproxy-certs.sh
+        dest: "/srv/certbot/haproxy-certs.sh"
+        mode: 0775
+    - name: Ensure haproxy certs exists
+      ansible.builtin.command:
+        cmd: "/srv/certbot/haproxy-certs.sh"
+        creates: "/etc/haproxy/itstoni.com.pem"
+    - name: Ensure haproxy certs cron added
+      ansible.builtin.cron:
+        name: HAProxy Cert Auto renewal
+        job: "/srv/certbot/haproxy-certs.sh"
+        minute: "00"
+        hour: "00"
+        user: "root"
+  when: install_haproxy

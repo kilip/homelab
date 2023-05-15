@@ -1,0 +1,3 @@
+kind: Secret
+ansible_host: 10.0.0.15
+inet_device: enp2s0

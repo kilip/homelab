@@ -41,6 +41,7 @@ spec:
       namespaceSelector:
         matchNames:
           - default
+          - security
           - storage
           - database
           - monitoring

@@ -44,6 +44,7 @@
     apply:
       tags: wakeonlan
   tags: wakeonlan
+  when: "'wakeonlan' in group_names"
 
 - name: Ensure emqx cluster configured
   ansible.builtin.include_tasks:

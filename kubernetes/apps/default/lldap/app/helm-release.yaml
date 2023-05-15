@@ -53,7 +53,6 @@ spec:
       LLDAP_HTTP_URL: "https://lldap.${SECRET_DOMAIN}"
       LLDAP_LDAP_PORT: &ldap-port 389
       LLDAP_LDAP_BASE_DN: dc=home,dc=arpa
-      LLDAP_DATABASE_URL: "postgres://${POSTGRES_SUPER_USER}:${POSTGRES_SUPER_PASS}@postgres.database.svc.cluster.local/lldap"
     envFrom:
       - secretRef:
           name: lldap-secret

@@ -8,6 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-db-postgresql
+    - name: cluster-security-lldap
   path: ./kubernetes/apps/security/authelia/app
   prune: true
   sourceRef:

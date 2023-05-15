@@ -5,6 +5,12 @@ default_packages:
   - nano
   - git
 packages: []
+
+install_docker: false
+install_haproxy: false
+install_squid: false
+install_pihole: false
+
 nfs_exports: []
 zfs: []
 zfs_pools: []

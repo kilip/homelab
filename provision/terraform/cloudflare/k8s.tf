@@ -40,7 +40,7 @@ resource "cloudflare_tunnel_config" "echo" {
     }
 
     ingress_rule {
-      hostname = "hass.itstoni.com"
+      hostname = "hestia.itstoni.com"
       path = "/"
       service = "http://home-assistant.default.svc.cluster.local:8123"
     }
@@ -82,10 +82,10 @@ resource "cloudflare_record" "flux-webhook" {
   proxied = true
 }
 
-resource "cloudflare_record" "hass" {
+resource "cloudflare_record" "hestia" {
   allow_overwrite = true
   zone_id = var.cloudflare_zone_id
-  name    = "hass"
+  name    = "hestia"
   value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
   type    = "CNAME"
   proxied = true

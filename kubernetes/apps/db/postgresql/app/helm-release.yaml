@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: bitnami/postgresql
-      tag: 15.2.0
+      tag: 15.3.0
     auth:
       enablePostgresUser: true
       postgresPassword: "${POSTGRES_SUPER_PASS}"

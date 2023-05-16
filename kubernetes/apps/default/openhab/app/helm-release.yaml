@@ -31,7 +31,7 @@ spec:
       fullnameOverride: openhab
     image:
       repository: openhab/openhab
-      tag: 3.4.3-alpine
+      tag: 3.4.4-alpine
 
     podSecurityContext:
       runAsUser: 0

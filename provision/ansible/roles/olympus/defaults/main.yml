@@ -9,7 +9,7 @@ packages: []
 install_docker: false
 install_haproxy: false
 install_squid: false
-install_pihole: false
+configure_certbot: false
 
 nfs_exports: []
 zfs: []

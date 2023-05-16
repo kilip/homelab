@@ -3,6 +3,7 @@ ansible_host: ENC[AES256_GCM,data:ci63vvuTq1jd,iv:SIpSaQvw4wB7Y4WeWDXkcp9TKMop3H
 install_docker: ENC[AES256_GCM,data:E7uaUQ==,iv:6QLnfvxaMz/17g7zB8yDh/1ODUZFLGzuNacyIZyoNKA=,tag:m5qTd6FRxEXcHQbg8nuRsQ==,type:bool]
 install_haproxy: ENC[AES256_GCM,data:1Sq14w==,iv:5pfBrmnXA6WGDNTX8p+c3EWB84W1oW0uE4re937Nm5g=,tag:/b/Wa8xHkXKIfFtxx1AkBA==,type:bool]
 install_pihole: ENC[AES256_GCM,data:D/a5RA==,iv:Ze2CWUTQ4kqgVWxtP87a7ZVwU9gipV1QQejAOXuGYxk=,tag:Ipc5U0ndBd+MCp1elCLIvQ==,type:bool]
+configure_certbot: ENC[AES256_GCM,data:zBDqRA==,iv:9GgfIbT12OYwnF5juAYJH4Gc1+Rx7qWZYMGSOESRQ2A=,tag:PtGzCzjOBqB56LK8zJDhIA==,type:bool]
 docker_install_compose_plugin: ENC[AES256_GCM,data:oR2evCc=,iv:R4x9vFUEhdJg2xE1vMazAF4nlMA6kH7kL+GVq9s+itc=,tag:p0PlC9i8kKwMKGgPPnWgOQ==,type:bool]
 sops:
     kms: []
@@ -19,8 +20,8 @@ sops:
             WDJPZnRtSjZEeUs4aCtLTnZNeTJoaFkKIY6zZPMhJH94SSd1EfQ+f9qEYyU0gwNe
             2nKEUARtpQVnG7FJrs0oNycH/TKICicu3R4MiHk6a123Zljhg+QWGQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-05-15T02:13:54Z"
-    mac: ENC[AES256_GCM,data:8A6Nrz2Vv0pjrDUJt/oBhNvEavEuYHaQ/xXPkICL3HxvfQjXirYglbVzmyC1+rYImQOflMRTrY8ED8kpY+PLG8y3qBJbqONFC6/VkIBoNH/oOQHsm0bh1AGjHNKZddD+RNxVEuhY89XaZ4HbSm+/zctKg4fer6bYDDvTbTqIZ6Y=,iv:lsD86Bueuo8jJ8pow3VUsbmTExIsgdX9mIYS2WchSkI=,tag:f3nS/nNO2ajVDpDkAiiMPw==,type:str]
+    lastmodified: "2023-05-15T11:23:42Z"
+    mac: ENC[AES256_GCM,data:hOuKEZ2V8Ns2u9CGzN3MIrD6bYUxUhu815U5+YeUK7o4wXHiyDolEJMITf7FxrHscTzMzOXVP78rkZY+nP8g930/N72BWerQzc30XcJBUheCuddSNTBsKoN9pOaLhQL475ovFhLPxqMVJybnsu5Z+F5+ZZ9diUrUGpGFY+1P030=,iv:GIe81R0ZE8nPtxVwpCndcUSjV8PFqhp8Iwa5xZJGMn4=,tag:CfyXVXhWh9Mb7Zbgs0VMIA==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.7.3

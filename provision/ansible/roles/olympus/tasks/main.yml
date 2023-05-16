@@ -53,3 +53,11 @@
       tags: emqx
   tags: emqx
   when: "'emqx' in group_names"
+
+- name: Ensure certbot configured
+  ansible.builtin.include_tasks:
+    file: certbot.yml
+    apply:
+      tags: certbot
+  tags: certbot
+  when: configure_certbot

@@ -8,4 +8,4 @@ resources:
   - ./thanos/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./snmp-exporter/ks.yaml
-  - ./grafana/ks.yaml
+#  - ./grafana/ks.yaml

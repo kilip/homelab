@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-base-echo-server
-    - name: cluster-db-postgresql
+    - name: cluster-db-cloudnative-pg
   path: ./kubernetes/apps/security/lldap/app
   prune: true
   sourceRef:

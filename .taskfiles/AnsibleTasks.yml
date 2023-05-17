@@ -108,4 +108,4 @@ tasks:
     dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - echo {{.CLI_ARGS}}
-      - ansible servers -i {{.ANSIBLE_INVENTORY}} {{.CLI_ARGS}}
+      - ansible kubernetes -i {{.ANSIBLE_INVENTORY}} -a '{{.CLI_ARGS}}'

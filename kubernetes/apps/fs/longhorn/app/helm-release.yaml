@@ -27,7 +27,9 @@ spec:
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
       concurrentAutomaticEngineUpgradePerNodeLimit: 1
       orphanAutoDeletion: true
-      backupTarget: "${CONFIG_NFS_BACKUP}"
+      #backupTarget: "${CONFIG_NFS_BACKUP}"
+      backupTarget: s3://longhorn@us-east-1/
+      backupTargetCredentialSecret: longhorn-system-secrets
     ingress:
       enabled: true
       ingressClassName: nginx

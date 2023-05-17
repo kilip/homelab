@@ -40,24 +40,6 @@ resource "cloudflare_tunnel_config" "echo" {
     }
 
     ingress_rule {
-      hostname = "hestia.itstoni.com"
-      path = "/"
-      service = "http://home-assistant.default.svc.cluster.local:8123"
-    }
-
-    ingress_rule {
-      hostname = "eros.itstoni.com"
-      path = "/"
-      service = "https://10.0.0.14:9443"
-    }
-
-    ingress_rule {
-      hostname = "testing.itstoni.com"
-      path = "/"
-      service = "http://10.0.0.14:2080"
-    }
-
-    ingress_rule {
       service = "http_status:404"
     }
   }
@@ -77,33 +59,6 @@ resource "cloudflare_record" "flux-webhook" {
   allow_overwrite = true
   zone_id = var.cloudflare_zone_id
   name    = "fw"
-  value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
-  type    = "CNAME"
-  proxied = true
-}
-
-resource "cloudflare_record" "hestia" {
-  allow_overwrite = true
-  zone_id = var.cloudflare_zone_id
-  name    = "hestia"
-  value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
-  type    = "CNAME"
-  proxied = true
-}
-
-resource "cloudflare_record" "eros" {
-  allow_overwrite = true
-  zone_id = var.cloudflare_zone_id
-  name    = "eros"
-  value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
-  type    = "CNAME"
-  proxied = true
-}
-
-resource "cloudflare_record" "testing" {
-  allow_overwrite = true
-  zone_id = var.cloudflare_zone_id
-  name    = "testing"
   value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
   type    = "CNAME"
   proxied = true

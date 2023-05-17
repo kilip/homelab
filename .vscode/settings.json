@@ -16,18 +16,17 @@
       "networking": "connection",
       "rook-ceph": "dump",
   },
-  "files.associations": {
-    "*.yaml": "home-assistant"
-  },
   "yaml.schemaStore.enable": true,
+  "files.associations": {
+    "*.json5": "jsonc",
+    "**/ansible/**/*.yml": "ansible",
+    "**/ansible/**/*.sops.yml": "yaml",
+    "**/ansible/**/inventory/**/*.yml": "yaml",
+    "**/kubernetes/**/*.sops.toml": "plaintext"
+  },
   "yaml.schemas": {
-    "ansible": [
-      "provision/ansible/**/*.yml"
-    ],
-    "kubernetes": "kubernetes/**/*.yaml",
-    "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.4-standalone-strict/all.json": "file:///home/toni/project/olympus/dev/kubernetes/base/networking/cloudflared/app/kustomization.yaml",
-    "https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json": "file:///home/toni/project/olympus/dev/kubernetes/base/db/pgadmin/app/helm-release.yaml",
-    "schemaservice://combinedschema/ansible": "file:///home/toni/project/olympus/cluster/provision/ansible/roles/homelab/tasks/proxy.yml"
+    "ansible": "ansible/*.yml",
+    "Kubernetes": "kubernetes/*.yaml"
   },
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,

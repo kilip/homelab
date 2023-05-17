@@ -39,6 +39,7 @@ spec:
       INFLUXDB_HOST: influxdb.database.svc.cluster.local
       INFLUXDB_PORT: 8086
       INFLUXDB_SOURCE: "k8s"
+      HASS_USING_GIT_CONFIG: "true"
     envFrom:
       - secretRef:
           name: home-assistant-secret

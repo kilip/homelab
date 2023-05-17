@@ -25,9 +25,8 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-db-cloudnative-pg
-    - name: cluster-fs-longhorn
     - name: cluster-base-local-path-provisioner
-  path: ./kubernetes/apps/default/cloudnative-pg/cluster
+  path: ./kubernetes/apps/db/cloudnative-pg/cluster
   prune: true
   sourceRef:
     kind: GitRepository

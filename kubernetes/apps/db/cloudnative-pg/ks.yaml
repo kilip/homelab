@@ -7,6 +7,10 @@ metadata:
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/db/cloudnative-pg/app
+  dependsOn:
+    - name: cluster-base-local-path-provisioner
+    - name: cluster-fs-longhorn
+    - name: cluster-fs-minio
   prune: true
   sourceRef:
     kind: GitRepository
@@ -25,7 +29,6 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-db-cloudnative-pg
-    - name: cluster-base-local-path-provisioner
   path: ./kubernetes/apps/db/cloudnative-pg/cluster
   prune: true
   sourceRef:

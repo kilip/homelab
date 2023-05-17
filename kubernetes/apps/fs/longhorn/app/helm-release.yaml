@@ -29,7 +29,7 @@ spec:
       orphanAutoDeletion: true
       #backupTarget: "${CONFIG_NFS_BACKUP}"
       backupTarget: s3://longhorn@us-east-1/
-      backupTargetCredentialSecret: longhorn-system-secrets
+      backupTargetCredentialSecret: longhorn-secrets
     ingress:
       enabled: true
       ingressClassName: nginx

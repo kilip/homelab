@@ -4,11 +4,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./namespace.yaml
-  - ./kubernetes-dashboard/ks.yaml
-  - ./thanos/ks.yaml
-  - ./kube-prometheus-stack/ks.yaml
-  - ./snmp-exporter/ks.yaml
-  - ./grafana/ks.yaml
+#  - ./kubernetes-dashboard/ks.yaml
+#  - ./thanos/ks.yaml
+#  - ./kube-prometheus-stack/ks.yaml
+#  - ./snmp-exporter/ks.yaml
+#  - ./grafana/ks.yaml
 #  - ./loki/ks.yaml
 #  - ./snmp-exporter/ks.yaml
 #  - ./thanos/ks.yaml

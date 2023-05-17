@@ -80,4 +80,6 @@ spec:
       uploadProviders:
         aws:
           enabled: true
-          existingSecret: influxdb-secrets
+          accessKeyId: "${AWS_ACCESS_KEY_ID}"
+          secretAccessKey: "${AWS_SECRET_ACCESS_KEY}"
+          bucketName: "s3://s3.itstoni.com/influxdb"

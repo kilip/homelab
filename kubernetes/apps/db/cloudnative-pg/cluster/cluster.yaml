@@ -5,8 +5,6 @@ kind: Cluster
 metadata:
   name: postgres
   namespace: database
-  annotations:
-    kyverno.io/ignore: "true"
 spec:
   instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:14.8-2
@@ -15,8 +13,8 @@ spec:
       kube-image-keeper.enix.io/image-caching-policy: ignore
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 20Gi
-    storageClass: local-path
+    size: 1Gi
+    storageClass: longhorn
   superuserSecret:
     name: cloudnative-pg-secret
   bootstrap:

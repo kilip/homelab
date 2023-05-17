@@ -1,8 +1,5 @@
 {
   "ansible.validation.lint.arguments": "-c .ansible-lint",
-  "files.associations": {
-    "*.yaml": "home-assistant"
-  },
   "material-icon-theme.folders.associations": {
       ".taskfiles": "utils",
       "bootstrap": "import",
@@ -19,6 +16,13 @@
       "networking": "connection",
       "rook-ceph": "dump",
   },
+  "files.associations": {
+    "*.json5": "jsonc",
+    "**/ansible/**/*.yml": "ansible",
+    "**/ansible/**/*.sops.yml": "yaml",
+    "**/ansible/**/inventory/**/*.yml": "yaml",
+    "**/kubernetes/**/*.sops.toml": "plaintext"
+  },
   "yaml.schemaStore.enable": true,
   "yaml.schemas": {
     "ansible": [
@@ -29,17 +33,10 @@
     "https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json": "file:///home/toni/project/olympus/dev/kubernetes/base/db/pgadmin/app/helm-release.yaml",
     "schemaservice://combinedschema/ansible": "file:///home/toni/project/olympus/cluster/provision/ansible/roles/homelab/tasks/proxy.yml"
   },
-  "editor.fontLigatures": true,
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,
   "editor.guides.bracketPairsHorizontal": true,
   "editor.guides.highlightActiveBracketPair": true,
   "editor.hover.delay": 1500,
-  "editor.stickyScroll.enabled": false,
-  "editor.rulers": [
-    100
-  ],
-  "explorer.autoReveal": false,
   "files.trimTrailingWhitespace": true,
-  "vue.codeActions.enabled": false,
 }

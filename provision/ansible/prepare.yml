@@ -3,6 +3,6 @@
   gather_facts: true
   become: true
   roles:
-    - olympus
+    - homelab
 
 - ansible.builtin.import_playbook: kilip.k3s_cluster.prepare

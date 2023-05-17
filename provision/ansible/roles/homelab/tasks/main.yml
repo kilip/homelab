@@ -61,3 +61,16 @@
       tags: certbot
   tags: certbot
   when: configure_certbot
+
+- name: Ensure prometheus installed
+  ansible.builtin.include_role:
+    name: prometheus.prometheus.node_exporter
+    apply:
+      tags: prometheus
+  tags: prometheus
+  when: "'prometheus' in group_names"
+  vars:
+    # renovate: datasource=github-releases depName=prometheus/node_exporter
+    node_exporter_version: 1.5.0
+    node_exporter_system_user: 'prometheus'
+    node_exporter_system_group: 'prometheus'

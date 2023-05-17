@@ -73,7 +73,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-path
+              storageClassName: longhorn
               resources:
                 requests:
                   storage: 1Gi
@@ -191,7 +191,7 @@ spec:
                 requests:
                   storage: 5Gi
         additionalScrapeConfigs:
-          - job_name: 'node_exporter'
+          - job_name: 'node-exporter'
             static_configs:
               - targets:
                   - 10.0.0.5:9100

@@ -7,8 +7,9 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-db-postgresql
+    - name: cluster-db-cloudnative-pg
     - name: cluster-security-lldap
+    - name: cluster-security-glauth
   path: ./kubernetes/apps/security/authelia/app
   prune: true
   sourceRef:

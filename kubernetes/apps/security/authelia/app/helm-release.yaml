@@ -31,11 +31,15 @@ spec:
       01-init-db:
         image: ghcr.io/onedr0p/postgres-init:14.8
         imagePullPolicy: IfNotPresent
+        env:
+          INIT_POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
+          INIT_POSTGRES_HOST: postgres-rw.database.svc.cluster.local
+          INIT_POSTGRES_DBNAME: authelia
         envFrom:
           - secretRef:
               name: authelia-secret
     controller:
-      replicas: 2
+      replicas: 3
       strategy: RollingUpdate
       annotations:
         reloader.stakater.com/auto: "true"

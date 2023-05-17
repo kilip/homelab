@@ -33,13 +33,13 @@ tasks:
     cmds:
       - ansible-playbook -i {{.ANSIBLE_INVENTORY}}  {{.ANSIBLE_PLAYBOOK_DIR}}/homelab.yml {{.CLI_ARGS}} || exit 0
 
-  prepare:
+  cluster:prepare:
     desc: Prepare all the k8s nodes for running k3s
     dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - ansible-playbook -i {{.ANSIBLE_INVENTORY}}  {{.ANSIBLE_PLAYBOOK_DIR}}/prepare.yml {{.CLI_ARGS}} || exit 0
 
-  install:
+  cluster:install:
     desc: Install Kubernetes on the nodes
     dir: "{{.ANSIBLE_DIR}}"
     cmds:
@@ -108,4 +108,4 @@ tasks:
     dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - echo {{.CLI_ARGS}}
-      - ansible servers -i {{.ANSIBLE_INVENTORY}} {{.CLI_ARGS}}
+      - ansible kubernetes -i {{.ANSIBLE_INVENTORY}} -a '{{.CLI_ARGS}}'

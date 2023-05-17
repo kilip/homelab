@@ -2,7 +2,9 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: database
 resources:
-  - pvc.yaml
-  - secret.sops.yaml
-  - helm-release.yaml
+  - ./cluster.yaml
+  - ./backup.yaml
+#  - ./prometheusrule.yaml
+  - ./service.yaml

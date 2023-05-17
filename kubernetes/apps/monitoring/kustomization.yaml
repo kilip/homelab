@@ -9,6 +9,3 @@ resources:
   - ./kube-prometheus-stack/ks.yaml
   - ./snmp-exporter/ks.yaml
   - ./grafana/ks.yaml
-#  - ./loki/ks.yaml
-#  - ./snmp-exporter/ks.yaml
-#  - ./thanos/ks.yaml

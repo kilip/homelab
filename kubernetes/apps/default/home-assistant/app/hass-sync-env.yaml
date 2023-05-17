@@ -15,6 +15,5 @@ data:
   GIT_SYNC_EXECHOOK_COMMAND: "/post-sync.sh"
   GIT_SYNC_WAIT: "5"
   GIT_SYNC_MAX_SYNC_FAILURES: "-1"
-
   UID: "568"
   GID: "568"

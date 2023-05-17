@@ -53,9 +53,9 @@ spec:
         check_for_updates: false
         check_for_plugin_updates: false
       auth:
-        oauth_auto_login: true
+        oauth_auto_login: false
       auth.generic_oauth:
-        enabled: true
+        enabled: false
         name: Authelia
         icon: signin
         scopes: openid profile email groups

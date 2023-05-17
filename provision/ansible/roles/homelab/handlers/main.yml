@@ -25,3 +25,9 @@
     name: emqx
     state: restarted
   when: not ansible_check_mode
+
+- name: restart squid
+  ansible.builtin.service:
+    name: squid
+    state: restarted
+  when: not ansible_check_mode

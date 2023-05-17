@@ -1,0 +1,21 @@
+---
+- name: Ensure squid installed
+  ansible.builtin.apt:
+    name: squid
+    state: present
+
+- name: Ensure squid cache dir exists
+  ansible.builtin.file:
+    path: /srv/cache
+    state: directory
+    owner: proxy
+    group: proxy
+    mode: 0775
+
+- name: Ensure squid configured
+  ansible.builtin.template:
+    src: squid.conf
+    dest: /etc/squid/squid.conf
+    mode: 0644
+    backup: true
+  notify: restart squid

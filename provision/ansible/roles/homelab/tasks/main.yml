@@ -74,3 +74,11 @@
     node_exporter_version: 1.5.0
     node_exporter_system_user: 'prometheus'
     node_exporter_system_group: 'prometheus'
+
+- name: Ensure squid installed and configured
+  ansible.builtin.include_tasks:
+    file: proxy.yml
+    apply:
+      tags: proxy
+  tags: proxy
+  when: install_squid

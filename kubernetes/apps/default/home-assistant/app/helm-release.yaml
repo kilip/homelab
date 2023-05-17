@@ -32,13 +32,10 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     image:
-      repository: ghcr.io/onedr0p/home-assistant
+      repository: ghcr.io/kilip/home-assistant
       tag: 2023.5.3
     env:
       TZ: "${TIMEZONE}"
-      POSTGRES_HOST: postgresql.database.svc.cluster.local
-      POSTGRES_DB: home_assistant
-      POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
       INFLUXDB_HOST: influxdb.database.svc.cluster.local
       INFLUXDB_PORT: 8086
       INFLUXDB_SOURCE: "k8s"
@@ -57,7 +54,7 @@ spec:
         annotations:
           hajimari.io/icon: mdi:home-assistant
         hosts:
-          - host: &host "hestia.${SECRET_DOMAIN}"
+          - host: &host "hass.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -110,31 +107,15 @@ spec:
 
     initContainers:
       01-init-db:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
+        image: ghcr.io/onedr0p/postgres-init:14.8
         imagePullPolicy: IfNotPresent
+        env:
+          INIT_POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
+          INIT_POSTGRES_DBNAME: hass
+          INIT_POSTGRES_HOST: postgres-rw.database.svc.cluster.local
         envFrom:
           - secretRef:
               name: home-assistant-secret
-        env:
-          POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
-
-      02-gitsync-init:
-        image: ghcr.io/kilip/git-sync-init:3.6.6@sha256:7b06eecd674e65da2ac435fcba250ced8ec9b7ab8304e5b3c73c0c10867a4510
-        env:
-          GIT_SYNC_ONE_TIME: "true"
-        envFrom:
-          - configMapRef:
-              name: hass-sync-env
-        securityContext:
-          runAsUser: 568
-          runAsGroup: 568
-          fsGroup: 568
-        volumeMounts:
-          - name: *hass-config
-            mountPath: /tmp/hass-config
-          - name: scripts
-            subPath: post-sync.sh
-            mountPath: /post-sync.sh
 
     sidecars:
       02-gitsync-watch:

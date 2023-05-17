@@ -104,7 +104,7 @@ spec:
         defaultMode: 256
         subPath:
           - path: GA_SERVICE_ACCOUNT
-            mountPath: /config/packages/integrations/ga-service-account.json
+            mountPath: /config/ga-service-account.json
 
     initContainers:
       01-init-db:

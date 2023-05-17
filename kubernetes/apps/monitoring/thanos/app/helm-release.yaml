@@ -39,7 +39,7 @@ spec:
         endpoint: minio.filesystem.svc.cluster.local:9000
     queryFrontend:
       enabled: true
-      replicaCount: 2
+      replicaCount: 3
       ingress:
         enabled: true
         ingressClassName: nginx

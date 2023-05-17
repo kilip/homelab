@@ -29,8 +29,12 @@ spec:
   values:
     extraInitContainers:
       - name: init-db
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
+        image: ghcr.io/onedr0p/postgres-init:14.8
         imagePullPolicy: IfNotPresent
+        env:
+          INIT_POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
+          INIT_POSTGRES_DBNAME: grafana
+          INIT_POSTGRES_HOST: postgres-rw.database.svc.cluster.local
         envFrom:
           - secretRef:
               name: grafana-secrets
@@ -89,23 +93,12 @@ spec:
     datasources:
       datasources.yaml:
         apiVersion: 1
-        deleteDatasources:
-        #  - name: Loki
-        #    orgId: 1
-        #  - name: Alertmanager
-        #    orgId: 1
         datasources:
           - name: Prometheus
             type: prometheus
             access: proxy
             url: http://thanos-query-frontend.monitoring.svc.cluster.local:9090
             isDefault: true
-          # - name: Loki
-          #   type: loki
-          #   access: proxy
-          #   url: http://loki-gateway.monitoring.svc.cluster.local
-          #   jsonData:
-          #     maxLines: 250
           - name: Alertmanager
             type: alertmanager
             access: proxy
@@ -114,26 +107,6 @@ spec:
               implementation: prometheus
     dashboards:
       default:
-        # Ref: https://grafana.com/grafana/dashboards/13679-mikrotik-mktxp-exporter/
-        mikrotik:
-          gnetId: 13679
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/11312-unifi-poller-usw-insights-prometheus/
-        # unifi-usw:
-        #   gnetId: 11312
-        #   revision: 9
-        #   datasource: Prometheus
-        #  Ref: https://grafana.com/grafana/dashboards/7845-zfs/
-        zfs:
-          gnetId: 7845
-          revision: 4
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/13502-minio-dashboard/
-        # minio:
-        #   gnetId: 13502
-        #   revision: 21
-        #   datasource: Prometheus
-        #  Ref: https://grafana.com/grafana/dashboards/1860-node-exporter-full/
         node-exporter-full:
           gnetId: 1860
           revision: 30
@@ -142,33 +115,6 @@ spec:
         redis:
           gnetId: 763
           revision: 4
-          datasource: Prometheus
-        flux-cluster:
-          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
-          datasource: Prometheus
-        flux-control-plane:
-          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/control-plane.json
-          datasource: Prometheus
-        flux-logs:
-          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/logs.json
-          datasource: Prometheus
-        kubernetes-api-server:
-          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
-          datasource: Prometheus
-        kubernetes-coredns:
-          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
-          datasource: Prometheus
-        kubernetes-global:
-          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
-          datasource: Prometheus
-        kubernetes-namespaces:
-          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
-          datasource: Prometheus
-        kubernetes-nodes:
-          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
-          datasource: Prometheus
-        kubernetes-pods:
-          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
           datasource: Prometheus
     sidecar:
       dashboards:
@@ -192,7 +138,7 @@ spec:
       annotations:
         hajimari.io/icon: simple-icons:grafana
       hosts:
-        - &host stats.itstoni.com
+        - &host grafana.itstoni.com
       tls:
         - hosts:
             - *host

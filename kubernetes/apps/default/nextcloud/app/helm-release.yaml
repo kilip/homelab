@@ -30,13 +30,17 @@ spec:
       flavor: fpm-alpine
     nginx:
       enabled: true
+      securityContext:
+        runAsUser: 33
+        runAsGroup: 33
+        fsGroups: 33
     nextcloud:
       datadir: /var/www/data
-      #extraEnv:
-      #  - name: REDIS_HOST
-      #    value: redis.common.svc.cluster.local
-      #  - name: REDIS_HOST_PORT
-      #    value: "6379"
+      # extraEnv:
+      #   - name: REDIS_HOST
+      #     value: redis.common.svc.cluster.local
+      #   - name: REDIS_HOST_PORT
+      #     value: "6379"
       existingSecret:
         enabled: true
         secretName: nextcloud
@@ -55,6 +59,7 @@ spec:
       securityContext:
         runAsUser: 33
         runAsGroup: 33
+        fsGroups: 33
         runAsNonRoot: true
     internalDatabase:
       enabled: false

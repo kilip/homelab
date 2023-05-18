@@ -50,7 +50,7 @@ spec:
           secure: ssl
           port: 465
           authtype: LOGIN
-          name: ${EMAIL_ADDRESS}
+          username: ${EMAIL_ADDRESS}
           password: ${EMAIL_PASSWORD}
     internalDatabase:
       enabled: false

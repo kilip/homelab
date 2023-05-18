@@ -8,13 +8,13 @@ spec:
   values:
     nextcloud:
       extraInitContainers:
-        - 01-init-db:
-            image: ghcr.io/onedr0p/postgres-init:14.8
-            imagePullPolicy: IfNotPresent
-            env:
-              INIT_POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
-              INIT_POSTGRES_DBNAME: hass
-              INIT_POSTGRES_HOST: postgres-rw.database.svc.cluster.local
-            envFrom:
-              - secretRef:
-                  name: nextcloud
+        - name: 01-init-db
+          image: ghcr.io/onedr0p/postgres-init:14.8
+          imagePullPolicy: IfNotPresent
+          env:
+            INIT_POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
+            INIT_POSTGRES_DBNAME: hass
+            INIT_POSTGRES_HOST: postgres-rw.database.svc.cluster.local
+          envFrom:
+            - secretRef:
+                name: nextcloud

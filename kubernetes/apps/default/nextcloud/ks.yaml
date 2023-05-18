@@ -8,6 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-db-cloudnative-pg
+    - name: cluster-fs-longhorn
   path: ./kubernetes/apps/default/nextcloud/app
   prune: true
   sourceRef:

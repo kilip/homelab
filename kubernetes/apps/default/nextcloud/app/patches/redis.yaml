@@ -1,0 +1,26 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nextcloud
+  namespace: default
+spec:
+  values:
+    nextcloud:
+      defaultConfigs:
+        redis.config.php: false
+      configs:
+        redis.config.php: |-
+          <?php
+          $CONFIG = [
+            'memcache.locking' => '\OC\Memcache\Redis',
+            'memcache.distributed' => '\OC\Memcache\Redis',
+            'memcache.local' =>'\OC\Memcache\Redis' ,
+            'redis.cluster' => [
+              'seeds' => [
+                  'redis-node-0.redis-headless.common.svc.cluster.local:6379',
+                  'redis-node-1.redis-headless.common.svc.cluster.local:6379',
+                  'redis-node-2.redis-headless.common.svc.cluster.local:6379',
+              ],
+            ]
+          ];

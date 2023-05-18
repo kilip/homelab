@@ -30,10 +30,6 @@ spec:
       flavor: fpm-alpine
     nginx:
       enabled: true
-      securityContext:
-        runAsUser: 33
-        runAsGroup: 33
-        fsGroups: 33
     nextcloud:
       datadir: /var/www/data
       # extraEnv:
@@ -59,8 +55,7 @@ spec:
       securityContext:
         runAsUser: 33
         runAsGroup: 33
-        fsGroups: 33
-        runAsNonRoot: true
+        fsGroup: 33
     internalDatabase:
       enabled: false
     externalDatabase:

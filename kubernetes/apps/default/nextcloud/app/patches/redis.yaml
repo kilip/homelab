@@ -22,11 +22,5 @@ spec:
                   'redis-node-1.redis-headless.common.svc.cluster.local:26379',
                   'redis-node-2.redis-headless.common.svc.cluster.local:26379',
               ],
-              'failover_mode'   => \RedisCluster::FAILOVER_ERROR,
-              'timeout'         => 0.0,
-              'read_timeout'    => 0.0,
-              'user'            => '',
-              'password'        => '',
-              'dbindex'         => 0,
             ]
           ];

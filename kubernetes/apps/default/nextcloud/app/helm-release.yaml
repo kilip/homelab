@@ -52,6 +52,10 @@ spec:
           authtype: LOGIN
           username: ${EMAIL_ADDRESS}
           password: ${EMAIL_PASSWORD}
+      securityContext:
+        runAsUser: 33
+        runAsGroup: 33
+        runAsNonRoot: true
     internalDatabase:
       enabled: false
     externalDatabase:
@@ -63,20 +67,34 @@ spec:
       enabled: true
       className: "nginx"
       annotations:
+        hajimari.io/icon: simple-icons:nextcloud
         nginx.ingress.kubernetes.io/proxy-body-size: "10G"
         nginx.ingress.kubernetes.io/proxy-buffering: "off"
         nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
-        nginx.ingress.kubernetes.io/server-snippet: |
+        nginx.ingress.kubernetes.io/server-snippet: |-
           server_tokens off;
-          location ^~ /.well-known {
-            location = /.well-known/carddav { return 301 /remote.php/dav/; }
-            location = /.well-known/caldav { return 301 /remote.php/dav/; }
-            location = /.well-known/acme-challenge { try_files $uri $uri/ =404; }
-            location = /.well-known/pki-validation { try_files $uri $uri/ =404; }
-            return 301 /index.php$request_uri;
+          proxy_hide_header X-Powered-By;
+
+          rewrite ^/.well-known/webfinger /public.php?service=webfinger last;
+          rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
+          rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json;
+          location = /.well-known/carddav {
+            return 301 $scheme://$host/remote.php/dav;
           }
-          location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)(?:$|/)  { return 404; }
-          location ~ ^/(?:\.|autotest|occ|issue|indie|db_|console)                { return 404; }
+          location = /.well-known/caldav {
+            return 301 $scheme://$host/remote.php/dav;
+          }
+          location = /robots.txt {
+            allow all;
+            log_not_found off;
+            access_log off;
+          }
+          location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
+            deny all;
+          }
+          location ~ ^/(?:autotest|occ|issue|indie|db_|console) {
+            deny all;
+          }
       path: /
       pathType: Prefix
       tls:
@@ -89,6 +107,15 @@ spec:
         enabled: true
         existingClaim: nextcloud-data
         accessMode: ReadWriteMany
+
+    startupProbe:
+      enabled: true
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 30
+      successThreshold: 1
+
   valuesFrom:
     - targetPath: externalDatabase.user
       kind: Secret

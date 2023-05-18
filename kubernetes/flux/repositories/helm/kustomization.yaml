@@ -21,6 +21,7 @@ resources:
   - ./metrics-server.yaml
   - ./nextcloud.yaml
   - ./nfs-provisioner.yaml
+  - ./nvidia-device-plugin.yaml
   - ./olympus.yaml
   - ./prometheus-community.yaml
   - ./rook-ceph.yaml

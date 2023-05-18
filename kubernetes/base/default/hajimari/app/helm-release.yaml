@@ -49,6 +49,7 @@ spec:
           - rook-ceph
           - home
           - filesystem
+          - common
     ingress:
       main:
         enabled: true

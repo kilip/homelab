@@ -18,9 +18,9 @@ spec:
             'memcache.local' =>'\OC\Memcache\Redis' ,
             'redis.cluster' => [
               'seeds' => [
-                  'redis-node-0.redis-headless.common.svc.cluster.local:26379',
-                  'redis-node-1.redis-headless.common.svc.cluster.local:26379',
-                  'redis-node-2.redis-headless.common.svc.cluster.local:26379',
+                  'redis-node-0.redis-headless.common.svc.cluster.local:6379',
+                  'redis-node-1.redis-headless.common.svc.cluster.local:6379',
+                  'redis-node-2.redis-headless.common.svc.cluster.local:6379',
               ],
             ]
           ];

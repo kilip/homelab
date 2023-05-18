@@ -8,4 +8,4 @@ resources:
   - helm-release.yaml
 patchesStrategicMerge:
   - patches/postgres.yaml
-  - patches/redis.yaml
+#  - patches/redis.yaml

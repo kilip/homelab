@@ -1,0 +1,21 @@
+---
+- name: Ensure distribution facts configured
+  ansible.builtin.set_fact:
+    nvidia_dist: "{{ ansible_distribution|lower }}{{ ansible_distribution_version }}"
+
+- name: Ensure nvidia apt-key imported
+  ansible.builtin.apt_key:
+    url: https://nvidia.github.io/libnvidia-container/gpgkey
+    state: present
+
+- name: Ensure nvidia repo exists
+  ansible.builtin.apt_repository:
+    repo: deb https://nvidia.github.io/libnvidia-container/stable/ubuntu18.04/$(ARCH) /
+    state: present
+    filename: libnvidia-container.list
+    update_cache: true
+
+- name: Ensure nvidia driver installed
+  ansible.builtin.apt:
+    name: "{{ nvidia_packages + ['nvidia-container-toolkit-base'] }}"
+  notify: reboot

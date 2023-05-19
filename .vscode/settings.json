@@ -34,4 +34,5 @@
   "editor.guides.highlightActiveBracketPair": true,
   "editor.hover.delay": 1500,
   "files.trimTrailingWhitespace": true,
+  "ansible.python.interpreterPath": "/home/toni/.pyenv/versions/3.10.4/bin/python",
 }

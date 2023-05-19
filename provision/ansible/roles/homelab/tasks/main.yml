@@ -82,3 +82,11 @@
       tags: proxy
   tags: proxy
   when: install_squid
+
+- name: Ensure nvidia gpu installed and configured
+  ansible.builtin.include_tasks:
+    file: nvidia.yml
+    apply:
+      tags: nvidia
+  tags: nvidia
+  when: install_nvidia

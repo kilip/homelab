@@ -24,3 +24,6 @@ spec:
     runtimeClassName: nvidia
     nodeSelector:
       feature.node.kubernetes.io/custom-nvidia-gpu: "true"
+    gfd:
+      enabled: true
+      nameOverride: gpu-feature-discovery

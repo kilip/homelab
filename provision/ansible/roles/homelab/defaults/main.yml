@@ -33,3 +33,6 @@ emqx_mqtt_port: 1883
 
 omf_theme: "bobthefish"
 omf_local_path: "/home/{{ ansible_user }}/.local/share/omf"
+
+install_nvidia: false
+nvidia_packages: []

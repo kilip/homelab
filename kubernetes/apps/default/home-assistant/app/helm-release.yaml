@@ -84,7 +84,7 @@ spec:
         memory: 512Mi
 
     volumeClaimTemplates:
-      - name: &hass-config hass-config-v1
+      - name: config
         mountPath: /config
         subPath: config
         accessMode: ReadWriteOnce
@@ -92,11 +92,6 @@ spec:
         storageClass: longhorn
 
     persistence:
-      scripts:
-        enabled: true
-        type: configMap
-        name: hass-scripts
-        defaultMode: 0777
       ga-service-account:
         enabled: true
         type: secret
@@ -117,26 +112,3 @@ spec:
         envFrom:
           - secretRef:
               name: home-assistant-secret
-
-    sidecars:
-      02-gitsync-watch:
-        image: registry.k8s.io/git-sync/git-sync:v3.6.6
-        env:
-          GIT_SYNC_USERNAME: "${GITSYNC_USERNAME}"
-          GIT_SYNC_PASSWORD: "${GITSYNC_PASSWORD}"
-        envFrom:
-          - configMapRef:
-              name: hass-sync-env
-        args:
-          - "-depth=1"
-          - "-v=3"
-        securityContext:
-          runAsUser: 568
-          runAsGroup: 568
-          fsGroup: 568
-        volumeMounts:
-          - name: *hass-config
-            mountPath: /tmp/hass-config
-          - name: scripts
-            subPath: post-sync.sh
-            mountPath: /post-sync.sh

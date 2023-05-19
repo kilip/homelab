@@ -40,5 +40,5 @@ spec:
             - hosts:
                 - *host
         volumeMounts:
-          - name: hass-config-v1
+          - name: config
             mountPath: /config

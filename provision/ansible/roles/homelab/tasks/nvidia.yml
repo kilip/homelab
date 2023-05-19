@@ -17,5 +17,12 @@
 
 - name: Ensure nvidia driver installed
   ansible.builtin.apt:
-    name: "{{ nvidia_packages + ['nvidia-container-toolkit-base'] }}"
+    name: "{{ nvidia_packages }}"
   notify: reboot
+
+- name: Ensure nvidia container toolkit package installed
+  ansible.builtin.apt:
+    name:
+      - nvidia-container-toolkit
+      - nvidia-container-runtime
+    state: present

@@ -97,6 +97,10 @@ spec:
       transcode:
         enabled: true
         type: emptyDir
+
+    nodeSelector:
+      feature.node.kubernetes.io/custom-nvidia-gpu: "true"
+
     # nodeSelector:
     #   node-role.kubernetes.io/worker: "true"
     #   intel.feature.node.kubernetes.io/gpu: "true"

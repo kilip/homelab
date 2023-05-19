@@ -13,6 +13,13 @@
       tags: base
   tags: base
 
+- name: Ensure homelab user configured
+  ansible.builtin.include_tasks:
+    file: homelab-user.yml
+    apply:
+      tags: homelab-user
+  tags: homelab-user
+
 - name: Ensure service facts gathered
   ansible.builtin.service_facts:
   tags: always

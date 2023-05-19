@@ -1,0 +1,40 @@
+---
+- name: Ensure homelab user group exists
+  ansible.builtin.group:
+    gid: 1100
+    name: "{{ homelab_user_group }}"
+
+- name: Ensure homelab user exists
+  ansible.builtin.user:
+    uid: 1100
+    name: "{{ homelab_user }}"
+    password: "{{ homelab_user_password }}"
+    comment: "Homelab User"
+    group: homelab
+    create_home: true
+    shell: "/bin/bash"
+
+- name: Ensure homelab ssh dir exists
+  ansible.builtin.file:
+    path: "{{ homelab_user_ssh_dir }}"
+    mode: "0700"
+    state: directory
+
+- name: Ensure homelab user private key exists
+  ansible.builtin.copy:
+    dest: "/home/homelab/.ssh/id_ed25519"
+    content: "{{ homelab_user_ssh_private_key }}"
+    mode: "0600"
+
+- name: Ensure homelab user public key exists
+  ansible.builtin.copy:
+    dest: "/home/homelab/.ssh/id_ed25519.pub"
+    content: "{{ homelab_user_ssh_public_key }}"
+    mode: "0600"
+
+- name: Ensure homelab ssh key authorized
+  ansible.posix.authorized_key:
+    user: "{{ homelab_user }}"
+    key: "{{ homelab_user_ssh_public_key }}"
+    state: present
+  when: not ansible_check_mode

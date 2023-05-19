@@ -6,3 +6,5 @@ resources:
   - ./scripts.yaml
   - ./secrets.sops.yaml
   - ./helm-release.yaml
+patchesStrategicMerge:
+  - ./patches/vscode.yaml

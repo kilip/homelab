@@ -36,3 +36,11 @@ omf_local_path: "/home/{{ ansible_user }}/.local/share/omf"
 
 install_nvidia: false
 nvidia_packages: []
+
+homelab_user: homelab
+homelab_user_home: "/home/{{ homelab_user }}"
+homelab_user_ssh_dir: "{{ homelab_user_home }}/.ssh"
+homelab_user_group: "{{ homelab_user }}"
+homelab_user_password: ""
+homelab_user_ssh_private_key: ""
+homelab_user_ssh_public_key: ""

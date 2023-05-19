@@ -5,6 +5,7 @@ install_packages:
     - ENC[AES256_GCM,data:fmii7tNcBe04rby6OMxg,iv:lP2hZH1D+gb0pxlm5SNoK1r9bCs+YhbNAwVwH39Lgew=,tag:KSOLyDM40f2UHC426Fu3Lg==,type:str]
     - ENC[AES256_GCM,data:etYt5A==,iv:M7HkcM43Ebmm+9nxORk2j8bkdso71slBsUUu/6X0H2k=,tag:b7U/TlGTnfLnHiZJo3jkMw==,type:str]
     - ENC[AES256_GCM,data:vLqP,iv:8dROy78sTABrh0pz+GxbYHc7T7EhdgqHZrHU8Mq7NHU=,tag:MrCBo8eR3o3S48mgFbkbsw==,type:str]
+    - ENC[AES256_GCM,data:XFx+rb1w65O3,iv:XR2ElymYq0E7OjqMa6aKZ0ok+pR+mCjkaMKDtz6s6cI=,tag:qkTZgueEmxhkcMP70M3k4Q==,type:str]
 kubevip_address: ENC[AES256_GCM,data:A0KXPGfXRcBmaQ==,iv:0opO98f8C9MBuqi7UA4ZcxLC6vvzUyOaVQpThghUy/w=,tag:3KzyDauusprjl0MPv2D1tw==,type:str]
 certbot_domain: ENC[AES256_GCM,data:d98wwBPqOwKx3iw=,iv:maStE+deF8IBxufW6TfDa8fyeJh6drVwU0sTUXwrPhQ=,tag:/i06960MtB2QliR2obIqSw==,type:str]
 certbot_cloudflare_email: ENC[AES256_GCM,data:1yFlA3OgErIixwxp/HI=,iv:6MOMHntupJMtRNnYOcJ93Q16sTDcdrDXTpgCggE7IVU=,tag:UrUCr1Ym9wJEh6DV0hd/pA==,type:str]
@@ -28,8 +29,8 @@ sops:
             bWREdmpHbTFQZXRQdlVSaFVSRWdYcFkKotwiDiy8f4HdzUhUxBM7hNxFis59SGWA
             VGDuyhF1xdlH7XEdLqvhvMVulwLjhYTcfSpFZvNyUwdCu+WDtRdjCw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-05-19T12:34:48Z"
-    mac: ENC[AES256_GCM,data:X7LX9wUeQlk0RDf1fHPU6hGR0iFT4R+bMYSO/DSIQO65V4oWcmJG8HCOXIaJ3HCsbGdC0fl0imIVX4zwVHsjPlYfJBOm67cPLURhNUYJFKkmHfIu7cH9PnCiXQYzQ3UfezBqk49D9cQyk/FMJPucEha87yNF1RCcNZ2jGU1iydE=,iv:iIjh6UD0+WTie20ABo69fbCBsaXhrPnFJtqJraeRyNg=,tag:sskRdCv5v/diImn7uqG2ew==,type:str]
+    lastmodified: "2023-05-19T13:00:05Z"
+    mac: ENC[AES256_GCM,data:xbFVSEZZhIuyJaORk3tFSlL0rivH3DniVZkPdH8cuu2qC2TNuah3VWHkXzNVb0lZL+3vekGIupDU9w/Y8diAb5gZNUFCJB5wxHqyAz4FgOmSDcoPaUr3WupfZAzcXIkr4EOylOCWSM8gZ6hYF8CdOlmJGBwBXADDWYHJ5eDmWHE=,iv:pnVYpiGPzG/++82ygJUGQjakZ6DH0tHCZJgzDOCuZYU=,tag:s3+6ELruQ6RZ+JlBUSkO0g==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.7.3

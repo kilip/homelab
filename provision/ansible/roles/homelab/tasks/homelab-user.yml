@@ -38,3 +38,14 @@
     key: "{{ homelab_user_ssh_public_key }}"
     state: present
   when: not ansible_check_mode
+
+- name: Ensure homelab ssh no password for suspend command
+  community.general.sudoers:
+    name: homelab-suspend
+    user: "{{ homelab_user }}"
+    commands:
+      - /usr/bin/whoami
+      - /usr/bin/systemctl suspend
+      - /usr/sbin/poweroff -p
+      - /usr/bin/wakeonlan
+    nopassword: true

@@ -1,4 +1,8 @@
 ---
+- name: Ensure service facts gathered
+  ansible.builtin.service_facts:
+  tags: always
+
 - name: Ensure upgrade tasks executed
   ansible.builtin.include_tasks:
     file: upgrade.yml
@@ -19,10 +23,6 @@
     apply:
       tags: homelab-user
   tags: homelab-user
-
-- name: Ensure service facts gathered
-  ansible.builtin.service_facts:
-  tags: always
 
 - name: Ensure fish tasks executed
   ansible.builtin.include_tasks:

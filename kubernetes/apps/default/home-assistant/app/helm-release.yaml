@@ -91,7 +91,7 @@ spec:
         storageClass: longhorn
 
     persistence:
-      ga-service-account:
+      secrets-mount:
         enabled: true
         type: secret
         name: home-assistant-secret
@@ -99,6 +99,10 @@ spec:
         subPath:
           - path: GA_SERVICE_ACCOUNT
             mountPath: /config/ga-service-account.json
+          - path: HOMELAB_SSH_PRIVATE_KEY
+            mountPath: /config/.ssh/homelab
+          - path: HOMELAB_SSH_PUBLIC_KEY
+            mountPath: /config/.ssh/homelab.pub
 
     initContainers:
       01-init-db:

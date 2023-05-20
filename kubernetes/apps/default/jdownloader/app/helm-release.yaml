@@ -27,8 +27,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    repository: jlesage/jdownloader-2
-    tag: v23.04.1
+    image:
+      repository: jlesage/jdownloader-2
+      tag: v23.04.1
 
     service:
       main:

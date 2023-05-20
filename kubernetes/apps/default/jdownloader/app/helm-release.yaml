@@ -37,8 +37,10 @@ spec:
       main:
         ports:
           http:
+            enabled: true
             port: 5800
-          tcp:
+          downloader:
+            enabled: true
             port: 3129
 
     persistence:

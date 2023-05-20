@@ -30,7 +30,10 @@ spec:
     image:
       repository: jlesage/jdownloader-2
       tag: v23.04.1
-
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
     service:
       main:
         type: LoadBalancer

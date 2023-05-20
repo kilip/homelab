@@ -37,7 +37,7 @@ spec:
           INIT_POSTGRES_HOST: postgres-rw.database.svc.cluster.local
         envFrom:
           - secretRef:
-              name: homelab
+              name: homelab-secrets
     ingress:
       main:
         enabled: true
@@ -64,4 +64,4 @@ spec:
 
     envFrom:
       - secretRef:
-          name: homelab
+          name: homelab-secrets

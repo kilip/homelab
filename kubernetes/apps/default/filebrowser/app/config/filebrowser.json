@@ -4,5 +4,5 @@
   "address": "",
   "log": "stdout",
   "database": "/config/database.db",
-  "root": "/media",
+  "root": "/media"
 }

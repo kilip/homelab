@@ -3,7 +3,6 @@
 kind: Kustomization
 namespace: default
 resources:
-  - ./pvc.yaml
   - ./helm-release.yaml
 configMapGenerator:
   - name: filebrowser-config

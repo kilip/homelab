@@ -216,7 +216,7 @@ spec:
             cpu: 100m
           limits:
             memory: 1Gi
-            cpu: 250m
+            #cpu: 250m
         additionalScrapeConfigs:
           - job_name: 'node-exporter'
             static_configs:

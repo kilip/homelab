@@ -71,9 +71,9 @@ spec:
         annotations:
           hajimari.io/icon: mdi:download-box
           nginx.ingress.kubernetes.io/auth-url: http://authelia.security.svc.cluster.local/api/verify
-          nginx.ingress.kubernetes.io/auth-signin: https://{{ .Release.Name }}.${SECRET_DOMAIN}
+          nginx.ingress.kubernetes.io/auth-signin: https://pyload.itstoni.com
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "pyload.itstoni.com"
             paths:
               - path: /
                 pathType: Prefix

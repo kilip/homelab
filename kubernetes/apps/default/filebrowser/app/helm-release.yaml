@@ -71,6 +71,7 @@ spec:
         enabled: true
         existingClaim: filebrowser
         storageClass: longhorn
+        accessMode: ReadWriteOnce
         size: 1Gi
       media:
         enabled: true

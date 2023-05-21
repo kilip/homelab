@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: jdownloader
+  name: pyload
   namespace: default
 spec:
   interval: 15m
@@ -28,8 +28,8 @@ spec:
     keepHistory: false
   values:
     image:
-      repository: jlesage/jdownloader-2
-      tag: v23.04.1
+      repository: linuxserver/pyload-ng
+      tag: 0.5.0
     controller:
       type: statefulset
       annotations:
@@ -41,16 +41,21 @@ spec:
         ports:
           http:
             enabled: true
-            port: 5800
+            port: 8000
           tcp:
             enabled: true
-            port: 3129
+            port: 9666
+
+    env:
+      TZ: Asia/Makassar
+      PUID: 1000
+      PGID: 1000
 
     persistence:
-      output:
+      downloads:
         enabled: true
         existingClaim: download-data
-        mountPath: /output
+        mountPath: /downloads
 
     volumeClaimTemplates:
       - name: config
@@ -73,9 +78,3 @@ spec:
         tls:
           - hosts:
               - *host
-
-    # podSecurityContext:
-    #   runAsUser: 1000
-    #   runAsGroup: 1000
-    #   fsGroup: 1000
-    #   fsGroupChangePolicy: OnRootMismatch

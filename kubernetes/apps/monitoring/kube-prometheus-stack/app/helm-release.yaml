@@ -200,7 +200,7 @@ spec:
               memory: 128Mi
               cpu: 10m
             limits:
-              memory: 160Mi
+              memory: 256Mi
         retention: 2d
         retentionSize: 15GB
         storageSpec:
@@ -212,10 +212,10 @@ spec:
                   storage: 5Gi
         resources:
           requests:
-            memory: 256Mi
+            memory: 512Mi
             cpu: 100m
           limits:
-            memory: 512Mi
+            memory: 1Gi
             cpu: 250m
         additionalScrapeConfigs:
           - job_name: 'node-exporter'

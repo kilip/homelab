@@ -92,6 +92,11 @@ spec:
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: longhorn
+      - name: vscode
+        mountPath: /.vscode
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: longhorn
 
     persistence:
       secrets-mount:

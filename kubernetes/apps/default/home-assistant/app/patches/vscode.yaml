@@ -15,14 +15,17 @@ spec:
           tag: 4.13.0
         env:
           TZ: Asia/Makassar
+        envFrom:
+          - secretRef:
+              name: home-assistant-secret
         workingDir: /config
         args:
           - --auth
           - "none"
           - --user-data-dir
-          - "/config/.vscode"
+          - "/.vscode"
           - --extensions-dir
-          - "/config/.vscode"
+          - "/.vscode"
         ingress:
           enabled: true
           ingressClassName: nginx
@@ -40,5 +43,7 @@ spec:
             - hosts:
                 - *host
         volumeMounts:
+          - name: vscode
+            mountPath: /.vscode
           - name: config
             mountPath: /config

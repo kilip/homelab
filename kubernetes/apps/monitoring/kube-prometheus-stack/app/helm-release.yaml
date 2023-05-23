@@ -107,7 +107,7 @@ spec:
         dashboards:
           multicluster:
             etcd:
-              enabled: true
+              enabled: false
 
     ###
     ### Prometheus operator values

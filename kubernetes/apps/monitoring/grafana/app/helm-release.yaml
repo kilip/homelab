@@ -121,12 +121,12 @@ spec:
     grafana.ini:
       analytics:
         check_for_updates: false
-      auth:
-        oauth_auto_login: true
+      # auth:
+      #   oauth_auto_login: true
       auth.basic:
-        enabled: false
-      auth.generic_oauth:
         enabled: true
+      auth.generic_oauth:
+        enabled: false
         name: Auth0
         scopes: "openid profile email"
         client_id: # Set by env vars

@@ -32,7 +32,7 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     image:
-      repository: ghcr.io/kilip/home-assistant
+      repository: ghcr.io/onedr0p/home-assistant
       tag: 2023.5.3
     env:
       TZ: "${TIMEZONE}"
@@ -45,6 +45,9 @@ spec:
           name: home-assistant-secret
     service:
       main:
+        type: LoadBalancer
+        externalIPs: ["10.0.0.100"]
+        externalTrafficPolicy: Local
         ports:
           http:
             port: 8123
@@ -86,6 +89,11 @@ spec:
     volumeClaimTemplates:
       - name: config
         mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: longhorn
+      - name: vscode
+        mountPath: /.vscode
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: longhorn

@@ -78,6 +78,7 @@ spec:
         loadBalancerIP: '10.0.0.101'
     backup:
       enabled: true
+      directory: /backups
       cron:
         schedule: 0 16 * * * # 16:00 UTC = 24:00
       uploadProviders:

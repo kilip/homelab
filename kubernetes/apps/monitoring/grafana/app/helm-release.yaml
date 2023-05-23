@@ -159,7 +159,7 @@ spec:
       enabled: true
       ingressClassName: nginx
       hosts:
-        - &host grafana.bjw-s.dev
+        - &host grafana.itstoni.com
       tls:
         - hosts:
             - *host

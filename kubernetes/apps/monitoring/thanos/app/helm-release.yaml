@@ -45,7 +45,6 @@ spec:
         access_key: "${AWS_ACCESS_KEY_ID}"
     queryFrontend:
       enabled: true
-      replicaCount: 2
       ingress:
         enabled: true
         ingressClassName: nginx
@@ -60,7 +59,6 @@ spec:
               - *host
     query:
       enabled: true
-      replicaCount: 2
       replicaLabel: ["__replica__"]
       dnsDiscovery:
         sidecarsService: kube-prometheus-stack-thanos-discovery
@@ -72,7 +70,6 @@ spec:
 
     bucketweb:
       enabled: true
-      replicaCount: 2
       resources:
         requests:
           cpu: 15m
@@ -97,7 +94,6 @@ spec:
 
     storegateway:
       enabled: true
-      replicaCount: 2
       persistence:
         enabled: true
         storageClass: local-path
@@ -109,7 +105,6 @@ spec:
 
     ruler:
       enabled: true
-      replicaCount: 2
       replicaLabel: __replica__
       alertmanagers: ["http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093"]
       extraFlags: ["--web.prefix-header=X-Forwarded-Prefix"]

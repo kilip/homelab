@@ -85,10 +85,10 @@ resource "cloudflare_record" "grafana" {
   proxied = true
 }
 
-resource "cloudflare_record" "hajimari" {
+resource "cloudflare_record" "apps" {
   allow_overwrite = true
   zone_id = var.cloudflare_zone_id
-  name    = "hajimari"
+  name    = "apps"
   value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
   type    = "CNAME"
   proxied = true

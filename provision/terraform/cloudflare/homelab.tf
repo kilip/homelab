@@ -47,3 +47,14 @@ resource "cloudflare_record" "hestia" {
   type    = "CNAME"
   proxied = true
 }
+
+resource "local_file" "homelab_tunnel_json" {
+  content = <<-DOC
+    {
+      "AccountTag":"${var.cloudflare_account_id}",
+      "TunnelSecret":"${random_id.k8s_secret.b64_std}",
+      "TunnelID":"${cloudflare_tunnel.k8s_tunnel.id}"
+    }
+    DOC
+  filename = "./homelab_tunnel.json"
+}

@@ -40,6 +40,18 @@ resource "cloudflare_tunnel_config" "echo" {
     }
 
     ingress_rule {
+      hostname = "apps.itstoni.com"
+      path = "/"
+      service = "http://hajimari.default.svc.cluster.local:3000"
+    }
+
+    ingress_rule {
+      hostname = "grafana.itstoni.com"
+      path = "/"
+      service = "http://grafana.monitoring.svc.cluster.local:80"
+    }
+
+    ingress_rule {
       service = "http_status:404"
     }
   }
@@ -59,6 +71,24 @@ resource "cloudflare_record" "flux-webhook" {
   allow_overwrite = true
   zone_id = var.cloudflare_zone_id
   name    = "fw"
+  value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
+  type    = "CNAME"
+  proxied = true
+}
+
+resource "cloudflare_record" "grafana" {
+  allow_overwrite = true
+  zone_id = var.cloudflare_zone_id
+  name    = "grafana"
+  value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
+  type    = "CNAME"
+  proxied = true
+}
+
+resource "cloudflare_record" "hajimari" {
+  allow_overwrite = true
+  zone_id = var.cloudflare_zone_id
+  name    = "hajimari"
   value   = "${cloudflare_tunnel.k8s_tunnel.id}.cfargotunnel.com"
   type    = "CNAME"
   proxied = true

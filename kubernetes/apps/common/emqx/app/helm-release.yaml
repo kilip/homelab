@@ -46,9 +46,8 @@ spec:
       EMQX_LOADED_MODULES: "emqx_mod_presence,emqx_mod_acl_internal,emqx_mod_topic_metrics"
       EMQX_LOADED_PLUGINS: "emqx_management,emqx_recon,emqx_retainer,emqx_dashboard,emqx_rule_engine,emqx_auth_mnesia,emqx_prometheus"
       EMQX_AUTH__MNESIA__PASSWORD_HASH: plain
-      EMQX_NODE_NAME: "emqx@10.0.0.104"
-      EMQX_CLUSTER__DISCOVERY_STRATEGY: "static"
-      EMQX_CLUSTER__STATIC__SEEDS: ['emqx@10.0.0.15','emqx@10.0.0.104']
+
+    envFromSecret: "emqx-secret"
 
     emqxAclConfig: >
       {allow, {user, "dashboard"}, subscribe, ["$SYS/#"]}.
@@ -77,41 +76,3 @@ spec:
         tls:
           - hosts:
             - *host
-
-  valuesFrom:
-    - targetPath: eqmxConfig.EMQX_NODE__COOKIE
-      kind: Secret
-      name: emqx-secret
-      valuesKey: node_cookie
-    - targetPath: emqxConfig.EMQX_DASHBOARD__DEFAULT_USERNAME
-      kind: Secret
-      name: emqx-secret
-      valuesKey: admin_username
-    - targetPath: emqxConfig.EMQX_DASHBOARD__DEFAULT_PASSWORD
-      kind: Secret
-      name: emqx-secret
-      valuesKey: admin_password
-    - targetPath: emqxConfig.EMQX_AUTH__USER__1__USERNAME
-      kind: Secret
-      name: emqx-secret
-      valuesKey: user_1_username
-    - targetPath: emqxConfig.EMQX_AUTH__USER__1__PASSWORD
-      kind: Secret
-      name: emqx-secret
-      valuesKey: user_1_password
-    - targetPath: emqxConfig.EMQX_AUTH__USER__2__USERNAME
-      kind: Secret
-      name: emqx-secret
-      valuesKey: user_2_username
-    - targetPath: emqxConfig.EMQX_AUTH__USER__2__PASSWORD
-      kind: Secret
-      name: emqx-secret
-      valuesKey: user_2_password
-    - targetPath: emqxConfig.EMQX_AUTH__USER__3__USERNAME
-      kind: Secret
-      name: emqx-secret
-      valuesKey: user_3_username
-    - targetPath: emqxConfig.EMQX_AUTH__USER__3__PASSWORD
-      kind: Secret
-      name: emqx-secret
-      valuesKey: user_3_password

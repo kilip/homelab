@@ -75,7 +75,7 @@ spec:
 
       service:
         type: LoadBalancer
-        loadBalancerIP: '10.0.0.101'
+        loadBalancerIP: "${SVC_INFLUXDB_ADDR}"
     backup:
       enabled: true
       directory: /backups

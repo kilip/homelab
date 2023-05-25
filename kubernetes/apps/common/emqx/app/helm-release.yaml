@@ -79,7 +79,7 @@ spec:
             - *host
 
   valuesFrom:
-    - targetPath: eqmxConfig.EMQX_NODE_COOKIE
+    - targetPath: eqmxConfig.EMQX_NODE__COOKIE
       kind: Secret
       name: emqx-secret
       valuesKey: node_cookie

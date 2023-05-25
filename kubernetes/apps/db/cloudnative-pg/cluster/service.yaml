@@ -7,7 +7,7 @@ metadata:
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
-  externalIPs: ["10.0.0.222"]
+  externalIPs: ["${SVC_POSTGRES_ADDR}"]
   ports:
     - name: postgres
       port: 5432

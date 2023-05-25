@@ -28,13 +28,16 @@ spec:
     keepHistory: false
   values:
     initContainers:
-      01-init-db:
+      - name: 01-init-db
         image: ghcr.io/onedr0p/postgres-init:14.8
         imagePullPolicy: IfNotPresent
         env:
-          INIT_POSTGRES_SUPER_PASS: "${POSTGRES_SUPER_PASS}"
-          INIT_POSTGRES_DBNAME: hass
-          INIT_POSTGRES_HOST: postgres-rw.database.svc.cluster.local
+          - name: INIT_POSTGRES_SUPER_PASS
+            value: "${POSTGRES_SUPER_PASS}"
+          - name: INIT_POSTGRES_DBNAME
+            value: homelab
+          - name: INIT_POSTGRES_HOST
+            value: postgres-rw.database.svc.cluster.local
         envFrom:
           - secretRef:
               name: homelab-secrets
@@ -45,7 +48,7 @@ spec:
         annotations:
           hajimari.io/icon: mdi:home-assistant
         hosts:
-          - host: &host "hass.${SECRET_DOMAIN}"
+          - host: &host "homelab.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -59,7 +62,7 @@ spec:
       limits:
         memory: 512Mi
 
-    postgres:
+    postgresql:
       enabled: false
 
     envFrom:

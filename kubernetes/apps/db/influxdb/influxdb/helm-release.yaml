@@ -73,8 +73,12 @@ spec:
           influx bucket create -n hass -o olympus
           influx bucket create -n openhab -o olympus
 
+      service:
+        type: LoadBalancer
+        loadBalancerIP: "${SVC_INFLUXDB_ADDR}"
     backup:
       enabled: true
+      directory: /backups
       cron:
         schedule: 0 16 * * * # 16:00 UTC = 24:00
       uploadProviders:

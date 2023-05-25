@@ -32,7 +32,7 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     image:
-      repository: ghcr.io/kilip/home-assistant
+      repository: ghcr.io/onedr0p/home-assistant
       tag: 2023.5.3
     env:
       TZ: "${TIMEZONE}"
@@ -45,6 +45,9 @@ spec:
           name: home-assistant-secret
     service:
       main:
+        type: LoadBalancer
+        loadBalancerIP: "${SVC_HASS_ADDR}"
+        externalTrafficPolicy: Local
         ports:
           http:
             port: 8123
@@ -59,9 +62,14 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+          - host: &hestia "hestia.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
         tls:
           - hosts:
               - *host
+              - *hestia
     probes:
       liveness:
         enabled: false
@@ -86,6 +94,11 @@ spec:
     volumeClaimTemplates:
       - name: config
         mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: longhorn
+      - name: vscode
+        mountPath: /.vscode
         accessMode: ReadWriteOnce
         size: 1Gi
         storageClass: longhorn

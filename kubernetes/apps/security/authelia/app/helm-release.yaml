@@ -55,17 +55,17 @@ spec:
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_GROUPS_FILTER: "(&(memberUid={username})(objectClass=posixGroup))"
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_GROUP_NAME_ATTRIBUTE: cn
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_MAIL_ATTRIBUTE: mail
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_URL: "ldap://glauth.security.svc.cluster.local:389"
+      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_ADDRESS: "ldap://glauth.security.svc.cluster.local:389"
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_USER: cn=search,ou=svcaccts,dc=home,dc=arpa
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_USERNAME_ATTRIBUTE: uid
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_USERS_FILTER: "(&({username_attribute}={input})(objectClass=posixAccount))"
       AUTHELIA_AUTHENTICATION_BACKEND_PASSWORD_RESET_DISABLE: "true"
       AUTHELIA_DEFAULT_REDIRECTION_URL: https://auth.itstoni.com
       AUTHELIA_DUO_API_DISABLE: "true"
-      AUTHELIA_LOG_LEVEL: info
+      # AUTHELIA_LOG_LEVEL: info
       AUTHELIA_NOTIFIER_DISABLE_STARTUP_CHECK: "true"
       AUTHELIA_SERVER_DISABLE_HEALTHCHECK: "true"
-      AUTHELIA_SERVER_PORT: &port 80
+      AUTHELIA_SERVER_ADDRESS: 0.0.0.0:80
       AUTHELIA_SESSION_DOMAIN: itstoni.com
       AUTHELIA_SESSION_REDIS_DATABASE_INDEX: 14
       AUTHELIA_SESSION_REDIS_HOST: redis.common.svc.cluster.local
@@ -83,7 +83,7 @@ spec:
       main:
         ports:
           http:
-            port: *port
+            port: &port 80
           metrics:
             enabled: true
             port: 8080
@@ -98,7 +98,7 @@ spec:
             scrapeTimeout: 10s
     probes:
       liveness: &probes
-        enabled: true
+        enabled: false
         custom: true
         spec:
           httpGet:

@@ -86,4 +86,4 @@ spec:
           enabled: true
           accessKeyId: "${AWS_ACCESS_KEY_ID}"
           secretAccessKey: "${AWS_SECRET_ACCESS_KEY}"
-          bucketName: "s3://s3.itstoni.com/influxdb"
+          bucketName: "http://minio.filesystem.svc.cluster.local:9000/influxdb"

@@ -6,6 +6,7 @@ resources:
   - ./filebrowser/ks.yaml
   - ./home-assistant/ks.yaml
 #  - ./homelab/ks.yaml
+  - ./jdownloader/ks.yaml
   - ./jellyfin/ks.yaml
   - ./nextcloud/ks.yaml
   - ./pyload/ks.yaml

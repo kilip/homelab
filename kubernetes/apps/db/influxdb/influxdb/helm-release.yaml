@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: influxdb
-      version: 5.5.2
+      version: 5.6.1
       sourceRef:
         kind: HelmRepository
         name: bitnami
@@ -75,7 +75,7 @@ spec:
 
       service:
         type: LoadBalancer
-        loadBalancerIP: '10.0.0.101'
+        loadBalancerIP: "${SVC_INFLUXDB_ADDR}"
     backup:
       enabled: true
       directory: /backups
@@ -86,4 +86,4 @@ spec:
           enabled: true
           accessKeyId: "${AWS_ACCESS_KEY_ID}"
           secretAccessKey: "${AWS_SECRET_ACCESS_KEY}"
-          bucketName: "s3://s3.itstoni.com/influxdb"
+          bucketName: "http://minio.filesystem.svc.cluster.local:9000/influxdb"

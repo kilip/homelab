@@ -46,7 +46,7 @@ spec:
     service:
       main:
         type: LoadBalancer
-        externalIPs: ["10.0.0.100"]
+        loadBalancerIP: "${SVC_HASS_ADDR}"
         externalTrafficPolicy: Local
         ports:
           http:
@@ -62,9 +62,14 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+          - host: &hestia "hestia.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
         tls:
           - hosts:
               - *host
+              - *hestia
     probes:
       liveness:
         enabled: false

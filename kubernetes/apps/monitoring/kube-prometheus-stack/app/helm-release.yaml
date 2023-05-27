@@ -107,7 +107,7 @@ spec:
         dashboards:
           multicluster:
             etcd:
-              enabled: true
+              enabled: false
 
     ###
     ### Prometheus operator values
@@ -161,7 +161,13 @@ spec:
                   - mars.lan:9100
                   - iris.lan:9100
                   - io.lan:9100
-
+          - job_name: 'emqx'
+            metrics_path: /api/v5/prometheus/stats
+            scrape_interval: 5s
+            honor_labels: true
+            static_configs:
+              # EMQX IP endpoint
+              - targets: [10.0.0.104:18083, 10.0.0.15:18083]
         enableAdminAPI: true
         externalLabels:
           cluster: olympus

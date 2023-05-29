@@ -44,3 +44,5 @@ homelab_user_group: "{{ homelab_user }}"
 homelab_user_password: ""
 homelab_user_ssh_private_key: ""
 homelab_user_ssh_public_key: ""
+
+install_ntp: false

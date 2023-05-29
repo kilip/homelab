@@ -97,3 +97,11 @@
       tags: nvidia
   tags: nvidia
   when: install_nvidia
+
+- name: Ensure ntp server configured
+  ansible.builtin.include_role:
+    name: geerlingguy.ntp
+    apply:
+      tags: ntp
+  tags: ntp
+  when: install_ntp

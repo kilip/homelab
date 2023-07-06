@@ -33,7 +33,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/home-assistant
-      tag: 2023.5.4
+      tag: 2023.7.1
     env:
       TZ: "${TIMEZONE}"
       INFLUXDB_HOST: influxdb.database.svc.cluster.local

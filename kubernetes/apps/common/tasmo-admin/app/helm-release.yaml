@@ -29,7 +29,7 @@ spec:
   values:
     image:
       repository: ghcr.io/tasmoadmin/tasmoadmin
-      tag: v3.0.5
+      tag: v3.0.8
     controller:
       type: statefulset
       annotations:

@@ -1,6 +1,22 @@
 ---
 version: "3"
 
+vars:
+  ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
+
 includes:
   cl: .tasks/ClusterTasks.yml
   dev: .tasks/DevTasks.yml
+  an: .tasks/AnsibleTasks.yml
+  fl: .tasks/FluxTasks.yml
+
+tasks:
+
+  default: task -l
+
+  deps:
+    desc: Create a Python virtual env and install required packages
+    cmds:
+      - .venv/bin/python3 -m pip install --upgrade pip setuptools wheel
+      - .venv/bin/python3 -m pip install --upgrade --requirement "{{.ROOT_DIR}}/requirements.txt"
+      - .venv/bin/ansible-galaxy install --role-file "{{.ROOT_DIR}}/requirements.yaml" --force

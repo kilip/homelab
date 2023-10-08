@@ -1,0 +1,34 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-flux-webhooks
+  namespace: flux-system
+spec:
+  path: ./cluster/core/flux-system/addons/webhooks
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: homelab
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+  dependsOn:
+    - name: core-net-nginx-external
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-flux-image-update
+  namespace: flux-system
+spec:
+  path: ./cluster/core/flux-system/addons/image-update
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: homelab
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m

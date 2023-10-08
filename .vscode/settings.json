@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "*.json5": "jsonc",
+        "**/ansible/**/*.yaml": "ansible",
+        "**/ansible/**/*.sops.yaml": "yaml",
+        "**/ansible/**/inventory/**/*.yaml": "yaml",
+        "**/kubernetes/**/*.sops.toml": "plaintext"
+    },
+    "yaml.schemas": {
+        "ansible": "**/ansible/*.yaml",
+        "Kubernetes": "**/kubernetes/*.yaml",
+        "kubernetes://schema/cilium.io/v2alpha1%40ciliumloadbalancerippool": "file:///home/toni/project/homelab/cluster/core/kube-system/cilium/app/cilium-l2.yaml"
+    },
+    "sops.defaults.ageKeyFile": "age.key",
+    "ansible.python.interpreterPath": "./.venv/bin/python"
+}

@@ -1,0 +1,54 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-net-nginx-certificates
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: core-cert-issuers
+  path: ./cluster/core/networking/nginx/certificates
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: homelab
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-net-nginx-external
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: core-net-nginx-certificates
+  path: ./cluster/core/networking/nginx/external
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: homelab
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-net-nginx-internal
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: core-net-nginx-certificates
+  path: ./cluster/core/networking/nginx/internal
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: homelab
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m

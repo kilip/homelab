@@ -1,0 +1,14 @@
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: cloudflared
+  namespace: networking
+spec:
+  endpoints:
+    - dnsName: "external.${SECRET_DOMAIN}"
+      recordType: CNAME
+      targets: ["${TUNNEL_ID}.cfargotunnel.com"]
+    - dnsName: "omed.${SECRET_DOMAIN}"
+      recordType: CNAME
+      targets: ["${TUNNEL_ID}.cfargotunnel.com"]

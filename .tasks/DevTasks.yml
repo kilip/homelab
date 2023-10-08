@@ -3,9 +3,24 @@
 version: "3"
 
 tasks:
-  create:
+  boot:
     cmds:
-      - kind create cluster
+      - kind create cluster --config=kind-config.yaml
   delete:
     cmds:
       - kind delete cluster
+  net-cidr:
+      - docker network inspect kind -f '{{ range $i, $a := .IPAM.Config }}{{ println .Subnet }}{{ end }}'
+  kube-vip:
+    cmds:
+      - kubectl apply -f https://raw.githubusercontent.com/kube-vip/kube-vip-cloud-provider/main/manifest/kube-vip-cloud-controller.yaml
+      - kubectl create configmap --namespace kube-system kubevip --from-literal range-global=172.23.100.10-172.23.100.30
+      - "{{.KUBE_VIP}} manifest daemonset --services --inCluster --arp --interface enp3s0 | kubectl apply -f -"
+    vars:
+      KUBE_VIP: docker run --network host --rm ghcr.io/kube-vip/kube-vip:v0.6.3
+
+  cilium:
+    #- helm repo add cilium https://helm.cilium.io/
+    #- docker pull quay.io/cilium/cilium:v1.14.2
+    - kind load docker-image quay.io/cilium/cilium:v1.14.2
+    - helm install cilium cilium/cilium --version 1.14.2 --namespace kube-system --set image.pullPolicy=IfNotPresent --set ipam.mode=kubernetes

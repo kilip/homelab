@@ -1,1 +1,3 @@
 age.key
+.decrypted~*.yaml
+.venv

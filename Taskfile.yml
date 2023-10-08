@@ -1,0 +1,6 @@
+---
+version: "3"
+
+includes:
+  cl: .tasks/ClusterTasks.yml
+  dev: .tasks/DevTasks.yml

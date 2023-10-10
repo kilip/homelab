@@ -1,6 +1,9 @@
 ---
 version: "3"
 
+env:
+  KUBECONFIG: "{{.ROOT}}/kubeconfig"
+
 vars:
   ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
 

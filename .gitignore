@@ -1,3 +1,4 @@
 age.key
 .decrypted~*.yaml
 .venv
+kubeconfig

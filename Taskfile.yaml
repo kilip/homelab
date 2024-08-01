@@ -25,18 +25,17 @@ env:
   VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
 
 includes:
-  kubernetes: .taskfiles/Kubernetes
-  flux: .taskfiles/Flux
-  repository: .taskfiles/Repository
-  talos: .taskfiles/Talos
+  kb: .taskfiles/Kubernetes
+  fl: .taskfiles/Flux
+  rp: .taskfiles/Repository
+  tl: .taskfiles/Talos
   sops: .taskfiles/Sops
-  workstation: .taskfiles/Workstation
+  ws: .taskfiles/Workstation
   user:
     taskfile: .taskfiles/User
     optional: true
 
 tasks:
-
   default: task --list
 
   init:

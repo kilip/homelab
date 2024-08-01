@@ -6,7 +6,6 @@ vars:
   KUBECONFORM_SCRIPT: "{{.SCRIPTS_DIR}}/kubeconform.sh"
 
 tasks:
-
   resources:
     desc: Gather common resources in your cluster, useful when asking for support
     cmds:
@@ -34,3 +33,13 @@ tasks:
   .reset:
     internal: true
     cmd: rm -rf {{.KUBERNETES_DIR}}
+
+  watch:pods:
+    desc: watch kubectl get pods output
+    cmd: watch kubectl get pods {{.CLI_ARGS}}
+
+  cleanup:
+    desc: cleanup non running pods
+    cmds:
+      - kubectl -A get pods field-selector="status.phase!=Succeeded,status.phase!=Running"
+      - kubectl -A get pod --field-selector=status.phase==Succeeded

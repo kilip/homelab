@@ -26,6 +26,7 @@ spec:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
+          secret.reloader.stakater.com/reload: "cloudflared-secret"
         containers:
           app:
             image:
@@ -42,7 +43,7 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: cloudflared-secret
-                    key: TUNNEL_ID
+                    key: CF_TUNNEL_ID
             args:
               - tunnel
               - --config

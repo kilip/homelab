@@ -6,13 +6,13 @@ talosVersion: v1.7.5
 kubernetesVersion: v1.30.3
 
 clusterName: "home-kubernetes"
-endpoint: https://:6443
+endpoint: https://10.10.10.101:6443
 clusterPodNets:
   - "10.69.0.0/16"
 clusterSvcNets:
   - "10.96.0.0/16"
 additionalApiServerCertSans: &sans
-  - ""
+  - "10.10.10.101"
   - 127.0.0.1 # KubePrism
 additionalMachineCertSans: *sans
 
@@ -22,7 +22,7 @@ cniConfig:
 
 nodes:
   - hostname: "k8s1"
-    ipAddress: ""
+    ipAddress: "10.10.10.11"
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/97bf8e92fc6bba0f03928b859c08295d7615737b29db06a97be51dc63004e403
     controlPlane: true
@@ -32,9 +32,9 @@ nodes:
         dhcp: true
         mtu: 1500
         vip:
-          ip: ""
+          ip: "10.10.10.101"
   - hostname: "k8s2"
-    ipAddress: ""
+    ipAddress: "10.10.10.12"
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/49e2c4ddebd7055aaa6549a1b1da7a6555b2962990912edd2b9e85ae80eefbab
     controlPlane: false
@@ -44,7 +44,7 @@ nodes:
         dhcp: true
         mtu: 1500
   - hostname: "k8s3"
-    ipAddress: ""
+    ipAddress: "10.10.10.13"
     installDisk: "/dev/sda"
     talosImageURL: factory.talos.dev/installer/49e2c4ddebd7055aaa6549a1b1da7a6555b2962990912edd2b9e85ae80eefbab
     controlPlane: false

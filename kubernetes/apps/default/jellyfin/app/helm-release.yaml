@@ -30,37 +30,43 @@ spec:
         containers:
           app:
             image:
-              repository: quay.io/minio/minio
-              tag: RELEASE.2024-06-29T01-20-47Z@sha256:fce0a90a37bb2887c850b68b61a0ac8ac02ea218b58eaea96bb7ca69eb503e20
+              repository: linuxserver/jellyfin
+              tag: 10.9.8
             env:
-              MINIO_API_CORS_ALLOW_ORIGIN: https://minio.${SECRET_DOMAIN},https://s3.${SECRET_DOMAIN}
-              MINIO_BROWSER_REDIRECT_URL: https://minio.${SECRET_DOMAIN}
-              MINIO_PROMETHEUS_JOB_ID: minio
-              MINIO_PROMETHEUS_URL: https://prometheus.${SECRET_DOMAIN}
-              MINIO_PROMETHEUS_AUTH_TYPE: public
-              MINIO_SERVER_URL: https://s3.${SECRET_DOMAIN}
-              MINIO_STORAGE_CLASS_RRS: EC:0
-              MINIO_STORAGE_CLASS_STANDARD: EC:0
-              MINIO_UPDATE: "off"
-            envFrom:
-              - secretRef:
-                  name: jellyfin
-
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [1000]
-        seccompProfile: { type: RuntimeDefault }
+              PUID: 1000
+              PGID: 1000
+              TZ: Asia/Makassar
+              JELLYFIN_PublishedServerUrl: "https://jellyfin.${SECRET_DOMAIN}"
+              JELLYFIN_CONFIG_DIR: "/media/.jellyfin"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 8096
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
     service:
       app:
-        controller: jellyfin
+        controller: *app
         ports:
           http:
-            port: 8086
+            port: 8096
+      discovery:
+        controller: *app
+        type: LoadBalancer
+        loadBalancerIP: 10.10.10.105
+        externalTrafficPolicy: Local
+        ports:
+          udp:
+            port: 7359
     ingress:
       app:
         annotations:
@@ -74,9 +80,27 @@ spec:
                   identifier: app
                   port: http
     persistence:
-      media:
+      config:
         type: nfs
         server: "10.0.0.21"
-        path: /tank/media
+        path: /tank/media/.jellyfin
         globalMounts:
-          - path: /media
+          - path: /config
+      video:
+        type: nfs
+        server: "10.0.0.21"
+        path: /tank/media/video
+        globalMounts:
+          - path: /nas/video
+      music:
+        type: nfs
+        server: "10.0.0.21"
+        path: /tank/media/music
+        globalMounts:
+          - path: /nas/music
+      photo:
+        type: nfs
+        server: "10.0.0.21"
+        path: /tank/media/photo
+        globalMounts:
+          - path: /nas/photo

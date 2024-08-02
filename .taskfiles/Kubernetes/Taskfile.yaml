@@ -41,5 +41,5 @@ tasks:
   cleanup:
     desc: cleanup non running pods
     cmds:
-      - kubectl -A get pods field-selector="status.phase!=Succeeded,status.phase!=Running"
-      - kubectl -A get pod --field-selector=status.phase==Succeeded
+      - kubectl delete pods -A --field-selector="status.phase!=Succeeded,status.phase!=Running"
+      - kubectl delete pods -A --field-selector=status.phase==Succeeded

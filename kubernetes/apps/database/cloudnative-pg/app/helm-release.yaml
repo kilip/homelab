@@ -23,13 +23,13 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: minio
-      namespace: storage
+    #- name: minio
+    #  namespace: storage
     - name: openebs
       namespace: openebs-system
   values:
     crds:
-      create: true
+      create: truex
     monitoring:
       podMonitorEnabled: false
       grafanaDashboard:

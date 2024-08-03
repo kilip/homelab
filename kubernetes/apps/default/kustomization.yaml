@@ -5,3 +5,4 @@ resources:
   - ./namespace.yaml
   - ./jellyfin/ks.yaml
   - ./jdownloader2/ks.yaml
+  - ./nextcloud/ks.yaml

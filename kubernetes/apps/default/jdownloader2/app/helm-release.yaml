@@ -1,0 +1,87 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app jdownloader2
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.3.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      jdownloader2:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: jlesage/jdownloader-2
+              tag: v24.08.1
+            env:
+              USER_ID: 1000
+              GROUP_ID: 1000
+              TZ: Etc/UTC
+              DARK_MODE: 1
+              MYJDOWNLOADER_DEVICE_NAME: k8s
+            envFrom:
+              - secretRef:
+                  name: *app
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 512Mi
+    service:
+      app:
+        controller: jdownloader2
+        ports:
+          http:
+            port: 5800
+      direct:
+        controller: *app
+        type: LoadBalancer
+        loadBalancerIP: 10.10.10.106
+        ports:
+          tcp:
+            port: 7359
+
+    ingress:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        className: internal
+        hosts:
+          - host: "dm.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      output:
+        type: nfs
+        server: "10.0.0.21"
+        path: /tank/media
+        globalMounts:
+          - path: /output
+      config:
+        type: nfs
+        server: "10.0.0.21"
+        path: /tank/media/.jdownloader
+        globalMounts:
+          - path: /config

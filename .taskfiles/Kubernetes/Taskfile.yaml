@@ -43,3 +43,7 @@ tasks:
     cmds:
       - kubectl delete pods -A --field-selector="status.phase!=Succeeded,status.phase!=Running"
       - kubectl delete pods -A --field-selector=status.phase==Succeeded
+
+  context:
+    desc: set current context namespace
+    cmd: kubectl config set-context --current --namespace={{.ns}}

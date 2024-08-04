@@ -116,7 +116,7 @@ spec:
       enabled: true
       className: internal
       annotations:
-        external-dns.alpha.kubernetes.io/target: internal.${CLUSTER_DOMAIN}
+        external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         hajimari.io/icon: mdi:dropbox
         nginx.ingress.kubernetes.io/proxy-body-size: "10G"
         nginx.ingress.kubernetes.io/proxy-buffering: "off"
@@ -150,7 +150,7 @@ spec:
       #tls:
       #  - hosts:
       #      host: *host
-        # this seems to be required for nextcloud initialization which takes a long time
+      # this seems to be required for nextcloud initialization which takes a long time
 
     startupProbe:
       enabled: true
@@ -162,8 +162,7 @@ spec:
 
     persistence:
       enabled: true
-      storageClass: openebs-hostpath
+      existingClaim: nextcloud-config-v1
       nextcloudData:
         enabled: true
         existingClaim: nextcloud
-

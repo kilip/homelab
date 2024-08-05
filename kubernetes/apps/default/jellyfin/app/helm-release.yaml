@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: linuxserver/jellyfin
-              tag: 10.9.8
+              tag: latest
             env:
               PUID: 1000
               PGID: 1000

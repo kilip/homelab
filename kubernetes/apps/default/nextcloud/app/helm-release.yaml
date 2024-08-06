@@ -23,6 +23,9 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: cloudnative-pg
+      namespace: database
   values:
     image:
       flavor: fpm-alpine

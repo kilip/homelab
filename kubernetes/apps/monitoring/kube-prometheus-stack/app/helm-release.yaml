@@ -27,7 +27,7 @@ spec:
       retries: 3
   dependsOn:
     - name: prometheus-operator-crds
-      namespace: observability
+      namespace: monitoring
     - name: openebs
       namespace: openebs-system
   values:

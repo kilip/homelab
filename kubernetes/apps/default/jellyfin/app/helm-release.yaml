@@ -56,14 +56,15 @@ spec:
     service:
       app:
         controller: *app
+        type: LoadBalancer
+        loadBalancerIP: 10.10.10.106
         ports:
           http:
             port: 8096
       discovery:
         controller: *app
         type: LoadBalancer
-        loadBalancerIP: 10.10.10.105
-        externalTrafficPolicy: Local
+        loadBalancerIP: 10.10.10.107
         ports:
           udp:
             port: 7359

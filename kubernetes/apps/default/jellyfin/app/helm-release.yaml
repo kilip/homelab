@@ -38,16 +38,15 @@ spec:
               TZ: Asia/Makassar
               JELLYFIN_PublishedServerUrl: "https://jellyfin.${SECRET_DOMAIN}"
               JELLYFIN_CONFIG_DIR: "/media/.jellyfin"
-              JELLYFIN_CACHE_DIR: "/cache"
             probes:
               liveness: &probes
-                enabled: false
+                enabled: true
                 custom: true
                 spec:
                   httpGet:
                     path: /health
                     port: &port 8096
-                  initialDelaySeconds: 0
+                  initialDelaySeconds: 180
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 30

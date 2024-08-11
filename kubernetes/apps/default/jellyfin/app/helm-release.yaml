@@ -38,21 +38,20 @@ spec:
               TZ: Asia/Makassar
               JELLYFIN_PublishedServerUrl: "https://jellyfin.${SECRET_DOMAIN}"
               JELLYFIN_CONFIG_DIR: "/media/.jellyfin"
+              JELLYFIN_CACHE_DIR: "/cache"
             probes:
               liveness: &probes
-                enabled: false
+                enabled: true
                 custom: true
                 spec:
                   httpGet:
                     path: /health
                     port: &port 8096
-                  initialDelaySeconds: 0
+                  initialDelaySeconds: 240
                   periodSeconds: 10
                   timeoutSeconds: 1
-                  failureThreshold: 3
+                  failureThreshold: 10
               readiness: *probes
-              startup:
-                enabled: false
     service:
       app:
         controller: *app
@@ -87,6 +86,16 @@ spec:
         path: /tank/media/.jellyfin
         globalMounts:
           - path: /config
+      cache:
+        enabled: true
+        storageClass: openebs-hostpath
+        retain: true
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        nameOverride: yes
+        globalMounts:
+          - path: /cache
+            readOnly: false
       video:
         type: nfs
         server: "10.0.0.21"

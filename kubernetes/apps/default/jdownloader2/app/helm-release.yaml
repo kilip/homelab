@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: jlesage/jdownloader-2
-              tag: v24.08.1
+              tag: v24.09.1
             env:
               USER_ID: 1000
               GROUP_ID: 1000

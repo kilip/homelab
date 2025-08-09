@@ -7,8 +7,7 @@
     ":dependencyDashboard",
     ":semanticCommits",
     ":skipStatusChecks",
-    ":timezone(Asia/Makassar)",
-    ":automerge"
+    ":timezone(Asia/Makassar)"
   ],
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
   "automerge": true,

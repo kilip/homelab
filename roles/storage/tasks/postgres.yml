@@ -1,0 +1,46 @@
+---
+- name: Ensure postgres installed and configured
+  when: postgres
+  block:
+    - name: Ensure python postgres lib installed
+      ansible.builtin.apt:
+        name:
+          - python3-psycopg2
+          - python3-requests
+          - libpq-dev
+        state: present
+      tags: always
+
+    - name: Ensure postgres data dir exists
+      ansible.builtin.file:
+        path: "/srv/postgres"
+        state: directory
+        mode: "0755"
+
+    - name: Ensure postgres container started
+      community.docker.docker_container:
+        name: postgres
+        image: "{{ pg_image }}"
+        image_name_mismatch: recreate
+        state: started
+        ports:
+          - 5432:5432
+        networks:
+          - name: "{{ docker_network }}"
+        volumes:
+          - "/srv/postgres:/var/lib/postgresql/data/pgdata"
+        restart_policy: always
+        env:
+          POSTGRES_USER: "{{ pg_user }}"
+          POSTGRES_PASSWORD: "{{ pg_pass }}"
+          POSTGRES_DB: "{{ pg_db }}"
+          PGDATA: /var/lib/postgresql/data/pgdata
+
+    - name: Ensure postgis extension installed
+      community.postgresql.postgresql_ext:
+        login_user: "{{ pg_user }}"
+        login_password: "{{ pg_pass }}"
+        login_host: "{{ ansible_host }}"
+        login_db: "{{ pg_db }}"
+        name: postgis
+        state: present

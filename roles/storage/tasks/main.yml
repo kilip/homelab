@@ -1,0 +1,7 @@
+---
+- name: Ensure postgres tasks included
+  ansible.builtin.include_tasks:
+    file: postgres.yml
+    apply:
+      tags: postgres
+  tags: postgres

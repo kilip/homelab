@@ -5,3 +5,10 @@
     apply:
       tags: postgres
   tags: postgres
+
+- name: Ensure redis tasks included
+  ansible.builtin.include_tasks:
+    file: redis.yml
+    apply:
+      tags: redis
+  tags: redis

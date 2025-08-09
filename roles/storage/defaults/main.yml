@@ -7,3 +7,7 @@ pg_user: homelab
 pg_pass: homelab
 pg_db: homelab
 pg_host: homelab
+
+# renovate: datasource=docker depName=redis
+redis_version: latest@sha256:b0efb06f6b4d8c1e2fd1b7c1e89e178d787b432b7b09286b4e7ea3dcdbac777a
+redis_image: "redis:{{ redis_version }}"

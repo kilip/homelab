@@ -1,0 +1,50 @@
+---
+- name: Ensure redis facts configured
+  ansible.builtin.set_fact:
+    redis: "{{ true if 'redis' in group_names else false }}"
+
+- name: Ensure redis container configured
+  when: redis
+  block:
+    - name: Ensure redis image pulled
+      community.docker.docker_image:
+        name: "{{ redis_image }}"
+        source: pull
+
+    - name: Ensure redis persistent dir exists
+      ansible.builtin.file:
+        path: "/srv/redis"
+        state: directory
+        mode: "0755"
+
+    - name: Ensure redis container started
+      community.docker.docker_container:
+        state: started
+        image_name_mismatch: recreate
+        name: redis
+        image: "{{ redis_image }}"
+        ulimits:
+          - memlock:1024
+        networks:
+          - name: "{{ docker_network }}"
+        restart_policy: always
+        volumes:
+          - "/srv/redis:/data"
+
+- name: Ensure redis cleaned up
+  when: not redis
+  block:
+    - name: Ensure redis container removed
+      community.docker.docker_container:
+        name: redis
+        state: absent
+
+    - name: Ensure redis image removed
+      community.docker.docker_image:
+        name: "{{ redis_image }}"
+        state: absent
+
+    - name: Ensure redis persistent dir cleaned up
+      ansible.builtin.file:
+        path: "/srv/redis"
+        state: absent

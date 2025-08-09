@@ -1,0 +1,90 @@
+---
+- name: Ensure authentik container configured
+  when: authentik
+  block:
+    - name: Ensure authentik image pulled
+      community.docker.docker_image:
+        name: "{{ authentik_image }}"
+        source: pull
+
+    - name: Ensure authentik dir exists
+      ansible.builtin.file:
+        path: "{{ authentik_dir }}/{{ item }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: "0755"
+      with_items:
+        - templates
+        - media
+        - certs
+
+    - name: Ensure authentik db configured
+      ansible.builtin.include_tasks: postgres-db.yml
+      vars:
+        db_user: "{{ authentik_env.AUTHENTIK_POSTGRESQL__USER }}"
+        db_pass: "{{ authentik_env.AUTHENTIK_POSTGRESQL__PASSWORD }}"
+        db_host: "{{ authentik_env.AUTHENTIK_POSTGRESQL__HOST }}"
+        db_name: "{{ authentik_env.AUTHENTIK_POSTGRESQL__USER }}"
+
+    - name: Ensure authentik server container started
+      community.docker.docker_container:
+        state: started
+        image_name_mismatch: recreate
+        name: authentik
+        image: "{{ authentik_image }}"
+        command: server
+        volumes:
+          - "{{ authentik_dir }}/templates:/templates"
+          - "{{ authentik_dir }}/media:/media"
+          - "{{ authentik_dir }}/certs:/certs"
+        env: "{{ authentik_env }}"
+        user: "1000:1000"
+        restart_policy: always
+        networks:
+          - name: "{{ docker_network }}"
+        labels:
+          traefik.enable: "true"
+          traefik.http.routers.authentik.entrypoints: websecure
+          traefik.http.routers.authentik.rule: "Host(`auth.{{ traefik_domain }}`)"
+          traefik.http.services.authentik.loadbalancer.server.port: "9000"
+          dockerdns.pihole.cname.domain: "auth.{{ traefik_domain }}"
+          dockerdns.pihole.cname.target: "{{ full_hostname }}"
+
+    - name: Ensure authentik worker container configured
+      community.docker.docker_container:
+        state: started
+        image_name_mismatch: recreate
+        name: authentik-worker
+        image: "{{ authentik_image }}"
+        command: worker
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - "{{ authentik_dir }}/templates:/templates"
+          - "{{ authentik_dir }}/media:/media"
+          - "{{ authentik_dir }}/certs:/certs"
+        env: "{{ authentik_env }}"
+        user: "1000:1000"
+        restart_policy: always
+        networks:
+          - name: "{{ docker_network }}"
+
+- name: Ensure authentik cleaned up
+  when: not authentik
+  block:
+    - name: Ensure authentik container removed
+      community.docker.docker_container:
+        name: "authentik"
+        state: absent
+    - name: Ensure authentik image removed
+      community.docker.docker_image:
+        name: authentik
+        state: absent
+    - name: Ensure authentik directory removed
+      ansible.builtin.file:
+        path: "{{ authentik_dir }}"
+        state: absent
+      with_items:
+        - templates
+        - media
+        - certs

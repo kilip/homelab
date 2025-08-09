@@ -3,6 +3,6 @@
     "**/*.yml": "ansible",
     ".ansible-lint": "yaml"
   },
-  "ansible.python.interpreterPath": "/workspaces/homelab/.venv/bin/python",
+  "ansible.python.interpreterPath": "/home/toni/code/homelab/.venv/bin/python",
   "sops.defaults.ageKeyFile": "age.key"
 }

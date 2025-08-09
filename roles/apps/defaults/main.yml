@@ -24,3 +24,9 @@ authelia_version: latest@sha256:08776367d54d4482c54ac8ca75b18f7db3287b751106e197
 authelia_db_user: authelia
 authelia_db_pass: authelia
 authelia_db_name: authelia
+
+authentik: false
+# renovate: datasource=docker depName=ghcr.io/goauthentik/server
+authentik_version: 2025.6.4
+authentik_image: "ghcr.io/goauthentik/server:{{ authentik_version }}"
+authentik_dir: "/srv/authentik"

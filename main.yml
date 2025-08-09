@@ -6,14 +6,21 @@
   become_method: ansible.builtin.sudo
   hosts: all
   tasks:
+    - name: Ensure node configured
+      ansible.builtin.include_role:
+        name: node
+      tags: always
+
     - name: Ensure core role included
       ansible.builtin.include_role:
         name: core
       tags: always
+
     - name: Ensure storage role included
       ansible.builtin.include_role:
         name: storage
       tags: always
+
     - name: Ensure apps role included
       ansible.builtin.include_role:
         name: apps

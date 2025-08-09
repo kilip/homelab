@@ -1,0 +1,26 @@
+---
+- name: Ensure ssh dir exists
+  ansible.builtin.file:
+    path: "{{ ssh_dir }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0700"
+
+- name: Ensure ssh keys configured
+  ansible.builtin.copy:
+    content: "{{ lookup('community.sops.sops', 'ssh/' + item + '.sops') }}\n"
+    dest: "{{ ssh_dir }}/{{ item }}"
+    mode: "0600"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  with_items: "{{ ssh_keys }}"
+
+- name: Ensure ssh public key configured
+  ansible.builtin.copy:
+    content: "{{ lookup('community.sops.sops', 'ssh/' + item + '.pub.sops') }}\n"
+    dest: "{{ ssh_dir }}/{{ item }}.pub"
+    mode: "0600"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  with_items: "{{ ssh_keys }}"

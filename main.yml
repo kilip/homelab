@@ -14,3 +14,7 @@
       ansible.builtin.include_role:
         name: storage
       tags: always
+    - name: Ensure apps role included
+      ansible.builtin.include_role:
+        name: apps
+      tags: always

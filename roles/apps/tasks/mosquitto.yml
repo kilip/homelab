@@ -1,0 +1,27 @@
+---
+- name: Ensure mosquitto installed and configured
+  when: mosquitto
+  block:
+    - name: Ensure mosquitto installed
+      ansible.builtin.apt:
+        package: mosquitto
+        state: present
+
+    - name: Ensure mosquitto service started
+      ansible.builtin.service:
+        name: mosquitto
+        state: started
+      when: not ansible_check_mode
+
+    - name: Ensure mosquitto configuration copied
+      ansible.builtin.copy:
+        content: "{{ lookup('community.sops.sops', 'mosquitto/homelab.conf.sops') }}"
+        dest: "/etc/mosquitto/conf.d/homelab.conf"
+        mode: "0644"
+
+    - name: Ensure mosquitto password copied
+      ansible.builtin.copy:
+        content: "{{ lookup('community.sops.sops', 'mosquitto/mosquitto.pwd.sops') }}"
+        dest: "/etc/mosquitto/mosquitto.pwd"
+        mode: "0644"
+      notify: Restart mosquitto

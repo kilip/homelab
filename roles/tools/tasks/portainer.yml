@@ -1,0 +1,41 @@
+---
+- name: Ensure portainer facts configured
+  ansible.builtin.set_fact:
+    portainer_state: "{{ 'present' if portainer else 'absent' }}"
+
+- name: Set container image edition
+  ansible.builtin.set_fact:
+    portainer_image: "{{ portainer_ee_image if portainer_edition == 'ee' else portainer_ce_image }}"
+
+- name: Ensure portainer image pulled
+  community.docker.docker_image:
+    name: "{{ portainer_image }}"
+    source: pull
+  when: portainer
+
+- name: Ensure portainer container removed
+  community.docker.docker_container:
+    name: portainer
+    state: absent
+  when: not portainer
+
+- name: Ensure portainer container configured
+  when: portainer
+  community.docker.docker_container:
+    state: started
+    image_name_mismatch: recreate
+    name: portainer
+    image: "{{ portainer_image }}"
+    restart_policy: always
+    networks:
+      - name: "{{ docker_network }}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /srv/portainer:/data
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.portainer.entrypoints: websecure
+      traefik.http.routers.portainer.rule: "Host(`{{ portainer_hostname }}.{{ traefik_domain }}`)"
+      traefik.http.services.portainer.loadbalancer.server.port: "9000"
+      dockerdns.pihole.cname.domain: "portainer.{{ traefik_domain }}"
+      dockerdns.pihole.cname.target: "{{ full_hostname }}"

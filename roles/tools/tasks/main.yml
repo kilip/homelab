@@ -1,0 +1,7 @@
+---
+- name: Ensure portainer task included
+  ansible.builtin.include_tasks:
+    file: portainer.yml
+    apply:
+      tags: portainer
+  tags: portainer

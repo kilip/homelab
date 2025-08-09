@@ -1,0 +1,65 @@
+---
+- name: Ensure hass image pulled
+  community.docker.docker_image:
+    name: "{{ hass_image }}"
+    source: pull
+  when: hass
+
+- name: Ensure hass config repository cloned
+  ansible.builtin.git: # noqa: latest[git]
+    repo: "{{ hass_config_repo }}"
+    dest: "{{ hass_config_local_dir }}"
+    clone: true
+    accept_newhostkey: true
+    key_file: "{{ homelab_deploy_key }}"
+    force: true
+  when:
+    - hass_config_repo
+    - hass
+
+- name: Ensure hass postgres database configured
+  ansible.builtin.include_tasks: postgres-db.yml
+  vars:
+    db_user: "{{ hass_db_user }}"
+    db_pass: "{{ hass_db_password }}"
+    db_host: "{{ hass_db_host }}"
+    db_name: "{{ hass_db_name }}"
+  when: hass
+
+- name: Ensure hass container configured
+  when: hass
+  community.docker.docker_container:
+    state: started
+    image_name_mismatch: recreate
+    name: hass
+    image: "{{ hass_image }}"
+    capabilities:
+      - NET_ADMIN
+      - NET_RAW
+    devices: "{{ hass_devices }}"
+    env:
+      AUTOMATION_ENABLED: "yes"
+      DB_CONNECTION: "postgresql://{{ hass_db_user }}:{{ hass_db_password }}@{{ hass_db_host }}:{{ hass_db_port }}/{{ hass_db_name }}"
+      PGID: "1000"
+      PUID: "1000"
+      TZ: "Asia/Makassar"
+    volumes:
+      - "{{ hass_config_local_dir }}:/config"
+    networks:
+      - name: "{{ docker_network }}"
+    ports:
+      - 8123:8123
+    restart_policy: always
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.hass.entrypoints: websecure
+      traefik.http.routers.hass.rule: "Host(`hass.{{ traefik_domain }}`)"
+      traefik.http.services.hass.loadbalancer.server.port: "8123"
+      dockerdns.pihole.cname.domain: "hass.{{ traefik_domain }}"
+      dockerdns.pihole.cname.target: "{{ full_hostname }}"
+
+- name: Ensure hass container removed
+  when: not hass
+  community.docker.docker_container:
+    name: hass
+    state: absent

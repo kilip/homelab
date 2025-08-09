@@ -1,0 +1,24 @@
+authelia: ENC[AES256_GCM,data:nMVccQ==,iv:Kh0YUnHgu13jb+OdjowNRYV4ZkychbMLSwxdOXxHGqY=,tag:PIN+9qdO1IVwSuuZoIDxUg==,type:bool]
+authelia_db_user: ENC[AES256_GCM,data:SczSmkDU/W8=,iv:lqNiXlp8f2bwbL/3xlHuy5IwlbxYrjVsiIC0aZzL6fE=,tag:X4JPMxUtjyEKuXT/hma+RQ==,type:str]
+authelia_db_pass: ENC[AES256_GCM,data:GDW2YtZm70A4UfHHIQ9cJuwdYJqaTXr1HIPtOI47zOw=,iv:6L1d/Ms77w+88+V3aJQOhdPPcxNZ1RJaJIHdh+Dfmts=,tag:UZDuq04vlICPGpKNNNU5iw==,type:str]
+authelia_db_name: ENC[AES256_GCM,data:Y2BagKz/Sts=,iv:pBDKblPAmRnxn4SE9OycnbZ84ckMpdKd7BZ8DHbYMnE=,tag:QZfPXF/82L31fpOw0mPRFw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1fjy59ujj3j4e5l37wzsntvl288m06qyj97nujyklefw67eg5r9usuj4qxh
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTRnI2eS8wT1ZsS292UUpV
+            UjQvUksrOUZra0tHem5lT21ZOU9uMitRNXhjCllpam5kYWhROWdNRmpKUU84bHU0
+            NXhmU2RpMVljU2ZLdWVsWVVuSU13N3MKLS0tIDBLcmJ0d1VhQU5wL280dThUa1ZH
+            akswaFY0eFhHUTlyMk0vZEZKUFVIV1kKp0r49kng7el6WpEjFPr4FBZG5iISqWMU
+            KRMI8wuIotPLNsLAklGVkcCp5VgLTOh0x6+uYQqW+VWVIu/o+Q38eA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-08-09T16:00:26Z"
+    mac: ENC[AES256_GCM,data:G/PvtPaDiWrQg0uEZ24CUf1SOj6f5w7JQX4mYhlQAFxHVFrYBXbOa4/s5bwAf+h0sy2GRH2widSjYOg+cLMcq4uCMdF4jDPxBoq8XzDRsgCDsa6Tqu6abgkTwbkKopAFDjqZOqes443McdsVbXVxQTHWDD687y+AQqWyb1WfghM=,iv:qeFysaAhctpDClM8YbafRNHraOP7csFlGvg4N867exg=,tag:D+rcMmsZpuFAFl+eG/kRlQ==,type:str]
+    pgp: []
+    unencrypted_suffix: _unencrypted
+    version: 3.9.4

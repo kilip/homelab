@@ -3,7 +3,7 @@
   community.postgresql.postgresql_user:
     user: "{{ db_user }}"
     password: "{{ db_pass }}"
-    host: "{{ db_host }}"
+    host: "{{ pg_host }}"
     login_user: "{{ pg_user }}"
     login_password: "{{ pg_pass }}"
     state: present
@@ -12,7 +12,7 @@
 - name: Ensure postgres database configured
   community.postgresql.postgresql_db:
     name: "{{ db_name }}"
-    host: "{{ db_host }}"
+    host: "{{ pg_host }}"
     owner: "{{ db_user }}"
     login_user: "{{ pg_user }}"
     login_password: "{{ pg_pass }}"

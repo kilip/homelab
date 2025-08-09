@@ -1,0 +1,40 @@
+- name: Ensure authelia installed and configured
+  when: authelia
+  block:
+    - name: Ensure authelia database config
+      ansible.builtin.include_tasks: postgres-db.yml
+      vars:
+        db_user: "{{ authelia_db_user }}"
+        db_pass: "{{ authelia_db_pass }}"
+        db_name: "{{ authelia_db_name }}"
+
+    - name: Ensure authelia configuration copied
+      ansible.builtin.copy:
+        content: "{{ lookup('community.sops.sops', 'authelia.sops.yaml') }}"
+        dest: "{{ authelia_dir }}/config/configuration.yml"
+        mode: "0644"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Ensure authelia container started
+      community.docker.docker_container:
+        name: authelia
+        image: "authelia/authelia:{{ authelia_version }}"
+        volumes:
+          - "{{ authelia_dir }}/config:/config"
+        networks:
+          - name: "{{ docker_network }}"
+        labels:
+          traefik.enable: "true"
+          traefik.http.routers.authelia.rule: "Host(`auth.{{ traefik_domain }}`)"
+          traefik.http.routers.hass.entrypoints: websecure
+          traefik.http.routers.authelia.tls: "true"
+          traefik.http.routers.authelia.tls.options: "default"
+          traefik.http.middlewares.authelia.forwardauth.address: "http://authelia:9091/api/authz/forward-auth"
+          traefik.http.middlewares.authelia.forwardauth.trustForwardHeader: "true"
+          traefik.http.middlewares.authelia.forwardauth.authResponseHeaders: "Remote-User,Remote-Groups,Remote-Name,Remote-Email"
+        restart_policy: always
+        env:
+          PUID: "1000"
+          PGID: "1000"
+          TZ: "Asia/Makassar"

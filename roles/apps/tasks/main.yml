@@ -6,6 +6,13 @@
       tags: mosquitto
   tags: mosquitto
 
+- name: Ensure authelia tasks included
+  ansible.builtin.include_tasks:
+    file: authelia.yml
+    apply:
+      tags: authelia
+  tags: authelia
+
 - name: Ensure home assistant service configured
   ansible.builtin.include_tasks:
     file: hass.yml

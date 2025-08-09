@@ -1,0 +1,34 @@
+---
+- name: Ensure gpg required package installed
+  ansible.builtin.apt:
+    package:
+      - python3-packaging
+    state: present
+
+- name: Ensure gpg facts configured
+  ansible.builtin.set_fact:
+    gpg_source: "{{ item }}"
+    gpg_temp_key: "/tmp/backup.asc"
+
+- name: Ensure gpg key decrypted
+  ansible.builtin.copy:
+    content: "{{ lookup('community.sops.sops', item, input_type='binary', output_type='binary') }}"
+    dest: "{{ gpg_temp_key }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0600"
+  changed_when: false
+
+- name: Ensure gpg key imported
+  gpg_key:
+    file: "{{ gpg_temp_key }}"
+    state: present
+    trust: 5
+  become: true
+  become_user: toni
+
+- name: Ensure key deleted
+  ansible.builtin.file:
+    path: "{{ gpg_temp_key }}"
+    state: absent
+  changed_when: false

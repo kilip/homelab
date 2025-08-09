@@ -5,3 +5,12 @@
     apply:
       tags: ssh
   tags: ssh
+
+- name: Ensure gpg keys imported
+  ansible.builtin.include_tasks:
+    file: gpg.yml
+    apply:
+      tags: gpg
+  tags: gpg
+  with_items: "{{ gpg_keys }}"
+  when: not ansible_check_mode

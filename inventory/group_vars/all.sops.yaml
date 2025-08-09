@@ -8,6 +8,9 @@ pg_pass: ENC[AES256_GCM,data:RLdcQkb6Z4b22QtM3aI=,iv:Oc1WQQaGcEkRLm7iuODVeyETASf
 pg_db: ENC[AES256_GCM,data:rR8s3qX7GQ==,iv:KnTVdM6ZnfSvx0EgsvS7b8uqNI64VETCyGx40VoGmOQ=,tag:fDURrS1c391QqjQyef9nyw==,type:str]
 ssh_keys:
     - ENC[AES256_GCM,data:foomlJQ8Rw==,iv:Xt/X1TyXh2X5IZUnfMmyszmzqyW+To2iDCXw+9Ki5vg=,tag:9jKenq3VFnj2IFkMKzGQLQ==,type:str]
+gpg_keys:
+    - ENC[AES256_GCM,data:fbWUonIn9XZjFkDWXg==,iv:U3E4MwBFHcf1ndq7hhqMdiIHQgR0JELg+CJ1fsQSzlI=,tag:miGbahDtkw07L5BxxYdrXQ==,type:str]
+    - ENC[AES256_GCM,data:1zxZaC/MeEG7zq5yCg==,iv:cRCjW2032vPKMhi+mLjhPKN9mpINVtqCW+V2G3pzDcA=,tag:Ie7e7jFd19hqnBR87979aA==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -23,8 +26,8 @@ sops:
             blJWRkREZjk0cEhnTGt1eXRmcXJnWTAKP0H+4NblgYQ9cTw2e5Nkjg3v9LkDqaxW
             9HBfLWVvgykB+qjCyv3/56AwzID+mwGfoJvlAPGH9etVW09eCB1uBQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-08-09T07:50:44Z"
-    mac: ENC[AES256_GCM,data:1RAySSI7LeAtsP9l16UGPvQMWp/nDZS0mGcHHKtkDFWOsQIRUkNTBdvSMsh5IoTugtzq1YrL1SoREhml1kDze1lCO0a81nONgS/eOdn8wybiLZieq2ejV4ZeHMQC83chddoY8gMlHcxisLGw8bQZJ8F4WWoB4IOOly750RFeaqw=,iv:fXDib4ODke4SXuSXjlnx33j/ZbBtpmcrlkcGqlAO5pg=,tag:uSSrPVo4UxNFDL3sNuYh2Q==,type:str]
+    lastmodified: "2025-08-09T07:57:00Z"
+    mac: ENC[AES256_GCM,data:VON18aQDze6zxtKGkWLFo7wqFoe4PLvfyAjyqABf1mxjeY4gnKUaxyUEpAfVHtUOfbqcW1dLpufZ+3l8lj+WNap5moJuHYmF2wsFDky7t7Gs8yu+kUEqok4TgkzURmU1s5tS7TiaC+l0NSY1GHiWMeOuMENC9LGunSAv9oO9TT8=,iv:o44njtsU8HyjIsxK1+IRT5vFPBLnYfIaQJYP8NZkjxc=,tag:S1pKa8Sk7QvE0pI8VlxrZg==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.9.4

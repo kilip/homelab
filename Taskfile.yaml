@@ -1,7 +1,7 @@
 version: 3
 
 vars:
-  PLAYBOOK: "{{.USER_WORKING_DIR}}/.venv/bin/ansible-playbook"
+  PLAYBOOK: "ansible-playbook"
   INVENTORY: "inventory/hosts.ini"
   ANSIBLE: "{{.USER_WORKING_DIR}}/.venv/bin/ansible"
 
@@ -36,3 +36,6 @@ tasks:
     desc: Ping all available hosts
     cmds:
       - "{{.ANSIBLE}} -i {{.INVENTORY}} --one-line -m ping all"
+
+  converge:
+    cmd: molecule converge

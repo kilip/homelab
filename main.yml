@@ -25,3 +25,8 @@
       ansible.builtin.include_role:
         name: apps
       tags: always
+
+    - name: Ensure tools role included
+      ansible.builtin.include_role:
+        name: tools
+      tags: always

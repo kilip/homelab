@@ -5,3 +5,10 @@
     apply:
       tags: mosquitto
   tags: mosquitto
+
+- name: Ensure home assistant service configured
+  ansible.builtin.include_tasks:
+    file: hass.yml
+    apply:
+      tags: hass
+  tags: hass

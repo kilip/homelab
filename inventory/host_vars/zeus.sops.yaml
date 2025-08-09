@@ -1,4 +1,5 @@
 ansible_host: ENC[AES256_GCM,data:BGAERHF7AX8=,iv:PcOk1jot/gNAHE1DW0AbvJDTNC8qjqXEZ+AttGAAk10=,tag:9t9+7viUcLIlsdHFB+HqLQ==,type:str]
+full_hostname: ENC[AES256_GCM,data:0w/wHtMW7O4=,iv:hZ8jfA8n1CJLTmTeMGXKp+/i+z+jbdLWzMkkhl5qr28=,tag:OhzuFNF7E6KAY9cJpcR6PQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -14,8 +15,8 @@ sops:
             blJWRkREZjk0cEhnTGt1eXRmcXJnWTAKP0H+4NblgYQ9cTw2e5Nkjg3v9LkDqaxW
             9HBfLWVvgykB+qjCyv3/56AwzID+mwGfoJvlAPGH9etVW09eCB1uBQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-08-09T03:04:28Z"
-    mac: ENC[AES256_GCM,data:rPNGzCA0xt1Y+n/xnQSu5qCaX/K0GYn9Dn2wuJ5AiVWrDYW+cfQxavnEGA78ZdIhQgmmo2a0eMlgvUAtVuoieXmrx/0RA3pFqx15Q0sguus2btPTK2hQ1kgjfDUhWTHa/bgxJ3FJMODU39tMFv8c+9oWJdBEtJ2phPFK5Z9warc=,iv:lPuh+/Af300wSZotzQK04x7hBybz/Lqie8K20Djuny8=,tag:uov2f6BOneBbxDrh+KzlDQ==,type:str]
+    lastmodified: "2025-08-09T06:05:55Z"
+    mac: ENC[AES256_GCM,data:j9HIb6pc1uCq1j2U1cv72omDOULiZSSBkaGrpk7Wm4nkem3QxGYjYIZtZT8RqHLYcPvCXLHkmAfBPnjCRRzzV4O4CIj6oFwj2jhqX3+jjJjDVBWhKha5Gh4Z6rTTcvO1lfzWuPcmXkdIhFK0GW9L7IbscLo2WwdgqhWXC/RfO+Q=,iv:dgrBumikfNejzr5jC7W0K7yGUjhbNbqenZuctNM0XGE=,tag:OIsFPn/WiEkY7SjDg0KryA==,type:str]
     pgp: []
     unencrypted_suffix: _unencrypted
     version: 3.9.4

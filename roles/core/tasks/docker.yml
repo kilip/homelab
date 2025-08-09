@@ -2,3 +2,9 @@
 - name: Ensure docker roles tasks executed
   ansible.builtin.include_role:
     name: geerlingguy.docker
+
+- name: Ensure docker network created
+  community.docker.docker_network:
+    name: "{{ docker_network }}"
+    driver: bridge
+  tags: always

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "docker:enableMajor",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":skipStatusChecks",
+    ":timezone(Asia/Makassar)",
+    "github>kilip/homeplay//.github/renovate/labels.json5"
+  ],
+  "dependencyDashboardTitle": "Renovate Dashboard 🤖",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": ["Process various dependencies in YAML files"],
+      "managerFilePatterns": ["/.+\\.ya?ml$/"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*=?))?( versionTemplate=(?<versionTemplate>.*=?))?\\n.*: ?(\"?(?<currentValue>[^\"\\n]+=?)\"?)"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
+      "extractVersionTemplate": "{{#if versionTemplate}}{{{versionTemplate}}}{{else}}{{/if}}"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": ["Custom versioning for minio"],
+      "matchDatasources": ["docker"],
+      "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$",
+      "matchPackageNames": ["/minio/"],
+      "automerge": true,
+      "automergeType": "branch",
+      "automergeStrategy": "rebase",
+      "ignoreTests": true
+    },
+    {
+      "description": ["Custom versioning for pihole"],
+      "matchDatasources": ["docker"],
+      "versioning": "regex:(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)",
+      "matchPackageNames": ["/pihole/"],
+      "automerge": true,
+      "automergeType": "branch",
+      "automergeStrategy": "rebase",
+      "ignoreTests": true
+    },
+    {
+      "description": ["Custom versioning for qbittorrent"],
+      "matchDatasources": ["docker"],
+      "allowedVersions": "<14.0.0",
+      "matchPackageNames": ["/qbittorrent/"],
+      "automerge": true,
+      "automergeType": "branch",
+      "automergeStrategy": "rebase",
+      "ignoreTests": true
+    },
+    {
+      "description": "Auto-merge trusted container digests",
+      "matchDatasources": ["docker"],
+      "automerge": true,
+      "automergeType": "branch",
+      "matchUpdateTypes": ["digest"],
+      "automergeStrategy": "rebase",
+      "ignoreTests": true
+    }
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["* 23 * * *"],
+    "automerge": true,
+    "automergeType": "branch",
+    "automergeStrategy": "rebase",
+    "ignoreTests": true
+  },
+  "automergeSchedule": ["* 23 * * *"]
+}

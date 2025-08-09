@@ -15,3 +15,21 @@ tunnel_env: {}
 # renovate: datasource=docker depName=cloudflare/cloudflared
 tunnel_version: 2025.7.0
 tunnel_image: "cloudflare/cloudflared:{{ tunnel_version }}"
+
+traefik: false
+# renovate: datasource=docker depName=traefik
+traefik_version: v3.5.0
+traefik_image: "traefik:{{ traefik_version }}"
+traefik_dir: /srv/traefik
+traefik_email: admin@homelab.com
+traefik_domain: homelab.com
+traefik_username: admin
+traefik_hashed_password: change_me
+traefik_hostname: traefik
+traefik_cert_dir: "{{ traefik_dir }}/certs"
+traefik_secret_dir: "{{ trefik_dir }}/secret"
+traefik_ca_server: https://acme-staging-v02.api.letsencrypt.org/directory
+traefik_ca_storage: /certs/acme-staging.json
+traefik_config: false # true if has traefik config file
+cloudflare_email: admin@homeplay.com
+cloudflare_token: replace_with_your_cloudflare_token

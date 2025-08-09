@@ -1,0 +1,19 @@
+---
+# Areas
+area/docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "docs/**/*"
+          - "README.md"
+area/github:
+  - changed-files:
+      - any-glob-to-any-file: ".github/**/*"
+area/preflight:
+  - changed-files:
+      - any-glob-to-any-file: "preflight/**/*"
+area/service:
+  - changed-files:
+      - any-glob-to-any-file: "service/**/*"
+area/workstation:
+  - changed-files:
+      - any-glob-to-any-file: "service/**/*"

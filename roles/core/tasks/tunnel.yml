@@ -15,3 +15,5 @@
       - tunnel
       - run
     restart_policy: always
+    networks:
+      - name: "{{ docker_network }}"

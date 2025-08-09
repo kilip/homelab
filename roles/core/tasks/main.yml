@@ -22,3 +22,10 @@
       tags: tunnel
   tags: tunnel
   when: tunnel
+
+- name: Ensure traefik installed and configured
+  ansible.builtin.include_tasks:
+    file: traefik.yml
+    apply:
+      tags: traefik
+  tags: traefik

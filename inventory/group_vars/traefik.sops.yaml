@@ -1,0 +1,25 @@
+traefik: ENC[AES256_GCM,data:X+jTAA==,iv:PdgP9//t4f3m7o9CDds6QB3yTk4sbHrTlaqkEcVmeVc=,tag:nDogNHLb/pnnpspbNFLUUA==,type:bool]
+traefik_username: ENC[AES256_GCM,data:Hmkaaw==,iv:d8Lhmb1k0BZ0lTv7jvR5QSwbEExoX7LMJUEaji2s/9Y=,tag:YOVBXoCHSI/E5UANUe+PkQ==,type:str]
+traefik_hashed_password: ENC[AES256_GCM,data:ot/qcl5Y77lUEXzhKvbQdLdGCaDt1KP61dPpMdkRta2Su6UneQ==,iv:kCvx1mMUN0AQaAvUUdgm+OnZPw6Y7A9apSjhA4LR+NU=,tag:cQUgiXAtJICIjvGwyrfcOA==,type:str]
+traefik_email: ENC[AES256_GCM,data:lX464zqCx+7h0qGcEAg=,iv:kDvia+7bUBryxHx2rR9XcFWsLRRrNAQ2V7B/pgi3coA=,tag:BeM0d3gvndHJdocbg6Lnaw==,type:str]
+traefik_domain: ENC[AES256_GCM,data:IQDmfyGLx6NQPj8=,iv:8YIrOHoKNhyo5CVgpKtVxKp06PK5mHOv61ZQ4PLk+/I=,tag:Bcjd1Eq+VBii2g+h7pI8uQ==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1fjy59ujj3j4e5l37wzsntvl288m06qyj97nujyklefw67eg5r9usuj4qxh
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBLZndhcXd2Qk9OdmpXUlFo
+            U2w5eXA4Zmxpakl3Sk04RGp5U1pUYUFvd2pZClgvSlNwWVoxOWQrbkhrZTYxQVNN
+            NkdkSmZpaXcyaTZqYnBHYVdJTFFOYVEKLS0tIHBnWWcyWHpIQTFZUzM3QVRoaWxG
+            M2RSWXV2MGhtVVdjVzB1SWpVSzd3TkEKI7zYWx1A7EMUWPzhhkdaEv1I8fcMwmgx
+            vPzUSregK3weUsf0Aj3ldfF2eHQZhoMP0HgHO21WVSqw3k6ie5av1w==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-08-09T06:10:51Z"
+    mac: ENC[AES256_GCM,data:Lz/rk6+SrCtbJ3mCZSbowkl3kAfvOmQaCF88LIL7ACNOF0f0vRo3yhh4WlODBc0e156c/fCAiHL9HCDJTV0ck7pFLz3zkibbT2TnFcYXJiYb2hpAryJkcSHw/iw/4JHtssrfG5N+DlexRtGR1d2OKOyHxyRJt0HyGaHSA5FeK7M=,iv:+l14b+dBCcGvP74e6KwNEM2ZZVgH9e/pCaIIGj30paE=,tag:V/7NzsvjyBPboduxMf/gvA==,type:str]
+    pgp: []
+    unencrypted_suffix: _unencrypted
+    version: 3.9.4

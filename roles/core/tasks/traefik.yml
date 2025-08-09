@@ -1,0 +1,101 @@
+---
+- name: Ensure traefik image pulled
+  community.docker.docker_image:
+    name: "{{ traefik_image }}"
+    source: pull
+  when: traefik
+
+- name: Ensure traefik cert dirs exists
+  ansible.builtin.file:
+    path: "{{ traefik_cert_dir }}"
+    state: directory
+    owner: root
+    mode: u=rwx,g=rx,o=x
+  when: traefik
+
+- name: Ensure traefik secret dirs exists
+  ansible.builtin.file:
+    path: "{{ traefik_cert_dir }}"
+    state: directory
+    owner: root
+    mode: u=rwx,g=rx,o=x
+  when: traefik
+
+- name: Ensure traefik config file copied
+  ansible.builtin.copy:
+    content: "{{ lookup('community.sops.sops', traefik_config) }}"
+    dest: "{{ traefik_dir }}/traefik.yml"
+    mode: "0644"
+  notify: Restart traefik
+  when: traefik_config and traefik
+
+- name: Ensure traefik container configured
+  when: traefik
+  community.docker.docker_container:
+    state: started
+    image_name_mismatch: recreate
+    name: traefik
+    image: "{{ traefik_image }}"
+    restart_policy: always
+    env:
+      CF_API_EMAIL: "{{ cloudflare_email }}"
+      CF_DNS_API_TOKEN: "{{ cloudflare_token }}"
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - "{{ traefik_cert_dir }}:/certs:rw"
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /srv/traefik/secrets:/secrets
+      # - "{{ traefik_dir }}/traefik.yml:/custom.yml"
+    networks:
+      - name: "{{ docker_network }}"
+    command: >
+      --log.level=INFO
+      --providers.docker=true
+      --providers.docker.exposedbydefault=false
+      --api
+      --api.dashboard=true
+      --api.insecure=true
+      --certificatesresolvers.letsencrypt.acme.dnschallenge=true
+      --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
+      --certificatesResolvers.letsencrypt.acme.dnschallenge.resolvers=1.1.1.1:53,1.0.0.1:53
+      --certificatesResolvers.letsencrypt.acme.dnschallenge.delayBeforeCheck=20
+      --certificatesresolvers.letsencrypt.acme.email={{ traefik_email }}
+      --certificatesresolvers.letsencrypt.acme.storage={{ traefik_ca_storage }}
+      --certificatesresolvers.letsencrypt.acme.caserver={{ traefik_ca_server }}
+      --entrypoints.web.address=:80
+      --entrypoints.websecure.address=:443
+      --entrypoints.web.http.redirections.entrypoint.to=websecure
+      --entrypoints.web.http.redirections.entrypoint.scheme=https
+      --entrypoints.websecure.http.tls=true
+      --entrypoints.websecure.http.tls.certResolver=letsencrypt
+      --entrypoints.websecure.http.tls.domains[0].main"={{ traefik_domain }}"
+      --entrypoints.websecure.http.tls.domains[0].sans="*.{{ traefik_domain }}"
+    labels:
+      traefik.enable: "true"
+      traefik.http.middlewares.api-auth.basicauth.users: "{{ traefik_username }}:{{ traefik_hashed_password }}"
+      traefik.http.middlewares.redirect-to-https.redirectscheme.scheme: https
+      traefik.http.routers.http-catchall.entrypoints: web
+      traefik.http.routers.http-catchall.middlewares: redirect-to-https
+      traefik.http.routers.http-catchall.rule: hostregexp(`{host:.+}`)
+      traefik.http.routers.traefik.entryPoints: websecure
+      traefik.http.routers.traefik.middlewares: api-auth
+      traefik.http.routers.traefik.rule: "Host(`{{ inventory_hostname }}.{{ traefik_domain }}`)"
+      traefik.http.routers.traefik.service: api@internal
+      traefik.http.routers.traefik.tls.certresolver: letsencrypt
+      traefik.http.services.traefik.loadbalancer.server.port: "8080"
+      dockerdns.pihole.cname.domain: "{{ inventory_hostname }}.{{ traefik_domain }}"
+      dockerdns.pihole.cname.target: "{{ full_hostname }}"
+
+- name: Ensure traefik container cleaned
+  when: not traefik
+  block:
+    - name: Ensure traefik container removed
+      community.docker.docker_container:
+        name: traefik
+        state: absent
+    - name: Ensure traefik image removed
+      community.docker.docker_image:
+        name: "{{ traefik_image }}"
+        state: absent

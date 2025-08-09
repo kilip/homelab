@@ -1,0 +1,10 @@
+changelog:
+  exclude:
+    authors: []
+  categories:
+    - title: 🏕 Features
+      labels:
+        - '*'
+      exclude:
+        labels:
+          - dependencies

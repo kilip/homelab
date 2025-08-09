@@ -13,7 +13,7 @@ squid_cache_dir: /srv/squid
 tunnel: false
 tunnel_env: {}
 # renovate: datasource=docker depName=cloudflare/cloudflared
-tunnel_version: 2025.7.0
+tunnel_version: 2025.8.0
 tunnel_image: "cloudflare/cloudflared:{{ tunnel_version }}"
 
 traefik: false

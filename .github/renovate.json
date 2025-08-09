@@ -8,9 +8,11 @@
     ":semanticCommits",
     ":skipStatusChecks",
     ":timezone(Asia/Makassar)",
-    "github>kilip/homeplay//.github/renovate/labels.json5"
+    ":automerge"
   ],
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
+  "automerge": true,
+  "automergeSchedule": ["* 23 * * *"],
   "customManagers": [
     {
       "customType": "regex",
@@ -63,14 +65,5 @@
       "automergeStrategy": "rebase",
       "ignoreTests": true
     }
-  ],
-  "lockFileMaintenance": {
-    "enabled": true,
-    "schedule": ["* 23 * * *"],
-    "automerge": true,
-    "automergeType": "branch",
-    "automergeStrategy": "rebase",
-    "ignoreTests": true
-  },
-  "automergeSchedule": ["* 23 * * *"]
+  ]
 }

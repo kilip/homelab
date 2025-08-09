@@ -6,7 +6,8 @@
     },
     "ghcr.io/devcontainers/features/docker-in-docker:1": {
       "version": "latest",
-      "moby": true
-    }
+      "moby": false
+    },
+    "ghcr.io/eitsupi/devcontainer-features/go-task:1": {}
   }
 }

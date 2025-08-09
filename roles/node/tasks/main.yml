@@ -14,3 +14,17 @@
   tags: gpg
   with_items: "{{ gpg_keys }}"
   when: not ansible_check_mode
+
+- name: Ensure pass configured
+  ansible.builtin.include_tasks:
+    file: pass.yml
+    apply:
+      tags: pass
+  tags: pass
+
+- name: Ensure chezmoi configured
+  ansible.builtin.include_tasks:
+    file: chezmoi.yml
+    apply:
+      tags: chezmoi
+  tags: chezmoi

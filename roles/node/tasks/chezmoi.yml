@@ -1,0 +1,53 @@
+---
+- name: Ensure curl installed
+  ansible.builtin.apt:
+    package:
+      - curl
+    state: present
+
+- name: Check if chezmoi installed
+  ansible.builtin.stat:
+    path: "{{ chezmoi_bin }}"
+  register: chezmoi_bin
+
+- name: Ensure chezmoi downloaded
+  ansible.builtin.get_url:
+    url: "http://get.chezmoi.io"
+    dest: /tmp/chezmoi.sh
+    mode: "0775"
+  when: not chezmoi_bin.stat.exists
+
+- name: Ensure chezmoi installed
+  ansible.builtin.command:
+    cmd: sh -c /tmp/chezmoi.sh
+    creates: "/usr/bin/chezmoi"
+    chdir: /usr
+
+- name: Ensure chezmoi initialized
+  become: true
+  become_user: "{{ ansible_user }}"
+  block:
+    - name: Ensure sops key dir exists
+      ansible.builtin.file:
+        path: "{{ user_home }}/.config/sops/age"
+        state: directory
+        mode: "0775"
+
+    - name: Ensure sops key file generated
+      ansible.builtin.shell:
+        cmd: "pass show age/keys >> {{ user_home }}/.config/sops/age/keys.txt"
+        creates: "{{ user_home }}/.config/sops/age/keys.txt"
+      register: result
+
+    - name: Ensure pass repo cloned # noqa: latest[git]
+      ansible.builtin.git:
+        repo: "{{ chezmoi_repo }}"
+        clone: true
+        dest: "{{ user_home }}/.local/share/chezmoi"
+        key_file: "{{ homelab_deploy_key }}"
+        accept_newhostkey: true
+
+    - name: Ensure chezmoi initialized
+      ansible.builtin.command:
+        cmd: "chezmoi init --apply"
+        creates: "{{ user_home }}/.config/chezmoi/chezmoi.yaml"

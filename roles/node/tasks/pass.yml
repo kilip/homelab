@@ -1,0 +1,16 @@
+---
+- name: Ensure pass installed
+  ansible.builtin.apt:
+    package:
+      - pass
+    state: present
+
+- name: Ensure pass repo cloned # noqa: latest[git]
+  ansible.builtin.git:
+    repo: "{{ pass_repo }}"
+    clone: true
+    dest: "{{ pass_dir }}"
+    key_file: "{{ homelab_deploy_key }}"
+    accept_newhostkey: true
+  become: true
+  become_user: "{{ ansible_user }}"

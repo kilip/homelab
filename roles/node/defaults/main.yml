@@ -1,2 +1,11 @@
 ---
 ssh_dir: /home/{{ ansible_user }}/.ssh
+user_home: "/home/{{ ansible_user }}"
+
+pass_repo: git@github.com:kilip/password-store.git
+pass_dir: "{{ user_home }}/.password-store"
+pass_gpg_key: "/tmp/gpg-key-backup.asc"
+
+chezmoi_bin: /usr/bin/chezmoi
+chezmoi_repo: git@github.com:kilip/dotfiles.git
+chezmoi_use_age_key: true

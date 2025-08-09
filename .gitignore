@@ -1,0 +1,6 @@
+.venv
+.env
+age.key
+.decrypted*.sops.yaml
+.decrypted*.sops
+.ansible

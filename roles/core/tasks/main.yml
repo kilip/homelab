@@ -1,0 +1,3 @@
+---
+- name: Ensure docker tasks executed
+  ansible.builtin.include_tasks: docker.yml

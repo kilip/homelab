@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "**/*.yml": "ansible"
+  },
+  "ansible.python.interpreterPath": "/home/toni/code/homelab/.venv/bin/python",
+  "sops.defaults.ageKeyFile": "age.key"
+}

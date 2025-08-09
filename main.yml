@@ -1,0 +1,11 @@
+---
+- name: Ensure homelab converged
+  gather_facts: true
+  become: true
+  become_user: root
+  become_method: ansible.builtin.sudo
+  hosts: all
+  tasks:
+    - name: Ensure core role tasks executed
+      ansible.builtin.include_role:
+        name: core

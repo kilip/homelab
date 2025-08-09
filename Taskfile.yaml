@@ -1,0 +1,23 @@
+version: 3
+
+vars:
+  PLAYBOOK: "{{.USER_WORKING_DIR}}/.venv/bin/ansible-playbook"
+  INVENTORY: "inventory/hosts.ini"
+  ANSIBLE: "{{.USER_WORKING_DIR}}/.venv/bin/ansible"
+
+tasks:
+  deps:
+    desc: Install homelab dependencies
+    cmds:
+      - pass hl/age-key > age.key
+      - pip install -r requirements.txt
+      - ansible-galaxy install -f -r ./roles/requirements.yml
+
+  play:
+    desc: Start converging homelab
+    cmd: "{{.PLAYBOOK}} main.yml -i {{.INVENTORY}}"
+
+  ping:
+    desc: Ping all available hosts
+    cmds:
+      - "{{.ANSIBLE}} -i {{.INVENTORY}} --one-line -m ping all"

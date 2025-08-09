@@ -1,0 +1,14 @@
+---
+creation_rules:
+  - path_regex: .*\.sops\.yaml
+    key_groups:
+      - age:
+          - age1fjy59ujj3j4e5l37wzsntvl288m06qyj97nujyklefw67eg5r9usuj4qxh
+  - path_regex: .*\.sops\.ini
+    key_groups:
+      - age:
+          - age1fjy59ujj3j4e5l37wzsntvl288m06qyj97nujyklefw67eg5r9usuj4qxh
+  - path_regex: .*.sops
+    key_groups:
+      - age:
+          - age1fjy59ujj3j4e5l37wzsntvl288m06qyj97nujyklefw67eg5r9usuj4qxh

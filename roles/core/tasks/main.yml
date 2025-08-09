@@ -1,3 +1,24 @@
 ---
-- name: Ensure docker tasks executed
-  ansible.builtin.include_tasks: docker.yml
+- name: Ensure docker installed and configured
+  ansible.builtin.include_tasks:
+    file: docker.yml
+    apply:
+      tags: docker
+  tags: docker
+  when: docker
+
+- name: Ensure squid installed and configured
+  ansible.builtin.include_tasks:
+    file: squid.yml
+    apply:
+      tags: squid
+  tags: squid
+  when: squid
+
+- name: Ensure cloudflare tunnel installed and configured
+  ansible.builtin.include_tasks:
+    file: tunnel.yml
+    apply:
+      tags: tunnel
+  tags: tunnel
+  when: tunnel

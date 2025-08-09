@@ -1,0 +1,27 @@
+---
+- name: Ensure squid cache dir configured
+  ansible.builtin.file:
+    path: "{{ squid_cache_dir }}"
+    owner: proxy
+    group: proxy
+    recurse: true
+
+- name: Ensure squid installed
+  ansible.builtin.apt:
+    package:
+      - squid
+    state: present
+
+- name: Ensure squid started
+  ansible.builtin.service:
+    name: squid
+    state: started
+  when: not ansible_check_mode
+
+- name: Ensure squid configuration generated
+  ansible.builtin.template:
+    src: squid.conf.j2
+    dest: /etc/squid/squid.conf
+    backup: true
+    mode: "0644"
+  notify: Restart squid

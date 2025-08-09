@@ -1,2 +1,17 @@
 ---
-core_foo: "bar"
+# docker default setup
+docker: false
+docker_network: homelab
+dockerdns_env: {}
+docker_users:
+  - "{{ ansible_user }}"
+
+squid: false
+squid_cache_dir: /srv/squid
+
+# cloudflare tunnel
+tunnel: false
+tunnel_env: {}
+# renovate: datasource=docker depName=cloudflare/cloudflared
+tunnel_version: 2025.7.0
+tunnel_image: "cloudflare/cloudflared:{{ tunnel_version }}"

@@ -15,7 +15,22 @@ tasks:
 
   play:
     desc: Start converging homelab
-    cmd: "{{.PLAYBOOK}} main.yml -i {{.INVENTORY}}"
+    cmd: "{{.PLAYBOOK}} -i {{.INVENTORY}} {{.playbook}}{{.host}}{{.tags}}{{.skip}}{{.check}}{{.args}}"
+    vars:
+      host: "{{if .host}} -l {{.host}}{{end}}"
+      check: "{{if .check}} --check{{end}}"
+      tags: "{{if .tags}} --tags {{.tags}}{{end}}"
+      args: "{{if .CLI_ARGS}} {{.CLI_ARGS}}{{end}}"
+      skip: "{{if .skip}} --skip-tags {{.skip}}{{end}}"
+      playbook: main.yml
+
+  check:
+    desc: Check playbook
+    cmds:
+      - task: play
+        vars:
+          check: 1
+          playbook: main.yml
 
   ping:
     desc: Ping all available hosts

@@ -9,3 +9,4 @@
     - name: Ensure core role tasks executed
       ansible.builtin.include_role:
         name: core
+      tags: always

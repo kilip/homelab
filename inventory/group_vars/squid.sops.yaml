@@ -1,0 +1,22 @@
+squid: ENC[AES256_GCM,data:StNe1Q==,iv:9tQnsf9JdbMJOj09Sj/UGS/t6zUuHqGyVKhbkSpgN4U=,tag:2Xdzj0YHYPFUO/IFvLBgew==,type:bool]
+squid_cache_dir: ENC[AES256_GCM,data:v0+ICuAmNg0Wlw==,iv:CV3d9xQ1YfYo+/2RXOVpGsV4Lq7RaMtsc9X32jQOuJQ=,tag:FnCi2DCsCN06ubuLjAbVig==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1fjy59ujj3j4e5l37wzsntvl288m06qyj97nujyklefw67eg5r9usuj4qxh
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAxQXpSdGZFejVKM0U1VWJ4
+            TmRCRHpXMXRHK3NnT2JuTTZLQVFuVnhTNGhNCldZVmY2RGtDN1N5eGE4NTlCZEN0
+            eVoyYlBSWDJrQm9NV3Q5Y0xvT3RPdTAKLS0tIGpwTzlZcVh0SW1QMmJHWThVdHF1
+            TUw0ZGpaWnFGeVAxQVlic3kydG1xWmMKYipmn89QMQ4gX0hkmCIzHH1ZWMN8ObPI
+            KtbBuhw0sI2O5I6eNUQkyBA9ZuvMwCABMuNZlsILgHf1u413h8aExA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-08-09T04:54:27Z"
+    mac: ENC[AES256_GCM,data:SNzS0ybRjLZJb7CTU4j0PcI649IyQNM1SfAnGzaJFQ/IvMi4+OypyqzcXPtQzt9Cib4+CB2rtspR+PJEd7m6IJ+pTgxZGdi7A6SwU9iJeR0Ut31tQCMBELe9r600NmfrpEAo/pA0gLo72jQ4uufYbBtK/UUxuBnfOU87bX3bI84=,iv:H9OvwmLIPX9/N1L45PILYkMW2/oGuwC70uuRp1A+auk=,tag:MzHradRUaSL9ETHnirobww==,type:str]
+    pgp: []
+    unencrypted_suffix: _unencrypted
+    version: 3.9.4

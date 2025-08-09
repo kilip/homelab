@@ -1,5 +1,4 @@
 ---
-- name: Ensure docker configured
-  when: docker in group_names
+- name: Ensure docker roles tasks executed
   ansible.builtin.include_role:
     name: geerlingguy.docker

@@ -1,0 +1,17 @@
+---
+- name: Ensure cloudflare tunnel image pulled
+  community.docker.docker_image:
+    name: "{{ tunnel_image }}"
+    source: pull
+
+- name: Ensure cloudflare tunnel container configured
+  community.docker.docker_container:
+    state: started
+    image_name_mismatch: recreate
+    name: tunnel
+    image: "{{ tunnel_image }}"
+    env: "{{ tunnel_env }}"
+    command:
+      - tunnel
+      - run
+    restart_policy: always

@@ -1,0 +1,10 @@
+---
+- name: Ensure newrelic installed
+  ansible.builtin.include_role:
+    name: newrelic.newrelic_install
+  vars:
+    targets:
+      - infrastructure
+      - logs
+    install_timeout_seconds: 1000
+    verbosity: debug

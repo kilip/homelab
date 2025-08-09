@@ -8,12 +8,6 @@ area/docs:
 area/github:
   - changed-files:
       - any-glob-to-any-file: ".github/**/*"
-area/preflight:
+area/core:
   - changed-files:
-      - any-glob-to-any-file: "preflight/**/*"
-area/service:
-  - changed-files:
-      - any-glob-to-any-file: "service/**/*"
-area/workstation:
-  - changed-files:
-      - any-glob-to-any-file: "service/**/*"
+      - any-glob-to-any-file: "core/**/*"

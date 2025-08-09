@@ -4,11 +4,11 @@
   color: "0e8a16"
 - name: area/github
   color: "0e8a16"
-- name: area/preflight
-  color: "0e8a16"
 - name: area/service
   color: "0e8a16"
-- name: area/workstation
+- name: area/core
+  color: "0e8a16"
+- name: area/apps
   color: "ffc300"
 # Renovate Types
 - name: renovate/container

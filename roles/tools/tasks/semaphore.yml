@@ -16,8 +16,7 @@
       with_items:
         - semaphore/config
         - semaphore/data
-        - semaphore-runner/config
-        - semaphore-runner/data
+        - semaphore/tmp
 
     # - name: Ensure python requirements copied
     #  ansible.builtin.copy:
@@ -49,7 +48,7 @@
         volumes:
           - /srv/semaphore/data:/var/lib/semaphore
           - /srv/semaphore/config:/etc/semaphore
-          - /tmp/semaphore:/tmp/semaphore
+          - /srv/semaphore/tmp:/tmp/semaphore
         labels:
           traefik.enable: "true"
           traefik.http.routers.semaphore.entrypoints: websecure

@@ -1,6 +1,6 @@
 ---
 - name: Ensure authentik container configured
-  when: authentik
+  when: authentik and authentik_state == 'present'
   block:
     - name: Ensure authentik image pulled
       community.docker.docker_image:
@@ -68,6 +68,11 @@
         restart_policy: always
         networks:
           - name: "{{ docker_network }}"
+
+- name: Ensure container info gathered
+  community.docker.docker_container_info:
+    name: authentik
+  register: authentik_info
 
 - name: Ensure authentik cleaned up
   when: not authentik

@@ -30,3 +30,5 @@ authentik: false
 authentik_version: 2025.6.4
 authentik_image: "ghcr.io/goauthentik/server:{{ authentik_version }}"
 authentik_dir: "/srv/authentik"
+authentik_state: present
+authentik_env: {}

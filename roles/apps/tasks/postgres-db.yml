@@ -16,4 +16,5 @@
     owner: "{{ db_user }}"
     login_user: "{{ pg_user }}"
     login_password: "{{ pg_pass }}"
+    state: present
   when: not ansible_check_mode

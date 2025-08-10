@@ -16,6 +16,7 @@ portainer_hostname: portainer
 portainer_agent_version: 2.32.0
 portainer_agent_image: "portainer/agent:{{ portainer_agent_version }}"
 
+# renovate: datasource=docker depName=linuxserver/duplicati
 duplicati_version: latest@sha256:22bae5a2a80ef48c8b2833e6887f72566491c8d383c0656111f7fdf78012c575
 duplicati_encryption_key: secret
 duplicati_password: secret

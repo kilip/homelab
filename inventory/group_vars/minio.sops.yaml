@@ -1,0 +1,22 @@
+minio_user: ENC[AES256_GCM,data:lDo6KA==,iv:GRHuSxLme8H1NWTlU1SOL7V/4/5aoiV+gnuG00otOh0=,tag:3J5fYATGfEUPkkuZDyY8tg==,type:str]
+minio_pass: ENC[AES256_GCM,data:UX/VGSGDaFOn1HB3XNl5MvNUbustAFP3rQtlO+2IQa0=,iv:iIrZEoE03Pdb/tjX9FKlJUBQHT8RKZ3qSmAY8x3xLXc=,tag:O7H43MLiTskdg9xHvEUU/w==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1fjy59ujj3j4e5l37wzsntvl288m06qyj97nujyklefw67eg5r9usuj4qxh
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBMUm51SEFpb2ZPUXRhTDlU
+            cXFEQzRpcEgrSldVeGhPa1l4NnVPc0QzSmxVCjhCaDVMdkhmMG5qc0NITXdaVFUz
+            ODdGb3R4Uk9vOWk3RHFiNUw3blFROUEKLS0tIHMxUWgxSUpCeGNhV0hCQ21EWnFD
+            TjZ6Mjh6WENYVHovbE1UeEFWeTU1cmsKiHY6JSdfygcRHALAdpaO038SF1USir9x
+            m/wjvb07n7JEDk41lVXeyRyCI9GP5VEdytSPtK9OVhrMQAyGMlq9vg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-08-10T12:37:48Z"
+    mac: ENC[AES256_GCM,data:AdZ+N8lItyS5OOAbZ5Budt5A1uwEu5wLz3FCymM1CKOXiP7JVYS92GGkAAbNQmRrcf4MQvoU8SvYf0XncD4WzXq2k7TdXkGU31clijkGT1eiy9zHDnEPurEtt5kZZeag6SpSc1a3Ono8ZFwp5nRp4h2jKOKIt9xweGkgALd2XiI=,iv:KUR8CuWCUlyBzVBDRO7fiN06kvA8REL4MbGevlg9dRQ=,tag:oOuPHcddUUZ/LguUedpTeA==,type:str]
+    pgp: []
+    unencrypted_suffix: _unencrypted
+    version: 3.9.4

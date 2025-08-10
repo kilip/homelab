@@ -12,3 +12,10 @@
     apply:
       tags: redis
   tags: redis
+
+- name: Ensure minio task included
+  ansible.builtin.include_tasks:
+    file: minio.yml
+    apply:
+      tags: minio
+  tags: minio

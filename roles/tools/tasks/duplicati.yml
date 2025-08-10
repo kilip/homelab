@@ -1,0 +1,32 @@
+---
+- name: Ensure duplicati facts configured
+  ansible.builtin.set_fact:
+    duplicati: "{{ true if 'duplicati' in group_names else false }}"
+
+- name: Ensure duplicati container installed and configured
+  when: duplicati
+  block:
+    - name: Ensure duplicati container started
+      community.docker.docker_container:
+        name: duplicati
+        image: "linuxserver/duplicati:{{ duplicati_version }}"
+        state: started
+        env:
+          PUID: "0"
+          PGID: "0"
+          TZ: "Asia/Makassar"
+          SETTINGS_ENCRYPTION_KEY: "{{ duplicati_encryption_key }}"
+          DUPLICATI__WEBSERVICE_PASSWORD: "{{ duplicati_password }}"
+        restart_policy: unless-stopped
+        networks:
+          - name: "{{ docker_network }}"
+        volumes:
+          - "/srv/duplicati/config:/config"
+          - "/:/source:ro"
+        labels:
+          traefik.enable: "true"
+          traefik.http.routers.duplicati.entrypoints: websecure
+          traefik.http.routers.duplicati.rule: "Host(`duplicati.{{ traefik_domain }}`)"
+          traefik.http.services.duplicati.loadbalancer.server.port: "8200"
+          dockerdns.pihole.cname.domain: "duplicati.{{ traefik_domain }}"
+          dockerdns.pihole.cname.target: "{{ full_hostname }}"

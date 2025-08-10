@@ -5,3 +5,10 @@
     apply:
       tags: portainer
   tags: portainer
+
+- name: Ensure duplicati task included
+  ansible.builtin.include_tasks:
+    file: duplicati.yml
+    apply:
+      tags: duplicati
+  tags: duplicati

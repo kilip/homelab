@@ -27,7 +27,7 @@
         labels:
           traefik.enable: "true"
           traefik.http.routers.authelia.rule: "Host(`auth.{{ traefik_domain }}`)"
-          traefik.http.routers.hass.entrypoints: websecure
+          traefik.http.routers.authelia.entrypoints: websecure
           traefik.http.routers.authelia.tls: "true"
           traefik.http.routers.authelia.tls.options: "default"
           traefik.http.middlewares.authelia.forwardauth.address: "http://authelia:9091/api/authz/forward-auth"

@@ -10,21 +10,19 @@
       ansible.builtin.file:
         path: "/srv/{{ item }}"
         state: directory
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
-        mode: "0755"
+        mode: "0777"
       with_items:
         - semaphore/config
         - semaphore/data
         - semaphore/tmp
 
-    - name: Ensure python requirements copied
-      ansible.builtin.copy:
-        src: requirements.txt
-        dest: /srv/semaphore/config/requirements.txt
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
-        mode: "0644"
+    # - name: Ensure python requirements copied
+    #  ansible.builtin.copy:
+    #    src: requirements.txt
+    #    dest: /srv/semaphore/config/requirements.txt
+    #    owner: "{{ ansible_user }}"
+    #    group: "{{ ansible_user }}"
+    #     mode: "0644"
 
     - name: Ensure semaphore db configured
       ansible.builtin.include_role:
@@ -39,7 +37,7 @@
     - name: Ensure semaphore container started
       community.docker.docker_container:
         name: semaphore
-        image: "semaphoreui/semaphore:{{ semaphore_version }}"
+        image: "semaphoreui/semaphore:{{ semaphore_version }}-ansible2.16.5"
         state: started
         env: "{{ semaphore_env }}"
         networks:
@@ -49,6 +47,7 @@
           - /srv/semaphore/data:/var/lib/semaphore
           - /srv/semaphore/config:/etc/semaphore
           - /srv/semaphore/tmp:/tmp/semaphore
+          - /srv/semaphore/local:/.local
         labels:
           traefik.enable: "true"
           traefik.http.routers.semaphore.entrypoints: websecure

@@ -1,4 +1,4 @@
-ansible>=2.19
+ansible>=2.10
 ansible-lint
 molecule
 molecule-docker

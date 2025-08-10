@@ -39,7 +39,7 @@
     - name: Ensure semaphore container started
       community.docker.docker_container:
         name: semaphore
-        image: "semaphoreui/semaphore:{{ semaphore_version }}"
+        image: "ghcr.io/kilip/semaphore:{{ semaphore_version }}"
         image_name_mismatch: recreate
         state: started
         env: "{{ semaphore_env }}"

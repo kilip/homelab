@@ -42,7 +42,6 @@
         env: "{{ semaphore_env }}"
         networks:
           - name: "{{ docker_network }}"
-        user: 1000:1000
         volumes:
           - /srv/semaphore/data:/var/lib/semaphore
           - /srv/semaphore/config:/etc/semaphore

@@ -9,7 +9,7 @@
     - name: Ensure minio container configured
       community.docker.docker_container:
         name: minio
-        image: "minio/minio:{{ minio_version }}"
+        image: "quay.io/minio/minio:{{ minio_version }}"
         state: started
         env:
           MINIO_ROOT_USER: "{{ minio_user }}"

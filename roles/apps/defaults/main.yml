@@ -20,7 +20,7 @@ hass_devices: []
 authelia: false
 authelia_dir: /srv/authelia
 # renovate: datasource=docker depName=authelia/authelia
-authelia_version: latest@sha256:08776367d54d4482c54ac8ca75b18f7db3287b751106e19736780c5f6811374d
+authelia_version: 4.39.6
 authelia_db_user: authelia
 authelia_db_pass: authelia
 authelia_db_name: authelia

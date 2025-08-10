@@ -10,19 +10,21 @@
       ansible.builtin.file:
         path: "/srv/{{ item }}"
         state: directory
-        mode: "0777"
+        mode: "0755"
+        owner: "1001"
+        group: "1001"
       with_items:
         - semaphore/config
         - semaphore/data
         - semaphore/tmp
 
-    # - name: Ensure python requirements copied
-    #  ansible.builtin.copy:
-    #    src: requirements.txt
-    #    dest: /srv/semaphore/config/requirements.txt
-    #    owner: "{{ ansible_user }}"
-    #    group: "{{ ansible_user }}"
-    #     mode: "0644"
+    - name: Ensure python requirements copied
+      ansible.builtin.copy:
+        src: requirements.txt
+        dest: /srv/semaphore/config/requirements.txt
+        owner: "1001"
+        group: "1001"
+        mode: "0644"
 
     - name: Ensure semaphore db configured
       ansible.builtin.include_role:
@@ -37,7 +39,8 @@
     - name: Ensure semaphore container started
       community.docker.docker_container:
         name: semaphore
-        image: "semaphoreui/semaphore:{{ semaphore_version }}-ansible2.16.5"
+        image: "semaphoreui/semaphore:{{ semaphore_version }}"
+        image_name_mismatch: recreate
         state: started
         env: "{{ semaphore_env }}"
         networks:

@@ -20,3 +20,8 @@ portainer_agent_image: "portainer/agent:{{ portainer_agent_version }}"
 duplicati_version: latest@sha256:22bae5a2a80ef48c8b2833e6887f72566491c8d383c0656111f7fdf78012c575
 duplicati_encryption_key: secret
 duplicati_password: secret
+
+# renovate: datasource=docker depName=semaphoreui/semaphore
+semaphore_version: v2.15.0
+semaphore_env: {}
+sempahore_runner_env: {}

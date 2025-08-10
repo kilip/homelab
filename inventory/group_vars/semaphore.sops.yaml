@@ -1,0 +1,46 @@
+semaphore_env:
+    SEMAPHORE_DB_DIALECT: ENC[AES256_GCM,data:Q71HjWg9d8M=,iv:qH6ObLaF7uwRZcXb1pOFTDvtzJgvBfZ+DS3RmyqS9C0=,tag:fxH4tYsD/9MNIV72bibeZA==,type:str]
+    SEMAPHORE_DB_HOST: ENC[AES256_GCM,data:Y2g/lg+jTeg=,iv:QaRBLKG+FkEkm3WSyTzyaC4x53UoT+zHgiPMkLSfRx8=,tag:rV+np6J4jxJAfKoNbzEC2w==,type:str]
+    SEMAPHORE_DB_NAME: ENC[AES256_GCM,data:M+vuSfNbyMi6,iv:CqETchJmu+Q8kac83/ZVi1lDEFOZq3DbZoke23EDhDI=,tag:hhpZevECH4fco2kvuO3lxg==,type:str]
+    SEMAPHORE_DB_USER: ENC[AES256_GCM,data:E2ull1jiqWzq,iv:WC2Ts7BaIehYEBHa30LPT5+wS5Ffwjcz7FVPVKwSqoA=,tag:RYg7hzJ6yD84Tb1onHS32A==,type:str]
+    SEMAPHORE_DB_PASS: ENC[AES256_GCM,data:3JgSSHJbSwC0njecv73akFnxh+nl5IhYbsxSEqK6tRg=,iv:1+059Z+QW1tk+XE5qnNXXg9zC69KV9KcFoFPbNupVnw=,tag:bshousRYnB9dAl821i2BeA==,type:str]
+    SEMAPHORE_ADMIN: ENC[AES256_GCM,data:hRooiw==,iv:p9hlLzn0VPv2f680bgv6e0x4TunvV5YjchcuM7zD/iI=,tag:YBIa87/ArqOqe/3/HAOa9w==,type:str]
+    SEMAPHORE_ADMIN_PASSWORD: ENC[AES256_GCM,data:SJlckJ8jQOd/GKemQuNdOBmvEiQibuYA6PvBQddPvIE=,iv:qmNSwj79OM2BWBJd70ln3bBRuBWGwVcfNfvsPchbhVo=,tag:DcCPClX37vzx5744Gba9pQ==,type:str]
+    SEMAPHORE_ADMIN_NAME: ENC[AES256_GCM,data:ZfpnQnk6W41csJwR359k7A==,iv:xuPi0vmxSiUxAK26r+j3SpBEHtjdm3h2zlbArEHeQ6w=,tag:4N3sB0AOVDvHFfjaOsrasQ==,type:str]
+    SEMAPHORE_ADMIN_EMAIL: ENC[AES256_GCM,data:0og8OcFluQAmsuExLCE=,iv:uEpzrqG6YyJHCorGtRk/kqVTL/MTYfbz82/Hgc+58BQ=,tag:iO5UOc/Pw8nwjIv1/cH+mw==,type:str]
+    SEMAPHORE_EMAIL_SENDER: ENC[AES256_GCM,data:VzetInqP7E6IuYaSFTI=,iv:DnbiqCErXyjgisH516fMMH6SHIbXxZaG/NDatVP+qKg=,tag:LI2jMeJtNIdYixavD2ZukA==,type:str]
+    SEMAPHORE_EMAIL_HOST: ENC[AES256_GCM,data:e7keUwcppUWnes8AqVo=,iv:ylfnNTrgZKA1JLuHyC2im2iiOgLTHGgFgpAAXPv2pFM=,tag:mM8v0KeFnBbDZTCeh2BoVQ==,type:str]
+    SEMAPHORE_EMAIL_PORT: ENC[AES256_GCM,data:/sIQ,iv:AVDHFPWtaKYeVc1m7wmKjfm0N/DjK47nhbSCjfJGSjw=,tag:mWkUfn+Its9dyKof+78qBQ==,type:str]
+    SEMAPHORE_EMAIL_USERNAME: ENC[AES256_GCM,data:1wbXGnJk6vLN8YyVL1k=,iv:7mDmBAk302GbC8riRVGmaB1obCOXhMffagezrfg09VU=,tag:nLkiK4kAugiiPfS+uVyb0Q==,type:str]
+    SEMAPHORE_EMAIL_PASSWORD: ENC[AES256_GCM,data:igGbNowBEWQ363Kc5XW/cA==,iv:/+/BQH0wI0lsd03L7HsoiscvBmhYKtHzDnZypy8CYa0=,tag:isXu3HDkHt/N40KlSBh2hQ==,type:str]
+    SEMAPHORE_EMAIL_SECURE: ENC[AES256_GCM,data:/dv42g==,iv:DWPDJyf/PQKi18PZERV4Ss/MLgOV6YJMmrSHG9sS67Q=,tag:gQTALC+CZ1c02gycGvExzg==,type:str]
+    SEMAPHORE_TELEGRAM_ALERT: ENC[AES256_GCM,data:smLBeQ==,iv:S01lgxpeLnaeNObhcAzQk9dHDikWKR4tBVw5RF2UvtY=,tag:IsnWyQIGwFJjKu3uSWoiJQ==,type:str]
+    SEMAPHORE_TELEGRAM_CHAT: ENC[AES256_GCM,data:9hwgYM1fW4JLHTCkFiY=,iv:9GfH+CFd90h6OA+D26H9unmETtQ9fs+fF3fhtl4EoL0=,tag:8qB7aTbpj3GdPrNFoOMgbg==,type:str]
+    SEMAPHORE_TELEGRAM_TOKEN: ENC[AES256_GCM,data:vwhaQJ4IDGgR36PDwVR1sCj9AKDNrwufQw2pYxu23I5p59ksNgfHgWVF3sMmVQ==,iv:CGQzAuLZdISyv0Ip7JQnlWZtzuM/uHnegram+O/63Ss=,tag:ctJtx9z+RH8PpWUJAJlgAw==,type:str]
+    ANSIBLE_HOST_KEY_CHECKING: ENC[AES256_GCM,data:HOHUfR4=,iv:bcw/czkPUf2YtrJh4BmfGwReiJiMZ+RHAiWXtupBMzA=,tag:Re/z6HMpDHnX3h31u+39cA==,type:str]
+    SEMAPHORE_DB_OPTIONS: ENC[AES256_GCM,data:Nquk/ZRytHSpIRQU7zOeR7laKHjn,iv:aqSJ7Yl8WdU91HfTF/OFoy2yCcAltjD0law6cEAq7AU=,tag:Z0ewglINblMHG7RqJRDJoQ==,type:str]
+semaphore_runner_env:
+    SEMAPHORE_RUNNER_PRIVATE_KEY_FILE: ENC[AES256_GCM,data:DW6ZlmW6nXpecUlzPLBGFSE3to9d7Oa2C6FfaY0=,iv:UZVJwt8580aJcGXQLsXnddSRZFSmG3jojIm8GZFVEI0=,tag:h887k6lGPW3+3iP+qnFsoA==,type:str]
+    SEMAPHORE_WEB_ROOT: ENC[AES256_GCM,data:RTn6v6ghCoBvIKH3UK4/TXyY9lYn,iv:DE5uhUQlzF1oMp8Kr7j5IHNs1lg2HnqEZYkLdwsPrn4=,tag:NV761MQYVt4D5qXPtxBYcg==,type:str]
+    SEMAPHORE_RUNNER_TOKEN: ENC[AES256_GCM,data:CutIfOPDm4oVSQ0++4/kQ3OAD21aazSaup25HDJdi/kZMcBynbdG+/IGocI=,iv:pYpVY02jkgQDRQ2idqQkl5Y35n27RMBG/uaIuXsQPAo=,tag:FhylGvwHiZmgJuCC6OZZJA==,type:str]
+    ANSIBLE_HOST_KEY_CHECKING: ENC[AES256_GCM,data:TYpBeSM=,iv:mU3sVgWaoMBXwkpuyTLsr5zdndWNtE5rzxE/0TWuDJY=,tag:B27UjA+K605o0L9Qs5nsKg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1fjy59ujj3j4e5l37wzsntvl288m06qyj97nujyklefw67eg5r9usuj4qxh
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBPY1dCY2g5Y2ZrTytiMWIy
+            Skw2K29nRjI2Nmx1TjF6UUFvb0RCcUs0YTJJCjlxMDMvNkxOczZOZ09GbnJ1bE5W
+            aUo4N0RERVRCL09GK0hWYVBDZk5rMFEKLS0tIC9zWlJvSXpvd1Y1SFdCMkJoK3cy
+            TlZpUENENlNsM1MwUUw4TU1sK0pYQW8Ktfw8Xf/4Kj1EnrABEW3BEMfbhrIG4NAz
+            /PqWu+SDlPWO+L7AxXOQAr3k5HBroWT0LhFcwQV09x9wwgM0p5ZYng==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-08-10T15:21:33Z"
+    mac: ENC[AES256_GCM,data:R2lpoJmSjaY0a15m99CjhFdDHTEuxy9fV7tpu8BjAiLL4VldxPRytSptdGLZSEYy2FvFbLORMTFA5ha4lhMml9GGZQyAqO4a+Tx1JoU15oNLEfbTWm4I1bX8ZlyruPx4THtrmmWZ04Ka0dMvvrLsve9ZsZqR/x8BxAJufktXaJk=,iv:5v8+xvcUVCLE4YZ1vV5L/Q2dHdPNH/fs0M8xM0hXEbo=,tag:auXtySIwpeL8vnfxRMtPpQ==,type:str]
+    pgp: []
+    unencrypted_suffix: _unencrypted
+    version: 3.9.4

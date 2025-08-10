@@ -1,0 +1,59 @@
+---
+- name: Ensure semaphore facts configured
+  ansible.builtin.set_fact:
+    semaphore: "{{ true if 'semaphore' in group_names else false }}"
+
+- name: Ensure semaphore installed and configured
+  when: semaphore
+  block:
+    - name: Ensure semaphore persistent dir exists
+      ansible.builtin.file:
+        path: "/srv/{{ item }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: "0755"
+      with_items:
+        - semaphore/config
+        - semaphore/data
+        - semaphore-runner/config
+        - semaphore-runner/data
+
+    # - name: Ensure python requirements copied
+    #  ansible.builtin.copy:
+    #    src: requirements.txt
+    #    dest: /srv/semaphore/config/requirements.txt
+    #    owner: "{{ ansible_user }}"
+    #    group: "{{ ansible_user }}"
+    #    mode: "0644"
+
+    - name: Ensure semaphore db configured
+      ansible.builtin.include_role:
+        name: apps
+        tasks_from: postgres-db.yml
+      vars:
+        db_user: "{{ semaphore_env.SEMAPHORE_DB_USER }}"
+        db_pass: "{{ semaphore_env.SEMAPHORE_DB_PASS }}"
+        db_host: "{{ semaphore_env.SEMAPHORE_DB_HOST }}"
+        db_name: "{{ semaphore_env.SEMAPHORE_DB_NAME }}"
+
+    - name: Ensure semaphore container started
+      community.docker.docker_container:
+        name: semaphore
+        image: "semaphoreui/semaphore:{{ semaphore_version }}"
+        state: started
+        env: "{{ semaphore_env }}"
+        networks:
+          - name: "{{ docker_network }}"
+        user: 1000:1000
+        volumes:
+          - /srv/semaphore/data:/var/lib/semaphore
+          - /srv/semaphore/config:/etc/semaphore
+          - /tmp/semaphore:/tmp/semaphore
+        labels:
+          traefik.enable: "true"
+          traefik.http.routers.semaphore.entrypoints: websecure
+          traefik.http.routers.semaphore.rule: "Host(`semaphore.{{ traefik_domain }}`)"
+          traefik.http.services.semaphore.loadbalancer.server.port: "3000"
+          dockerdns.pihole.cname.domain: "semaphore.{{ traefik_domain }}"
+          dockerdns.pihole.cname.target: "{{ full_hostname }}"

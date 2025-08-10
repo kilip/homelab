@@ -12,3 +12,10 @@
     apply:
       tags: duplicati
   tags: duplicati
+
+- name: Ensure semaphore task included
+  ansible.builtin.include_tasks:
+    file: semaphore.yml
+    apply:
+      tags: semaphore
+  tags: semaphore

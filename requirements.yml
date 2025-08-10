@@ -5,3 +5,5 @@ collections:
   - community.docker
   - community.sops
   - community.postgresql
+roles:
+  - name: geerlingguy.docker

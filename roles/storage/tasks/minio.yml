@@ -17,7 +17,7 @@
           MINIO_DEFAULT_BUCKETS: "homelab"
           MINIO_BROWSER_REDIRECT_URL: https://minio.itstoni.com
           MINIO_API_CORS_ALLOW_ORIGIN: "*"
-
+        restart_policy: unless-stopped
         networks:
           - name: "{{ docker_network }}"
         volumes:
@@ -42,5 +42,7 @@
           traefik.http.routers.s3.service: s3
           traefik.http.routers.s3.rule: "Host(`s3.{{ traefik_domain }}`)"
           traefik.http.services.s3.loadbalancer.server.port: "9000"
-          dockerdns.pihole.cname.domain: "s3.{{ traefik_domain }}"
-          dockerdns.pihole.cname.target: "{{ full_hostname }}"
+          dockerdns.pihole.cname.0.domain: "s3.{{ traefik_domain }}"
+          dockerdns.pihole.cname.0.target: "{{ full_hostname }}"
+          dockerdns.pihole.cname.1.domain: "minio.{{ traefik_domain }}"
+          dockerdns.pihole.cname.1.target: "{{ full_hostname }}"

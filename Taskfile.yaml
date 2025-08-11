@@ -11,7 +11,7 @@ tasks:
     cmds:
       - pass hl/age-key > age.key
       - pip install -r requirements.txt
-      - ansible-galaxy install -f -r ./roles/requirements.yml
+      - ansible-galaxy install -f -r requirements.yml
 
   play:
     desc: Start converging homelab

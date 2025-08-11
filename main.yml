@@ -4,6 +4,10 @@
   become_user: root
   become_method: ansible.builtin.sudo
   hosts: all
+  environment:
+    NEW_RELIC_API_KEY: "{{ nr_api_key }}"
+    NEW_RELIC_ACCOUNT_ID: "{{ nr_account_id }}"
+    NEW_RELIC_REGION: "{{ nr_region }}"
   tasks:
     - name: Ensure node configured
       ansible.builtin.include_role:

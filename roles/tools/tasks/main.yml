@@ -19,3 +19,17 @@
     apply:
       tags: semaphore
   tags: semaphore
+
+- name: Ensure newrelic installed
+  when: newrelic
+  ansible.builtin.include_role:
+    name: newrelic.newrelic_install
+    apply:
+      tags: newrelic
+  vars:
+    targets:
+      - infrastructure
+      - logs
+    install_timeout_seconds: 1000
+    verbosity: debug
+  tags: newrelic

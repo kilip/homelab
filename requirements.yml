@@ -7,3 +7,4 @@ collections:
   - community.postgresql
 roles:
   - name: geerlingguy.docker
+  - name: newrelic.newrelic_install

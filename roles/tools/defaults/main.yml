@@ -25,3 +25,5 @@ duplicati_password: secret
 semaphore_version: v2.15.7
 semaphore_env: {}
 sempahore_runner_env: {}
+
+newrelic: false

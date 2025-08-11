@@ -19,8 +19,6 @@ jobs:
       - name: Setup workflow variables
         shell: bash
         id: vars
-        env:
-          GITHUB_TOKEN: "${{ secrets.GH_PAT }}"
         run: |
           # Retrieve previous release tag
           previous_tag="$(gh release list --limit 1 | awk '{ print $1 }')"
@@ -46,7 +44,7 @@ jobs:
       - name: Create Release
         shell: bash
         env:
-          GITHUB_TOKEN: "${{ secrets.GH_PAT }}"
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           RELEASE_TAG: "${{ steps.vars.outputs.release_tag }}"
         run: |
           gh release create "${RELEASE_TAG}" \
@@ -57,13 +55,13 @@ jobs:
         id: changelog
         uses: requarks/changelog-action@v1
         with:
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           toTag: ${{ steps.vars.outputs.previous_tag }}
           fromTag: ${{ steps.vars.outputs.release_tag }}
 
       - name: Update release changelog
         env:
-          GITHUB_TOKEN: "${{ secrets.GH_PAT }}"
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           RELEASE_TAG: "${{ steps.vars.outputs.release_tag }}"
         run: |
           gh release edit \

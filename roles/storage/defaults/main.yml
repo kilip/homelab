@@ -9,7 +9,7 @@ pg_db: homelab
 pg_host: homelab
 
 # renovate: datasource=docker depName=redis
-redis_version: 8.2.0
+redis_version: 8.2.1
 redis_image: "redis:{{ redis_version }}-alpine"
 
 # renovate: datasource=docker depName=quay.io/minio/minio

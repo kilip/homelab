@@ -13,7 +13,7 @@ portainer_ce_image: "portainer/portainer-ce:{{ portainer_ce_version }}"
 portainer_hostname: portainer
 
 # renovate: datasource=docker depName=portainer/agent
-portainer_agent_version: 2.33.0
+portainer_agent_version: 2.33.1
 portainer_agent_image: "portainer/agent:{{ portainer_agent_version }}"
 
 # renovate: datasource=docker depName=linuxserver/duplicati

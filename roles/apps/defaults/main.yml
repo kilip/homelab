@@ -27,7 +27,7 @@ authelia_db_name: authelia
 
 authentik: false
 # renovate: datasource=docker depName=ghcr.io/goauthentik/server
-authentik_version: 2025.8.1
+authentik_version: 2025.8.4
 authentik_image: "ghcr.io/goauthentik/server:{{ authentik_version }}"
 authentik_dir: "/srv/authentik"
 authentik_state: present

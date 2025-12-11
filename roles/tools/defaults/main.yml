@@ -4,7 +4,7 @@ portainer_edition: ce
 portainer_agent: false
 
 # renovate: datasource=docker depName=portainer/portainer-ee
-portainer_ee_version: 2.36.0
+portainer_ee_version: 2.37.0
 portainer_ee_image: "portainer/portainer-ee:{{ portainer_ee_version }}"
 
 # renovate: datasource=docker depName=portainer/portainer-ce

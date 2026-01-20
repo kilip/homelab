@@ -1,3 +1,6 @@
 {
-  "recommendations": ["redhat.ansible"]
+  "recommendations": [
+    "redhat.ansible",
+    "signageos.signageos-vscode-sops"
+  ]
 }

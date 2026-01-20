@@ -13,7 +13,7 @@
 
     - name: Ensure postgres data dir exists
       ansible.builtin.file:
-        path: "/srv/postgres"
+        path: "/srv/postgres/18"
         state: directory
         mode: "0755"
 
@@ -28,13 +28,15 @@
         networks:
           - name: "{{ docker_network }}"
         volumes:
-          - "/srv/postgres:/var/lib/postgresql/data/pgdata"
+          - "/srv/postgres/18:/pgdata/18"
+          - "/srv/postgres/17:/pgdata/17"
+          - "/srv/postgres/backup:/pgdata/backup"
         restart_policy: always
         env:
           POSTGRES_USER: "{{ pg_user }}"
           POSTGRES_PASSWORD: "{{ pg_pass }}"
           POSTGRES_DB: "{{ pg_db }}"
-          PGDATA: /var/lib/postgresql/data/pgdata
+          PGDATA: /pgdata/18
 
     - name: Ensure postgis extension installed
       community.postgresql.postgresql_ext:

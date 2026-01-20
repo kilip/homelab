@@ -14,7 +14,7 @@
     key_file: "{{ homelab_deploy_key }}"
     force: true
   when:
-    - hass_config_repo
+    - hass_config_repo != ""
     - hass
 
 - name: Ensure hass postgres database configured

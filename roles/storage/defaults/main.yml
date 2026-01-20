@@ -1,7 +1,7 @@
 ---
 postgres: false
 # renovate: datasource=docker depName=postgis/postgis
-pg_version: latest@sha256:012923f3849715b414cd252d6aadc7843cad6804b13fc3af32a582edfdacc132
+pg_version: 18-3.6-alpine
 pg_image: "postgis/postgis:{{ pg_version }}"
 pg_user: homelab
 pg_pass: homelab

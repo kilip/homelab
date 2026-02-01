@@ -13,7 +13,7 @@ redis_version: 8.4.0
 redis_image: "redis:{{ redis_version }}-alpine"
 
 # renovate: datasource=docker depName=quay.io/minio/minio
-minio_version: RELEASE.2025-07-23T15-54-02Z
+minio_version: RELEASE.2025-09-07T16-13-09Z
 minio: false
 minio_user: minio
 minio_pass: minio

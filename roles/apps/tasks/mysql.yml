@@ -11,7 +11,7 @@
     - name: Deploy mysql container
       community.docker.docker_container:
         name: mysql
-        image: mariadb:10.11
+        image: mariadb:12.2
         state: started
         restart_policy: always
         command:

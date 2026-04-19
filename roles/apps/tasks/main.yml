@@ -26,3 +26,17 @@
     apply:
       tags: hass
   tags: hass
+
+- name: Ensure trillium service configured
+  ansible.builtin.include_tasks:
+    file: trilium.yml
+    apply:
+      tags: trilium
+  tags: trilium
+
+- name: Ensure zabbix service configured
+  ansible.builtin.include_tasks:
+    file: zabbix.yml
+    apply:
+      tags: zabbix
+  tags: zabbix

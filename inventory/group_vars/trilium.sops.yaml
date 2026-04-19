@@ -1,0 +1,16 @@
+trilium: ENC[AES256_GCM,data:rzveokU=,iv:8/ZwHIBRaPK3RaiN3TA8ETb58YDWx7BCpSWajXIx8AE=,tag:zGNROEwuP7kZNORAkKu7iA==,type:bool]
+sops:
+    age:
+        - recipient: age1fjy59ujj3j4e5l37wzsntvl288m06qyj97nujyklefw67eg5r9usuj4qxh
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBLZndhcXd2Qk9OdmpXUlFo
+            U2w5eXA4Zmxpakl3Sk04RGp5U1pUYUFvd2pZClgvSlNwWVoxOWQrbkhrZTYxQVNN
+            NkdkSmZpaXcyaTZqYnBHYVdJTFFOYVEKLS0tIHBnWWcyWHpIQTFZUzM3QVRoaWxG
+            M2RSWXV2MGhtVVdjVzB1SWpVSzd3TkEKI7zYWx1A7EMUWPzhhkdaEv1I8fcMwmgx
+            vPzUSregK3weUsf0Aj3ldfF2eHQZhoMP0HgHO21WVSqw3k6ie5av1w==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-04-18T07:55:17Z"
+    mac: ENC[AES256_GCM,data:hupniJS4VwUFwNtMKWa0zJW4U4AhgfNYj82inOd4FTqRGqLgR5BFpY/njdiappZimWg0OU/hajTv5ptHhWxRj9gyA1AvqcS1GH8DA+leRDMjVzc6zwDRJD2RBCuQwzqEW1MEDfrvdGkGFhGLZfAQkeM5cEsF29WUoHRc5bVxRRM=,iv:+8ZuNiDE40C1G5aMa5539ers7Y+Po3/bguQLqYwlnx0=,tag:hVk6qJQD8PdGhUYZ4xRPYA==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.12.2

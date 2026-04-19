@@ -32,3 +32,10 @@ authentik_image: "ghcr.io/goauthentik/server:{{ authentik_version }}"
 authentik_dir: "/srv/authentik"
 authentik_state: present
 authentik_env: {}
+
+trilium: false
+
+zabbix: false
+zabbix_db_user:
+zabbix_db_pass:
+zabbix_db_name:

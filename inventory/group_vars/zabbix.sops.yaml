@@ -1,0 +1,19 @@
+zabbix: ENC[AES256_GCM,data:Q7ksgA==,iv:VT8b1nQIipViWVqQjkom7hG7S8ROTQzwkNbflDeeHxk=,tag:50h9F1nSvj+CZ693tGEXZA==,type:bool]
+zabbix_db_user: ENC[AES256_GCM,data:tN9j64C+,iv:8Ga+WEoEfjAdp4EC12CojNIROismDWXt+mAO1lAlte8=,tag:cS3ioflyYzk/NZOCGr6MbA==,type:str]
+zabbix_db_pass: ENC[AES256_GCM,data:+qsc3LGP,iv:d4btc0/vd+swr2dylmQnzIQ2AvOFFIxXQRYeVF2iLQo=,tag:95a4AnHQ83PLFiiH7ONpug==,type:str]
+zabbix_db_name: ENC[AES256_GCM,data:xG8whLAk,iv:qLg5CdduTpuEncUZwI1iUjgBeqs8aebM6vSc9prKvQI=,tag:qK3/OrArnEZGCWxtjI8u3g==,type:str]
+sops:
+    age:
+        - recipient: age1fjy59ujj3j4e5l37wzsntvl288m06qyj97nujyklefw67eg5r9usuj4qxh
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBLZndhcXd2Qk9OdmpXUlFo
+            U2w5eXA4Zmxpakl3Sk04RGp5U1pUYUFvd2pZClgvSlNwWVoxOWQrbkhrZTYxQVNN
+            NkdkSmZpaXcyaTZqYnBHYVdJTFFOYVEKLS0tIHBnWWcyWHpIQTFZUzM3QVRoaWxG
+            M2RSWXV2MGhtVVdjVzB1SWpVSzd3TkEKI7zYWx1A7EMUWPzhhkdaEv1I8fcMwmgx
+            vPzUSregK3weUsf0Aj3ldfF2eHQZhoMP0HgHO21WVSqw3k6ie5av1w==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-04-18T08:53:40Z"
+    mac: ENC[AES256_GCM,data:oF0AyssXk6MwGgJ3iQ1E0HsuIZ8pOfAJduFWZL1GWhSO+IyctkWfZJWPB1mQnw9iIbVX7W8/meJyOnixHAS7shBvdtyDk/+J3+aCV8f6aXnh+KV5jHc3MwyD4a1XCn2nF8RbtZ4bBP3lyvFq4MB430eUz4uwz8HYRNoqesZzlNY=,iv:lgM5pgIOQJTyOkxnb4lYoZV8oYXrQPlePVxYxBJ0DTk=,tag:IKILOCpLkZuKjO3KVSFRNA==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.12.2

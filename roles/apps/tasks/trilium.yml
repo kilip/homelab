@@ -1,0 +1,43 @@
+---
+- name: Ensure trilium notes installed
+  when: trilium
+  block:
+    - name: Ensure Toni trilium notes container started
+      community.docker.docker_container:
+        name: trilium-toni
+        image: "triliumnext/notes:latest"
+        volumes:
+          - "/srv/trilium/toni:/data"
+        networks:
+          - name: "{{ docker_network }}"
+        labels:
+          traefik.enable: "true"
+          traefik.http.routers.trilium1.entrypoints: websecure
+          traefik.http.routers.trilium1.service: trilium2
+          traefik.http.routers.trilium1.rule: "Host(`notes1.{{ traefik_domain }}`)"
+          traefik.http.services.trilium1.loadbalancer.server.port: "8080"
+        restart_policy: always
+        env:
+          PUID: "1000"
+          PGID: "1000"
+          TZ: "Asia/Makassar"
+    - name: Ensure Bety trilium notes container started
+      community.docker.docker_container:
+        name: trilium-bety
+        image: "triliumnext/notes:latest"
+        volumes:
+          - "/srv/trilium/bety:/data"
+        networks:
+          - name: "{{ docker_network }}"
+        labels:
+          traefik.enable: "true"
+          traefik.http.routers.trilium2.entrypoints: websecure
+          traefik.http.routers.trilium2.service: notes2
+          traefik.http.routers.trilium2.rule: "Host(`notes2.{{ traefik_domain }}`)"
+          traefik.http.services.trilium2.loadbalancer.server.port: "8080"
+
+        restart_policy: always
+        env:
+          PUID: "1000"
+          PGID: "1000"
+          TZ: "Asia/Makassar"

@@ -19,3 +19,8 @@
     apply:
       tags: minio
   tags: minio
+
+- name: Ensure mysql tasks included
+  ansible.builtin.include_tasks:
+    file: mysql.yml
+  tags: mysql

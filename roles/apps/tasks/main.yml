@@ -1,4 +1,11 @@
 ---
+- name: Ensure librenms service configured
+  ansible.builtin.include_tasks:
+    file: librenms.yml
+    apply:
+      tags: librenms
+  tags: librenms
+
 - name: Ensure mosquitto tasks included
   ansible.builtin.include_tasks:
     file: mosquitto.yml
@@ -13,12 +20,12 @@
       tags: authentik
   tags: authentik
 
-# - name: Ensure authelia tasks included
-#   ansible.builtin.include_tasks:
-#    file: authelia.yml
-#    apply:
-#      tags: authelia
-#  tags: authelia
+- name: Ensure mysql service configured
+  ansible.builtin.include_tasks:
+    file: mysql.yml
+    apply:
+      tags: mysql
+  tags: mysql
 
 - name: Ensure home assistant service configured
   ansible.builtin.include_tasks:

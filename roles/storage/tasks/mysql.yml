@@ -1,0 +1,37 @@
+---
+- name: Ensure mysql installed and configured
+  when: mysql
+  block:
+    - name: Ensure python mysql lib installed
+      ansible.builtin.apt:
+        name:
+          - python3-mysqldb
+          - python3-pymysql # pymysql is often used for Ansible's mysql modules
+        state: present
+      tags: always
+
+    - name: Ensure mysql data dir exists
+      ansible.builtin.file:
+        path: "/srv/mysql/8" # Using /srv/mysql/8 similar to postgres /srv/postgres/18
+        state: directory
+        mode: "0755"
+
+    - name: Ensure mysql container started
+      community.docker.docker_container:
+        name: mysql
+        image: "{{ mysql_image }}"
+        image_name_mismatch: recreate
+        state: started
+        ports:
+          - 3306:3306
+        networks:
+          - name: "{{ docker_network }}"
+        volumes:
+          - "/srv/mysql/8:/var/lib/mysql" # Standard MySQL data path within container
+        restart_policy: always
+        env:
+          MYSQL_ROOT_PASSWORD: "{{ mysql_root_password }}"
+          MYSQL_DATABASE: "{{ mysql_db }}"
+          MYSQL_USER: "{{ mysql_user }}"
+          MYSQL_PASSWORD: "{{ mysql_pass }}"
+          # Optional: Add other env vars if needed, e.g., for character set

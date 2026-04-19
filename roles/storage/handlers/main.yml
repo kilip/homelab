@@ -1,0 +1,7 @@
+---
+# homelab/roles/storage/handlers/main.yml
+- name: restart mysql container
+  community.docker.docker_container:
+    name: mysql
+    state: restarted
+  when: mysql is defined and mysql

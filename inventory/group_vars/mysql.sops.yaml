@@ -1,0 +1,21 @@
+mysql_root_user: ENC[AES256_GCM,data:AWZRnA==,iv:jJAawy0Klqu714x3Lu2eW1Vij1dpgUOtmKZoqd1ZFk0=,tag:pF1rlRXke7p8LwyUquj47A==,type:str]
+mysql_root_pass: ENC[AES256_GCM,data:8DmOWK+ifUGUde64uXjHj0Yb4X0FJKCkCJFL5R9OfQ==,iv:p1RCbiQOoPLpkE8UYuFIB1uXnqZ+7uc7l53KO8jCcMc=,tag:UOzSt/CExL1Zh+oLGwEW7Q==,type:str]
+mysql_user: ENC[AES256_GCM,data:o4DAIw==,iv:+U3gshl2L0/M9qAT+3z3NG8FcsWV4G1Pc2Jr6fCstbI=,tag:E2p6kzphWOGHByeq3OlpSQ==,type:str]
+mysql_pass: ENC[AES256_GCM,data:tFJZ6JgnNHQjy9fcAKFqMWDJ+jHAM7KXoEO0gv9IjL0=,iv:WrZKJGYPJHHjxKMBlCitaiR37zE+Tzg6ioe0BFXEN3k=,tag:kp99SIT+4hbSKWzRxRXvUQ==,type:str]
+mysql_db: ENC[AES256_GCM,data:2TxEfQ==,iv:FdgXMJyRXJtcHRIlcfNz4EG5fLQV2XgYwoP2119eHZA=,tag:2wT5WvPNRuJkLQYApzpXdQ==,type:str]
+mysql_host: ENC[AES256_GCM,data:F/ktR84sG1IU,iv:pqtBERClfyQvkpHh61wzO7l3XRIP7XIyOUNwelpTR9w=,tag:rvMrE7Q9gDUGFlCYyR7fcA==,type:str]
+sops:
+    age:
+        - recipient: age1fjy59ujj3j4e5l37wzsntvl288m06qyj97nujyklefw67eg5r9usuj4qxh
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAwZTRjeVhwUDQ4ejgwQ2Vm
+            WkVHclVTSmF5bkMxK25XOEtXWmt1Z1plRlVvCnVNZzlteFR6MTVwSXk0KzVQNUdi
+            QklvajlWMis5VDg1cmxpVjlKeWt5OUkKLS0tIFlWajhwT1R5UW5mVnZhdEUzeWRH
+            T0ZOd253dUVQNzk5OHhqRjRmcTcxZDQKbETMdZevnOgxhRwWSQh6fh2T60Y51GtI
+            GNQZNH/3oj86yJvEa19Mtt6xlVhuUvZzKuDNt5/I01abcXpHpAPzAg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-04-19T07:32:14Z"
+    mac: ENC[AES256_GCM,data:MaXszlrRDGOnO2+NOpi8FJ8YLPz8hq/D7NWlZ5OKFS12CCVZ+gbcTHqyyJh+2sI8dYYZXEdpXmxehPkANAY+e4c8oEHyn4icYNEqDerlm20jjWFNTZObkngpAAgHNq6slz8m4YERT5Ve9iEguVuQdCWI9FtoPwKZcnVwIo22bno=,iv:5TvWlqKDxcz53ZyOe3F//XkPiYlZWKHkxN95sn7CNJE=,tag:h9Dl+oUYbEnl6O1T5gs2Zg==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.12.2

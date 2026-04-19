@@ -1,0 +1,32 @@
+---
+- name: Ensure mysql service configured
+  when: mysql | default(false)
+  block:
+    - name: Create mysql directory
+      ansible.builtin.file:
+        path: /opt/mysql
+        state: directory
+        mode: "0755"
+
+    - name: Deploy mysql container
+      community.docker.docker_container:
+        name: mysql
+        image: mariadb:10.11
+        state: started
+        restart_policy: always
+        command:
+          - mysqld
+          - --innodb-file-per-table=1
+          - --lower-case-table-names=1
+          - --character-set-server=utf8mb4
+          - --collation-server=utf8mb4_unicode_ci
+        env:
+          MARIADB_DATABASE: "{{ mysql_db }}"
+          MARIADB_USER: "{{ mysql_user }}"
+          MARIADB_PASSWORD: "{{ mysql_pass }}"
+          MARIADB_ROOT_PASSWORD: "{{ mysql_root_pass }}"
+        volumes:
+          - /opt/mysql:/var/lib/mysql
+        ports:
+          - "3306:3306"
+

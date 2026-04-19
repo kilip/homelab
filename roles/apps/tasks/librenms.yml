@@ -1,63 +1,50 @@
 ---
-- name: Create librenms directories
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
-  loop:
-    - /opt/librenms
-    - /opt/librenms/db
-    - /opt/librenms/data
+- name: Ensure librenms service configured
+  when: librenms | default(false)
+  block:
+    - name: Ensure librenms database exists
+      community.mysql.mysql_db:
+        login_host: "{{ librenms_db_host }}"
+        login_user: root
+        login_password: "{{ mysql_root_pass }}"
+        name: "{{ librenms_db_name }}"
+        state: present
 
-- name: Deploy librenms containers
-  community.docker.docker_compose_v2:
-    project_name: librenms
-    definition:
-      services:
-        db:
-          image: mariadb:10.11
-          container_name: librenms_db
-          command:
-            - mysqld
-            - --innodb-file-per-table=1
-            - --lower-case-table-names=1
-            - --character-set-server=utf8mb4
-            - --collation-server=utf8mb4_unicode_ci
-          volumes:
-            - /opt/librenms/db:/var/lib/mysql
-          environment:
-            TZ: UTC
-            MARIADB_DATABASE: librenms
-            MARIADB_USER: librenms
-            MARIADB_PASSWORD: "{{ mysql_pass }}"
-            MARIADB_ROOT_PASSWORD: "{{ mysql_root_pass }}"
-          restart: always
+    - name: Ensure librenms user exists
+      community.mysql.mysql_user:
+        login_host: "{{ librenms_db_host }}"
+        login_user: root
+        login_password: "{{ mysql_root_pass }}"
+        name: "{{ librenms_db_user }}"
+        password: "{{ librenms_db_pass }}"
+        priv: "{{ librenms_db_name }}.*:ALL"
+        state: present
 
-        redis:
-          image: redis:7-alpine
-          container_name: librenms_redis
-          restart: always
+    - name: Create librenms directory
+      ansible.builtin.file:
+        path: /srv/librenms
+        state: directory
+        mode: "0755"
 
-        librenms:
-          image: librenms/librenms:latest
-          container_name: librenms
-          hostname: librenms
-          ports:
-            - "8000:8000"
-          volumes:
-            - /opt/librenms/data:/data
-          depends_on:
-            - db
-            - redis
-          environment:
-            TZ: UTC
-            PUID: 1000
-            PGID: 1000
-            DB_HOST: db
-            DB_NAME: librenms
-            DB_USER: librenms
-            DB_PASSWORD: "{{ mysql_pass }}"
-            REDIS_HOST: redis
-          restart: always
+    - name: Deploy librenms container
+      community.docker.docker_container:
+        name: librenms
+        image: librenms/librenms:26.3.1
+        state: started
+        restart_policy: always
+        env:
+          DB_HOST: "{{ librenms_db_host }}"
+          DB_NAME: "{{ librenms_db_name }}"
+          DB_USER: "{{ librenms_db_user }}"
+          DB_PASSWORD: "{{ librenms_db_pass }}"
+        volumes:
+          - /srv/librenms:/data
+        networks:
+          - name: "{{ docker_network }}"
+        labels:
+          traefik.enable: "true"
+          traefik.http.routers.librenms.entrypoints: websecure
+          traefik.http.routers.librenms.rule: "Host(`librenms.{{ traefik_domain }}`)"
+          traefik.http.services.librenms.loadbalancer.server.port: "80"
+          dockerdns.pihole.cname.domain: "librenms.{{ traefik_domain }}"
+          dockerdns.pihole.cname.target: "{{ full_hostname }}"

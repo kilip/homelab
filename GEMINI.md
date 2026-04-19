@@ -36,7 +36,7 @@ The project uses `Taskfile` to simplify common operations.
 - **`task ping`**: Pings all hosts in the inventory to check connectivity.
 - **`task converge`**: Runs Molecule to test and validate roles.
 
-> **Note:** To enable an application on a specific host, add the host to the relevant group in `inventory/hosts.ini` (e.g., adding a host under `[mysql]` will enable the MySQL role for that host).
+> **Note:** To enable an application on a specific host, add the host to the relevant group in `inventory/hosts.ini` (e.g., adding a host under `[mysql]` will enable the MySQL role for that host). Application configurations in `defaults/main.yml` must remain `false` by default, and secrets/activation should be managed via encrypted `.sops.yaml` files.
 
 ### Prerequisites
 - Ansible and `task` installed.

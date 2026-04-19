@@ -39,3 +39,9 @@ zabbix: false
 zabbix_db_user:
 zabbix_db_pass:
 zabbix_db_name:
+
+librenms: false
+librenms_db_user: librenms
+librenms_db_pass: librenms
+librenms_db_name: librenms
+librenms_db_host: mysql

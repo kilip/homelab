@@ -12,9 +12,17 @@
 
     - name: Ensure mysql data dir exists
       ansible.builtin.file:
-        path: "/srv/mysql/8" # Using /srv/mysql/8 similar to postgres /srv/postgres/18
+        path: "/srv/mysql/8"
         state: directory
         mode: "0755"
+
+    - name: Ensure mysql init script exists
+      ansible.builtin.copy:
+        dest: "/srv/mysql/init.sql"
+        content: |
+          CREATE USER IF NOT EXISTS 'toni'@'%' IDENTIFIED BY '{{ mysql_pass }}';
+          GRANT ALL PRIVILEGES ON *.* TO 'toni'@'%' WITH GRANT OPTION;
+          FLUSH PRIVILEGES;
 
     - name: Ensure mysql container started
       community.docker.docker_container:
@@ -23,15 +31,16 @@
         image_name_mismatch: recreate
         state: started
         ports:
-          - 3306:3306
+          - "3306:3306"
         networks:
           - name: "{{ docker_network }}"
         volumes:
-          - "/srv/mysql/8:/var/lib/mysql" # Standard MySQL data path within container
+          - "/srv/mysql/8:/var/lib/mysql"
+          - "/srv/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql"
         restart_policy: always
         env:
           MYSQL_ROOT_PASSWORD: "{{ mysql_root_password }}"
           MYSQL_DATABASE: "{{ mysql_db }}"
           MYSQL_USER: "{{ mysql_user }}"
           MYSQL_PASSWORD: "{{ mysql_pass }}"
-          # Optional: Add other env vars if needed, e.g., for character set
+

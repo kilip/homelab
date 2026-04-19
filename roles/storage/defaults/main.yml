@@ -19,10 +19,10 @@ minio_user: minio
 minio_pass: minio
 
 mysql: false
-mysql_image: "mysql:8"
+# renovate: datasource=docker depName=mysql
+mysql_image: mysql:8.0.41
 mysql_container_name: "mysql"
 mysql_port: 3306
-
 mysql_root_password: "CHANGEME_MYSQL_ROOT_PASSWORD"
 mysql_db: "default_mysql_database"
 mysql_user: "default_mysql_user"

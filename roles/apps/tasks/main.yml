@@ -20,13 +20,6 @@
       tags: authentik
   tags: authentik
 
-- name: Ensure mysql service configured
-  ansible.builtin.include_tasks:
-    file: mysql.yml
-    apply:
-      tags: mysql
-  tags: mysql
-
 - name: Ensure home assistant service configured
   ansible.builtin.include_tasks:
     file: hass.yml

@@ -1,3 +1,4 @@
+mysql: ENC[AES256_GCM,data:tzqStw==,iv:FovL5WBJHMcZfJjQu/6BUqGyW+Ug94hI0YwHiQTaBlI=,tag:rcSn3BOsrKt6c6eSE8jHyg==,type:bool]
 mysql_root_user: ENC[AES256_GCM,data:AWZRnA==,iv:jJAawy0Klqu714x3Lu2eW1Vij1dpgUOtmKZoqd1ZFk0=,tag:pF1rlRXke7p8LwyUquj47A==,type:str]
 mysql_root_pass: ENC[AES256_GCM,data:8DmOWK+ifUGUde64uXjHj0Yb4X0FJKCkCJFL5R9OfQ==,iv:p1RCbiQOoPLpkE8UYuFIB1uXnqZ+7uc7l53KO8jCcMc=,tag:UOzSt/CExL1Zh+oLGwEW7Q==,type:str]
 mysql_user: ENC[AES256_GCM,data:o4DAIw==,iv:+U3gshl2L0/M9qAT+3z3NG8FcsWV4G1Pc2Jr6fCstbI=,tag:E2p6kzphWOGHByeq3OlpSQ==,type:str]
@@ -15,7 +16,7 @@ sops:
             T0ZOd253dUVQNzk5OHhqRjRmcTcxZDQKbETMdZevnOgxhRwWSQh6fh2T60Y51GtI
             GNQZNH/3oj86yJvEa19Mtt6xlVhuUvZzKuDNt5/I01abcXpHpAPzAg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-04-19T07:32:14Z"
-    mac: ENC[AES256_GCM,data:MaXszlrRDGOnO2+NOpi8FJ8YLPz8hq/D7NWlZ5OKFS12CCVZ+gbcTHqyyJh+2sI8dYYZXEdpXmxehPkANAY+e4c8oEHyn4icYNEqDerlm20jjWFNTZObkngpAAgHNq6slz8m4YERT5Ve9iEguVuQdCWI9FtoPwKZcnVwIo22bno=,iv:5TvWlqKDxcz53ZyOe3F//XkPiYlZWKHkxN95sn7CNJE=,tag:h9Dl+oUYbEnl6O1T5gs2Zg==,type:str]
+    lastmodified: "2026-04-19T07:38:41Z"
+    mac: ENC[AES256_GCM,data:pNtJJOhJ6NBLqhcvPlKt/p8peg2X3swx0RtZI9xueOib0lYhDGQyupya94QM95ACJwmiMAzW7yqmVNBhsGj4I4MW20JS5Y2d5QUXqYRu5nwUXkMba9jpW75oWiqhQSFTVlCZyGMlKpycbH2wPdrbPLEQG0TxiGWNtB/I0s9g/yQ=,iv:JatdobF7CbAqel/doKx9sxoz8mY3hgzM2239XGNSg58=,tag:E4TxSsxT1FMLGe8/DRishg==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.12.2

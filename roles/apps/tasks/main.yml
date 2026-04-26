@@ -6,6 +6,13 @@
       tags: librenms
   tags: librenms
 
+- name: Ensure homarr service configured
+  ansible.builtin.include_tasks:
+    file: homarr.yml
+    apply:
+      tags: homarr
+  tags: homarr
+
 - name: Ensure mosquitto tasks included
   ansible.builtin.include_tasks:
     file: mosquitto.yml

@@ -21,6 +21,7 @@
         login_password: "{{ mysql_pass }}"
         name: "{{ librenms_db_user }}"
         password: "{{ librenms_db_pass }}"
+        host: "%"
         priv: "{{ librenms_db_name }}.*:ALL"
         state: present
 
@@ -41,6 +42,9 @@
           DB_NAME: "{{ librenms_db_name }}"
           DB_USER: "{{ librenms_db_user }}"
           DB_PASSWORD: "{{ librenms_db_pass }}"
+          PUID: "1000"
+          PGID: "1000"
+          TZ: "Asia/Makassar"
         volumes:
           - /srv/librenms:/data
         networks:
@@ -49,7 +53,7 @@
           traefik.enable: "true"
           traefik.http.routers.librenms.entrypoints: websecure
           traefik.http.routers.librenms.rule: "Host(`librenms.{{ traefik_domain }}`)"
-          traefik.http.services.librenms.loadbalancer.server.port: "80"
+          traefik.http.services.librenms.loadbalancer.server.port: "8000"
           dockerdns.pihole.cname.domain: "librenms.{{ traefik_domain }}"
           dockerdns.pihole.cname.target: "{{ full_hostname }}"
 

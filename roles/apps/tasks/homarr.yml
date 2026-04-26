@@ -1,0 +1,32 @@
+---
+- name: Ensure homarr service configured
+  when: homarr | default(false)
+  block:
+    - name: Create homarr directory
+      ansible.builtin.file:
+        path: /srv/homarr
+        state: directory
+        mode: "0755"
+
+    - name: Deploy homarr container
+      community.docker.docker_container:
+        name: homarr
+        image: ghcr.io/ajnart/homarr:latest
+        state: started
+        restart_policy: always
+        volumes:
+          - /srv/homarr:/app/data/configs
+          - /var/run/docker.sock:/var/run/docker.sock
+        env:
+          HOST: "0.0.0.0"
+        ports:
+          - "7575:7575"
+        networks:
+          - name: "{{ docker_network }}"
+        labels:
+          traefik.enable: "true"
+          traefik.http.routers.homarr.entrypoints: websecure
+          traefik.http.routers.homarr.rule: "Host(`homarr.{{ traefik_domain }}`)"
+          traefik.http.services.homarr.loadbalancer.server.port: "7575"
+          dockerdns.pihole.cname.domain: "homarr.{{ traefik_domain }}"
+          dockerdns.pihole.cname.target: "{{ full_hostname }}"

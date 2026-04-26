@@ -40,6 +40,8 @@ zabbix_db_user:
 zabbix_db_pass:
 zabbix_db_name:
 
+homarr: false
+
 librenms: false
 librenms_db_user: librenms
 librenms_db_pass: librenms

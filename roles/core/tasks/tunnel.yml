@@ -34,6 +34,8 @@
     env: "{{ tunnel_env }}"
     volumes: "{{ (tunnel_manage_locally | bool) | ternary([ tunnel_config_dir ~ ':/etc/cloudflared:ro' ], []) }}"
     command:
+      - --config
+      - /etc/cloudflared/config.yml
       - tunnel
       - run
     restart_policy: always

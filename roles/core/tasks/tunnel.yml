@@ -1,4 +1,25 @@
 ---
+- name: Ensure cloudflare tunnel config directory exists
+  ansible.builtin.file:
+    path: "{{ tunnel_config_dir }}"
+    state: directory
+    mode: "0755"
+  when: tunnel_manage_locally
+
+- name: Ensure cloudflare tunnel credentials deployed
+  ansible.builtin.copy:
+    content: "{{ tunnel_credentials_json }}"
+    dest: "{{ tunnel_config_dir }}/credentials.json"
+    mode: "0644"
+  when: tunnel_manage_locally
+
+- name: Ensure cloudflare tunnel config deployed
+  ansible.builtin.template:
+    src: tunnel-config.yml.j2
+    dest: "{{ tunnel_config_dir }}/config.yml"
+    mode: "0644"
+  when: tunnel_manage_locally
+
 - name: Ensure cloudflare tunnel image pulled
   community.docker.docker_image:
     name: "{{ tunnel_image }}"
@@ -11,6 +32,7 @@
     name: tunnel
     image: "{{ tunnel_image }}"
     env: "{{ tunnel_env }}"
+    volumes: "{{ (tunnel_manage_locally | bool) | ternary([ tunnel_config_dir ~ ':/etc/cloudflared:ro' ], []) }}"
     command:
       - tunnel
       - run

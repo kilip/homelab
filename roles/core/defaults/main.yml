@@ -11,6 +11,9 @@ squid_cache_dir: /srv/squid
 
 # cloudflare tunnel
 tunnel: false
+tunnel_manage_locally: false
+tunnel_config_dir: /srv/tunnel
+tunnel_ingress_rules: []
 tunnel_env: {}
 # renovate: datasource=docker depName=cloudflare/cloudflared
 tunnel_version: 2026.3.0

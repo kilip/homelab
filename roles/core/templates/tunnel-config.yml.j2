@@ -1,0 +1,15 @@
+tunnel: {{ tunnel_id }}
+credentials-file: /etc/cloudflared/credentials.json
+
+ingress:
+{% for rule in tunnel_ingress_rules %}
+{% if rule.hostname is defined %}
+  - hostname: {{ rule.hostname }}
+    service: {{ rule.service }}
+{% if rule.path is defined %}
+    path: {{ rule.path }}
+{% endif %}
+{% else %}
+  - service: {{ rule.service }}
+{% endif %}
+{% endfor %}

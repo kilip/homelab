@@ -16,7 +16,7 @@ tunnel_ingress_rules:
     - hostname: ENC[AES256_GCM,data:hqiEG3yhAXnimnaEF7N9KA==,iv:fbyhGMiGk8sqO4lL4jJYHHCi8piE2dis5rbomcBeCjk=,tag:hPd4ZW2UCpSEq3jscerPUA==,type:str]
       service: ENC[AES256_GCM,data:h8Nh7tywApd1/CF7/TpLC6hq,iv:mC8h6Bwbx2PUhcZsnpjKi3Hs/W89h+4YWZWxUkbb5to=,tag:TGyytvkm9RgohYLMnEN6lQ==,type:str]
     - hostname: ENC[AES256_GCM,data:naiE/eKbrAF2qaL1jaal9g==,iv:3NAY44mOpvsYvdKOPc/D2gHUI0gM0QY6lFBgqPcPZjI=,tag:kTYncKyTZ9asmyPTN1Jdww==,type:str]
-      service: ENC[AES256_GCM,data:5FP2OqcIRnCll0SEZ2dVIx3OMjCJDg==,iv:/iqhDFo5e5Tmy0CLDK2lvI3ix2hrjSN8FtG5Kb1ZM7s=,tag:vHAyvKvOHDxtw112QSYdfQ==,type:str]
+      service: ENC[AES256_GCM,data:cMXWNogxpQFdaTgw4lnI6v4Oo5JP,iv:LU6IqXSxKWIDwP/1uap7H4g+ShZ19wZnQczvdFVzTfA=,tag:iRVtQiD6Hp/8ASitty9gaQ==,type:str]
     - service: ENC[AES256_GCM,data:7V/Y0wtWO34uFSMIdeF3,iv:Azf2VciLNCsMQs7pacrNJwIHeaThoRIPlMlNduuNmQM=,tag:Nq5wRT1C+mI3PXTGqbBqwQ==,type:str]
 tunnel_manage_locally: ENC[AES256_GCM,data:rbHACQ==,iv:RQ2ZyFOoyheBgw+/0OcSYplVuBX9ZH5oIGwpEJl29Dg=,tag:jV+IRaYF/mOJzPwDB8vIaQ==,type:bool]
 sops:
@@ -30,7 +30,7 @@ sops:
             S2VwMnpoRlRUSUJYV0ZKS0RSMlpHdFUKqZYSkvTmeJTls90yhDg0H7q2xRGjH3y7
             FqP4LJkxQRGWrMHMlfaV2wq5DQOE3bWcWhV0FKvocftcslyzMnliyg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-04-27T06:41:00Z"
-    mac: ENC[AES256_GCM,data:D6d/LzR+MLojOMWhJM00xendW00OaC3jxfjFYmukZmNbLTg42OE6T7vUTWiWjTk4Z5hRKYjdr1iDZlP8ArDaLXKrbHf0fuN1PCmq0gSL4QrSFMnOFvzGGhwByHyG0tOuqdk06yDC04oad78FjBvd2oaL3WDl5O3O2nZSz9i9JOg=,iv:eltiHUlwFjYHcdc9MmyzUuC7Y+Bl4U9TORUPzGwzwwM=,tag:+IHnsZPRVNXTp3Nv3dm7Tw==,type:str]
+    lastmodified: "2026-04-27T07:41:00Z"
+    mac: ENC[AES256_GCM,data:83WkdzApQDueRK2ucg2Zomx1RY28GArWjuMv/stB6nIAI6hWHU7+pHlLKYx5HEUOI6nDui4bLIdzOIAh0Xc/3eJXxWEupXlUA3lwkay/KsVYBLMKfzTorIidd7ZW+/m/4uDfRT+pNCOCi2xxDwr2W/CchnviKii5Lth9OFtvQwg=,iv:EkGl5mLzsX+b3khtFhtVyteWvqJvtpvN7/UtW74sKwE=,tag:bad/uxdn5aIVxazH8Ct/hQ==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.12.2

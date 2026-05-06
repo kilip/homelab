@@ -21,7 +21,7 @@ tunnel_image: "cloudflare/cloudflared:{{ tunnel_version }}"
 
 traefik: false
 # renovate: datasource=docker depName=traefik
-traefik_version: v3.6.14
+traefik_version: v3.7.0
 traefik_image: "traefik:{{ traefik_version }}"
 traefik_dir: /srv/traefik
 traefik_email: admin@homelab.com

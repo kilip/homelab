@@ -16,7 +16,7 @@ tunnel_config_dir: /srv/tunnel
 tunnel_ingress_rules: []
 tunnel_env: {}
 # renovate: datasource=docker depName=cloudflare/cloudflared
-tunnel_version: 2026.6.0
+tunnel_version: 2026.7.3
 tunnel_image: "cloudflare/cloudflared:{{ tunnel_version }}"
 
 traefik: false

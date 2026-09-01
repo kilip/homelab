@@ -34,7 +34,7 @@
     - name: Deploy librenms container
       community.docker.docker_container:
         name: librenms
-        image: librenms/librenms:26.7.0
+        image: librenms/librenms:26.8.2
         state: started
         restart_policy: always
         env:

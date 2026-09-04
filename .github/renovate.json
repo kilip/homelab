@@ -8,7 +8,7 @@
     ":semanticCommits",
     ":skipStatusChecks",
     ":timezone(Asia/Makassar)",
-    ":pinDigests"
+    "docker:pinDigests"
   ],
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
   "automerge": true,

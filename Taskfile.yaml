@@ -9,7 +9,6 @@ tasks:
   deps:
     desc: Install homelab dependencies
     cmds:
-      - pass hl/age-key > age.key
       - pip install -r requirements.txt
       - ansible-galaxy install -f -r requirements.yml
 

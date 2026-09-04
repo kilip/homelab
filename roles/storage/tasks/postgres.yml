@@ -31,7 +31,13 @@
           - "/srv/postgres/18:/pgdata/18"
           - "/srv/postgres/17:/pgdata/17"
           - "/srv/postgres/backup:/pgdata/backup"
+          - "/srv/postgres/certs:/certs"
         restart_policy: always
+        command: >
+          -c ssl=on
+          -c ssl_cert_file=/certs/server.crt
+          -c ssl_key_file=/certs/server.key
+          -c ssl_ca_file=/certs/root.crt
         env:
           POSTGRES_USER: "{{ pg_user }}"
           POSTGRES_PASSWORD: "{{ pg_pass }}"

@@ -1,0 +1,28 @@
+---
+- name: Ensure waha service configured
+  when: waha | default(false)
+  block:
+    - name: Ensure waha directory
+      ansible.builtin.file:
+        path: /srv/waha/sessions
+        state: directory
+        mode: "0755"
+
+    - name: Ensure waha deployed
+      community.general.docker_container:
+        state: started
+        name: waha
+        image: "{{ waha_image }}"
+        image_name_mismatch: recreate
+        restart_policy: always
+        volumes:
+          - /srv/waha/sessions:/app/.sessions
+        networks:
+          - name: "{{ docker_network }}"
+        labels:
+          traefik.enable: "true"
+          traefik.http.routers.waha.entrypoints: websecure
+          traefik.http.routers.waha.rule: "Host(`waha.{{ traefik_domain }}`)"
+          traefik.http.services.waha.loadbalancer.server.port: "3000"
+          dockerdns.pihole.cname.domain: "waha.{{ traefik_domain }}"
+          dockerdns.pihole.cname.target: "{{ full_hostname }}"

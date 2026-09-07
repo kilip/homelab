@@ -47,3 +47,10 @@
     apply:
       tags: zabbix
   tags: zabbix
+
+- name: Ensure waha service configured
+  ansible.builtin.include_tasks:
+    file: waha.yml
+    apply:
+      tags: waha
+  tags: waha

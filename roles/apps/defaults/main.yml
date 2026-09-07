@@ -47,3 +47,8 @@ librenms_db_user: librenms
 librenms_db_pass: librenms
 librenms_db_name: librenms
 librenms_db_host: mysql
+
+waha: false
+# renovate: datasource=docker depName=devlikeapro/waha
+waha_version: latest@sha256:527ff3d634925adb26d596883d7b3ca502c080f737af3c2af2be0c973c511533
+waha_image: "devlikeapro/waha:{{ waha_version }}"

@@ -1,9 +1,7 @@
 {
   "files.associations": {
     "**/*.yml": "ansible",
-    ".ansible-lint": "yaml",
-    "**/*.sops.yaml": "sops"
+    ".ansible-lint": "yaml"
   },
-  "ansible.python.interpreterPath": "${workspaceFolder}/.venv/bin/python",
-  "sops.defaults.ageKeyFile": "${workspaceFolder}/age.key"
+  "ansible.python.interpreterPath": "${workspaceFolder}/.venv/bin/python"
 }

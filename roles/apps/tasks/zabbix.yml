@@ -65,7 +65,7 @@
     - name: Ensure zabbix agent installed
       community.docker.docker_container:
         name: zabbix-agent
-        image: zabbix/zabbix-agent2:7.4.14-ubuntu
+        image: zabbix/zabbix-agent2:7.4.15-ubuntu@sha256:040f800ad3a32125e6d209bda6238914ca6880cdbb62cfb792ac582737e5e4b3
         state: started
         env:
           ZBX_HOSTNAME: Mars

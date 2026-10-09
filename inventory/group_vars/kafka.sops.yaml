@@ -1,0 +1,16 @@
+kafka: ENC[AES256_GCM,data:AZkXew==,iv:BHACMaF1FlgpzCoAOglIO0DaxJdPXlq+6aE9ZFEOU8g=,tag:ZWAfvlhR+7BH20sruyhRpw==,type:bool]
+sops:
+    age:
+        - enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB6aStxOGU5dEVjV2NFTEF1
+            RzRBclV6dlE3YmJHcXNSb3VEbVlQVUZLRjNBCm0vT0FiTHhsZk9NMlFuU2VlQXpm
+            SEI1cTZ3TTlzTm1TY055TzNrWEl2a2MKLS0tIHQwMUs5MFJsUW1WQVBpazRsZ25r
+            dm9wbFhSKzFNSU5hV3dvdUoxNUp6YUUK4eo+ZlLBn/kRlEU5h0QiPm7B6v6H/Ise
+            dp7SjqJmgAMB22yhAPQOFidkyNRBti5u6eJXyz+TmzJuHgQz5nNuDw==
+            -----END AGE ENCRYPTED FILE-----
+          recipient: age1fjy59ujj3j4e5l37wzsntvl288m06qyj97nujyklefw67eg5r9usuj4qxh
+    lastmodified: "2026-10-09T10:10:13Z"
+    mac: ENC[AES256_GCM,data:xnoB7s+4g9IkS4DsL/uASeVlMy9majquGSRIZc4fyddqWXtrFpTX9zEflA4elKYBkte6XRXDsAkzsJkuJIFFhA/5FytfoCkl6AjFMNkXnKuogOmgf1sB0QYhJmJiLJCavkyEqKuQQ8+OowzOoN1sIylR7QU/DXbFSFuJ//hG5Xs=,iv:T4rdf8CNvvR7qLbtcv8QKuRhiyisjXII1do5qG8qrWM=,tag:SBNair8osxXF5pmYMnkYiw==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.13.3

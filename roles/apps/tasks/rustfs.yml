@@ -1,0 +1,27 @@
+---
+
+- name: Ensure rustfs service configured
+  when: rustfs | default(false)
+  block:
+    - name: Create rustfs directory
+      ansible.builtin.file:
+        path: /srv/rustfs
+        state: directory
+        mode: "0755"
+        owner: 10001
+        group: 10001
+
+    - name: Deploy rustfs container
+      community.docker.docker_container:
+        name: rustfs
+        image: "{{ rustfs_image }}"
+        restart_policy: always
+        env:
+          RUSTFS_ACCESS_KEY: "{{ rustfs_access_key }}"
+          RUSTFS_SECRET_KEY: "{{ rustfs_secret_key }}"
+          RUSTFS_ADDRESS: ":9000"
+          RUSTFS_CONSOLE_ADDRESS: ":9001"
+          RUSTFS_CONSOLE_ENABLE: "true"
+        volumes:
+          - /srv/rustfs:/data
+        command: /data

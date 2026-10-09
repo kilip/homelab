@@ -1,11 +1,4 @@
 ---
-- name: Ensure librenms service configured
-  ansible.builtin.include_tasks:
-    file: librenms.yml
-    apply:
-      tags: librenms
-  tags: librenms
-
 - name: Ensure homarr service configured
   ansible.builtin.include_tasks:
     file: homarr.yml
@@ -61,3 +54,17 @@
     apply:
       tags: n8n
   tags: n8n
+
+- name: Ensure kafka service configured
+  ansible.builtin.include_tasks:
+    file: kafka.yml
+    apply:
+      tags: kafka
+  tags: kafka
+
+- name: Ensure rustfs service configured
+  ansible.builtin.include_tasks:
+    file: rustfs.yml
+    apply:
+      tags: rustfs
+  tags: rustfs

@@ -57,3 +57,15 @@ n8n: false
 # renovate: datasource=docker depName=n8nio/n8n
 n8n_version: latest
 n8n_image: n8nio/n8n:{{ n8n_version }}
+
+kafka: false
+# renovate: datasource=docker depName=apache/kafka
+kafka_version: 3.9.0
+kafka_image: apache/kafka:{{ kafka_version }}
+
+rustfs: false
+# renovate: datasource=docker depName=rustfs/rustfs
+rustfs_version: 1.0.1
+rustfs_image: rustfs/rustfs:{{ rustfs_version }}
+rustfs_access_key: rustfsadmin
+rustfs_secret_key: rustfsadmin

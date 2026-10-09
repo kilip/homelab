@@ -54,3 +54,10 @@
     apply:
       tags: waha
   tags: waha
+
+- name: Ensure n8n service configured
+  ansible.builtin.include_tasks:
+    file: n8n.yml
+    apply:
+      tags: n8n
+  tags: n8n

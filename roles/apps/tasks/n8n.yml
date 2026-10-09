@@ -1,0 +1,49 @@
+---
+- name: Ensure n8n service configured
+  when: n8n
+  block:
+    - name: Ensure n8n db configured
+      ansible.builtin.include_tasks: postgres-db.yml
+      vars:
+        db_user: "{{ n8n_db_user }}"
+        db_pass: "{{ n8n_db_password }}"
+        db_host: "{{ n8n_db_host }}"
+        db_name: "{{ n8n_db_name }}"
+
+    - name: Ensure n8n persistent directory
+      ansible.builtin.file:
+        path: "/srv/n8n/{{ item }}"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: "0755"
+      with_items:
+        - data
+        - files
+
+    - name: Ensure n8n container configured
+      community.docker.docker_container:
+        name: n8n
+        state: started
+        image_name_mismatch: recreate
+        image: "{{ n8n_image }}"
+        networks:
+          - name: "{{ docker_network }}"
+        env:
+          N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
+          N8N_HOST: "n8n.{{ traefik_domain }}"
+          N8N_PORT: "5678"
+          N8N_PROTOCOL: "https"
+          NODE_ENV: "production"
+          WEBHOOK_URL: "https://n8n.{{ traefik_domain }}/"
+          GENERIC_TIMEZONE: "Asia/Makassar"
+          TZ: "Asia/Makassar"
+          N8N_RESTRICT_FILE_ACCESS_TO: "/files"
+        labels:
+          traefik.enable: "true"
+          traefik.http.routers.n8n.entrypoints: websecure
+          traefik.http.routers.n8n.rule: "Host(`n8n.{{ traefik_domain }}`)"
+          traefik.http.services.n8n.loadbalancer.server.port: "5678"
+        volumes:
+          - "/srv/n8n/data:/home/node/.n8n"
+          - "/srv/n8n/files:/files"

@@ -52,3 +52,8 @@ waha: false
 # renovate: datasource=docker depName=devlikeapro/waha
 waha_version: latest@sha256:527ff3d634925adb26d596883d7b3ca502c080f737af3c2af2be0c973c511533
 waha_image: "devlikeapro/waha:{{ waha_version }}"
+
+n8n: false
+# renovate: datasource=docker depName=n8nio/n8n
+n8n_version: latest
+n8n_image: n8nio/n8n:{{ n8n_version }}

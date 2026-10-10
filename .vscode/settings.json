@@ -6,5 +6,5 @@
 	},
 	"ansible.python.interpreterPath": "${workspaceFolder}/.venv/bin/python",
 	"sops.binPath": "/usr/bin/sops",
-	"sops.defaults.ageKeyFile": "age.key"
+	"sops.defaults.ageKeyFile": "${workspaceFolder}/age.key"
 }

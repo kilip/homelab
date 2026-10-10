@@ -1,0 +1,12 @@
+# cloudflare tunnel
+pkrbt_tunnel_config_dir: /srv/pkrbt/tunnel
+pkrbt_tunnel_ingress_rules: []
+pkrbt_tunnel_env: {}
+# renovate: datasource=docker depName=cloudflare/cloudflared
+pkrbt_tunnel_version: 2026.10.0
+pkrbt_tunnel_image: "cloudflare/cloudflared:{{ pkrbt_tunnel_version }}"
+domus_env: {}
+
+domus_version: "nightly"
+domus_img_base: "ghcr.io/paroki/domus"
+domus_img_migrator: "{{ domus_img_base }}/migrator:{{ domus_version }}"

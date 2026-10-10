@@ -1,4 +1,6 @@
 kafka: ENC[AES256_GCM,data:AZkXew==,iv:BHACMaF1FlgpzCoAOglIO0DaxJdPXlq+6aE9ZFEOU8g=,tag:ZWAfvlhR+7BH20sruyhRpw==,type:bool]
+kafka_user: ENC[AES256_GCM,data:RoVBbw==,iv:qCm/Q5CCnSWyyUI/kWI2mIuPaitUWX9qZOUF38Uyvj4=,tag:C3cRBtHJjrFB6vZVQB8D1w==,type:str]
+kafka_password: ENC[AES256_GCM,data:knei0Qky+k8mp6+aDWY=,iv:00jiCd4lLf1nIBCAFMazSlb4ULhZ8U/gKMWngSJ4mfo=,tag:paUgVso9i4lWYrHdd9XqlA==,type:str]
 sops:
     age:
         - enc: |
@@ -10,7 +12,7 @@ sops:
             dp7SjqJmgAMB22yhAPQOFidkyNRBti5u6eJXyz+TmzJuHgQz5nNuDw==
             -----END AGE ENCRYPTED FILE-----
           recipient: age1fjy59ujj3j4e5l37wzsntvl288m06qyj97nujyklefw67eg5r9usuj4qxh
-    lastmodified: "2026-10-09T10:10:13Z"
-    mac: ENC[AES256_GCM,data:xnoB7s+4g9IkS4DsL/uASeVlMy9majquGSRIZc4fyddqWXtrFpTX9zEflA4elKYBkte6XRXDsAkzsJkuJIFFhA/5FytfoCkl6AjFMNkXnKuogOmgf1sB0QYhJmJiLJCavkyEqKuQQ8+OowzOoN1sIylR7QU/DXbFSFuJ//hG5Xs=,iv:T4rdf8CNvvR7qLbtcv8QKuRhiyisjXII1do5qG8qrWM=,tag:SBNair8osxXF5pmYMnkYiw==,type:str]
+    lastmodified: "2026-10-09T16:37:50Z"
+    mac: ENC[AES256_GCM,data:FiDjLGPk2BIp6MVKO9i52HM4uaNJqmlnn++8kiOF80J8YGqi+PmmV8tAYgVf0Vp4IMueR+3fShpa507MkrSrX8GmR83o1zgsq+qG45z4PGSSpga7PIgBPZF+E0wavJUMJqne9+STFyAm0lUfhWFmq7VfWR7tyCGXIE8FF/djkIc=,iv:DjVuDbB1pqHUirF9elWxArQrel7YPgm2hdU+mdYaVeA=,tag:meJq8UYNMiyLetOzNshAGw==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.13.3

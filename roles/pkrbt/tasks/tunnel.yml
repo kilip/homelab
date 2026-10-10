@@ -1,0 +1,24 @@
+---
+- name: Ensure cloudflare pkrbt-tunnel config directory exists
+  ansible.builtin.file:
+    path: "{{ pkrbt_tunnel_config_dir }}"
+    state: directory
+    mode: "0755"
+  when: pkrbt_tunnel_manage_locally
+
+- name: Ensure cloudflare pkrbt-tunnel image pulled
+  community.docker.docker_image:
+    name: "{{ pkrbt_tunnel_image }}"
+    source: pull
+
+- name: Ensure cloudflare pkrbt-tunnel container configured
+  community.docker.docker_container:
+    name: pkrbt-tunnel
+    state: started
+    image_name_mismatch: recreate
+    image: "{{ pkrbt_tunnel_image }}"
+    env: "{{ pkrbt_tunnel_env }}"
+    restart_policy: always
+    command: tunnel --no-autoupdate run
+    networks:
+      - name: "{{ docker_network }}"

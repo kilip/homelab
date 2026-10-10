@@ -1,0 +1,11 @@
+---
+- name: Ensure container loaded
+  community.docker.docker_container:
+    name: domus-api
+    image: ghcr.io/paroki/domus/api:nightly
+    state: started
+    image_name_mismatch: recreate
+    restart_policy: always
+    env: "{{ domus_env }}"
+    networks:
+      - name: "{{ docker_network }}"

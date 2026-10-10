@@ -33,3 +33,8 @@
       ansible.builtin.include_role:
         name: tools
       tags: always
+    
+    - name: Ensure pkrbt role included
+      ansible.builtin.include_role:
+        name: pkrbt
+      tags: always

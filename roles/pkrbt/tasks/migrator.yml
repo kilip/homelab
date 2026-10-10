@@ -1,0 +1,15 @@
+---
+- name: Run migrator (blocks until finished)
+  community.docker.docker_container:
+    name: domus-migrator
+    image: "{{ domus_img_migrator }}"
+    pull: always
+    state: started
+    detach: false
+    cleanup: true
+    restart_policy: "no"
+    env: "{{ domus_env }}"
+    networks:
+      - name: "{{ docker_network }}"
+  register: domus_migrator
+  failed_when: domus_migrator.status | default(1) != 0

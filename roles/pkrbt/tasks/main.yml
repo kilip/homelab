@@ -1,0 +1,42 @@
+---
+- name: Ensure tunnel configured
+  ansible.builtin.include_tasks:
+    file: tunnel.yml
+    apply:
+      tags: pkrbt
+  tags: pkrbt
+
+- name: Ensure postgres configured
+  ansible.builtin.include_tasks:
+    file: db.yml
+    apply:
+      tags: pkrbt
+  tags: pkrbt
+
+- name: Ensure migrator configured
+  ansible.builtin.include_tasks:
+    file: migrator.yml
+    apply:
+      tags: pkrbt
+  tags: pkrbt
+
+- name: Ensure auth container configured
+  ansible.builtin.include_tasks:
+    file: auth.yml
+    apply:
+      tags: pkrbt
+  tags: pkrbt
+
+- name: Ensure api container configured
+  ansible.builtin.include_tasks:
+    file: api.yml
+    apply:
+      tags: pkrbt
+  tags: pkrbt
+
+- name: Ensure api container configured
+  ansible.builtin.include_tasks:
+    file: dash.yml
+    apply:
+      tags: pkrbt
+  tags: pkrbt

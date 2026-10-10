@@ -44,9 +44,16 @@
         name: kafka-ui
         image: ghcr.io/kafbat/kafka-ui:v1.5.0
         # Start on demand: docker compose --profile tools up -d kafka-ui
+        published_ports:
+          - 8080:8080
+        networks:
+          - name: "{{ docker_network }}"
         env:
           KAFKA_CLUSTERS_0_NAME: "local"
           KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka:9092"
+          AUTH_TYPE: "LOGIN_FORM"
+          SPRING_SECURITY_USER_NAME: "{{ kafka_user }}"
+          SPRING_SECURITY_USER_PASSWORD: "{{ kafka_password }}"
         labels:
           traefik.enable: "true"
           traefik.http.routers.homarr.entrypoints: websecure

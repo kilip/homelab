@@ -60,7 +60,7 @@ n8n_image: n8nio/n8n:{{ n8n_version }}
 
 kafka: false
 # renovate: datasource=docker depName=apache/kafka
-kafka_version: 3.9.0
+kafka_version: 3.9.2
 kafka_image: apache/kafka:{{ kafka_version }}
 
 rustfs: false

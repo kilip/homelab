@@ -65,7 +65,7 @@ kafka_image: apache/kafka:{{ kafka_version }}
 
 rustfs: false
 # renovate: datasource=docker depName=rustfs/rustfs
-rustfs_version: 1.0.1
+rustfs_version: 1.0.3
 rustfs_image: rustfs/rustfs:{{ rustfs_version }}
 rustfs_access_key: rustfsadmin
 rustfs_secret_key: rustfsadmin

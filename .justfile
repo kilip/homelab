@@ -3,6 +3,7 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 mod deps '.just/deps.just'
 mod sops '.just/sops.just'
 mod ans '.just/ansible.just'
+mod fl '.just/flux.just'
 
 [private]
 default:

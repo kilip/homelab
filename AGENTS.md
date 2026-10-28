@@ -33,6 +33,7 @@ Defined in `ansible/inventory/hosts.yml` and documented in `docs/nodes/`:
 ├── .just/                   # Modular justfile recipes
 │   ├── ansible.just         # `ans` module: lint, Molecule lifecycle, kubeconfig fetch
 │   ├── deps.just            # `deps` module: mise + uv virtualenv installation
+│   ├── flux.just            # `fl` module: Flux CD bootstrap and SOPS secret setup
 │   └── sops.just            # `sops` module: age key initialization from pass
 ├── ansible/                 # Ansible IaC
 │   ├── ansible.cfg          # Ansible config (SOPS vars plugin enabled at inventory stage)
@@ -66,6 +67,7 @@ Run commands through `just` (or `mise exec -- just ...` if `mise` shims are not 
   - `just ans::destroy [platform]`
   - `just ans::clean-cache`
 - **Fetch K3s `kubeconfig` from server**: `just ans::kubeconfig`
+- **Bootstrap Flux CD onto cluster**: `just fl::bootstrap`
 
 ## Coding & Architecture Conventions
 

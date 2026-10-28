@@ -10,16 +10,19 @@ platforms:
   - name: ubuntu
     image: ubuntu:26.04
     pre_build_image: true
+    privileged: true
     command: sleep infinity
     groups:
       - k3s
   - name: debian
     image: debian:13
     pre_build_image: true
+    privileged: true
     command: sleep infinity
   - name: cachyos
     image: cachyos/cachyos:latest
     pre_build_image: true
+    privileged: true
     command: sleep infinity
 
 provisioner:

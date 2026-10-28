@@ -4,6 +4,10 @@
     that:
       - k3s_version is defined
       - k3s_version | length > 0
+      - k3s_cluster_name is defined
+      - k3s_cluster_name | length > 0
+      - k3s_node_name is defined
+      - k3s_node_name | length > 0
       - k3s_install_script_url is defined
       - k3s_install_script_url | length > 0
       - k3s_config_dir is defined

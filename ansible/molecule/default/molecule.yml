@@ -8,11 +8,11 @@ driver:
 
 platforms:
   - name: ubuntu
-    image: ubuntu:24.04
+    image: ubuntu:26.04
     pre_build_image: true
     command: sleep infinity
-  - name: debian12
-    image: debian:12
+  - name: debian
+    image: debian:13
     pre_build_image: true
     command: sleep infinity
   - name: cachyos

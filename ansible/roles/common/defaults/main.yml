@@ -1,0 +1,6 @@
+---
+common_packages:
+  - git
+  - btop
+  - just
+  - pass

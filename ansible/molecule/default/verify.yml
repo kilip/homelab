@@ -2,6 +2,8 @@
 - name: Verify common role package cache and upgrade state
   hosts: all
   gather_facts: true
+  vars_files:
+    - ../../roles/common/defaults/main.yml
   tasks:
     - name: Verify apt package lists exist on Debian/Ubuntu
       ansible.builtin.stat:
@@ -27,3 +29,12 @@
       register: pacman_upgrade_check
       failed_when: pacman_upgrade_check.changed
       when: ansible_facts['os_family'] == 'Archlinux'
+
+    - name: Verify common packages are installed
+      ansible.builtin.package:
+        name: "{{ common_packages }}"
+        state: present
+      check_mode: true
+      register: common_packages_check
+      failed_when: common_packages_check.changed
+      when: common_packages | length > 0

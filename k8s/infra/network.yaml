@@ -2,12 +2,50 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: network
+  name: metallb
   namespace: flux-system
 spec:
   interval: 10m0s
   retryInterval: 1m0s
-  path: ./k8s/network
+  path: ./k8s/network/metallb
+  prune: true
+  wait: true
+  timeout: 5m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: metallb-config
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: metallb
+  interval: 10m0s
+  retryInterval: 1m0s
+  path: ./k8s/network/metallb/config
+  prune: true
+  wait: true
+  timeout: 5m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: network-vars
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cert-manager
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  retryInterval: 1m0s
+  path: ./k8s/network/cert-manager
   prune: true
   wait: true
   timeout: 5m0s
@@ -18,7 +56,93 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: traefik
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: metallb-config
+  interval: 10m0s
+  retryInterval: 1m0s
+  path: ./k8s/network/traefik
+  prune: true
+  wait: true
+  timeout: 5m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
   postBuild:
     substituteFrom:
       - kind: Secret
         name: network-vars
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cert-manager-config
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cert-manager
+    - name: traefik
+  interval: 10m0s
+  retryInterval: 1m0s
+  path: ./k8s/network/cert-manager/config
+  prune: true
+  wait: false
+  timeout: 5m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: network-vars
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: traefik-config
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: traefik
+    - name: cert-manager-config
+  interval: 10m0s
+  retryInterval: 1m0s
+  path: ./k8s/network/traefik/config
+  prune: true
+  wait: true
+  timeout: 5m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: network-vars
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cloudflared
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: traefik
+  interval: 10m0s
+  retryInterval: 1m0s
+  path: ./k8s/network/cloudflared
+  prune: true
+  wait: false
+  timeout: 5m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age

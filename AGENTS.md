@@ -60,10 +60,11 @@ Run commands through `just` (or `mise exec -- just ...` if `mise` shims are not 
 - **Run Ansible linter**: `just ans::lint`
 - **Run full Molecule test suite (all platforms)**: `just ans::test`
 - **Run Molecule tests for a single platform**: `just ans::test ubuntu` (or `debian`, `cachyos`)
-- **Run Molecule converge / verify / destroy**:
+- **Run Molecule converge / verify / destroy / clean-cache**:
   - `just ans::converge [platform]`
   - `just ans::verify [platform]`
   - `just ans::destroy [platform]`
+  - `just ans::clean-cache`
 - **Fetch K3s `kubeconfig` from server**: `just ans::kubeconfig`
 
 ## Coding & Architecture Conventions

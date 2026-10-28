@@ -109,17 +109,29 @@
   failed_when: false
   when: k3s_binary.stat.exists
 
+- name: Check if K3s systemd service unit exists
+  ansible.builtin.stat:
+    path: /etc/systemd/system/k3s.service
+  register: k3s_service_unit
+
 - name: Run K3s installer script
   ansible.builtin.command:
     cmd: "{{ k3s_install_script_path }}"
   environment:
     INSTALL_K3S_VERSION: "{{ k3s_version }}"
+    INSTALL_K3S_SKIP_DOWNLOAD: >-
+      {{
+        'true'
+        if (k3s_binary.stat.exists and (k3s_version in (k3s_installed_version.stdout | default(''))))
+        else 'false'
+      }}
     INSTALL_K3S_SKIP_START: "{{ 'false' if (k3s_start_service | bool) else 'true' }}"
     INSTALL_K3S_SKIP_ENABLE: "{{ 'false' if (k3s_start_service | bool) else 'true' }}"
   changed_when: true
   when: >-
     (not k3s_binary.stat.exists) or
-    (k3s_version not in (k3s_installed_version.stdout | default('')))
+    (k3s_version not in (k3s_installed_version.stdout | default(''))) or
+    (not k3s_service_unit.stat.exists)
 
 - name: Ensure K3s systemd service is enabled and started
   ansible.builtin.systemd_service:

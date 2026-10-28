@@ -52,7 +52,7 @@ jobs:
       matrix:
         platform:
           - ubuntu
-          - debian12
+          - debian
           - cachyos
     steps:
       - name: Checkout repository

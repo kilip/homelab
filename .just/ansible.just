@@ -6,7 +6,7 @@ ansible_dir := justfile_directory() / "ansible"
 lint:
     cd "{{ ansible_dir }}" && ANSIBLE_VARS_SOPS_PLUGIN_STAGE=task ansible-lint
 
-# Run full Molecule test lifecycle (optionally target a single platform: ubuntu, debian12, cachyos)
+# Run full Molecule test lifecycle (optionally target a single platform: ubuntu, debian, cachyos)
 test platform="":
     #!/usr/bin/env bash
     set -euo pipefail

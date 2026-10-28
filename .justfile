@@ -2,7 +2,7 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 
 mod deps '.just/deps.just'
 mod sops '.just/sops.just'
-mod ansible '.just/ansible.just'
+mod ans '.just/ansible.just'
 
 [private]
 default:

@@ -20,7 +20,7 @@ doctor: sops::init-key
     mise doctor
     echo
     echo "Checking core tools..."
-    for tool in sops age-keygen kubectl flux helm talosctl uv python; do
+    for tool in sops age-keygen kubectl flux helm uv python; do
         if command -v "$tool" >/dev/null 2>&1; then
             printf "  %-12s %s\n" "$tool" "$(command -v "$tool")"
         else

@@ -1,0 +1,6 @@
+creation_rules:
+  - path_regex: ^k8s/.*\.sops\.ya?ml$
+    encrypted_regex: ^(data|stringData)$
+    age: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf
+  - path_regex: ^ansible/.*\.sops\.ya?ml$
+    age: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf

@@ -4,7 +4,7 @@ ansible_dir := justfile_directory() / "ansible"
 
 # Run ansible-lint on the ansible directory
 lint:
-    cd "{{ ansible_dir }}" && ansible-lint
+    cd "{{ ansible_dir }}" && ANSIBLE_VARS_SOPS_PLUGIN_STAGE=task ansible-lint
 
 # Run full Molecule test lifecycle (optionally target a single platform: ubuntu, debian12, cachyos)
 test platform="":

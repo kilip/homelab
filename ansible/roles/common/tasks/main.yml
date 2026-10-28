@@ -1,4 +1,7 @@
 ---
+- name: Verify role variables
+  ansible.builtin.import_tasks: verify.yml
+
 - name: Refresh apt cache and upgrade packages (Debian/Ubuntu)
   ansible.builtin.apt:
     update_cache: true
@@ -16,3 +19,11 @@
     name: "{{ common_packages }}"
     state: present
   when: common_packages | length > 0
+
+- name: Configure passwordless sudo for ansible_user
+  community.general.sudoers:
+    name: "{{ ansible_user }}"
+    user: "{{ ansible_user }}"
+    commands: ALL
+    nopassword: true
+    state: present

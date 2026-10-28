@@ -38,3 +38,26 @@ bootstrap:
         --path=k8s/infra \
         --private-key-file="$ssh_key" \
         --silent
+
+# Verify Flux CD installation, controllers, SOPS secret, and sync status
+doctor:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    export KUBECONFIG="{{ kubeconfig }}"
+    if [ ! -f "$KUBECONFIG" ]; then
+        echo "❌ kubeconfig not found at $KUBECONFIG (run 'just ans::kubeconfig' first)"
+        exit 1
+    fi
+    echo "Checking Flux controllers and prerequisites..."
+    flux check
+    echo
+    echo "Checking sops-age secret in flux-system..."
+    if kubectl -n flux-system get secret sops-age >/dev/null 2>&1; then
+        echo "✔ sops-age secret present in flux-system"
+    else
+        echo "✗ sops-age secret missing in flux-system"
+        exit 1
+    fi
+    echo
+    echo "Checking Flux resources status..."
+    flux get all -A

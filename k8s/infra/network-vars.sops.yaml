@@ -5,8 +5,8 @@ metadata:
     namespace: flux-system
 type: Opaque
 stringData:
-    METALLB_IP_RANGE: ENC[AES256_GCM,data:tb4VD4ipZCikOqfC/gvT023Whh63,iv:GyhaRhfgSK2fR2hm+fEX9pDntj0sfSh2iizbBiJWWeA=,tag:Z5KdUIWshr/ay+Tw5YlFlQ==,type:str]
-    TRAEFIK_LB_IP: ENC[AES256_GCM,data:ETA8n26/nFP38g==,iv:el/H9J1rJa09DeuGBWg9Q8s5xNuBwsyhYAsku1/M6aU=,tag:/k9hp48qNA448527tNgp/g==,type:str]
+    METALLB_IP_RANGE: ENC[AES256_GCM,data:b0o5bAtnKRGTze/yfMZt/nVgzWO6,iv:G1RilLoHQpVY7cC8OE1+/DLxCpzR52LiO9O4H/jgtHE=,tag:5+hHqZkOYnx7QZJKReFphw==,type:str]
+    TRAEFIK_LB_IP: ENC[AES256_GCM,data:caiZTkt+uVCbPw==,iv:kJqQnA2efpHl1jvyobuuPR3i1X2bz8xcO84wF605mqw=,tag:+NXl8gRJ5m413eXdis24vw==,type:str]
     SECRET_DOMAIN: ENC[AES256_GCM,data:DILwA5BLnysbl1E=,iv:bWd9U6OcwfgBa0Ognxx7db4n2P68DOt3lowRgXbHT5Q=,tag:hZPq74D6ahEPQurUCfFfoA==,type:str]
     ACME_EMAIL: ENC[AES256_GCM,data:ndFOQ3sQVnTUgBrtVrA=,iv:NjpDJkMsowkHZp7IOUkgD8qFCi1zYxK7qutL86NRs8Q=,tag:mXetsg5Mu8eI6+hhfYLP8A==,type:str]
     INTERNAL_CIDR: ENC[AES256_GCM,data:i9YAIcLFymXzWrM=,iv:uRfe0gODR1HXOwPw8XCGtPtsE1co2Gn73ij8PNb3Z8s=,tag:Fv4plqRHQ2EwzFuZymAf8Q==,type:str]
@@ -22,6 +22,6 @@ sops:
             -----END AGE ENCRYPTED FILE-----
           recipient: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf
     encrypted_regex: ^(data|stringData)$
-    lastmodified: "2026-10-28T20:05:21Z"
-    mac: ENC[AES256_GCM,data:rvKndNmQdJlAwpJDMkWML3xpIM2ap3bsFppqM/V7hWaxnAxLRv9eeXY/wdANqmYlhw4vrKEwElQXVe3kTiyiT7l2D6pgReqjIE4oqTRN3BR54nrR+2Y9lV0L/UPPMFxZYxRa433/knSwxNSPZ47/xPjKNzpgFtGb4hO9+bvMoNU=,iv:b4OnDAkHGUS5jURbrheEHaG9rhnjUcnhVGasO/+k6n4=,tag:VasbnTVUSSYCKWB8oSkhUA==,type:str]
+    lastmodified: "2026-10-28T20:52:32Z"
+    mac: ENC[AES256_GCM,data:BR28Ssiwt32urZ2oEsEUGx3XCHH/Yj2om1zCKlRuV680eIh2E3fQwuTXSA/XNCltw0P/tTzVJYpw+xMi55Ztv3Xlw/m4ZFCZP3rBMTfhEOOqUGGXhnLGSQksYXkaFkCu4RmWHMVx/hK1YH6hh7s5Rdpx79VQ8rs+eByM6ks/HPg=,iv:exw7P45Zg+M6SvO0XrWpq4DVfhCn9xFkpLmGdh9nae8=,tag:6kbvYDxoEqHkqRj/ZzX/3Q==,type:str]
     version: 3.13.3

@@ -1,0 +1,78 @@
+---
+name: Molecule CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "ansible/**"
+      - ".just/ansible.just"
+      - ".justfile"
+      - ".mise.toml"
+      - ".github/workflows/molecule.yml"
+  pull_request:
+    paths:
+      - "ansible/**"
+      - ".just/ansible.just"
+      - ".justfile"
+      - ".mise.toml"
+      - ".github/workflows/molecule.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Ansible Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Set up mise
+        uses: jdx/mise-action@5ac50f778e26fac95da98d50503682459e8fb556 # v3.6.1
+        with:
+          install: false
+
+      - name: Install Python and Ansible dependencies
+        run: |
+          mise install python uv
+          mise exec -- uv venv .venv
+          mise exec -- uv pip install -r ansible/requirements.txt
+
+      - name: Run ansible-lint
+        run: mise exec -- just ansible::lint
+
+  molecule:
+    name: Molecule (${{ matrix.platform }})
+    runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - ubuntu
+          - debian12
+          - cachyos
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Set up mise
+        uses: jdx/mise-action@5ac50f778e26fac95da98d50503682459e8fb556 # v3.6.1
+        with:
+          install: false
+
+      - name: Install Python and Ansible dependencies
+        run: |
+          mise install python uv
+          mise exec -- uv venv .venv
+          mise exec -- uv pip install -r ansible/requirements.txt
+
+      - name: Run Molecule test
+        run: mise exec -- just ansible::test "${{ matrix.platform }}"

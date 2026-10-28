@@ -34,14 +34,10 @@ jobs:
 
       - name: Set up mise
         uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
-        with:
-          install: false
 
-      - name: Install Python and Ansible dependencies
+      - name: Install Ansible dependencies
         run: |
-          mise install python uv
           mise use -g just@1.59.0
-          mise exec -- uv venv .venv
           mise exec -- uv pip install -r ansible/requirements.txt
 
       - name: Run ansible-lint
@@ -66,14 +62,10 @@ jobs:
 
       - name: Set up mise
         uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
-        with:
-          install: false
 
-      - name: Install Python and Ansible dependencies
+      - name: Install Ansible dependencies
         run: |
-          mise install python uv
           mise use -g just@1.59.0
-          mise exec -- uv venv .venv
           mise exec -- uv pip install -r ansible/requirements.txt
 
       - name: Run Molecule test

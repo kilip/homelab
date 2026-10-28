@@ -34,11 +34,23 @@ jobs:
 
       - name: Set up mise
         uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
+        with:
+          install_args: "just python uv"
+
+      - name: Cache Python virtualenv and uv cache
+        id: venv-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            .venv
+            ~/.cache/uv
+          key: venv-${{ runner.os }}-${{ hashFiles('.mise.toml', 'ansible/requirements.txt') }}
+          restore-keys: |
+            venv-${{ runner.os }}-
 
       - name: Install Ansible dependencies
-        run: |
-          mise use -g just@1.59.0
-          mise exec -- uv pip install -r ansible/requirements.txt
+        if: steps.venv-cache.outputs.cache-hit != 'true'
+        run: mise exec -- uv pip install -r ansible/requirements.txt
 
       - name: Run ansible-lint
         run: mise exec -- just ans::lint
@@ -50,10 +62,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform:
-          - ubuntu
-          - debian
-          - cachyos
+        include:
+          - platform: ubuntu
+            image: ubuntu:26.04
+          - platform: debian
+            image: debian:13
+          - platform: cachyos
+            image: cachyos/cachyos:latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -62,11 +77,66 @@ jobs:
 
       - name: Set up mise
         uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
+        with:
+          install_args: "just python uv"
+
+      - name: Cache Python virtualenv and uv cache
+        id: venv-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            .venv
+            ~/.cache/uv
+          key: venv-${{ runner.os }}-${{ hashFiles('.mise.toml', 'ansible/requirements.txt') }}
+          restore-keys: |
+            venv-${{ runner.os }}-
 
       - name: Install Ansible dependencies
+        if: steps.venv-cache.outputs.cache-hit != 'true'
+        run: mise exec -- uv pip install -r ansible/requirements.txt
+
+      - name: Cache Docker base image
+        id: docker-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .cache/docker/${{ matrix.platform }}.tar
+          key: docker-${{ runner.os }}-${{ matrix.platform }}-${{ hashFiles('ansible/molecule/default/molecule.yml') }}
+
+      - name: Load or pull Docker base image
+        env:
+          PLATFORM: ${{ matrix.platform }}
+          IMAGE: ${{ matrix.image }}
+          CACHE_HIT: ${{ steps.docker-cache.outputs.cache-hit }}
         run: |
-          mise use -g just@1.59.0
-          mise exec -- uv pip install -r ansible/requirements.txt
+          mkdir -p .cache/docker
+          if [ "$CACHE_HIT" = "true" ] && [ -f ".cache/docker/${PLATFORM}.tar" ]; then
+            docker load -i ".cache/docker/${PLATFORM}.tar"
+          else
+            docker pull "$IMAGE"
+            docker save -o ".cache/docker/${PLATFORM}.tar" "$IMAGE"
+          fi
+
+      - name: Cache Molecule package and K3s caches
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .cache/molecule/${{ matrix.platform }}
+          key: molecule-pkg-${{ runner.os }}-${{ matrix.platform }}-${{ hashFiles('ansible/molecule/default/**', 'ansible/roles/**') }}
+          restore-keys: |
+            molecule-pkg-${{ runner.os }}-${{ matrix.platform }}-
 
       - name: Run Molecule test
-        run: mise exec -- just ans::test "${{ matrix.platform }}"
+        env:
+          PLATFORM: ${{ matrix.platform }}
+        run: mise exec -- just ans::test "$PLATFORM"
+
+      - name: Normalize Molecule cache permissions for cache save
+        if: always()
+        env:
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          if [ -d ".cache/molecule/${PLATFORM}" ]; then
+            sudo chown -R "$(id -u):$(id -g)" ".cache/molecule/${PLATFORM}"
+            sudo chmod -R u+rwX,go+rX ".cache/molecule/${PLATFORM}"
+            find ".cache/molecule/${PLATFORM}" -name "lock" -type f -delete || true
+            find ".cache/molecule/${PLATFORM}" -name "db.lck" -type f -delete || true
+          fi

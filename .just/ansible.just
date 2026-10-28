@@ -49,3 +49,7 @@ destroy platform="":
     else
         molecule destroy
     fi
+
+# Fetch K3s kubeconfig from cluster node to local kubeconfig
+kubeconfig:
+    cd "{{ ansible_dir }}" && ansible-playbook site.yml --tags kubeconfig

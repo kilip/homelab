@@ -5,3 +5,10 @@
   gather_facts: true
   roles:
     - role: common
+
+- name: Converge k3s role
+  hosts: k3s
+  become: true
+  gather_facts: true
+  roles:
+    - role: k3s

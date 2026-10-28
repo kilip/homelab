@@ -69,6 +69,7 @@ Run commands through `just` (or `mise exec -- just ...` if `mise` shims are not 
 - **Fetch K3s `kubeconfig` from server**: `just ans::kubeconfig`
 - **Bootstrap Flux CD onto cluster**: `just fl::bootstrap`
 - **Verify Flux CD installation & sync status**: `just fl::doctor`
+- **Validate Kustomize overlays & K8s manifests**: `just fl::validate`
 
 ## Coding & Architecture Conventions
 

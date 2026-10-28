@@ -61,3 +61,22 @@ doctor:
     echo
     echo "Checking Flux resources status..."
     flux get all -A
+
+# Validate Kustomize overlays and Kubernetes manifests with kubeconform
+validate:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for dir in k8s/infra k8s/network; do
+        echo "Validating $dir..."
+        kustomize build "{{ justfile_directory() }}/$dir" \
+            | yq 'del(.sops)' \
+            | kubeconform -strict -ignore-missing-schemas -summary
+    done
+    echo "Checking SOPS encryption on *.sops.yaml manifests..."
+    while IFS= read -r -d '' file; do
+        if ! grep -q '^sops:' "$file"; then
+            echo "❌ Unencrypted SOPS file detected: $file"
+            exit 1
+        fi
+        echo "✔ Encrypted: $file"
+    done < <(find "{{ justfile_directory() }}/k8s" -name "*.sops.y*ml" -print0)

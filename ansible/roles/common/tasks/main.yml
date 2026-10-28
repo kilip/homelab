@@ -10,3 +10,9 @@
     update_cache: true
     upgrade: true
   when: ansible_facts['os_family'] == 'Archlinux'
+
+- name: Install common packages
+  ansible.builtin.package:
+    name: "{{ common_packages }}"
+    state: present
+  when: common_packages | length > 0

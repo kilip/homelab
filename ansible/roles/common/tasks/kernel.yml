@@ -1,0 +1,29 @@
+---
+# Modules first: the net.bridge.* sysctl keys only exist once br_netfilter is loaded.
+- name: Persist the kernel modules required by container networking
+  ansible.builtin.copy:
+    dest: /etc/modules-load.d/k3s.conf
+    content: |
+      # Managed by Ansible (role: common)
+      {{ common_kernel_modules | join('\n') }}
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Load the kernel modules now
+  community.general.modprobe:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ common_kernel_modules }}"
+
+- name: Apply kernel parameters
+  ansible.posix.sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    sysctl_file: "{{ common_sysctl_file }}"
+    sysctl_set: true
+    state: present
+    reload: true
+    # In --check mode the modules above are not really loaded yet, so bridge keys may be missing.
+    ignoreerrors: "{{ ansible_check_mode }}"
+  loop: "{{ common_sysctl | dict2items }}"

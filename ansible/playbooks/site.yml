@@ -1,0 +1,20 @@
+---
+- name: Provision homelab node
+  hosts: all
+  become: true
+  gather_facts: false
+  pre_tasks:
+    # Without --limit this play would target test and prod at the same time.
+    - name: Refuse to run without --limit
+      ansible.builtin.assert:
+        that: ansible_limit is defined
+        fail_msg: "Always pass --limit test or --limit prod (use: just ansible check-test)."
+        quiet: true
+
+    - name: Gather facts
+      ansible.builtin.setup:
+  roles:
+    - role: common
+      tags: [common]
+    # - role: k3s     # next phase
+    # - role: backup  # later phase

@@ -1,0 +1,20 @@
+---
+- name: Refresh the apt cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Upgrade all packages
+  ansible.builtin.apt:
+    upgrade: dist
+  when: common_apt_upgrade | bool
+
+- name: Install base packages
+  ansible.builtin.apt:
+    name: "{{ common_packages }}"
+    state: present
+
+- name: Remove packages that are no longer required
+  ansible.builtin.apt:
+    autoremove: true
+  when: common_apt_autoremove | bool

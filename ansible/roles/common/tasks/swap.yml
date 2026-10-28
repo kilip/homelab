@@ -1,0 +1,16 @@
+---
+# Kubernetes is designed for nodes without swap. The swap file itself is left on disk;
+# remove it by hand if you want the space back.
+- name: Turn off active swap
+  ansible.builtin.command: swapoff -a
+  when:
+    - common_disable_swap | bool
+    - ansible_facts['swaptotal_mb'] | int > 0
+  changed_when: true
+
+- name: Comment out swap entries in /etc/fstab
+  ansible.builtin.replace:
+    path: /etc/fstab
+    regexp: '^(?!#)(\S+\s+\S+\s+swap\s.*)$'
+    replace: '# \1'
+  when: common_disable_swap | bool

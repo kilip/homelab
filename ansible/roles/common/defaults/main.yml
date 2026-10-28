@@ -1,0 +1,53 @@
+---
+# Role defaults for `common`. Global tunables (timezone, lan_cidr, ssh_disable_password_auth,
+# node_hostname) live in ansible/group_vars/all/main.yml.
+
+# --- Packages and updates -----------------------------------------------------
+common_apt_upgrade: true # dist-upgrade all packages on every run
+common_apt_autoremove: true # remove packages that are no longer required
+# Keep the OS minimal: add packages here only when something really needs them.
+common_packages:
+  - ca-certificates
+  - curl
+  - ufw
+
+# --- Automatic security updates -----------------------------------------------
+common_unattended_upgrades: true
+# Never reboot automatically: this is a single node, reboots are planned by hand.
+common_unattended_auto_reboot: false
+
+# --- Reboot handling ----------------------------------------------------------
+# When a reboot is required (kernel updates), only report it unless this is true.
+common_reboot_if_required: false
+
+# --- Swap ---------------------------------------------------------------------
+common_disable_swap: true
+
+# --- Kernel -------------------------------------------------------------------
+common_kernel_modules:
+  - overlay
+  - br_netfilter
+common_sysctl_file: /etc/sysctl.d/90-homelab.conf
+common_sysctl:
+  net.ipv4.ip_forward: 1
+  net.bridge.bridge-nf-call-iptables: 1
+  net.bridge.bridge-nf-call-ip6tables: 1
+  fs.inotify.max_user_watches: 524288
+  fs.inotify.max_user_instances: 512
+
+# --- Firewall (ufw) -----------------------------------------------------------
+# Inbound rules, each allowed only from lan_cidr. The k3s role extends this list later.
+common_ufw_lan_rules:
+  - port: 22
+    proto: tcp
+    comment: "SSH from LAN"
+
+# --- Services that are not needed on this node --------------------------------
+# Units that do not exist on the machine are skipped silently.
+common_disabled_services:
+  - snapd.service
+  - snapd.socket
+  - multipathd.service
+  - multipathd.socket
+  - ModemManager.service
+  - motd-news.timer

@@ -1,0 +1,43 @@
+---
+- name: Assert that the target runs Ubuntu
+  ansible.builtin.assert:
+    that:
+      - ansible_facts['distribution'] == 'Ubuntu'
+    fail_msg: "Role 'common' supports Ubuntu only (found {{ ansible_facts['distribution'] }})."
+    quiet: true
+
+- name: Assert that the required variables are defined
+  ansible.builtin.assert:
+    that:
+      - lan_cidr is defined
+      - timezone is defined
+      - node_hostname is defined
+      - ssh_disable_password_auth is defined
+    fail_msg: "Required variables are missing. Check ansible/group_vars/all/main.yml."
+    quiet: true
+
+# Lockout guard for stage 2 of SSH hardening: password login may only be disabled when the
+# SSH user has at least one authorized key. It does not prove the key works, so always verify
+# key based login in a separate terminal first.
+- name: Look up the home directory of the SSH user
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ ansible_user }}"
+  when: ssh_disable_password_auth | bool
+
+- name: Check the authorized_keys file of the SSH user
+  ansible.builtin.stat:
+    path: "{{ getent_passwd[ansible_user][4] }}/.ssh/authorized_keys"
+  register: common_authorized_keys
+  when: ssh_disable_password_auth | bool
+
+- name: Refuse to disable password login without an authorized key
+  ansible.builtin.assert:
+    that:
+      - common_authorized_keys.stat.exists
+      - common_authorized_keys.stat.size > 0
+    fail_msg: >-
+      ssh_disable_password_auth is true but {{ ansible_user }} has no authorized_keys.
+      Install a public key (ssh-copy-id) and verify key based login first.
+    quiet: true
+  when: ssh_disable_password_auth | bool

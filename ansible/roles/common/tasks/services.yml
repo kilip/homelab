@@ -1,0 +1,12 @@
+---
+# A missing unit is not an error: this role must work on minimized installs too.
+- name: Disable and stop unused services
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    enabled: false
+    state: stopped
+  loop: "{{ common_disabled_services }}"
+  register: common_service_result
+  failed_when:
+    - common_service_result.failed | default(false)
+    - "'Could not find' not in (common_service_result.msg | default(''))"

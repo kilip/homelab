@@ -1,0 +1,10 @@
+---
+# Collections pinned to the ranges bundled with Ansible 14.5.0 (ansible-core 2.21.5).
+# Install with: just ansible deps
+collections:
+  - name: ansible.posix
+    version: ">=2.2.2,<3.0.0"
+  - name: community.general
+    version: ">=13.5.0,<14.0.0"
+  - name: community.sops
+    version: ">=2.5.0,<3.0.0"

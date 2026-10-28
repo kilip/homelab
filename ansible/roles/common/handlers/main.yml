@@ -1,0 +1,6 @@
+---
+# sshd is reloaded, not restarted, so the running SSH session survives.
+- name: Reload ssh
+  ansible.builtin.systemd_service:
+    name: ssh
+    state: reloaded

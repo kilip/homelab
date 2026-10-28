@@ -1,0 +1,46 @@
+---
+# Order matters: SSH and firewall come last, and the firewall is the final step that can lock you out.
+
+- name: Run preflight checks
+  ansible.builtin.import_tasks: preflight.yml
+  tags: [always]
+
+- name: Update the OS and install base packages
+  ansible.builtin.import_tasks: packages.yml
+  tags: [packages]
+
+- name: Configure the time zone
+  ansible.builtin.import_tasks: time.yml
+  tags: [time]
+
+- name: Configure the hostname
+  ansible.builtin.import_tasks: hostname.yml
+  tags: [hostname]
+
+- name: Disable swap
+  ansible.builtin.import_tasks: swap.yml
+  tags: [swap]
+
+- name: Configure kernel modules and sysctl
+  ansible.builtin.import_tasks: kernel.yml
+  tags: [kernel]
+
+- name: Disable unused services
+  ansible.builtin.import_tasks: services.yml
+  tags: [services]
+
+- name: Configure automatic security updates
+  ansible.builtin.import_tasks: unattended_upgrades.yml
+  tags: [updates]
+
+- name: Harden SSH
+  ansible.builtin.import_tasks: ssh.yml
+  tags: [ssh]
+
+- name: Configure the firewall
+  ansible.builtin.import_tasks: firewall.yml
+  tags: [firewall]
+
+- name: Handle pending reboots
+  ansible.builtin.import_tasks: reboot.yml
+  tags: [reboot]

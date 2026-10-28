@@ -1,0 +1,11 @@
+---
+# Copy this file to local.yml (git-ignored) and adjust the values.
+# Everything here overrides ansible/group_vars/all/main.yml.
+# The values below are examples only.
+test_host_ip: 10.0.0.50
+test_ssh_user: anthonius
+prod_host_ip: 10.0.0.10
+prod_ssh_user: anthonius
+
+# Stage 2 of SSH hardening: enable only after key based login is verified.
+# ssh_disable_password_auth: true

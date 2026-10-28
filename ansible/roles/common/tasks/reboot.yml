@@ -1,0 +1,19 @@
+---
+- name: Check whether a reboot is required
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+  register: common_reboot_required
+
+- name: Report that a reboot is required
+  ansible.builtin.debug:
+    msg: "{{ inventory_hostname }} needs a reboot (kernel or core library update). Reboot it when convenient."
+  when:
+    - common_reboot_required.stat.exists
+    - not (common_reboot_if_required | bool)
+
+- name: Reboot the node
+  ansible.builtin.reboot:
+    reboot_timeout: 600
+  when:
+    - common_reboot_required.stat.exists
+    - common_reboot_if_required | bool

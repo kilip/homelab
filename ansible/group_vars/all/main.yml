@@ -1,0 +1,33 @@
+---
+# Global variables shared by every host (test and prod).
+#
+# Override machine specific values without editing this file:
+#   - ansible/group_vars/all/local.yml (git-ignored; copy local.yml.example)
+#   - on the command line, e.g.  -e prod_host_ip=10.0.0.20 -e prod_ssh_user=anthonius
+
+# --- Connection (PLACEHOLDERS: override them before first use) ----------------
+test_host_ip: 192.0.2.10 # RFC 5737 documentation address, intentionally unreachable
+test_ssh_user: changeme
+prod_host_ip: 192.0.2.20 # RFC 5737 documentation address, intentionally unreachable
+prod_ssh_user: changeme
+
+# --- Network ------------------------------------------------------------------
+lan_cidr: 10.0.0.0/24 # LAN allowed to reach SSH (and later the k3s API and ingress)
+node_hostname: "{{ inventory_hostname }}"
+node_ip: "{{ ansible_host }}"
+
+# --- System -------------------------------------------------------------------
+# UTC keeps node, container and Kubernetes CronJob timestamps aligned.
+timezone: UTC
+
+# --- SSH hardening (two stages) -----------------------------------------------
+# Stage 1 (default): password login stays enabled.
+# Stage 2: after key based login is verified in a separate terminal, set this to true and re-run.
+ssh_disable_password_auth: false
+
+# --- k3s (consumed by the k3s role in the next phase) -------------------------
+# Pinned so upgrades are deliberate. Re-check the latest stable release before the k3s phase.
+k3s_version: "v1.36.2+k3s1"
+k3s_node_ip: "{{ node_ip }}"
+k3s_cluster_cidr: 10.42.0.0/16 # k3s default pod CIDR
+k3s_service_cidr: 10.43.0.0/16 # k3s default service CIDR

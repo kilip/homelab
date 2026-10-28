@@ -1,0 +1,30 @@
+# --- Secrets: never commit private keys or plaintext secrets -----------------
+age.key
+age.key.*
+*.agekey
+.env
+.env.*
+!.env.example
+
+# --- Local overrides (machine specific values) --------------------------------
+ansible/group_vars/all/local.yml
+ansible/inventory/local*.yml
+
+# --- Ansible ------------------------------------------------------------------
+ansible/collections/
+.ansible/
+*.retry
+
+# --- Kubernetes ---------------------------------------------------------------
+kubeconfig
+kubeconfig.*
+*.kubeconfig
+.kube/
+
+# --- Editors, OS and tooling --------------------------------------------------
+.idea/
+.vscode/
+*.swp
+.DS_Store
+.venv/
+__pycache__/

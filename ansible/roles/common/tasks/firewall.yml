@@ -1,0 +1,32 @@
+---
+# Allow rules are added BEFORE ufw is enabled, so the running SSH session is never cut off.
+# Make sure the machine you run Ansible from is inside lan_cidr before the first apply.
+- name: Allow inbound traffic from the LAN
+  community.general.ufw:
+    rule: allow
+    direction: in
+    proto: "{{ item.proto | default('tcp') }}"
+    from_ip: "{{ lan_cidr }}"
+    to_port: "{{ item.port | string }}"
+    comment: "{{ item.comment }}"
+  loop: "{{ common_ufw_lan_rules }}"
+  loop_control:
+    label: "{{ item.port }}/{{ item.proto | default('tcp') }}"
+
+- name: Deny all other inbound traffic by default
+  community.general.ufw:
+    default: deny
+    direction: incoming
+
+- name: Allow all outbound traffic by default
+  community.general.ufw:
+    default: allow
+    direction: outgoing
+
+- name: Set the firewall log level
+  community.general.ufw:
+    logging: "low"
+
+- name: Enable the firewall
+  community.general.ufw:
+    state: enabled

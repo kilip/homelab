@@ -1,0 +1,12 @@
+---
+# A drop-in named 10-* is read before cloud-init's 50-* file, and sshd uses the first value it sees.
+# sshd -t validates the file before it replaces the live one, so a typo cannot break SSH.
+- name: Install the SSH hardening drop-in
+  ansible.builtin.template:
+    src: sshd_hardening.conf.j2
+    dest: /etc/ssh/sshd_config.d/10-homelab-hardening.conf
+    owner: root
+    group: root
+    mode: "0644"
+    validate: /usr/sbin/sshd -t -f %s
+  notify: Reload ssh

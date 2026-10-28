@@ -26,10 +26,12 @@ This repository contains infrastructure-as-code (IaC) for homelab management usi
   - 🧠 **RAM**: 8 GB DDR3
   - 💽 **Disk**: 256 GB SSD
   - 🐧 **OS**: Ubuntu Server 26.04 LTS
-- **🕊️ Eros** — Auxiliary / Lightweight Node
+- **🕊️ Eros** — Auxiliary / Lightweight Node ([Details](docs/nodes/eros.md))
   - 🍓 **Model**: Raspberry Pi 3 Model B+
-  - 🧠 **RAM**: 1 GB
-  - 🐧 **OS**: Ubuntu Server 26.04 LTS
+  - 🔲 **CPU**: Broadcom BCM2837B0 (4C/4T @ 1.4 GHz)
+  - 🧠 **RAM**: 1 GB LPDDR2
+  - 💽 **Disk**: 64 GB MicroSD
+  - 🐧 **OS**: Debian GNU/Linux 12 (bookworm) arm64
 - **🛡️ Ares** — Network Gateway & Router ([Details](docs/nodes/ares.md))
   - 🌐 **Model**: MikroTik RouterBOARD RB2011iL
   - 🔲 **CPU**: Qualcomm Atheros AR9344 (600 MHz)

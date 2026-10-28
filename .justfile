@@ -8,7 +8,7 @@ default:
     @just --list --list-submodules
 
 # Verify local development toolchain and environment
-doctor:
+doctor: sops::init-key
     #!/usr/bin/env bash
     set -euo pipefail
     echo "Checking mise and environment..."

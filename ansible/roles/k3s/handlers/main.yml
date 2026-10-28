@@ -4,4 +4,6 @@
     name: k3s
     state: restarted
     daemon_reload: true
-  when: k3s_start_service | bool
+  when:
+    - k3s_start_service | bool
+    - not ansible_check_mode or k3s_binary.stat.exists

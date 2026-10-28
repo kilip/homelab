@@ -126,10 +126,14 @@
     name: k3s
     state: started
     enabled: true
-  when: k3s_start_service | bool
+  when:
+    - k3s_start_service | bool
+    - not ansible_check_mode or k3s_binary.stat.exists
 
 - name: Fetch and configure local kubeconfig
-  when: k3s_fetch_kubeconfig | bool
+  when:
+    - k3s_fetch_kubeconfig | bool
+    - not ansible_check_mode
   tags:
     - kubeconfig
   block:

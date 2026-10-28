@@ -45,12 +45,14 @@ jobs:
             .venv
             ~/.cache/uv
           key: venv-${{ runner.os }}-${{ hashFiles('.mise.toml', 'ansible/requirements.txt') }}
-          restore-keys: |
-            venv-${{ runner.os }}-
 
       - name: Install Ansible dependencies
         if: steps.venv-cache.outputs.cache-hit != 'true'
-        run: mise exec -- uv pip install -r ansible/requirements.txt
+        run: |
+          if [ -d .venv ] && ! .venv/bin/python --version >/dev/null 2>&1; then
+            rm -rf .venv
+          fi
+          mise exec -- uv pip install -r ansible/requirements.txt
 
       - name: Run ansible-lint
         run: mise exec -- just ans::lint
@@ -88,12 +90,14 @@ jobs:
             .venv
             ~/.cache/uv
           key: venv-${{ runner.os }}-${{ hashFiles('.mise.toml', 'ansible/requirements.txt') }}
-          restore-keys: |
-            venv-${{ runner.os }}-
 
       - name: Install Ansible dependencies
         if: steps.venv-cache.outputs.cache-hit != 'true'
-        run: mise exec -- uv pip install -r ansible/requirements.txt
+        run: |
+          if [ -d .venv ] && ! .venv/bin/python --version >/dev/null 2>&1; then
+            rm -rf .venv
+          fi
+          mise exec -- uv pip install -r ansible/requirements.txt
 
       - name: Cache Docker base image
         id: docker-cache

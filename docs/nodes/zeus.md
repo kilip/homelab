@@ -111,7 +111,6 @@ Technical specifications and network profile for node **Zeus** in the Olympus ho
   - `kustomize` (`5.8.3`)
   - `flux2` (`2.9.6`)
   - `helm` (`4.3.1`) & `helmfile` (`1.8.2`)
-  - `talosctl` (`1.14.4`)
   - `kubeconform` (`0.8.0`)
 - **Networking & Access**:
   - `cloudflared` (`2026.10.3`) for Cloudflare Tunnels

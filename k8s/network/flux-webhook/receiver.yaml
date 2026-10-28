@@ -8,6 +8,7 @@ spec:
   type: github
   interval: 10m
   events:
+    - ping
     - push
   secretRef:
     name: github-webhook-token

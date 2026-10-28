@@ -1,0 +1,7 @@
+---
+- name: Verify required variables are defined
+  ansible.builtin.assert:
+    that:
+      - ansible_user is defined
+      - ansible_user | length > 0
+    fail_msg: "ansible_user must be defined"

@@ -24,6 +24,10 @@ provisioner:
   name: ansible
   env:
     ANSIBLE_ROLES_PATH: "${MOLECULE_PROJECT_DIRECTORY}/roles"
+  inventory:
+    group_vars:
+      all:
+        ansible_user: root
   config_options:
     defaults:
       interpreter_python: auto_silent

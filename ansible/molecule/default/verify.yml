@@ -38,3 +38,14 @@
       register: common_packages_check
       failed_when: common_packages_check.changed
       when: common_packages | length > 0
+
+    - name: Verify passwordless sudo configuration for ansible_user
+      community.general.sudoers:
+        name: "{{ ansible_user }}"
+        user: "{{ ansible_user }}"
+        commands: ALL
+        nopassword: true
+        state: present
+      check_mode: true
+      register: sudoers_check
+      failed_when: sudoers_check.changed

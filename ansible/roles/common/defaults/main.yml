@@ -1,5 +1,6 @@
 ---
 common_packages:
+  - sudo
   - git
   - btop
   - just

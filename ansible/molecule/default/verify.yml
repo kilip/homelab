@@ -50,6 +50,20 @@
       register: sudoers_check
       failed_when: sudoers_check.changed
 
+    - name: Verify system hostname matches inventory_hostname
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['hostname'] == inventory_hostname
+
+    - name: Verify /etc/hosts maps 127.0.1.1 to inventory_hostname
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        regexp: '^127\.0\.1\.1\s+'
+        line: "127.0.1.1 {{ inventory_hostname }}"
+      check_mode: true
+      register: hosts_check
+      failed_when: hosts_check.changed
+
 - name: Verify k3s role installation and configuration
   hosts: k3s
   gather_facts: true
@@ -78,6 +92,7 @@
         k3s_config_parsed: "{{ k3s_config_raw.content | b64decode | from_yaml }}"
       ansible.builtin.assert:
         that:
+          - k3s_config_parsed['node-name'] == inventory_hostname
           - k3s_config_parsed['write-kubeconfig-mode'] == k3s_write_kubeconfig_mode
           - "'traefik' in k3s_config_parsed['disable']"
           - "'servicelb' in k3s_config_parsed['disable']"

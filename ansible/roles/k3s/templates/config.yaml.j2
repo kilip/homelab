@@ -1,4 +1,5 @@
 ---
+node-name: "{{ k3s_node_name }}"
 write-kubeconfig-mode: "{{ k3s_write_kubeconfig_mode }}"
 disable:
 {{ k3s_disable | to_nice_yaml(indent=2) | indent(2, true) -}}

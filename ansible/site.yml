@@ -1,0 +1,6 @@
+---
+- name: Configure common baseline across all nodes
+  hosts: all
+  become: true
+  roles:
+    - role: common

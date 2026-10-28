@@ -1,0 +1,29 @@
+---
+- name: Verify common role package cache and upgrade state
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Verify apt package lists exist on Debian/Ubuntu
+      ansible.builtin.stat:
+        path: /var/lib/apt/lists
+      register: apt_lists
+      failed_when: not apt_lists.stat.exists or not apt_lists.stat.isdir
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Check no pending apt upgrades remain on Debian/Ubuntu
+      ansible.builtin.apt:
+        upgrade: dist
+        update_cache: false
+      check_mode: true
+      register: apt_upgrade_check
+      failed_when: apt_upgrade_check.changed
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Check no pending pacman upgrades remain on CachyOS
+      community.general.pacman:
+        upgrade: true
+        update_cache: false
+      check_mode: true
+      register: pacman_upgrade_check
+      failed_when: pacman_upgrade_check.changed
+      when: ansible_facts['os_family'] == 'Archlinux'

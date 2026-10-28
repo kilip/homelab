@@ -1,19 +1,47 @@
 ---
-- name: Prepare containers with Python runtime for Ansible
+- name: Prepare containers with Python runtime and persistent package cache
   hosts: all
   gather_facts: false
+  vars_files:
+    - ../../roles/k3s/defaults/main.yml
   tasks:
-    - name: Bootstrap Python and python3-apt on Debian/Ubuntu
+    - name: Configure persistent apt cache and bootstrap Python on Debian/Ubuntu
       ansible.builtin.raw: |
         if command -v apt-get >/dev/null 2>&1; then
           export DEBIAN_FRONTEND=noninteractive
-          apt-get update -qq && apt-get install -y -qq python3 python3-apt sudo
+          rm -f /etc/apt/apt.conf.d/docker-clean
+          printf 'Binary::apt::APT::Keep-Downloaded-Packages "true";\nAPT::Keep-Downloaded-Packages "true";\n' > /etc/apt/apt.conf.d/99keep-cache
+          mkdir -p /var/cache/apt/archives/partial /var/lib/apt/lists/partial
+          if [ -z "$(find /var/lib/apt/lists -maxdepth 1 -type f 2>/dev/null)" ]; then
+            apt-get update -qq
+          fi
+          apt-get install -y -qq python3 python3-apt sudo || (apt-get update -qq && apt-get install -y -qq python3 python3-apt sudo)
         fi
       changed_when: false
 
-    - name: Bootstrap Python on CachyOS
+    - name: Bootstrap Python on CachyOS with persistent pacman cache
       ansible.builtin.raw: |
         if command -v pacman >/dev/null 2>&1; then
-          pacman -Sy --noconfirm python sudo
+          mkdir -p /var/cache/pacman/pkg /var/lib/pacman/sync
+          if [ -z "$(find /var/lib/pacman/sync -maxdepth 1 -name '*.db' 2>/dev/null)" ]; then
+            pacman -Sy --noconfirm --needed python sudo
+          else
+            pacman -S --noconfirm --needed python sudo || pacman -Sy --noconfirm --needed python sudo
+          fi
         fi
       changed_when: false
+
+    - name: Restore cached K3s binary and installer script on k3s nodes
+      ansible.builtin.raw: |
+        if [ -d /var/cache/k3s ]; then
+          if [ -f "/var/cache/k3s/k3s-{{ k3s_version }}" ]; then
+            cp -f "/var/cache/k3s/k3s-{{ k3s_version }}" /usr/local/bin/k3s
+            chmod 0755 /usr/local/bin/k3s
+          fi
+          if [ -f /var/cache/k3s/k3s-install.sh ]; then
+            cp -f /var/cache/k3s/k3s-install.sh "{{ k3s_install_script_path }}"
+            chmod 0755 "{{ k3s_install_script_path }}"
+          fi
+        fi
+      changed_when: false
+      when: "'k3s' in group_names"

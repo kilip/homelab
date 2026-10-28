@@ -4,3 +4,4 @@ kubeconfig
 .venv/
 .ansible/
 .mise.local.toml
+.cache/

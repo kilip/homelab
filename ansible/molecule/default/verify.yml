@@ -112,3 +112,13 @@
         path: /etc/systemd/system/k3s.service
       register: k3s_service_unit
       failed_when: not k3s_service_unit.stat.exists
+
+    - name: Persist K3s binary and installer script to Molecule cache
+      ansible.builtin.shell:
+        cmd: |
+          set -eu
+          if [ -d /var/cache/k3s ]; then
+            cp -f /usr/local/bin/k3s "/var/cache/k3s/k3s-{{ k3s_version }}"
+            cp -f "{{ k3s_install_script_path }}" /var/cache/k3s/k3s-install.sh
+          fi
+      changed_when: false

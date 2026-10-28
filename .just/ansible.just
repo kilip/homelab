@@ -30,6 +30,7 @@ play host="" tags="" check="":
 test platform="":
     #!/usr/bin/env bash
     set -euo pipefail
+    mkdir -p "{{ justfile_directory() }}/.cache/molecule"/{ubuntu/{apt-cache,apt-lists,k3s},debian/{apt-cache,apt-lists},cachyos/{pacman-pkg,pacman-sync}}
     cd "{{ ansible_dir }}"
     if [ -n "{{ platform }}" ]; then
         molecule test --platform-name "{{ platform }}"
@@ -41,6 +42,7 @@ test platform="":
 converge platform="":
     #!/usr/bin/env bash
     set -euo pipefail
+    mkdir -p "{{ justfile_directory() }}/.cache/molecule"/{ubuntu/{apt-cache,apt-lists,k3s},debian/{apt-cache,apt-lists},cachyos/{pacman-pkg,pacman-sync}}
     cd "{{ ansible_dir }}"
     if [ -n "{{ platform }}" ]; then
         molecule converge --platform-name "{{ platform }}"
@@ -68,6 +70,18 @@ destroy platform="":
         molecule destroy --platform-name "{{ platform }}"
     else
         molecule destroy
+    fi
+
+# Clean local Molecule package and binary caches
+clean-cache:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cache_dir="{{ justfile_directory() }}/.cache/molecule"
+    if [ -d "$cache_dir" ]; then
+        docker run --rm -v "{{ justfile_directory() }}/.cache:/cache" alpine:3.21 rm -rf /cache/molecule
+        echo "Removed $cache_dir"
+    else
+        echo "No Molecule cache directory found at $cache_dir"
     fi
 
 # Fetch K3s kubeconfig from cluster node to local kubeconfig

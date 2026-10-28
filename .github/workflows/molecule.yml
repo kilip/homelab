@@ -41,7 +41,7 @@ jobs:
           mise exec -- uv pip install -r ansible/requirements.txt
 
       - name: Run ansible-lint
-        run: mise exec -- just ansible::lint
+        run: mise exec -- just ans::lint
 
   molecule:
     name: Molecule (${{ matrix.platform }})
@@ -69,4 +69,4 @@ jobs:
           mise exec -- uv pip install -r ansible/requirements.txt
 
       - name: Run Molecule test
-        run: mise exec -- just ansible::test "${{ matrix.platform }}"
+        run: mise exec -- just ans::test "${{ matrix.platform }}"

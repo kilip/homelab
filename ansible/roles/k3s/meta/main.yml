@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  role_name: k3s
+  namespace: olympus
+  author: Anthonius
+  description: Install and configure single-node K3s server
+  license: MIT
+  min_ansible_version: "2.16"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - bookworm
+
+dependencies: []

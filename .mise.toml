@@ -33,4 +33,5 @@ oxfmt = "0.74.0"
 
 [env]
 SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
+KUBECONFIG = "{{config_root}}/kubeconfig"
 _.python.venv = { path = ".venv", create = true }

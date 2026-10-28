@@ -1,0 +1,40 @@
+---
+k3s_version: "v1.37.1+k3s1"
+k3s_install_script_url: "https://get.k3s.io"
+k3s_install_script_path: "/usr/local/bin/k3s-install.sh"
+k3s_config_dir: "/etc/rancher/k3s"
+k3s_config_file: "/etc/rancher/k3s/config.yaml"
+k3s_write_kubeconfig_mode: "0644"
+
+k3s_disable:
+  - traefik
+  - servicelb
+  - local-storage
+  - metrics-server
+
+k3s_tls_san: >-
+  {{
+    ([inventory_hostname] + ([ansible_host] if (ansible_host is defined and ansible_host != inventory_hostname) else []))
+    | unique
+  }}
+
+k3s_extra_config: {}
+
+k3s_packages:
+  - curl
+  - ca-certificates
+  - iptables
+  - systemd
+
+k3s_kernel_modules:
+  - br_netfilter
+  - overlay
+
+k3s_sysctl_params:
+  net.ipv4.ip_forward: 1
+  net.bridge.bridge-nf-call-iptables: 1
+  net.bridge.bridge-nf-call-ip6tables: 1
+
+k3s_start_service: true
+k3s_fetch_kubeconfig: true
+k3s_kubeconfig_local_path: "{{ playbook_dir }}/../kubeconfig"

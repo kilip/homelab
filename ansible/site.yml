@@ -4,3 +4,9 @@
   become: true
   roles:
     - role: common
+
+- name: Install and configure K3s server
+  hosts: k3s
+  become: true
+  roles:
+    - role: k3s

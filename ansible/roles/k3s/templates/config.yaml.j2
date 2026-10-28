@@ -1,0 +1,9 @@
+---
+write-kubeconfig-mode: "{{ k3s_write_kubeconfig_mode }}"
+disable:
+{{ k3s_disable | to_nice_yaml(indent=2) | indent(2, true) -}}
+tls-san:
+{{ k3s_tls_san | to_nice_yaml(indent=2) | indent(2, true) -}}
+{% if k3s_extra_config | length > 0 %}
+{{ k3s_extra_config | to_nice_yaml(indent=2) -}}
+{% endif %}

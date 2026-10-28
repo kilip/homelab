@@ -11,6 +11,8 @@ platforms:
     image: ubuntu:26.04
     pre_build_image: true
     command: sleep infinity
+    groups:
+      - k3s
   - name: debian
     image: debian:13
     pre_build_image: true
@@ -28,6 +30,9 @@ provisioner:
     group_vars:
       all:
         ansible_user: root
+      k3s:
+        k3s_start_service: false
+        k3s_fetch_kubeconfig: false
   config_options:
     defaults:
       interpreter_python: auto_silent

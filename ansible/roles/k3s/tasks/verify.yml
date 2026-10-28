@@ -1,0 +1,14 @@
+---
+- name: Verify required K3s variables are defined
+  ansible.builtin.assert:
+    that:
+      - k3s_version is defined
+      - k3s_version | length > 0
+      - k3s_install_script_url is defined
+      - k3s_install_script_url | length > 0
+      - k3s_config_dir is defined
+      - k3s_config_dir | length > 0
+      - k3s_config_file is defined
+      - k3s_config_file | length > 0
+      - k3s_disable is sequence
+    fail_msg: "Required K3s role variables must be properly defined"

@@ -1,0 +1,157 @@
+---
+- name: Verify role variables
+  ansible.builtin.import_tasks: verify.yml
+
+- name: Install K3s prerequisite packages
+  ansible.builtin.package:
+    name: "{{ k3s_packages }}"
+    state: present
+  when: k3s_packages | length > 0
+
+- name: Check if UFW binary is present
+  ansible.builtin.stat:
+    path: /usr/sbin/ufw
+  register: k3s_ufw_bin
+  when: ansible_facts['os_family'] == 'Debian'
+
+- name: Disable UFW on Debian/Ubuntu nodes
+  community.general.ufw:
+    state: disabled
+  when:
+    - ansible_facts['os_family'] == 'Debian'
+    - k3s_ufw_bin.stat.exists | default(false)
+    - k3s_start_service | bool
+
+- name: Ensure kernel modules and sysctl directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  loop:
+    - /etc/modules-load.d
+    - /etc/sysctl.d
+
+- name: Configure persistent kernel modules for K3s
+  ansible.builtin.copy:
+    dest: /etc/modules-load.d/k3s.conf
+    content: |
+      {% for mod in k3s_kernel_modules %}
+      {{ mod }}
+      {% endfor %}
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Load kernel modules for K3s
+  community.general.modprobe:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ k3s_kernel_modules }}"
+  when: k3s_start_service | bool
+
+- name: Configure sysctl parameters file for K3s
+  ansible.builtin.copy:
+    dest: /etc/sysctl.d/90-k3s.conf
+    content: |
+      {% for key, value in k3s_sysctl_params.items() %}
+      {{ key }} = {{ value }}
+      {% endfor %}
+    owner: root
+    group: root
+    mode: "0644"
+  register: k3s_sysctl_file
+
+- name: Apply sysctl parameters for K3s
+  ansible.builtin.command:
+    cmd: sysctl --system
+  changed_when: true
+  when:
+    - k3s_start_service | bool
+    - k3s_sysctl_file.changed
+
+- name: Ensure K3s configuration directory exists
+  ansible.builtin.file:
+    path: "{{ k3s_config_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Render K3s server configuration
+  ansible.builtin.template:
+    src: config.yaml.j2
+    dest: "{{ k3s_config_file }}"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart k3s
+
+- name: Download official K3s installer script
+  ansible.builtin.get_url:
+    url: "{{ k3s_install_script_url }}"
+    dest: "{{ k3s_install_script_path }}"
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Check if K3s binary is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/k3s
+  register: k3s_binary
+
+- name: Check installed K3s version
+  ansible.builtin.command:
+    cmd: /usr/local/bin/k3s --version
+  register: k3s_installed_version
+  changed_when: false
+  failed_when: false
+  when: k3s_binary.stat.exists
+
+- name: Run K3s installer script
+  ansible.builtin.command:
+    cmd: "{{ k3s_install_script_path }}"
+  environment:
+    INSTALL_K3S_VERSION: "{{ k3s_version }}"
+    INSTALL_K3S_SKIP_START: "{{ 'false' if (k3s_start_service | bool) else 'true' }}"
+    INSTALL_K3S_SKIP_ENABLE: "{{ 'false' if (k3s_start_service | bool) else 'true' }}"
+  changed_when: true
+  when: >-
+    (not k3s_binary.stat.exists) or
+    (k3s_version not in (k3s_installed_version.stdout | default('')))
+
+- name: Ensure K3s systemd service is enabled and started
+  ansible.builtin.systemd_service:
+    name: k3s
+    state: started
+    enabled: true
+  when: k3s_start_service | bool
+
+- name: Fetch and configure local kubeconfig
+  when: k3s_fetch_kubeconfig | bool
+  tags:
+    - kubeconfig
+  block:
+    - name: Wait for K3s kubeconfig to be generated on node
+      ansible.builtin.wait_for:
+        path: /etc/rancher/k3s/k3s.yaml
+        state: present
+        timeout: 60
+
+    - name: Read K3s kubeconfig from node
+      ansible.builtin.slurp:
+        src: /etc/rancher/k3s/k3s.yaml
+      register: k3s_remote_kubeconfig
+
+    - name: Write local kubeconfig with node endpoint
+      ansible.builtin.copy:
+        content: >-
+          {{
+            (k3s_remote_kubeconfig.content | b64decode)
+            | replace('https://127.0.0.1:6443', 'https://' ~ (ansible_host | default(inventory_hostname)) ~ ':6443')
+          }}
+        dest: "{{ k3s_kubeconfig_local_path | realpath }}"
+        mode: "0600"
+      delegate_to: localhost
+      become: false

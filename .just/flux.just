@@ -62,11 +62,28 @@ doctor:
     echo "Checking Flux resources status..."
     flux get all -A
 
+# Trigger immediate Flux GitRepository and Kustomization reconciliation
+reconcile name="flux-system":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    export KUBECONFIG="{{ kubeconfig }}"
+    if [ ! -f "$KUBECONFIG" ]; then
+        echo "❌ kubeconfig not found at $KUBECONFIG (run 'just ans::kubeconfig' first)"
+        exit 1
+    fi
+    flux reconcile kustomization "{{ name }}" --with-source
+    flux get kustomizations
+
 # Validate Kustomize overlays and Kubernetes manifests with kubeconform
 validate:
     #!/usr/bin/env bash
     set -euo pipefail
-    for dir in k8s/infra k8s/network; do
+    for dir in \
+        k8s/infra \
+        k8s/network \
+        k8s/network/metallb/config \
+        k8s/network/cert-manager/config \
+        k8s/network/traefik/config; do
         echo "Validating $dir..."
         kustomize build "{{ justfile_directory() }}/$dir" \
             | yq 'del(.sops)' \

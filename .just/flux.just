@@ -83,7 +83,8 @@ validate:
         k8s/network \
         k8s/network/metallb/config \
         k8s/network/cert-manager/config \
-        k8s/network/traefik/config; do
+        k8s/network/traefik/config \
+        k8s/network/flux-webhook; do
         echo "Validating $dir..."
         kustomize build "{{ justfile_directory() }}/$dir" \
             | yq 'del(.sops)' \

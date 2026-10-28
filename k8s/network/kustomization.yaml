@@ -6,3 +6,4 @@ resources:
   - ./traefik
   - ./cloudflared
   - ./external-dns
+  - ./flux-webhook

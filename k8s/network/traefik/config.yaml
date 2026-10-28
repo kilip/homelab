@@ -1,0 +1,26 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: TLSStore
+metadata:
+  name: default
+  namespace: network
+spec:
+  defaultCertificate:
+    secretName: wildcard-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: internal-only
+  namespace: network
+spec:
+  ipAllowList:
+    sourceRange:
+      - 127.0.0.1/32
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+      - 100.64.0.0/10
+      - "${INTERNAL_CIDR}"
+    ipStrategy:
+      depth: 1

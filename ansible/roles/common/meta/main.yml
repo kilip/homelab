@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  role_name: common
+  namespace: olympus
+  author: Anthonius
+  description: Common baseline role for refreshing package cache and upgrading packages across all OS families
+  license: MIT
+  min_ansible_version: "2.16"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - bookworm
+    - name: ArchLinux
+      versions:
+        - all
+
+dependencies: []

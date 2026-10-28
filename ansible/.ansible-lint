@@ -1,0 +1,5 @@
+---
+exclude_paths:
+  - "**/*.sops.yml"
+  - "**/*.sops.yaml"
+  - "**/.decrypted~*"

@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: traefik-dashboard-auth
+    namespace: network
+    annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
+type: Opaque
+data:
+    users: ENC[AES256_GCM,data:bCo9jrClODh699FRUUwaRT9NX0HIZY3lVwLRwXCtQSo7u3Qpj2mmUesSkHF/hRfwCnrWb9EfXYzVhYiQ84PvD6T42jPpC5RNCMPiFTcQvI+Q/SGbKR7yGg==,iv:TUrOcblALvTXhzDf5UfLj/PoSqdqjl2P+QQRAHJRfBQ=,tag:OmDJbj4JCery9OTawyKRiQ==,type:str]
+sops:
+    age:
+        - enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB2Y3prZkNwSHZLWVM1dE9k
+            dlVydHl6RVcvMmxrMkdXWjAvZnpFdWlsblFzCjNUVjVOYXdURURFajJRZXpxcGNv
+            T2NUTEh3UWNUY3ZRR25wbjYyeWVKZjAKLS0tIC9xNGJBVlVORStmY2Nwc1Z6NEd2
+            aFZCWkFIZ2NkOFNJaGZJSWx1M3ZxV1UK3/14LTDcQ8ILr69BhJzPPKANDVYehdHb
+            vhJuIFhpsaejfxMrh2QJHDoUmQbelEcyC/yA91JAv6zZikCTEQ7DeA==
+            -----END AGE ENCRYPTED FILE-----
+          recipient: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf
+    encrypted_regex: ^(data|stringData)$
+    lastmodified: "2026-10-28T21:19:21Z"
+    mac: ENC[AES256_GCM,data:UkjeCE3xTkE9YwE4Q9OF+s2XeGOBNwCepvrHl5N45csupoYptpIxnz1tt64SOJH3TOaNxVYXRfrOi1ozWY/jtToHGr05ed0p7NwtLrnhMwfKBtO2C07jMdH1oHGYQe0zbYXP1hTh/ksOAXvixrYFeku/vRWWipfKVUrqhhdTSfU=,iv:luYDfafJ83aglEba70Axgm7FIIwvrAN0DTZB1BN8MFE=,tag:u4M60nf/uP+29gWXBSy+2g==,type:str]
+    version: 3.13.3

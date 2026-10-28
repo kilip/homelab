@@ -33,13 +33,14 @@ jobs:
           persist-credentials: false
 
       - name: Set up mise
-        uses: jdx/mise-action@5ac50f778e26fac95da98d50503682459e8fb556 # v3.6.1
+        uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
         with:
           install: false
 
       - name: Install Python and Ansible dependencies
         run: |
           mise install python uv
+          mise use -g just@1.59.0
           mise exec -- uv venv .venv
           mise exec -- uv pip install -r ansible/requirements.txt
 
@@ -64,13 +65,14 @@ jobs:
           persist-credentials: false
 
       - name: Set up mise
-        uses: jdx/mise-action@5ac50f778e26fac95da98d50503682459e8fb556 # v3.6.1
+        uses: jdx/mise-action@6be3c7ed4c21d4f76b208d351d95aac273ebb76d # v5.2.4
         with:
           install: false
 
       - name: Install Python and Ansible dependencies
         run: |
           mise install python uv
+          mise use -g just@1.59.0
           mise exec -- uv venv .venv
           mise exec -- uv pip install -r ansible/requirements.txt
 

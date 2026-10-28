@@ -1,1 +1,3 @@
 age.key
+.venv/
+.mise.local.toml

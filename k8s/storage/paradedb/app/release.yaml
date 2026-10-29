@@ -52,6 +52,8 @@ spec:
           logicalReplication: false
         podMonitor:
           enabled: false
+        prometheusRule:
+          enabled: false
       initdb:
         database: paradedb
         owner: paradedb

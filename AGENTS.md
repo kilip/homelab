@@ -58,6 +58,7 @@ Run commands through `just` (or `mise exec -- just ...` if `mise` shims are not 
 - **Install tools & Python dependencies**: `just deps::install`
 - **Initialize Age key from `pass`**: `just sops::init-key`
 - **Run Ansible playbook**: `just ans::play` (supports `--host/-h <host>`, `--tags/-t <tags>`, `--check/-c`)
+- **Ping inventory hosts**: `just ans::ping [host]`
 - **Run Ansible linter**: `just ans::lint`
 - **Run full Molecule test suite (all platforms)**: `just ans::test`
 - **Run Molecule tests for a single platform**: `just ans::test ubuntu` (or `cachyos`)

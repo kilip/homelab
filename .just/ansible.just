@@ -26,6 +26,23 @@ play host="" tags="" check="":
     fi
     ansible-playbook site.yml "${args[@]}"
 
+# Ping inventory hosts (defaults to all, or target specific host/group)
+ping host="all" *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    target="{{ host }}"
+    extra="{{ args }}"
+    if [ "$target" = "-h" ] || [ "$target" = "--host" ]; then
+        target="${extra%% *}"
+        if [ "$extra" = "$target" ]; then
+            extra=""
+        else
+            extra="${extra#* }"
+        fi
+    fi
+    cd "{{ ansible_dir }}"
+    ansible "${target:-all}" -m ansible.builtin.ping $extra
+
 # Run full Molecule test lifecycle (optionally target a single platform: ubuntu, cachyos)
 test platform="":
     #!/usr/bin/env bash

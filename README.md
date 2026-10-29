@@ -4,13 +4,26 @@ This repository contains infrastructure-as-code (IaC) for homelab management usi
 
 ## 🏗️ Architecture & Technology
 
-- **Ansible**: Primary configuration management and deployment tool.
-- **Kubernetes**: Container orchestration engine for managing and scaling homelab applications and workloads.
-- **Flux CD**: GitOps tool for continuous delivery and automatic Kubernetes cluster state reconciliation.
-- **SOPS + Age**: Encrypted secrets management directly within the repository.
-- **Cloudflare Tunnel**: Secure public access without opening router ports (Local Management).
-- **just**: Command runner for orchestrating development and deployment tasks.
-- **mise**: Polyglot tool version manager and environment control (replacing asdf).
+Olympus leverages an automated Infrastructure-as-Code (IaC) and GitOps pipeline designed for minimal node footprint, declarative configuration, zero-trust security, and reproducibility.
+
+- **Configuration Management**: **Ansible** for multi-OS node provisioning (`Ubuntu`, `Debian`, `Archlinux`/`CachyOS`) and initial host hardening.
+- **Orchestration**: **K3s** (Kubernetes) lightweight container orchestration engine running on homelab server nodes.
+- **GitOps Delivery**: **Flux CD** (v2) managing declarative continuous deployment, dependency graphs, and automatic state reconciliation.
+- **Networking & Ingress**:
+  - **MetalLB**: Layer 2 bare-metal load balancer providing internal cluster IP allocation.
+  - **Traefik**: Edge ingress controller managing HTTP/HTTPS routing, secure middlewares, and TLS termination via **Cert-Manager** with Cloudflare DNS-01 validation.
+  - **Cloudflare Tunnel & ExternalDNS**: Secure zero-trust public edge ingress and automated DNS record management without opening public firewall ports.
+- **Database & Storage**:
+  - **CloudNative-PG**: Declarative Kubernetes operator for high-availability PostgreSQL with automated failover and backups.
+  - **ParadeDB**: Elasticsearch-alternative search engine built directly on PostgreSQL with BM25 indexing.
+  - **Local Path Provisioner**: Lightweight host-based persistent volume management.
+- **Observability & Logging**:
+  - **New Relic**: SaaS-based observability collecting node metrics (`newrelic-infrastructure`), cluster state (`kube-state-metrics`), custom Prometheus endpoints (`nri-prometheus`), and real-time container logs (`newrelic-logging` via Fluent Bit) with an ultra-low cluster footprint (~185 MiB RAM).
+- **Secrets Management**: **SOPS + Age** for end-to-end repository encryption, transparently decrypted at runtime by Ansible and Flux CD.
+- **Developer Toolchain**:
+  - **`just`**: Modular task runner (`.just/`) orchestrating cluster diagnostics, linting, and GitOps workflows.
+  - **`mise`**: Polyglot runtime version manager ensuring pinned, deterministic CLI environments.
+  - **`uv`**: Fast Python virtual environment and package manager.
 
 ## 🖥️ Hardware Infrastructure
 

@@ -1,4 +1,28 @@
 ---
+app_docker: false
+app_docker_start_service: true
+app_docker_users:
+  - "{{ ansible_user }}"
+app_docker_daemon_config:
+  log-driver: "json-file"
+  log-opts:
+    max-size: "50m"
+    max-file: "3"
+  live-restore: true
+app_docker_packages_debian:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+  - python3-docker
+app_docker_packages_archlinux:
+  - docker
+  - docker-buildx
+  - docker-compose
+  - python-docker
+app_docker_packages: []
+
 app_mosquitto: false
 app_mosquitto_container_name: mosquitto
 app_mosquitto_image: "eclipse-mosquitto:2"

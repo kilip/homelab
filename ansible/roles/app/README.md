@@ -19,6 +19,11 @@ Variables available in `defaults/main.yml`:
 
 | Variable | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
+| `app_docker` | Boolean | `false` | Enable Docker CE engine installation and configuration. When `false`, executes uninstall block (stops services, removes packages and repository files). |
+| `app_docker_start_service` | Boolean | `true` | Enable and start Docker service and socket (set to `false` in unprivileged container/test environments). |
+| `app_docker_users` | List[String] | `["{{ ansible_user }}"]` | Host users to append to the `docker` system group. |
+| `app_docker_daemon_config` | Dict | `{"log-driver": "json-file", ...}` | Daemon configuration rendered to `/etc/docker/daemon.json`. |
+| `app_docker_packages` | List[String] | `[]` | Explicit package override for Docker (defaults to distro-specific packages if empty). |
 | `app_mosquitto` | Boolean | `false` | Enable Mosquitto Docker container deployment. When `false`, executes uninstall block (stops container and purges persistent storage). |
 | `app_mosquitto_container_name` | String | `mosquitto` | Name of the Mosquitto Docker container. |
 | `app_mosquitto_image` | String | `eclipse-mosquitto:2` | Docker container image for Mosquitto. |

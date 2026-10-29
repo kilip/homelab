@@ -20,6 +20,7 @@
   roles:
     - role: app
       vars:
+        app_docker: true
         app_mosquitto: true
         app_mosquitto_users:
           - username: molecule_user

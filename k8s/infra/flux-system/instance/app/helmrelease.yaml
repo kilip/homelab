@@ -22,8 +22,7 @@ spec:
         ref: refs/heads/main
         path: k8s/infra
         interval: 10m
-        secretRef:
-          name: flux-system
+        pullSecret: flux-system
       kustomize:
         patches:
           - # Inject SOPS decryption to all child Kustomizations under flux-system

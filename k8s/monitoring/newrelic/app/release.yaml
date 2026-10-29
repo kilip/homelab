@@ -1,0 +1,104 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: newrelic-bundle
+  namespace: monitoring
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: nri-bundle
+      version: "8.0.39"
+      sourceRef:
+        kind: HelmRepository
+        name: newrelic
+        namespace: monitoring
+      interval: 12h
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      cluster: "olympus"
+      customSecretName: "newrelic-bundle-secret"
+      customSecretLicenseKey: "licenseKey"
+      lowDataMode: true
+
+    newrelic-infrastructure:
+      enabled: true
+      privileged: true
+      resources:
+        limits:
+          cpu: 100m
+          memory: 150Mi
+        requests:
+          cpu: 30m
+          memory: 60Mi
+
+    kube-state-metrics:
+      enabled: true
+      resources:
+        limits:
+          cpu: 50m
+          memory: 64Mi
+        requests:
+          cpu: 10m
+          memory: 32Mi
+
+    nri-prometheus:
+      enabled: true
+      resources:
+        limits:
+          cpu: 100m
+          memory: 128Mi
+        requests:
+          cpu: 20m
+          memory: 40Mi
+      config:
+        scrape_services: false
+        scrape_endpoints: true
+        scrape_enabled_label: "prometheus.io/scrape"
+
+    newrelic-logging:
+      enabled: true
+      resources:
+        limits:
+          cpu: 100m
+          memory: 96Mi
+        requests:
+          cpu: 20m
+          memory: 45Mi
+
+    nri-metadata-injection:
+      enabled: false
+
+    nri-kube-events:
+      enabled: false
+
+    newrelic-pixie:
+      enabled: false
+
+    pixie-chart:
+      enabled: false
+
+    nr-ebpf-agent:
+      enabled: false
+
+    k8s-agents-operator:
+      enabled: false
+
+    newrelic-infra-operator:
+      enabled: false
+
+    newrelic-prometheus-agent:
+      enabled: false
+
+    newrelic-k8s-metrics-adapter:
+      enabled: false

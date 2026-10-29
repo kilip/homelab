@@ -9,3 +9,4 @@
 - name: Manage mosquitto
   ansible.builtin.include_tasks:
     file: "mosquitto.yml"
+  when: app_docker | bool

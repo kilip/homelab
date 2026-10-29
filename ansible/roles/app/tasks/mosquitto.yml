@@ -1,4 +1,9 @@
 ---
+- name: Check if Docker daemon socket exists
+  ansible.builtin.stat:
+    path: /var/run/docker.sock
+  register: app_docker_socket
+
 - name: Ensure mosquitto installed and configured
   when: app_mosquitto | bool
   block:
@@ -54,7 +59,9 @@
           - "{{ app_mosquitto_config_dir }}:/mosquitto/config:ro"
           - "{{ app_mosquitto_data_dir }}:/mosquitto/data:rw"
           - "{{ app_mosquitto_log_dir }}:/mosquitto/log:rw"
-      when: app_mosquitto_start_service | bool
+      when:
+        - app_mosquitto_start_service | bool
+        - not ansible_check_mode or (app_docker_socket.stat.exists | default(false))
 
 - name: Ensure mosquitto uninstalled
   when: not (app_mosquitto | bool)
@@ -63,7 +70,10 @@
       community.docker.docker_container:
         name: "{{ app_mosquitto_container_name }}"
         state: absent
-      when: app_mosquitto_start_service | bool
+      when:
+        - app_docker | bool
+        - app_mosquitto_start_service | bool
+        - not ansible_check_mode or (app_docker_socket.stat.exists | default(false))
 
     - name: Remove mosquitto persistent directories
       ansible.builtin.file:

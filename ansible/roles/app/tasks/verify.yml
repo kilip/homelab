@@ -2,6 +2,7 @@
 - name: Assert app role variables are valid
   ansible.builtin.assert:
     that:
+      - (not (app_mosquitto | bool)) or (app_docker | bool)
       - app_docker is boolean
       - app_docker_start_service is boolean
       - app_docker_users is sequence

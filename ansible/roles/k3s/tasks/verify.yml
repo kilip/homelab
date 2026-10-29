@@ -15,4 +15,5 @@
       - k3s_config_file is defined
       - k3s_config_file | length > 0
       - k3s_disable is sequence
+      - k3s_disable_swap is boolean
     fail_msg: "Required K3s role variables must be properly defined"

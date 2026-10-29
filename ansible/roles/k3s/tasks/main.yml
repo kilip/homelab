@@ -22,6 +22,39 @@
     - k3s_ufw_bin.stat.exists | default(false)
     - k3s_start_service | bool
 
+- name: Check if /etc/fstab exists
+  ansible.builtin.stat:
+    path: /etc/fstab
+  register: k3s_fstab_stat
+  when: k3s_disable_swap | bool
+
+- name: Disable swap entry in /etc/fstab
+  ansible.builtin.replace:
+    path: /etc/fstab
+    regexp: '^([ \t]*[^# \t\n\r]+[ \t]+[^# \t\n\r]+[ \t]+swap([ \t]+.*)?)$'
+    replace: '# \1'
+  when:
+    - k3s_disable_swap | bool
+    - k3s_fstab_stat.stat.exists | default(false)
+
+- name: Check active swap status
+  ansible.builtin.command:
+    cmd: swapon --show --noheadings
+  register: k3s_active_swap
+  changed_when: false
+  when:
+    - k3s_disable_swap | bool
+    - k3s_start_service | bool
+
+- name: Disable active swap
+  ansible.builtin.command:
+    cmd: swapoff -a
+  changed_when: true
+  when:
+    - k3s_disable_swap | bool
+    - k3s_start_service | bool
+    - (k3s_active_swap.stdout | default('')) | trim | length > 0
+
 - name: Ensure kernel modules and sysctl directories exist
   ansible.builtin.file:
     path: "{{ item }}"

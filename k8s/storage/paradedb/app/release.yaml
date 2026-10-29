@@ -43,6 +43,15 @@ spec:
           memory: 2Gi
       enableSuperuserAccess: true
       superuserSecret: paradedb-superuser-credentials
+      monitoring:
+        enabled: true
+        instrumentation:
+          paradedbIndex: true
+          pgStatActivity: true
+          pgStatStatements: false
+          logicalReplication: false
+        podMonitor:
+          enabled: false
       initdb:
         database: paradedb
         owner: paradedb

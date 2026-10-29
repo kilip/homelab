@@ -1,9 +1,12 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./metallb
-  - ./cert-manager
-  - ./traefik
-  - ./cloudflared
-  - ./external-dns
-  - ./flux-webhook
+  - ./namespace.yaml
+  - ./metallb/ks.yaml
+  - ./cert-manager/ks.yaml
+  - ./traefik/ks.yaml
+  - ./cloudflared/ks.yaml
+  - ./external-dns/ks.yaml
+  - ./flux-webhook/ks.yaml

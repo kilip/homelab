@@ -9,6 +9,14 @@ spec:
     kind: OCIRepository
     name: home-assistant
   interval: 1h
+  timeout: 10m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   values:
     controllers:
       home-assistant:
@@ -36,7 +44,7 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /healthz
+                    path: /manifest.json
                     port: &port 8123
                   timeoutSeconds: 5
                   failureThreshold: 5

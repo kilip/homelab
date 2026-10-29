@@ -1,0 +1,95 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: home-assistant
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: home-assistant
+  interval: 1h
+  values:
+    controllers:
+      home-assistant:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-operations/home-assistant
+              tag: 2026.10.4@sha256:81271a8bbe2a6019659e9d5cde98b884dd0d67fad6819bb4ab177dceb0c1c5e1
+            env:
+              TZ: Asia/Jakarta
+            envFrom:
+              - secretRef:
+                  name: home-assistant-secret
+            probes:
+              liveness:
+                enabled: true
+                spec:
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: &port 8123
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 2Gi
+    defaultPodOptions:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        ports:
+          http:
+            appProtocol: kubernetes.io/ws
+            port: *port
+    ingress:
+      app:
+        className: traefik
+        annotations:
+          external-dns.alpha.kubernetes.io/expose: "true"
+          external-dns.kubernetes.io/target: "${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
+        hosts:
+          - host: hass.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - hass.${SECRET_DOMAIN}
+    persistence:
+      config:
+        existingClaim: home-assistant
+      config-cache:
+        existingClaim: home-assistant-cache
+        globalMounts:
+          - path: /config/.venv
+      tmp:
+        type: emptyDir

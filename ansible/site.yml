@@ -6,7 +6,9 @@
     - role: common
       tags:
         - common
-
+    - role: app
+      tags:
+        - app
 - name: Install and configure K3s server
   hosts: k3s
   become: true

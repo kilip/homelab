@@ -1,0 +1,13 @@
+---
+app_mosquitto: false
+app_mosquitto_packages:
+  - mosquitto
+app_mosquitto_service: mosquitto
+app_mosquitto_start_service: true
+app_mosquitto_config_dir: /etc/mosquitto
+app_mosquitto_data_dir: /srv/mosquitto
+app_mosquitto_port: 1883
+app_mosquitto_bind_address: "0.0.0.0"
+app_mosquitto_allow_anonymous: false
+app_mosquitto_persistence: true
+app_mosquitto_users: "{{ app_mosquitto_user | default([]) }}"

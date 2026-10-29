@@ -122,3 +122,52 @@
             cp -f "{{ k3s_install_script_path }}" /var/cache/k3s/k3s-install.sh
           fi
       changed_when: false
+
+- name: Verify app role installation and configuration
+  hosts: all
+  gather_facts: true
+  vars_files:
+    - ../../roles/app/defaults/main.yml
+  tasks:
+    - name: Verify mosquitto package is installed
+      ansible.builtin.package:
+        name: "{{ app_mosquitto_packages }}"
+        state: present
+      check_mode: true
+      register: mosquitto_pkg_check
+      failed_when: mosquitto_pkg_check.changed
+
+    - name: Verify mosquitto configuration directory exists
+      ansible.builtin.stat:
+        path: "{{ app_mosquitto_config_dir }}"
+      register: mosquitto_config_dir_stat
+      failed_when: not mosquitto_config_dir_stat.stat.exists or not mosquitto_config_dir_stat.stat.isdir
+
+    - name: Verify mosquitto data directory exists
+      ansible.builtin.stat:
+        path: "{{ app_mosquitto_data_dir }}"
+      register: mosquitto_data_dir_stat
+      failed_when: not mosquitto_data_dir_stat.stat.exists or not mosquitto_data_dir_stat.stat.isdir
+
+    - name: Verify mosquitto default config exists and has valid listener setting
+      ansible.builtin.lineinfile:
+        path: "{{ app_mosquitto_config_dir }}/conf.d/default.conf"
+        line: "listener {{ app_mosquitto_port }} {{ app_mosquitto_bind_address }}"
+      check_mode: true
+      register: mosquitto_conf_check
+      failed_when: mosquitto_conf_check.changed
+
+    - name: Verify mosquitto password file exists
+      ansible.builtin.stat:
+        path: "{{ app_mosquitto_config_dir }}/passwd"
+      register: mosquitto_passwd_stat
+      failed_when: not mosquitto_passwd_stat.stat.exists
+
+    - name: Verify provisioned user exists in passwd file
+      ansible.builtin.lineinfile:
+        path: "{{ app_mosquitto_config_dir }}/passwd"
+        regexp: '^molecule_user:'
+        state: present
+      check_mode: true
+      register: mosquitto_user_check
+      failed_when: mosquitto_user_check.changed

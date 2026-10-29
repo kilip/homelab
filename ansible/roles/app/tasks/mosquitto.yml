@@ -1,0 +1,94 @@
+---
+- name: Ensure mosquitto installed and configured
+  when: app_mosquitto | bool
+  block:
+    - name: Install mosquitto packages
+      ansible.builtin.package:
+        name: "{{ app_mosquitto_packages }}"
+        state: present
+
+    - name: Ensure mosquitto configuration and data directories exist
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: mosquitto
+        group: mosquitto
+        mode: "0750"
+      loop:
+        - "{{ app_mosquitto_config_dir }}"
+        - "{{ app_mosquitto_config_dir }}/conf.d"
+        - "{{ app_mosquitto_data_dir }}"
+
+    - name: Configure mosquitto default configuration
+      ansible.builtin.template:
+        src: mosquitto.conf.j2
+        dest: "{{ app_mosquitto_config_dir }}/conf.d/default.conf"
+        owner: mosquitto
+        group: mosquitto
+        mode: "0640"
+      notify: Restart mosquitto
+
+    - name: Ensure mosquitto password file exists
+      ansible.builtin.copy:
+        content: ""
+        dest: "{{ app_mosquitto_config_dir }}/passwd"
+        force: false
+        owner: mosquitto
+        group: mosquitto
+        mode: "0600"
+      when: not (app_mosquitto_allow_anonymous | bool) or (app_mosquitto_users | length > 0)
+
+    - name: Check configured mosquitto users
+      ansible.builtin.command:
+        cmd: "grep -E '^{{ item.username }}:' {{ app_mosquitto_config_dir }}/passwd"
+      loop: "{{ app_mosquitto_users }}"
+      loop_control:
+        label: "{{ item.username }}"
+      register: app_mosquitto_user_exists
+      failed_when: false
+      changed_when: false
+      when: app_mosquitto_users | length > 0
+
+    - name: Configure mosquitto users and passwords
+      ansible.builtin.command:
+        cmd: "mosquitto_passwd -b {{ app_mosquitto_config_dir }}/passwd {{ item.item.username }} {{ item.item.password }}"
+      loop: "{{ app_mosquitto_user_exists.results }}"
+      loop_control:
+        label: "{{ item.item.username }}"
+      no_log: true
+      changed_when: true
+      when:
+        - app_mosquitto_users | length > 0
+        - item.rc != 0
+      notify: Restart mosquitto
+
+    - name: Ensure mosquitto service is started and enabled
+      ansible.builtin.service:
+        name: "{{ app_mosquitto_service }}"
+        state: started
+        enabled: true
+      when: app_mosquitto_start_service | bool
+
+- name: Ensure mosquitto uninstalled
+  when: not (app_mosquitto | bool)
+  block:
+    - name: Ensure mosquitto service is stopped and disabled
+      ansible.builtin.service:
+        name: "{{ app_mosquitto_service }}"
+        state: stopped
+        enabled: false
+      failed_when: false
+      when: app_mosquitto_start_service | bool
+
+    - name: Remove mosquitto packages
+      ansible.builtin.package:
+        name: "{{ app_mosquitto_packages }}"
+        state: absent
+
+    - name: Remove mosquitto configuration and data directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ app_mosquitto_config_dir }}"
+        - "{{ app_mosquitto_data_dir }}"

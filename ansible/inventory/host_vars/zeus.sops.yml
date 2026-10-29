@@ -1,6 +1,7 @@
 ansible_host: ENC[AES256_GCM,data:dlV/2lu0KDM=,iv:dCoADORdNx5EY1gp5Rxcb7H0dEM+KpucqSEVrQXhOOY=,tag:xCFoStxuqJoSH8ztYho81w==,type:str]
 ansible_user: ENC[AES256_GCM,data:9555nA==,iv:dekwY5c9bUjQCZ0BcL4UlxV7WI/1XrBId2Q8Av90WmA=,tag:pVCnmPIKb970cA+Q8H59Zg==,type:str]
 ansible_become_password: ENC[AES256_GCM,data:fhz7+9BT0gbENVQ3,iv:BCbMvXIU6wseH3OsPIaE1YBF0DGPnAS1oC5YwZ3Q7jo=,tag:voXK7ee0N7Zb1td9jzNYVA==,type:str]
+app_docker: ENC[AES256_GCM,data:sDPuHw==,iv:5auFUWjr1hvLk1tBySeQhWasG0pVSm2sRdUwhrV6DyU=,tag:56e+SPlQdHQ4myVzl1imJg==,type:bool]
 sops:
     age:
         - enc: |
@@ -12,7 +13,7 @@ sops:
             53xO0aouIwybEz8VyAdiOL9nWdxuo30uJA9q5UKj0OUz75wKFPWE2Q==
             -----END AGE ENCRYPTED FILE-----
           recipient: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf
-    lastmodified: "2026-10-29T09:21:56Z"
-    mac: ENC[AES256_GCM,data:j7qhfBbqd6SVmr2OQvOdzt0H7rP3SNLG5Dt+yJQKoxnWPZc2jyHPBGh5kmEBHVJcCtkAwQtjIftFNCFudmETZBSG6MhCM81dwxDLeBiY30i8GDh7WApN++DH5w3MNDt0Ytp/4BdptQYzH9YqPnhgSKsjfT39xEE8Jc+zEVGQtCI=,iv:seSxVvD+Zq+xbOs8FJg0FRvQApeQ1nMB6CROZRD8OP0=,tag:5n65SuGnf3mHjzOUZwiyQQ==,type:str]
+    lastmodified: "2026-10-29T13:08:36Z"
+    mac: ENC[AES256_GCM,data:ljdlZKryXB4s+mtBIiJ+jG8gNIcQn3CSpIWeLW/dXef46hZklAZjE5nShX++93Tn/QHMKNgoDcoKRtdCEwtqNTlojfagFR/FI5x/kEPURCgPkKz61GZpkfSQamg5EHfP475rQlihbN21e3zpeay42Pjk/aKkaGhQJpUqZ3KuY6o=,iv:nEtqe8NMNnnIUTtEU4ZDWUscnAwIULgQ+K7tkynBvrc=,tag:JemaBjaDzBLLNGc16gaREA==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.13.3

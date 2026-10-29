@@ -1,0 +1,21 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: flux-operator
+  namespace: flux-system
+spec:
+  interval: 1h
+  path: ./k8s/infra/flux-system/operator/app
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: flux-system
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: network-vars
+        optional: true

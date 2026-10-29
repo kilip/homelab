@@ -1,0 +1,97 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: flux-instance
+  namespace: flux-system
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: flux-instance
+  interval: 1h
+  values:
+    commonAnnotations:
+      fluxcd.controlplane.io/reconcileArtifactEvery: 1h
+    instance:
+      cluster:
+        networkPolicy: false
+      distribution:
+        version: "2.x"
+      sync:
+        url: ssh://git@github.com/kilip/homelab.git
+        ref: refs/heads/main
+        path: k8s/infra
+        interval: 10m
+        secretRef:
+          name: flux-system
+      kustomize:
+        patches:
+          - # Inject SOPS decryption to all child Kustomizations under flux-system
+            patch: |-
+              - op: add
+                path: /spec/patches
+                value:
+                  - patch: |-
+                      apiVersion: kustomize.toolkit.fluxcd.io/v1
+                      kind: Kustomization
+                      metadata:
+                        name: _
+                      spec:
+                        decryption:
+                          provider: sops
+                          secretRef:
+                            name: sops-age
+                    target:
+                      group: kustomize.toolkit.fluxcd.io
+                      kind: Kustomization
+            target:
+              group: kustomize.toolkit.fluxcd.io
+              kind: Kustomization
+              name: flux-system
+          - # Remediate & CRD handling defaults for child HelmReleases
+            patch: |-
+              - op: add
+                path: /spec/patches
+                value:
+                  - patch: |-
+                      apiVersion: helm.toolkit.fluxcd.io/v2
+                      kind: HelmRelease
+                      metadata:
+                        name: _
+                      spec:
+                        install:
+                          crds: CreateReplace
+                        rollback:
+                          cleanupOnFail: true
+                        upgrade:
+                          cleanupOnFail: true
+                          crds: CreateReplace
+                          strategy:
+                            name: RemediateOnFailure
+                          remediation:
+                            remediateLastFailure: true
+                            retries: 2
+                    target:
+                      group: helm.toolkit.fluxcd.io
+                      kind: HelmRelease
+            target:
+              group: kustomize.toolkit.fluxcd.io
+              kind: Kustomization
+              name: flux-system
+          - # Resource limits
+            patch: |-
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: all
+              spec:
+                template:
+                  spec:
+                    containers:
+                      - name: manager
+                        resources:
+                          limits:
+                            memory: 1Gi
+            target:
+              kind: Deployment
+              name: (kustomize-controller|helm-controller|source-controller)

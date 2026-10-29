@@ -35,13 +35,6 @@ spec:
     newrelic-infrastructure:
       enabled: true
       privileged: true
-      resources:
-        limits:
-          cpu: 100m
-          memory: 150Mi
-        requests:
-          cpu: 30m
-          memory: 60Mi
 
     kube-state-metrics:
       enabled: true

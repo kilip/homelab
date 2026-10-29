@@ -120,6 +120,10 @@ validate:
         k8s/network/cloudflared/app \
         k8s/network/external-dns/app \
         k8s/network/flux-webhook/app \
+        k8s/storage \
+        k8s/storage/local-path/app \
+        k8s/storage/cloudnative-pg/app \
+        k8s/storage/paradedb/app \
         k8s/apps \
         k8s/apps/echo/app; do
         echo "Validating $dir..."

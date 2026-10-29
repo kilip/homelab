@@ -1,0 +1,16 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: local-path
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  retryInterval: 1m0s
+  path: ./k8s/storage/local-path/app
+  prune: true
+  wait: true
+  timeout: 5m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system

@@ -4,6 +4,7 @@ resources:
   - ./flux-system
   - network-vars.sops.yaml
   - network.yaml
+  - storage.yaml
   - apps.yaml
 patches:
   - patch: |

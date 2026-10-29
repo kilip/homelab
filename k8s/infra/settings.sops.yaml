@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-    name: network-vars
+    name: settings
     namespace: flux-system
 type: Opaque
 stringData:
@@ -12,6 +12,7 @@ stringData:
     ACME_EMAIL: ENC[AES256_GCM,data:JUXdAuIDTo82yjwMi4E=,iv:7yrOOd1mujPAGp6GV27pz/ZQE0O70IznvUwTwXRGraw=,tag:TyojYYky6s7QeYu+SVSzsw==,type:str]
     INTERNAL_CIDR: ENC[AES256_GCM,data:FztEfDyJcEzTWgI=,iv:ZKN9f6OndA3fsjoIf6AyNQzUjm+/dcD1ibcz83z504Y=,tag:OWTuzOfyGooBZlIUKGUk+g==,type:str]
     CLOUDFLARE_TUNNEL_ID: ENC[AES256_GCM,data:EKCkuSvJTwXoWVY/yw0to/MqK0jHRxtTsyg358J1Tv3qngVV,iv:/wK+pKaiGuMtDEqj7NXY19yl1XU5bVZP00tc/RNeYcU=,tag:exzqIsSksXM/7+OLgqudTw==,type:str]
+    TIMEZONE: ENC[AES256_GCM,data:LC6b2HC34j2C157iPw==,iv:vAKzn9U0NJkhaZSOLbBs1EGkSBJiAbSJHidJt1L2ia4=,tag:wCU0ZTplsjoWDOEHsAUYaA==,type:str]
 sops:
     age:
         - enc: |
@@ -24,6 +25,6 @@ sops:
             -----END AGE ENCRYPTED FILE-----
           recipient: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf
     encrypted_regex: ^(data|stringData)$
-    lastmodified: "2026-10-29T01:44:50Z"
-    mac: ENC[AES256_GCM,data:yDuQpFI89QEp6m89WOqyliPoAQAyae1iaWdoGI5rJ5dvGPoJ7cWJOlYg4YnL065ST6Q9J+LEWPnKURkc2bk4YnGydAm2WZHsdiyZv/RlS68zi1CElEuuoBxkGEeMVlTXtEWR2Jp69NBk3FWe5WPjtmQByIfpVCu5GQ/GLlWuQC4=,iv:gKnbY5LFzaHeEVSlGDlx2ymb7sf1n66W8L3FYdhCKD8=,tag:EKvCZNzgzgrhceCIugw26w==,type:str]
+    lastmodified: "2026-10-29T07:04:33Z"
+    mac: ENC[AES256_GCM,data:yOMMyZ7mGKr2Zax+ECfqhtSnb+KWmNOesqe1qMEguApT3hvHg51zcXbldj8YN4K09JT8PLFeLt5zB3AbWuEzD2hExvQEG2Nb4IakriFfk0yD9trnIk5iglZR9/1w4rCzeeEaM5zaSJZcixxd/7aAKMGxNDmJ8vbqUlaJt6u9Z2A=,iv:26Y2sN6pUruhQrJ6duZWMBe5pqVG+jtwN0IaLC4a+aM=,tag:eiYlOLjaTQxA1DWUXOeUFQ==,type:str]
     version: 3.13.3

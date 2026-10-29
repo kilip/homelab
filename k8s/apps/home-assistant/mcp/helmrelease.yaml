@@ -36,7 +36,7 @@ spec:
               MCP_HEALTHZ: true
               MCP_HOST: 0.0.0.0
               MCP_PORT: &port 80
-              TZ: Asia/Makassar
+              TZ: ${TIMEZONE}
             envFrom:
               - secretRef:
                   name: home-assistant-mcp-secret

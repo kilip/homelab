@@ -3,10 +3,15 @@
   ansible.builtin.systemd_service:
     name: docker
     state: restarted
-  when: app_docker_start_service | bool
+  when:
+    - app_docker_start_service | bool
+    - not ansible_check_mode
 
 - name: Restart mosquitto
   community.docker.docker_container:
     name: "{{ app_mosquitto_container_name }}"
+    image: "{{ app_mosquitto_image }}"
     restart: true
-  when: app_mosquitto_start_service | bool
+  when:
+    - app_mosquitto_start_service | bool
+    - not ansible_check_mode

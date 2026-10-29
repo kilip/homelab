@@ -26,11 +26,11 @@ play host="" tags="" check="":
     fi
     ansible-playbook site.yml "${args[@]}"
 
-# Run full Molecule test lifecycle (optionally target a single platform: ubuntu, debian, cachyos)
+# Run full Molecule test lifecycle (optionally target a single platform: ubuntu, cachyos)
 test platform="":
     #!/usr/bin/env bash
     set -euo pipefail
-    mkdir -p "{{ justfile_directory() }}/.cache/molecule"/{ubuntu/{apt-cache,apt-lists,k3s},debian/{apt-cache,apt-lists},cachyos/{pacman-pkg,pacman-sync}}
+    mkdir -p "{{ justfile_directory() }}/.cache/molecule"/{ubuntu/{apt-cache,apt-lists,k3s},cachyos/{pacman-pkg,pacman-sync}}
     cd "{{ ansible_dir }}"
     if [ -n "{{ platform }}" ]; then
         molecule test --platform-name "{{ platform }}"
@@ -42,7 +42,7 @@ test platform="":
 converge platform="":
     #!/usr/bin/env bash
     set -euo pipefail
-    mkdir -p "{{ justfile_directory() }}/.cache/molecule"/{ubuntu/{apt-cache,apt-lists,k3s},debian/{apt-cache,apt-lists},cachyos/{pacman-pkg,pacman-sync}}
+    mkdir -p "{{ justfile_directory() }}/.cache/molecule"/{ubuntu/{apt-cache,apt-lists,k3s},cachyos/{pacman-pkg,pacman-sync}}
     cd "{{ ansible_dir }}"
     if [ -n "{{ platform }}" ]; then
         molecule converge --platform-name "{{ platform }}"

@@ -5,6 +5,7 @@ resources:
   - network-vars.sops.yaml
   - network.yaml
   - storage.yaml
+  - monitoring.yaml
   - apps.yaml
 patches:
   - patch: |

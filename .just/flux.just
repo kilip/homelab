@@ -124,6 +124,9 @@ validate:
         k8s/storage/local-path/app \
         k8s/storage/cloudnative-pg/app \
         k8s/storage/paradedb/app \
+        k8s/monitoring \
+        k8s/monitoring/kube-prometheus-stack/app \
+        k8s/monitoring/kube-prometheus-stack/config \
         k8s/apps \
         k8s/apps/echo/app; do
         echo "Validating $dir..."

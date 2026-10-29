@@ -4,15 +4,15 @@ kind: IngressRoute
 metadata:
   name: grafana
   namespace: monitoring
+  annotations:
+    external-dns.alpha.kubernetes.io/expose: "true"
+    external-dns.kubernetes.io/target: "${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
 spec:
   entryPoints:
     - websecure
   routes:
     - match: Host(`grafana.${SECRET_DOMAIN}`)
       kind: Rule
-      middlewares:
-        - name: internal-only
-          namespace: network
       services:
         - name: kube-prometheus-stack-grafana
           port: 80

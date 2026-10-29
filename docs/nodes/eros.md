@@ -11,7 +11,7 @@ Technical specifications and network profile for node **Eros** in the Olympus ho
 | **Hostname** | `eros` |
 | **Role** | Auxiliary Edge Server, Local DNS Resolver & Network Boot Node |
 | **Chassis** | Raspberry Pi 3 Model B Plus Rev 1.3 (Single Board Computer) |
-| **Primary OS** | Debian GNU/Linux 12 (bookworm) / Raspberry Pi OS 64-bit |
+| **Primary OS** | Debian GNU/Linux 13 (trixie) / Raspberry Pi OS 64-bit |
 | **Kernel** | `6.12.34+rpt-rpi-v8` (aarch64) |
 
 ---
@@ -64,7 +64,7 @@ Technical specifications and network profile for node **Eros** in the Olympus ho
 ## 4. Software Environment & Homelab Services
 
 ### Operating System & Shell
-- **Distribution**: Debian GNU/Linux 12 (bookworm) / Raspberry Pi OS arm64
+- **Distribution**: Debian GNU/Linux 13 (trixie) / Raspberry Pi OS arm64
 - **Default Shell**: Fish `3.6.0+`
 
 ### Container Runtime

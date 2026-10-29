@@ -1,0 +1,59 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: redis
+  namespace: storage
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: redis
+      version: "28.3.10"
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: storage
+      interval: 12h
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    architecture: standalone
+    auth:
+      enabled: true
+      existingSecret: redis-credentials
+      existingSecretPasswordKey: redis-password
+    master:
+      persistence:
+        enabled: true
+        storageClass: local-path
+        size: 8Gi
+      resources:
+        requests:
+          cpu: 50m
+          memory: 64Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
+      service:
+        type: ClusterIP
+        ports:
+          redis: 6379
+    metrics:
+      enabled: true
+      service:
+        type: ClusterIP
+        ports:
+          metrics: 9121
+      resources:
+        requests:
+          cpu: 20m
+          memory: 32Mi
+        limits:
+          cpu: 100m
+          memory: 64Mi

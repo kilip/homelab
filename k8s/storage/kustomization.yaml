@@ -7,3 +7,4 @@ resources:
   - ./local-path/ks.yaml
   - ./cloudnative-pg/ks.yaml
   - ./paradedb/ks.yaml
+  - ./redis/ks.yaml

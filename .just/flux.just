@@ -124,6 +124,7 @@ validate:
         k8s/storage/local-path/app \
         k8s/storage/cloudnative-pg/app \
         k8s/storage/paradedb/app \
+        k8s/storage/redis/app \
         k8s/monitoring \
         k8s/monitoring/newrelic/app \
         k8s/apps \

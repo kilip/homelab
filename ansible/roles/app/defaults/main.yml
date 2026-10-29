@@ -1,13 +1,19 @@
 ---
 app_mosquitto: false
-app_mosquitto_packages:
-  - mosquitto
-app_mosquitto_service: mosquitto
+app_mosquitto_container_name: mosquitto
+app_mosquitto_image: "eclipse-mosquitto:2"
 app_mosquitto_start_service: true
-app_mosquitto_config_dir: /etc/mosquitto
-app_mosquitto_data_dir: /srv/mosquitto
+app_mosquitto_dir: /srv/mosquitto
+app_mosquitto_config_dir: "{{ app_mosquitto_dir }}/config"
+app_mosquitto_data_dir: "{{ app_mosquitto_dir }}/data"
+app_mosquitto_log_dir: "{{ app_mosquitto_dir }}/log"
 app_mosquitto_port: 1883
+app_mosquitto_container_port: 1883
 app_mosquitto_bind_address: "0.0.0.0"
 app_mosquitto_allow_anonymous: false
 app_mosquitto_persistence: true
 app_mosquitto_users: "{{ app_mosquitto_user | default([]) }}"
+app_mosquitto_uid: "1883"
+app_mosquitto_gid: "1883"
+app_mosquitto_service: mosquitto
+app_mosquitto_packages: []

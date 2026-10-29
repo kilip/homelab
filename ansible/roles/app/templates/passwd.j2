@@ -1,0 +1,5 @@
+# Managed by Ansible - Olympus app role
+# Do not edit manually
+{% for user in app_mosquitto_users %}
+{{ user.username }}:{{ user.password | mosquitto_hash(user.username) }}
+{% endfor %}

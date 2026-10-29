@@ -138,13 +138,11 @@
   vars_files:
     - ../../roles/app/defaults/main.yml
   tasks:
-    - name: Verify mosquitto package is installed
-      ansible.builtin.package:
-        name: "{{ app_mosquitto_packages }}"
-        state: present
-      check_mode: true
-      register: mosquitto_pkg_check
-      failed_when: mosquitto_pkg_check.changed
+    - name: Verify mosquitto base directory exists
+      ansible.builtin.stat:
+        path: "{{ app_mosquitto_dir }}"
+      register: mosquitto_base_dir_stat
+      failed_when: not mosquitto_base_dir_stat.stat.exists or not mosquitto_base_dir_stat.stat.isdir
 
     - name: Verify mosquitto configuration directory exists
       ansible.builtin.stat:
@@ -158,10 +156,16 @@
       register: mosquitto_data_dir_stat
       failed_when: not mosquitto_data_dir_stat.stat.exists or not mosquitto_data_dir_stat.stat.isdir
 
-    - name: Verify mosquitto default config exists and has valid listener setting
+    - name: Verify mosquitto log directory exists
+      ansible.builtin.stat:
+        path: "{{ app_mosquitto_log_dir }}"
+      register: mosquitto_log_dir_stat
+      failed_when: not mosquitto_log_dir_stat.stat.exists or not mosquitto_log_dir_stat.stat.isdir
+
+    - name: Verify mosquitto config exists and has valid listener setting
       ansible.builtin.lineinfile:
-        path: "{{ app_mosquitto_config_dir }}/conf.d/default.conf"
-        line: "listener {{ app_mosquitto_port }} {{ app_mosquitto_bind_address }}"
+        path: "{{ app_mosquitto_config_dir }}/mosquitto.conf"
+        line: "listener {{ app_mosquitto_container_port }}"
       check_mode: true
       register: mosquitto_conf_check
       failed_when: mosquitto_conf_check.changed

@@ -123,6 +123,16 @@ spec:
       persistence:
         enabled: false
       defaultDashboardsEnabled: false
+      livenessProbe:
+        enabled: true
+        initialDelaySeconds: 120
+        failureThreshold: 15
+        periodSeconds: 10
+      readinessProbe:
+        enabled: true
+        initialDelaySeconds: 30
+        failureThreshold: 10
+        periodSeconds: 10
       sidecar:
         dashboards:
           enabled: false
@@ -174,7 +184,7 @@ spec:
             datasource: Prometheus
       resources:
         requests:
-          cpu: 25m
-          memory: 96Mi
+          cpu: 100m
+          memory: 128Mi
         limits:
-          memory: 256Mi
+          memory: 384Mi

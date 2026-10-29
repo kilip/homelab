@@ -29,6 +29,7 @@ spec:
       cluster: "olympus"
       customSecretName: "newrelic-bundle-secret"
       customSecretLicenseKey: "licenseKey"
+      region: "US"
       lowDataMode: true
 
     newrelic-infrastructure:

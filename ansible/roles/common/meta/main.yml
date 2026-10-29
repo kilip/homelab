@@ -12,7 +12,7 @@ galaxy_info:
         - all
     - name: Debian
       versions:
-        - bookworm
+        - trixie
     - name: ArchLinux
       versions:
         - all

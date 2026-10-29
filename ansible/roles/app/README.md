@@ -10,7 +10,7 @@ Deploy and manage host application services and utilities (e.g., Mosquitto MQTT 
 ## Supported Platforms
 
 - Ubuntu (all supported releases)
-- Debian (`bookworm`)
+- Debian (`trixie`)
 - ArchLinux / CachyOS
 
 ## Role Variables

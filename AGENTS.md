@@ -20,7 +20,7 @@ Defined in `ansible/inventory/hosts.yml` and documented in `docs/nodes/`:
 | :--- | :--- | :--- | :--- |
 | `zeus` | `workstations` | CachyOS Linux (`Archlinux` family) | Intel Core i5-12400, 32 GB RAM, GTX 1650 |
 | `hera` | `servers`, `k3s` | Ubuntu Server 26.04 LTS (`Debian` family) | Intel NUC 6CAYH (Celeron J3455, 8 GB RAM) |
-| `eros` | `servers` | Debian 12 / 13 arm64 (`Debian` family) | Raspberry Pi 3 Model B+ (1 GB RAM) |
+| `eros` | `servers` | Debian 13 arm64 (`Debian` family) | Raspberry Pi 3 Model B+ (1 GB RAM) |
 | `ares` | Network Gateway / Router | MikroTik RouterOS v7 | RB2011iL |
 | `gaia` | Access Point & Switch | MikroTik RouterOS v7 | RB951Ui-2HnD |
 | `leto` | Access Point & Switch | MikroTik RouterOS v6 | RB941-2nD (hAP lite) |
@@ -38,7 +38,7 @@ Defined in `ansible/inventory/hosts.yml` and documented in `docs/nodes/`:
 ├── ansible/                 # Ansible IaC
 │   ├── ansible.cfg          # Ansible config (SOPS vars plugin enabled at inventory stage)
 │   ├── inventory/           # `hosts.yml` and encrypted `host_vars/*.sops.yml`
-│   ├── molecule/default/    # Docker-backed Molecule scenario (ubuntu, cachyos)
+│   ├── molecule/default/    # Docker-backed Molecule scenario (ubuntu, debian, cachyos)
 │   ├── requirements.txt     # Python dependencies (ansible, ansible-lint, molecule, docker)
 │   ├── roles/               # Ansible roles (`common`, `k3s`)
 │   └── site.yml             # Main cluster & node playbook
@@ -61,7 +61,7 @@ Run commands through `just` (or `mise exec -- just ...` if `mise` shims are not 
 - **Ping inventory hosts**: `just ans::ping [host]`
 - **Run Ansible linter**: `just ans::lint`
 - **Run full Molecule test suite (all platforms)**: `just ans::test`
-- **Run Molecule tests for a single platform**: `just ans::test ubuntu` (or `cachyos`)
+- **Run Molecule tests for a single platform**: `just ans::test ubuntu` (or `debian`, `cachyos`)
 - **Run Molecule converge / verify / destroy / clean-cache**:
   - `just ans::converge [platform]`
   - `just ans::verify [platform]`

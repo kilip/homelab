@@ -44,7 +44,7 @@ Olympus leverages an automated Infrastructure-as-Code (IaC) and GitOps pipeline 
   - 🔲 **CPU**: Broadcom BCM2837B0 (4C/4T @ 1.4 GHz)
   - 🧠 **RAM**: 1 GB LPDDR2
   - 💽 **Disk**: 64 GB MicroSD
-  - 🐧 **OS**: Debian GNU/Linux 12 (bookworm) arm64
+  - 🐧 **OS**: Debian GNU/Linux 13 (trixie) arm64
 - **🛡️ Ares** — Network Gateway & Router ([Details](docs/nodes/ares.md))
   - 🌐 **Model**: MikroTik RouterBOARD RB2011iL
   - 🔲 **CPU**: Qualcomm Atheros AR9344 (600 MHz)

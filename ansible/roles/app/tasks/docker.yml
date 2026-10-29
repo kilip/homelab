@@ -1,0 +1,151 @@
+---
+- name: Ensure docker installed and configured
+  when: app_docker | bool
+  block:
+    - name: Ensure Docker APT prerequisites are installed (Debian/Ubuntu)
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - curl
+        state: present
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Ensure apt keyrings directory exists (Debian/Ubuntu)
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Download Docker official GPG key (Debian/Ubuntu)
+      ansible.builtin.get_url:
+        url: "https://download.docker.com/linux/{{ ansible_facts['distribution'] | lower }}/gpg"
+        dest: /etc/apt/keyrings/docker.asc
+        owner: root
+        group: root
+        mode: "0644"
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Configure Docker APT repository (Debian/Ubuntu)
+      ansible.builtin.copy:
+        dest: /etc/apt/sources.list.d/docker.list
+        content: >-
+          deb [arch={{
+            'amd64' if ansible_facts['architecture'] == 'x86_64'
+            else ('arm64' if ansible_facts['architecture'] == 'aarch64' else ansible_facts['architecture'])
+          }} signed-by=/etc/apt/keyrings/docker.asc]
+          https://download.docker.com/linux/{{ ansible_facts['distribution'] | lower }}
+          {{ ansible_facts['distribution_release'] }}
+          stable
+        owner: root
+        group: root
+        mode: "0644"
+      register: app_docker_apt_repo
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Update apt cache if Docker repository was changed (Debian/Ubuntu)
+      ansible.builtin.apt:
+        update_cache: true
+      when:
+        - ansible_facts['os_family'] == 'Debian'
+        - app_docker_apt_repo.changed
+
+    - name: Install Docker packages (Debian/Ubuntu)
+      ansible.builtin.apt:
+        name: "{{ app_docker_packages if (app_docker_packages | length > 0) else app_docker_packages_debian }}"
+        state: present
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Install Docker packages (CachyOS)
+      community.general.pacman:
+        name: "{{ app_docker_packages if (app_docker_packages | length > 0) else app_docker_packages_archlinux }}"
+        state: present
+      when: ansible_facts['os_family'] == 'Archlinux'
+
+    - name: Ensure /etc/docker directory exists
+      ansible.builtin.file:
+        path: /etc/docker
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Configure Docker daemon.json
+      ansible.builtin.copy:
+        dest: /etc/docker/daemon.json
+        content: "{{ app_docker_daemon_config | to_nice_json }}\n"
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Restart docker
+
+    - name: Ensure docker group exists
+      ansible.builtin.group:
+        name: docker
+        state: present
+
+    - name: Add configured users to docker group
+      ansible.builtin.user:
+        name: "{{ item }}"
+        groups: docker
+        append: true
+      loop: "{{ app_docker_users }}"
+      when: app_docker_users | length > 0
+
+    - name: Ensure Docker service and socket are enabled and started
+      ansible.builtin.systemd_service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop:
+        - docker.socket
+        - docker.service
+      when:
+        - app_docker_start_service | bool
+        - not ansible_check_mode
+
+- name: Ensure docker uninstalled
+  when: not (app_docker | bool)
+  block:
+    - name: Ensure Docker service and socket are stopped and disabled
+      ansible.builtin.systemd_service:
+        name: "{{ item }}"
+        state: stopped
+        enabled: false
+      loop:
+        - docker.service
+        - docker.socket
+      failed_when: false
+      when: app_docker_start_service | bool
+
+    - name: Ensure Docker packages are removed (Debian/Ubuntu)
+      ansible.builtin.apt:
+        name: "{{ app_docker_packages if (app_docker_packages | length > 0) else app_docker_packages_debian }}"
+        state: absent
+        purge: true
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Ensure Docker packages are removed (CachyOS)
+      community.general.pacman:
+        name: "{{ app_docker_packages if (app_docker_packages | length > 0) else app_docker_packages_archlinux }}"
+        state: absent
+      when: ansible_facts['os_family'] == 'Archlinux'
+
+    - name: Remove Docker APT repository file (Debian/Ubuntu)
+      ansible.builtin.file:
+        path: /etc/apt/sources.list.d/docker.list
+        state: absent
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Remove Docker GPG key (Debian/Ubuntu)
+      ansible.builtin.file:
+        path: /etc/apt/keyrings/docker.asc
+        state: absent
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Remove Docker daemon configuration
+      ansible.builtin.file:
+        path: /etc/docker/daemon.json
+        state: absent

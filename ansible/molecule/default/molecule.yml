@@ -43,6 +43,7 @@ provisioner:
     group_vars:
       all:
         ansible_user: root
+        app_docker_start_service: false
         app_mosquitto_start_service: false
       k3s:
         k3s_start_service: false

@@ -138,6 +138,31 @@
   vars_files:
     - ../../roles/app/defaults/main.yml
   tasks:
+    - name: Verify docker binary is installed
+      ansible.builtin.stat:
+        path: /usr/bin/docker
+      register: docker_bin_stat
+      failed_when: not docker_bin_stat.stat.exists
+
+    - name: Verify docker daemon configuration file exists
+      ansible.builtin.stat:
+        path: /etc/docker/daemon.json
+      register: docker_daemon_stat
+      failed_when: not docker_daemon_stat.stat.exists
+
+    - name: Slurp docker daemon configuration
+      ansible.builtin.slurp:
+        src: /etc/docker/daemon.json
+      register: docker_daemon_raw
+
+    - name: Parse and assert docker daemon.json content
+      vars:
+        daemon_config_parsed: "{{ docker_daemon_raw.content | b64decode | from_json }}"
+      ansible.builtin.assert:
+        that:
+          - daemon_config_parsed['log-driver'] == app_docker_daemon_config['log-driver']
+          - daemon_config_parsed['live-restore'] == app_docker_daemon_config['live-restore']
+
     - name: Verify mosquitto base directory exists
       ansible.builtin.stat:
         path: "{{ app_mosquitto_dir }}"

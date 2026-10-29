@@ -128,7 +128,9 @@ validate:
         k8s/monitoring \
         k8s/monitoring/newrelic/app \
         k8s/apps \
-        k8s/apps/echo/app; do
+        k8s/apps/echo/app \
+        k8s/apps/home-assistant/app \
+        k8s/apps/home-assistant/mcp; do
         echo "Validating $dir..."
         kustomize build "{{ justfile_directory() }}/$dir" \
             | yq 'del(.sops)' \

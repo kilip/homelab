@@ -5,6 +5,8 @@ metadata:
   name: flux-operator
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: traefik
   interval: 1h
   path: ./k8s/infra/flux-system/operator/app
   prune: true

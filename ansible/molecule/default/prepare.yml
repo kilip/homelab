@@ -45,3 +45,9 @@
         fi
       changed_when: false
       when: "'k3s' in group_names"
+
+    - name: Seed dummy /etc/fstab with swap entry for swap test on k3s nodes
+      ansible.builtin.raw: |
+        printf '/swap.img none swap sw 0 0\n' > /etc/fstab
+      changed_when: false
+      when: "'k3s' in group_names"

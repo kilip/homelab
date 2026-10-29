@@ -37,6 +37,7 @@ k3s_sysctl_params:
   net.bridge.bridge-nf-call-iptables: 1
   net.bridge.bridge-nf-call-ip6tables: 1
 
+k3s_disable_swap: true
 k3s_start_service: true
 k3s_fetch_kubeconfig: true
 k3s_kubeconfig_local_path: "{{ playbook_dir }}/../kubeconfig"

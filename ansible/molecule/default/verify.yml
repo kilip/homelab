@@ -113,6 +113,15 @@
       register: k3s_service_unit
       failed_when: not k3s_service_unit.stat.exists
 
+    - name: Verify no uncommented swap entries in /etc/fstab
+      ansible.builtin.shell:
+        cmd: |
+          if [ -f /etc/fstab ]; then
+            grep -E '^[[:space:]]*[^#[:space:]]+[[:space:]]+[^#[:space:]]+[[:space:]]+swap' /etc/fstab || exit 0
+            exit 1
+          fi
+      changed_when: false
+
     - name: Persist K3s binary and installer script to Molecule cache
       ansible.builtin.shell:
         cmd: |

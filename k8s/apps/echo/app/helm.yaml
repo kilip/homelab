@@ -13,7 +13,7 @@ spec:
     replicaCount: 1
     monitoring:
       serviceMonitor:
-        enabled: true
+        enabled: false
     resources:
       requests:
         cpu: 10m

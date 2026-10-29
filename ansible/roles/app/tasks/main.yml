@@ -1,0 +1,7 @@
+---
+- name: Verify role variables
+  ansible.builtin.import_tasks: verify.yml
+
+- name: Manage mosquitto
+  ansible.builtin.include_tasks:
+    file: "mosquitto.yml"

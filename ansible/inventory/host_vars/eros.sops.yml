@@ -1,5 +1,11 @@
 ansible_host: ENC[AES256_GCM,data:s4tCWKTpOuN2,iv:kVpL0BaPFJ4ck7xuHYsroJwrfEXSWRG+tqJfHbkE7TI=,tag:auD82aRhGE8cTjN+fI8KGQ==,type:str]
 ansible_user: ENC[AES256_GCM,data:Xn31/A==,iv:n4o0UH2zmuSi1X6+PMZQLlbTehzxmxwoHqMCkYTv1lo=,tag:6Z2W3w6B3Mt6GF+sX1aINw==,type:str]
+app_mosquitto: ENC[AES256_GCM,data:FpOQ+Q==,iv:486fHxRbHoq5bHIRMCNwI8HSKAxJbvwnxuyai8WePiM=,tag:MO9yptVWSWwtyTdhLh1q+A==,type:bool]
+app_mosquitto_user:
+    - username: ENC[AES256_GCM,data:XQrH,iv:jspJfFz+R9zObR6Kue2GdpZQH7NqFNUP+448XIofwIg=,tag:ochDfTRxh4x5CoCEbaO2WQ==,type:str]
+      password: ENC[AES256_GCM,data:m36JoIwfiCpYttQ+Cs+ej3f8SsKSp+L3Qyx95A==,iv:3K5v10+X9nBTo2T48LfWEWPqkSRDKGk8fhbaBxUbOiM=,tag:rdsObN4TDY7iQUowAdv6zw==,type:str]
+    - username: ENC[AES256_GCM,data:J1HcJg==,iv:1HW/l6aHHNw7EryXpmVTczWOFYs7BFjhXlVtftDDdso=,tag:TJhPVbvojuFabHDd29lFdg==,type:str]
+      password: ENC[AES256_GCM,data:KVBGBQ3W9zb+QWcGoNAIOO7SdKw3LCpSpXKvig==,iv:qnLzYh/Boi3NZdzc1/uqAHiPLzhWmRYYT1YKDhYCKjU=,tag:su/7kICyq369Tqt0yh4gqA==,type:str]
 sops:
     age:
         - enc: |
@@ -11,7 +17,7 @@ sops:
             Q89QsXLUmbSDwYqyEi+tBLE2NFka5rcdJWhwHXjOtASw+90u+rM2BA==
             -----END AGE ENCRYPTED FILE-----
           recipient: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf
-    lastmodified: "2026-10-28T17:18:36Z"
-    mac: ENC[AES256_GCM,data:ftUw18JJ7CH0odttauGBnjwfqjagSyQ3Q3aZsEGappa6I/vmW4mUCCnaA6bGlLNyhvaOiUmf38mPe9aHrXxqGhiS17bj1knSZ6f9SS2aI9Ji6XNYSSAmZvScqK/9hehLO2roXM80zdVWBhqBB2N4AxthWKMDzhUGsdNNwXMo77U=,iv:sskpCPDZ6mHfhsIB131miKGE4l0bOpy42pYAO3jyj5U=,tag:in68KAf6Nt6oYELyCL64Qg==,type:str]
+    lastmodified: "2026-10-29T07:50:06Z"
+    mac: ENC[AES256_GCM,data:rAj+jjl4M1a+z5iHSQn2uRPyAVbRnC5Farp5p153s4T/ZT5O1KSWil+lsaHsYCanj+hDRb30eamhRnYB6yfLz798H2QVoUgaNqFl/3s+sfkn215GqU6ZFSf8s4iPIrrKSyh61IgWACaaQgO7S7S8rbVKGyeHjAq9P26ONq/kwpc=,iv:xIstEX2PCixwG0bwHLCFbzTgFD5xK8uj3SYuaAIEU5E=,tag:qOZD84KzSW7GCooQPpXOiw==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.13.3

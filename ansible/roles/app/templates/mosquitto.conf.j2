@@ -1,0 +1,12 @@
+# Managed by Ansible - Olympus app role
+# Do not edit manually
+
+listener {{ app_mosquitto_port }} {{ app_mosquitto_bind_address }}
+allow_anonymous {{ app_mosquitto_allow_anonymous | bool | lower }}
+
+persistence {{ app_mosquitto_persistence | bool | lower }}
+persistence_location {{ app_mosquitto_data_dir }}/
+
+{% if not (app_mosquitto_allow_anonymous | bool) or (app_mosquitto_users | length > 0) %}
+password_file {{ app_mosquitto_config_dir }}/passwd
+{% endif %}

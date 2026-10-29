@@ -12,3 +12,15 @@
   gather_facts: true
   roles:
     - role: k3s
+
+- name: Converge app role
+  hosts: all
+  become: true
+  gather_facts: true
+  roles:
+    - role: app
+      vars:
+        app_mosquitto: true
+        app_mosquitto_users:
+          - username: molecule_user
+            password: molecule_password

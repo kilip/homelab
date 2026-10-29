@@ -1,0 +1,12 @@
+---
+- name: Assert app role variables are valid
+  ansible.builtin.assert:
+    that:
+      - app_mosquitto is boolean
+      - app_mosquitto_start_service is boolean
+      - app_mosquitto_packages is sequence
+      - app_mosquitto_port | int > 0
+      - app_mosquitto_port | int < 65536
+      - app_mosquitto_config_dir is string
+      - app_mosquitto_data_dir is string
+    quiet: true

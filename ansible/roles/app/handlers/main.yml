@@ -1,0 +1,6 @@
+---
+- name: Restart mosquitto
+  ansible.builtin.service:
+    name: "{{ app_mosquitto_service }}"
+    state: restarted
+  when: app_mosquitto_start_service | bool

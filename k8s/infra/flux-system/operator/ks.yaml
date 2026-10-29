@@ -17,5 +17,5 @@ spec:
   postBuild:
     substituteFrom:
       - kind: Secret
-        name: network-vars
+        name: settings
         optional: true

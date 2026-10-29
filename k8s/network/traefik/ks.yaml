@@ -19,7 +19,7 @@ spec:
   postBuild:
     substituteFrom:
       - kind: Secret
-        name: network-vars
+        name: settings
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -46,4 +46,4 @@ spec:
   postBuild:
     substituteFrom:
       - kind: Secret
-        name: network-vars
+        name: settings

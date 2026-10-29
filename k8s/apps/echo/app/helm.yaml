@@ -24,6 +24,7 @@ spec:
       className: traefik
       annotations:
         external-dns.alpha.kubernetes.io/expose: "true"
+        external-dns.kubernetes.io/target: "${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
       hosts:
         - host: echo.itstoni.com
           paths:

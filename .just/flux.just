@@ -52,7 +52,8 @@ bootstrap:
         --version 0.62.1 \
         --namespace flux-system \
         -f <(yq '.spec.values' "{{ justfile_directory() }}/k8s/infra/flux-system/instance/app/helmrelease.yaml") \
-        --wait
+        --wait \
+        --timeout 10m
     echo "✔ Flux bootstrap completed. GitOps reconciliation handed over to Flux Operator."
 
 # Verify Flux CD installation, controllers, SOPS secret, and sync status

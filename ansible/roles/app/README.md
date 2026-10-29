@@ -19,17 +19,22 @@ Variables available in `defaults/main.yml`:
 
 | Variable | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `app_mosquitto` | Boolean | `false` | Enable Mosquitto installation and configuration. When `false`, executes uninstall block (stops service, removes package, and purges config/data). |
-| `app_mosquitto_packages` | List | `["mosquitto"]` | Packages to install for Mosquitto. |
-| `app_mosquitto_service` | String | `mosquitto` | Systemd service unit name. |
-| `app_mosquitto_start_service` | Boolean | `true` | Start and enable service (set to `false` in unprivileged container/test environments). |
-| `app_mosquitto_config_dir` | String | `/etc/mosquitto` | Base configuration directory. |
-| `app_mosquitto_data_dir` | String | `/srv/mosquitto` | Persistence and data storage directory. |
-| `app_mosquitto_port` | Integer | `1883` | MQTT listener port. |
-| `app_mosquitto_bind_address` | String | `0.0.0.0` | IP address for MQTT listener to bind. |
+| `app_mosquitto` | Boolean | `false` | Enable Mosquitto Docker container deployment. When `false`, executes uninstall block (stops container and purges persistent storage). |
+| `app_mosquitto_container_name` | String | `mosquitto` | Name of the Mosquitto Docker container. |
+| `app_mosquitto_image` | String | `eclipse-mosquitto:2` | Docker container image for Mosquitto. |
+| `app_mosquitto_start_service` | Boolean | `true` | Start container (set to `false` in unprivileged container/test environments). |
+| `app_mosquitto_dir` | String | `/srv/mosquitto` | Base persistent storage directory on host. |
+| `app_mosquitto_config_dir` | String | `{{ app_mosquitto_dir }}/config` | Configuration directory on host. |
+| `app_mosquitto_data_dir` | String | `{{ app_mosquitto_dir }}/data` | Persistence and data storage directory on host. |
+| `app_mosquitto_log_dir` | String | `{{ app_mosquitto_dir }}/log` | Log storage directory on host. |
+| `app_mosquitto_port` | Integer | `1883` | Host MQTT listener port mapped to container. |
+| `app_mosquitto_container_port` | Integer | `1883` | Internal MQTT listener port inside container. |
+| `app_mosquitto_bind_address` | String | `0.0.0.0` | Host IP address for MQTT listener to bind. |
 | `app_mosquitto_allow_anonymous` | Boolean | `false` | Allow anonymous client connections without authentication. |
 | `app_mosquitto_persistence` | Boolean | `true` | Enable persistent storage for retained messages and subscriptions. |
-| `app_mosquitto_users` | List[Dict] | `[]` | List of user dictionaries (`username`, `password`) provisioned in `passwd` file via `mosquitto_passwd`. |
+| `app_mosquitto_users` | List[Dict] | `[]` | List of user dictionaries (`username`, `password`) provisioned in `passwd` file via PBKDF2-SHA512 hashing. |
+| `app_mosquitto_uid` | String | `1883` | Numeric UID of mosquitto container user for directory ownership. |
+| `app_mosquitto_gid` | String | `1883` | Numeric GID of mosquitto container user for directory ownership. |
 
 ### Example User Provisioning
 

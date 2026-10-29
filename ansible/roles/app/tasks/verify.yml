@@ -4,9 +4,16 @@
     that:
       - app_mosquitto is boolean
       - app_mosquitto_start_service is boolean
-      - app_mosquitto_packages is sequence
-      - app_mosquitto_port | int > 0
-      - app_mosquitto_port | int < 65536
+      - app_mosquitto_container_name is string
+      - app_mosquitto_image is string
+      - app_mosquitto_dir is string
       - app_mosquitto_config_dir is string
       - app_mosquitto_data_dir is string
+      - app_mosquitto_log_dir is string
+      - app_mosquitto_port | int > 0
+      - app_mosquitto_port | int < 65536
+      - app_mosquitto_container_port | int > 0
+      - app_mosquitto_container_port | int < 65536
+      - app_mosquitto_packages is sequence
+      - app_mosquitto_users is sequence
     quiet: true

@@ -6,3 +6,5 @@ cloudflare-tunnel.json
 .ansible/
 .mise.local.toml
 .cache/
+__pycache__/
+*.pyc

@@ -1,12 +1,15 @@
 # Managed by Ansible - Olympus app role
 # Do not edit manually
 
-listener {{ app_mosquitto_port }} {{ app_mosquitto_bind_address }}
+listener {{ app_mosquitto_container_port }}
 allow_anonymous {{ app_mosquitto_allow_anonymous | bool | lower }}
 
 persistence {{ app_mosquitto_persistence | bool | lower }}
-persistence_location {{ app_mosquitto_data_dir }}/
+persistence_location /mosquitto/data/
+
+log_dest stdout
+log_dest file /mosquitto/log/mosquitto.log
 
 {% if not (app_mosquitto_allow_anonymous | bool) or (app_mosquitto_users | length > 0) %}
-password_file {{ app_mosquitto_config_dir }}/passwd
+password_file /mosquitto/config/passwd
 {% endif %}

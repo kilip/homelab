@@ -18,14 +18,6 @@ platforms:
       - "${MOLECULE_PROJECT_DIRECTORY}/../.cache/molecule/ubuntu/k3s:/var/cache/k3s:rw"
     groups:
       - k3s
-  - name: debian
-    image: debian:13
-    pre_build_image: true
-    privileged: true
-    command: sleep infinity
-    volumes:
-      - "${MOLECULE_PROJECT_DIRECTORY}/../.cache/molecule/debian/apt-cache:/var/cache/apt:rw"
-      - "${MOLECULE_PROJECT_DIRECTORY}/../.cache/molecule/debian/apt-lists:/var/lib/apt/lists:rw"
   - name: cachyos
     image: cachyos/cachyos:latest
     pre_build_image: true

@@ -38,7 +38,7 @@ Defined in `ansible/inventory/hosts.yml` and documented in `docs/nodes/`:
 ├── ansible/                 # Ansible IaC
 │   ├── ansible.cfg          # Ansible config (SOPS vars plugin enabled at inventory stage)
 │   ├── inventory/           # `hosts.yml` and encrypted `host_vars/*.sops.yml`
-│   ├── molecule/default/    # Docker-backed Molecule scenario (ubuntu, debian, cachyos)
+│   ├── molecule/default/    # Docker-backed Molecule scenario (ubuntu, cachyos)
 │   ├── requirements.txt     # Python dependencies (ansible, ansible-lint, molecule, docker)
 │   ├── roles/               # Ansible roles (`common`, `k3s`)
 │   └── site.yml             # Main cluster & node playbook
@@ -60,7 +60,7 @@ Run commands through `just` (or `mise exec -- just ...` if `mise` shims are not 
 - **Run Ansible playbook**: `just ans::play` (supports `--host/-h <host>`, `--tags/-t <tags>`, `--check/-c`)
 - **Run Ansible linter**: `just ans::lint`
 - **Run full Molecule test suite (all platforms)**: `just ans::test`
-- **Run Molecule tests for a single platform**: `just ans::test ubuntu` (or `debian`, `cachyos`)
+- **Run Molecule tests for a single platform**: `just ans::test ubuntu` (or `cachyos`)
 - **Run Molecule converge / verify / destroy / clean-cache**:
   - `just ans::converge [platform]`
   - `just ans::verify [platform]`

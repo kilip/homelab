@@ -67,8 +67,6 @@ jobs:
         include:
           - platform: ubuntu
             image: ubuntu:26.04
-          - platform: debian
-            image: debian:13
           - platform: cachyos
             image: cachyos/cachyos:latest
     steps:

@@ -1,66 +1,99 @@
 # Ansible Role: `app`
 
-Deploy and manage host application services and utilities (e.g., Mosquitto MQTT broker) across Olympus homelab nodes.
+Deploy and manage host application services and containerized workloads across Olympus homelab nodes.
+
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Supported Platforms](#supported-platforms)
+- [Architecture & Lifecycle](#architecture--lifecycle)
+- [Applications & Components](#applications--components)
+  - [Docker Engine (`app_docker`)](#docker-engine-app_docker)
+  - [Mosquitto MQTT Broker (`app_mosquitto`)](#mosquitto-mqtt-broker-app_mosquitto)
+  - [RustFS Object Storage (`app_rustfs`)](#rustfs-object-storage-app_rustfs)
+- [Example Playbook](#example-playbook)
+- [License](#license)
+- [Author Information](#author-information)
 
 ## Requirements
 
 - Ansible 2.16 or higher.
 - Elevated privileges (`become: true`) on target nodes.
+- Python Docker SDK on target nodes (`python3-docker` or `python-docker`, installed automatically by the Docker component).
 
 ## Supported Platforms
 
-- Ubuntu (all supported releases)
+- Ubuntu (all supported LTS releases)
 - Debian (`trixie`)
 - ArchLinux / CachyOS
 
-## Role Variables
+## Architecture & Lifecycle
 
-Variables available in `defaults/main.yml`:
+The `app` role provides a modular, containerized deployment pattern for host services:
+
+1. **Dependency on Docker**: Containerized services (`mosquitto`, `rustfs`) require the container runtime. An assertion validates that `app_docker: true` when enabling any container service (`app_mosquitto: true` or `app_rustfs: true`).
+2. **Container-Safe Testing**: All systemd service starts and container operations are guarded by `*_start_service` flags (`app_docker_start_service`, `app_mosquitto_start_service`, `app_rustfs_start_service`). In containerized test runners (e.g. Molecule), setting these to `false` allows verifying package installation, directory creation, permissions, and templating without requiring privileged Docker-in-Docker daemons.
+3. **Idempotency & Clean Removal**: Setting any component flag to `false` triggers its respective uninstall routine, stopping and removing containers, disabling services, and cleaning up persistent data according to configured retention policies.
+
+---
+
+## Applications & Components
+
+### Docker Engine (`app_docker`)
+
+Installs and manages the host Docker CE container engine, official repository keys, daemon configuration (`/etc/docker/daemon.json`), and system user memberships.
+
+#### Docker Variables
 
 | Variable | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `app_docker` | Boolean | `false` | Enable Docker CE engine installation and configuration. When `false`, executes uninstall block (stops services, removes packages and repository files). |
-| `app_docker_start_service` | Boolean | `true` | Enable and start Docker service and socket (set to `false` in unprivileged container/test environments). |
-| `app_docker_users` | List[String] | `["{{ ansible_user }}"]` | Host users to append to the `docker` system group. |
-| `app_docker_daemon_config` | Dict | `{"log-driver": "json-file", ...}` | Daemon configuration rendered to `/etc/docker/daemon.json`. |
-| `app_docker_packages` | List[String] | `[]` | Explicit package override for Docker (defaults to distro-specific packages if empty). |
-| `app_mosquitto` | Boolean | `false` | Enable Mosquitto Docker container deployment. When `false`, executes uninstall block (stops container and purges persistent storage). |
-| `app_mosquitto_container_name` | String | `mosquitto` | Name of the Mosquitto Docker container. |
-| `app_mosquitto_image` | String | `eclipse-mosquitto:2` | Docker container image for Mosquitto. |
-| `app_mosquitto_start_service` | Boolean | `true` | Start container (set to `false` in unprivileged container/test environments). |
-| `app_mosquitto_dir` | String | `/srv/mosquitto` | Base persistent storage directory on host. |
-| `app_mosquitto_config_dir` | String | `{{ app_mosquitto_dir }}/config` | Configuration directory on host. |
-| `app_mosquitto_data_dir` | String | `{{ app_mosquitto_dir }}/data` | Persistence and data storage directory on host. |
-| `app_mosquitto_log_dir` | String | `{{ app_mosquitto_dir }}/log` | Log storage directory on host. |
-| `app_mosquitto_port` | Integer | `1883` | Host MQTT listener port mapped to container. |
-| `app_mosquitto_container_port` | Integer | `1883` | Internal MQTT listener port inside container. |
-| `app_mosquitto_bind_address` | String | `0.0.0.0` | Host IP address for MQTT listener to bind. |
-| `app_mosquitto_allow_anonymous` | Boolean | `false` | Allow anonymous client connections without authentication. |
-| `app_mosquitto_persistence` | Boolean | `true` | Enable persistent storage for retained messages and subscriptions. |
-| `app_mosquitto_users` | List[Dict] | `[]` | List of user dictionaries (`username`, `password`) provisioned in `passwd` file via PBKDF2-SHA512 hashing. |
-| `app_mosquitto_uid` | String | `1883` | Numeric UID of mosquitto container user for directory ownership. |
-| `app_mosquitto_gid` | String | `1883` | Numeric GID of mosquitto container user for directory ownership. |
-| `app_rustfs` | Boolean | `false` | Enable RustFS distributed object storage container deployment. When `false`, removes container (and purges storage if `app_rustfs_purge_data: true`). |
-| `app_rustfs_container_name` | String | `rustfs` | Name of the RustFS Docker container. |
-| `app_rustfs_image` | String | `rustfs/rustfs:1.0.1` | Docker container image for RustFS. |
-| `app_rustfs_start_service` | Boolean | `true` | Start container (set to `false` in unprivileged container/test environments). |
-| `app_rustfs_dir` | String | `/srv/rustfs` | Base persistent storage directory on host. |
-| `app_rustfs_data_dir` | String | `{{ app_rustfs_dir }}/data` | Data storage directory on host. |
-| `app_rustfs_port` | Integer | `9000` | Host S3 API port mapped to container. |
-| `app_rustfs_container_port` | Integer | `9000` | Internal S3 API port inside container. |
-| `app_rustfs_console_port` | Integer | `9001` | Host Web Console port mapped to container. |
-| `app_rustfs_container_console_port` | Integer | `9001` | Internal Web Console port inside container. |
-| `app_rustfs_bind_address` | String | `0.0.0.0` | Host IP address for RustFS listeners to bind. |
-| `app_rustfs_access_key` | String | `rustfsadmin` | Admin access key for S3 API and Console. |
-| `app_rustfs_secret_key` | String | `rustfsadmin` | Admin secret key for S3 API and Console. |
-| `app_rustfs_uid` | String | `10001` | Numeric UID of container user for directory ownership. |
-| `app_rustfs_gid` | String | `10001` | Numeric GID of container user for directory ownership. |
-| `app_rustfs_purge_data` | Boolean | `false` | Purge persistent storage directories upon uninstall when `app_rustfs: false`. |
+| `app_docker` | Boolean | `false` | Enable Docker CE installation and management. Set to `false` to uninstall Docker packages, repository files, and daemon configurations. |
+| `app_docker_start_service` | Boolean | `true` | Enable and start `docker.socket` and `docker.service` systemd units. Set to `false` in unprivileged container environments. |
+| `app_docker_users` | List[String] | `["{{ ansible_user }}"]` | Host users added to the `docker` system group. |
+| `app_docker_daemon_config` | Dict | See below | Daemon options rendered to `/etc/docker/daemon.json`. |
+| `app_docker_packages` | List[String] | `[]` | Explicit package override list (uses distro defaults when empty). |
+| `app_docker_packages_debian` | List[String] | `docker-ce`, `docker-ce-cli`, `containerd.io`, `docker-buildx-plugin`, `docker-compose-plugin`, `python3-docker` | Default Docker packages for Debian and Ubuntu. |
+| `app_docker_packages_archlinux` | List[String] | `docker`, `docker-buildx`, `docker-compose`, `python-docker` | Default Docker packages for Arch Linux and CachyOS. |
 
-
-### Example User Provisioning
+Default `app_docker_daemon_config`:
 
 ```yaml
+app_docker_daemon_config:
+  log-driver: "json-file"
+  log-opts:
+    max-size: "50m"
+    max-file: "3"
+  live-restore: true
+```
+
+#### Docker Uninstall Lifecycle
+
+When `app_docker: false`:
+- Stops and disables `docker.service` and `docker.socket`.
+- Purges Docker packages across Debian/Ubuntu or Arch Linux.
+- Removes APT repository (`/etc/apt/sources.list.d/docker.list`) and keyrings (`/etc/apt/keyrings/docker.asc`).
+- Removes `/etc/docker/daemon.json`.
+
+---
+
+### Mosquitto MQTT Broker (`app_mosquitto`)
+
+Deploys the lightweight Eclipse Mosquitto MQTT message broker as a Docker container. Supports persistent storage, custom listener ports, anonymous connection toggles, and user authentication with PBKDF2-SHA512 hashed passwords.
+
+#### Mosquitto Storage & Directory Layout
+
+- **Base Directory**: `{{ app_mosquitto_dir }}` (`/srv/mosquitto`)
+- **Configuration**: `{{ app_mosquitto_config_dir }}` (`/srv/mosquitto/config`) -> mounted read-only (`:ro`) to `/mosquitto/config`
+- **Data Persistence**: `{{ app_mosquitto_data_dir }}` (`/srv/mosquitto/data`) -> mounted read-write (`:rw`) to `/mosquitto/data`
+- **Logs**: `{{ app_mosquitto_log_dir }}` (`/srv/mosquitto/log`) -> mounted read-write (`:rw`) to `/mosquitto/log`
+- **Permissions**: Ownership set to UID `1883` and GID `1883` (Mosquitto container user).
+
+#### Mosquitto Authentication & Password Hashing
+
+Mosquitto 2.x requires hashed passwords in the `passwd` file. The role includes a custom Ansible filter plugin (`mosquitto_passwd`) that deterministically generates PBKDF2-SHA512 password hashes:
+
+```yaml
+app_mosquitto_allow_anonymous: false
 app_mosquitto_users:
   - username: homeassistant
     password: "{{ vault_mosquitto_hass_password }}"
@@ -68,9 +101,81 @@ app_mosquitto_users:
     password: "{{ vault_mosquitto_z2m_password }}"
 ```
 
-## Dependencies
+#### Mosquitto Variables
 
-None.
+| Variable | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `app_mosquitto` | Boolean | `false` | Enable Mosquitto deployment. |
+| `app_mosquitto_container_name` | String | `mosquitto` | Docker container name. |
+| `app_mosquitto_image` | String | `eclipse-mosquitto:2` | Container image tag. |
+| `app_mosquitto_start_service` | Boolean | `true` | Start container (set to `false` in unprivileged container tests). |
+| `app_mosquitto_dir` | String | `/srv/mosquitto` | Base directory on host. |
+| `app_mosquitto_config_dir` | String | `{{ app_mosquitto_dir }}/config` | Configuration directory. |
+| `app_mosquitto_data_dir` | String | `{{ app_mosquitto_dir }}/data` | Database/persistence storage directory. |
+| `app_mosquitto_log_dir` | String | `{{ app_mosquitto_dir }}/log` | Log storage directory. |
+| `app_mosquitto_port` | Integer | `1883` | Published host listener port. |
+| `app_mosquitto_container_port` | Integer | `1883` | Container internal port. |
+| `app_mosquitto_bind_address` | String | `0.0.0.0` | Host IP address to bind (empty string binds to all interfaces). |
+| `app_mosquitto_allow_anonymous` | Boolean | `false` | Allow anonymous connections without credentials. |
+| `app_mosquitto_persistence` | Boolean | `true` | Enable persistence database saving messages and subscriptions. |
+| `app_mosquitto_users` | List[Dict] | `[]` | List of `{username: str, password: str}` dicts. |
+| `app_mosquitto_uid` | String | `1883` | Host file ownership UID for Mosquitto. |
+| `app_mosquitto_gid` | String | `1883` | Host file ownership GID for Mosquitto. |
+| `app_mosquitto_service` | String | `mosquitto` | Name of legacy host systemd service stopped/disabled if present. |
+
+#### Mosquitto Uninstall Lifecycle
+
+When `app_mosquitto: false`:
+- Stops and removes the Docker container `{{ app_mosquitto_container_name }}`.
+- Deletes the base persistent directory `{{ app_mosquitto_dir }}` (`/srv/mosquitto`).
+
+---
+
+### RustFS Object Storage (`app_rustfs`)
+
+Deploys RustFS, a lightweight, high-performance S3-compatible distributed object storage engine written in Rust. Exposes both S3 API and the built-in Web Management Console.
+
+#### RustFS Storage & Directory Layout
+
+- **Base Directory**: `{{ app_rustfs_dir }}` (`/srv/rustfs`)
+- **Data Persistence**: `{{ app_rustfs_data_dir }}` (`/srv/rustfs/data`) -> mounted read-write (`:rw`) to `/data`
+- **Permissions**: Ownership set to UID `10001` and GID `10001` (RustFS container user).
+
+#### RustFS Network & Ports
+
+| Service | Host Port | Container Port | Default Binding |
+| :--- | :--- | :--- | :--- |
+| **S3 API** | `app_rustfs_port` (`9000`) | `app_rustfs_container_port` (`9000`) | `0.0.0.0:9000` |
+| **Web Console** | `app_rustfs_console_port` (`9001`) | `app_rustfs_container_console_port` (`9001`) | `0.0.0.0:9001` |
+
+#### RustFS Variables
+
+| Variable | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `app_rustfs` | Boolean | `false` | Enable RustFS deployment. |
+| `app_rustfs_container_name` | String | `rustfs` | Docker container name. |
+| `app_rustfs_image` | String | `rustfs/rustfs:1.0.1` | Container image tag. |
+| `app_rustfs_start_service` | Boolean | `true` | Start container (set to `false` in unprivileged container tests). |
+| `app_rustfs_dir` | String | `/srv/rustfs` | Base directory on host. |
+| `app_rustfs_data_dir` | String | `{{ app_rustfs_dir }}/data` | Object storage data directory on host. |
+| `app_rustfs_port` | Integer | `9000` | Published S3 API host port. |
+| `app_rustfs_container_port` | Integer | `9000` | Internal S3 API port. |
+| `app_rustfs_console_port` | Integer | `9001` | Published Web Console host port. |
+| `app_rustfs_container_console_port` | Integer | `9001` | Internal Web Console port. |
+| `app_rustfs_bind_address` | String | `0.0.0.0` | Host IP address to bind. |
+| `app_rustfs_access_key` | String | `rustfsadmin` | Admin access key for S3 API and Console. |
+| `app_rustfs_secret_key` | String | `rustfsadmin` | Admin secret key for S3 API and Console. |
+| `app_rustfs_uid` | String | `10001` | Host file ownership UID for RustFS. |
+| `app_rustfs_gid` | String | `10001` | Host file ownership GID for RustFS. |
+| `app_rustfs_purge_data` | Boolean | `false` | Purge persistent storage (`/srv/rustfs`) when `app_rustfs: false`. Set to `false` to preserve data across uninstallations. |
+
+#### RustFS Uninstall Lifecycle
+
+When `app_rustfs: false`:
+- Stops and removes the Docker container `{{ app_rustfs_container_name }}`.
+- Storage directory `{{ app_rustfs_dir }}` is retained unless `app_rustfs_purge_data: true`.
+
+---
 
 ## Example Playbook
 
@@ -81,17 +186,33 @@ None.
   roles:
     - role: app
       vars:
+        # Enable Docker runtime
         app_docker: true
+        app_docker_users:
+          - toni
+
+        # Deploy Mosquitto MQTT Broker
         app_mosquitto: true
         app_mosquitto_port: 1883
         app_mosquitto_allow_anonymous: false
         app_mosquitto_users:
           - username: sensor_node
-            password: "supersecretpassword"
+            password: "{{ vault_mosquitto_sensor_password }}"
+          - username: homeassistant
+            password: "{{ vault_mosquitto_hass_password }}"
+
+        # Deploy RustFS Object Storage
         app_rustfs: true
+        app_rustfs_port: 9000
+        app_rustfs_console_port: 9001
         app_rustfs_access_key: "admin"
         app_rustfs_secret_key: "{{ vault_rustfs_secret_key }}"
+        app_rustfs_purge_data: false
 ```
+
+## Dependencies
+
+None.
 
 ## License
 

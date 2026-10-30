@@ -17,8 +17,6 @@ stringData:
     R2_ACCESS_KEY: ENC[AES256_GCM,data:MeNtRkxXIWG8sKFG0JXmXuW8jVLYSiBfBYLn8wfg3bCxK2rkrQ8xTTI++0uChn2AaxlRYzdx2KMK3i6JSVO+Qw==,iv:AyofS1AiLmKfKArWWxlpx8NrULRAZkaF2e5cKnp0Kfw=,tag:khlkCdXL/n23dOpU3zs2rQ==,type:str]
     R2_ACCESS_TOKEN: ENC[AES256_GCM,data:Ifz5sGaTPs4AhWQxYKrhM7n5piDgfTXk9ww5dqGNlyYwA4v/TfNlKMw+qjXk3sLUZGlXAEU=,iv:8YAJVoA8S4dAU4/ibBKxK9v/lYRYCEH4Nr88W+Cy3F0=,tag:tx55sfLQSSEAU7O4D39wUg==,type:str]
     R2_API_URL: ENC[AES256_GCM,data:eLqmXZ74zCa1mzXJBA5eQ4jP6lPNN3FeXd5l7qbtj0ileh7p/0pcWAwS0iw+rnFz/8ZtiuPDc1lymoRvB+GW9Qk=,iv:FdpW3DxmdvLNkhjuRZscuwfzr+P/0U0KmDPgOp0+jkg=,tag:W/05NFil97Y6VDH1qDfTug==,type:str]
-    ZEUS_IP: ENC[AES256_GCM,data:osumWjCihVM=,iv:yMgibfiuG2uKvEO0FqFg1xRZ7qozfU7grg1583kbTzE=,tag:1c7UtP9YgYMbAnju0ob/zQ==,type:str]
-    ZEUS_PORT: ENC[AES256_GCM,data:4YrsqQ==,iv:VUK2qRvMIyWqz1d4N35FrEi+D2kScpYrBJyQH5oxRW8=,tag:4RBw6dRyAbPtQku6Pl0RPw==,type:str]
 sops:
     age:
         - enc: |
@@ -31,6 +29,6 @@ sops:
             -----END AGE ENCRYPTED FILE-----
           recipient: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf
     encrypted_regex: ^(data|stringData)$
-    lastmodified: "2026-10-30T17:14:47Z"
-    mac: ENC[AES256_GCM,data:6a1rPCHquw0EPA76xlCpaA5c+UnQtlsQEz19xiFfjmnySOXYdytU6kKbyCGSM6vV5ZX3YFLyc+5NvwXrm5Rc68WPtz01d7TWr9nYfS8HLiqLNjPb5h/En4IZHI2u3d5WJ7OjBIBQaWEfJok7LKW72Ii/yxtHxp9rin2q6OB0p4E=,iv:Fm/JFnBcWxqfTXpD1AY/xWjL48eMyH+jqktAykaKT2Q=,tag:YNDgEIoGAc8Cjwd6ZTAK5w==,type:str]
+    lastmodified: "2026-10-30T17:27:32Z"
+    mac: ENC[AES256_GCM,data:ZLtgLynx3wWHrWtv9bz3U99xO95wCTCXtALhLE9H66mW+zdr/A0kV9lpHUB8PvugCFV0rMP3qfNu8ObEYQOVgoHmkq1EUxxjg0pWJvp3N7dDPmLccgfFYAUjGzGpqMHfEyitfHW5tmxRMs+yejkJi3JrzLWuLLGMGjHgv8eBA3A=,iv:H++FAjkwk6KYD5pH/nCECFuW1ZJnkU6fZBTr3+T2ki4=,tag:Ga4MOyg1nnnOou6R0QAwgA==,type:str]
     version: 3.13.3

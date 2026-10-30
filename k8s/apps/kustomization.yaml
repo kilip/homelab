@@ -9,4 +9,3 @@ resources:
   - ./omed/ks.yaml
   - ./omed-nightly/ks.yaml
   - ./rustfs/ks.yaml
-  - ./zeus/ks.yaml

@@ -1,0 +1,54 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: omed
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: omed
+  interval: 1h
+  timeout: 10m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    secrets:
+      existingSecret: omed-secret
+    api:
+      replicaCount: 1
+      resources:
+        requests:
+          cpu: 50m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
+    web:
+      replicaCount: 1
+      resources:
+        requests:
+          cpu: 25m
+          memory: 64Mi
+        limits:
+          memory: 256Mi
+    migrations:
+      enabled: true
+    ingress:
+      enabled: true
+      className: traefik
+      annotations:
+        external-dns.alpha.kubernetes.io/expose: "true"
+        external-dns.kubernetes.io/target: "${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
+      web:
+        host: omed.${SECRET_DOMAIN}
+      api:
+        host: api.${SECRET_DOMAIN}
+      tls:
+        - hosts:
+            - omed.${SECRET_DOMAIN}
+            - api.${SECRET_DOMAIN}

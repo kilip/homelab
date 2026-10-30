@@ -6,3 +6,4 @@ resources:
   - ./namespace.yaml
   - ./echo/ks.yaml
   - ./home-assistant/ks.yaml
+  - ./omed/ks.yaml

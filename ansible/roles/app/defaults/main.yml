@@ -41,3 +41,20 @@ app_mosquitto_uid: "1883"
 app_mosquitto_gid: "1883"
 app_mosquitto_service: mosquitto
 app_mosquitto_packages: []
+
+app_rustfs: false
+app_rustfs_container_name: rustfs
+app_rustfs_image: "rustfs/rustfs:1.0.1"
+app_rustfs_start_service: true
+app_rustfs_dir: /srv/rustfs
+app_rustfs_data_dir: "{{ app_rustfs_dir }}/data"
+app_rustfs_port: 9000
+app_rustfs_container_port: 9000
+app_rustfs_console_port: 9001
+app_rustfs_container_console_port: 9001
+app_rustfs_bind_address: "0.0.0.0"
+app_rustfs_access_key: "rustfsadmin"
+app_rustfs_secret_key: "rustfsadmin"
+app_rustfs_uid: "10001"
+app_rustfs_gid: "10001"
+app_rustfs_purge_data: false

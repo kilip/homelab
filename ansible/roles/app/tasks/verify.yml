@@ -22,4 +22,22 @@
       - app_mosquitto_container_port | int < 65536
       - app_mosquitto_packages is sequence
       - app_mosquitto_users is sequence
+      - (not (app_rustfs | bool)) or (app_docker | bool)
+      - app_rustfs is boolean
+      - app_rustfs_start_service is boolean
+      - app_rustfs_container_name is string
+      - app_rustfs_image is string
+      - app_rustfs_dir is string
+      - app_rustfs_data_dir is string
+      - app_rustfs_port | int > 0
+      - app_rustfs_port | int < 65536
+      - app_rustfs_container_port | int > 0
+      - app_rustfs_container_port | int < 65536
+      - app_rustfs_console_port | int > 0
+      - app_rustfs_console_port | int < 65536
+      - app_rustfs_container_console_port | int > 0
+      - app_rustfs_container_console_port | int < 65536
+      - app_rustfs_access_key is string
+      - app_rustfs_secret_key is string
+      - app_rustfs_purge_data is boolean
     quiet: true

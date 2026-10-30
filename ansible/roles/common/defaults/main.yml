@@ -7,3 +7,4 @@ common_packages:
   - pass
   - tmux
   - neovim
+  - zsh

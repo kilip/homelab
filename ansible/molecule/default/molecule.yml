@@ -46,6 +46,7 @@ provisioner:
         app_docker_start_service: false
         app_mosquitto_start_service: false
         app_rustfs_start_service: false
+        app_node_exporter_start_service: false
       k3s:
         k3s_start_service: false
         k3s_fetch_kubeconfig: false

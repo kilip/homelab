@@ -1,0 +1,90 @@
+---
+- name: Ensure Prometheus Node Exporter installed and configured
+  when: app_node_exporter | bool
+  block:
+    - name: Install Prometheus Node Exporter package (Debian/Ubuntu)
+      ansible.builtin.apt:
+        name: "{{ app_node_exporter_packages if (app_node_exporter_packages | length > 0) else app_node_exporter_packages_debian }}"
+        state: present
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Install Prometheus Node Exporter package (CachyOS)
+      community.general.pacman:
+        name: "{{ app_node_exporter_packages if (app_node_exporter_packages | length > 0) else app_node_exporter_packages_archlinux }}"
+        state: present
+      when: ansible_facts['os_family'] == 'Archlinux'
+
+    - name: Configure Prometheus Node Exporter defaults (Debian/Ubuntu)
+      ansible.builtin.copy:
+        dest: /etc/default/prometheus-node-exporter
+        content: |
+          ARGS="{{ app_node_exporter_flags }}"
+        owner: root
+        group: root
+        mode: "0644"
+      vars:
+        app_node_exporter_flags: >-
+          {{ (['--web.listen-address=' ~ app_node_exporter_bind_address ~ ':' ~ app_node_exporter_port]
+          + app_node_exporter_extra_flags) | join(' ') }}
+      notify: Restart prometheus-node-exporter
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Configure Prometheus Node Exporter conf.d (CachyOS)
+      ansible.builtin.copy:
+        dest: /etc/conf.d/prometheus-node-exporter
+        content: |
+          NODE_EXPORTER_ARGS="{{ app_node_exporter_flags }}"
+        owner: root
+        group: root
+        mode: "0644"
+      vars:
+        app_node_exporter_flags: >-
+          {{ (['--web.listen-address=' ~ app_node_exporter_bind_address ~ ':' ~ app_node_exporter_port]
+          + app_node_exporter_extra_flags) | join(' ') }}
+      notify: Restart prometheus-node-exporter
+      when: ansible_facts['os_family'] == 'Archlinux'
+
+    - name: Ensure Prometheus Node Exporter service is enabled and started
+      ansible.builtin.systemd_service:
+        name: "{{ app_node_exporter_service }}"
+        state: started
+        enabled: true
+      when:
+        - app_node_exporter_start_service | bool
+        - not ansible_check_mode
+
+- name: Ensure Prometheus Node Exporter uninstalled
+  when: not (app_node_exporter | bool)
+  block:
+    - name: Ensure Prometheus Node Exporter service is stopped and disabled
+      ansible.builtin.systemd_service:
+        name: "{{ app_node_exporter_service }}"
+        state: stopped
+        enabled: false
+      failed_when: false
+      when: app_node_exporter_start_service | bool
+
+    - name: Ensure Prometheus Node Exporter package is removed (Debian/Ubuntu)
+      ansible.builtin.apt:
+        name: "{{ app_node_exporter_packages if (app_node_exporter_packages | length > 0) else app_node_exporter_packages_debian }}"
+        state: absent
+        purge: true
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Ensure Prometheus Node Exporter package is removed (CachyOS)
+      community.general.pacman:
+        name: "{{ app_node_exporter_packages if (app_node_exporter_packages | length > 0) else app_node_exporter_packages_archlinux }}"
+        state: absent
+      when: ansible_facts['os_family'] == 'Archlinux'
+
+    - name: Remove Prometheus Node Exporter defaults configuration (Debian/Ubuntu)
+      ansible.builtin.file:
+        path: /etc/default/prometheus-node-exporter
+        state: absent
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Remove Prometheus Node Exporter conf.d configuration (CachyOS)
+      ansible.builtin.file:
+        path: /etc/conf.d/prometheus-node-exporter
+        state: absent
+      when: ansible_facts['os_family'] == 'Archlinux'

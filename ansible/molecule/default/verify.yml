@@ -226,3 +226,27 @@
         - rustfs_data_dir_stat.stat.uid != (app_rustfs_uid | int)
         - rustfs_data_dir_stat.stat.gid != (app_rustfs_gid | int)
         - rustfs_data_dir_stat.stat.mode != '0750'
+
+    - name: Verify prometheus node exporter binary exists
+      ansible.builtin.stat:
+        path: /usr/bin/prometheus-node-exporter
+      register: node_exporter_bin_stat
+      failed_when: not node_exporter_bin_stat.stat.exists
+
+    - name: Verify prometheus node exporter configuration file exists (Debian/Ubuntu)
+      ansible.builtin.lineinfile:
+        path: /etc/default/prometheus-node-exporter
+        line: 'ARGS="--web.listen-address={{ app_node_exporter_bind_address }}:{{ app_node_exporter_port }}"'
+      check_mode: true
+      register: node_exporter_debian_config_check
+      failed_when: node_exporter_debian_config_check.changed
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Verify prometheus node exporter configuration file exists (CachyOS)
+      ansible.builtin.lineinfile:
+        path: /etc/conf.d/prometheus-node-exporter
+        line: 'NODE_EXPORTER_ARGS="--web.listen-address={{ app_node_exporter_bind_address }}:{{ app_node_exporter_port }}"'
+      check_mode: true
+      register: node_exporter_arch_config_check
+      failed_when: node_exporter_arch_config_check.changed
+      when: ansible_facts['os_family'] == 'Archlinux'

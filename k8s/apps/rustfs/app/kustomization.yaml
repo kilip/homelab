@@ -6,3 +6,4 @@ resources:
   - ./secret.sops.yaml
   - ./repository.yaml
   - ./helmrelease.yaml
+  - ./init-buckets-job.yaml

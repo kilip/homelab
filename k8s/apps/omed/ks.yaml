@@ -11,6 +11,8 @@ spec:
   interval: 1h
   path: ./k8s/apps/omed/db
   prune: true
+  wait: true
+  timeout: 5m
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -29,6 +31,7 @@ metadata:
 spec:
   dependsOn:
     - name: omed-db
+    - name: rustfs
     - name: traefik
   interval: 1h
   path: ./k8s/apps/omed/app

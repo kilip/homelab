@@ -22,3 +22,4 @@ spec:
     name: paradedb
   name: omed
   owner: omed
+  template: template0

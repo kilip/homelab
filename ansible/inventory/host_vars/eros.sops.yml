@@ -9,6 +9,8 @@ app_mosquitto_user:
     - username: ENC[AES256_GCM,data:J1HcJg==,iv:1HW/l6aHHNw7EryXpmVTczWOFYs7BFjhXlVtftDDdso=,tag:TJhPVbvojuFabHDd29lFdg==,type:str]
       password: ENC[AES256_GCM,data:KVBGBQ3W9zb+QWcGoNAIOO7SdKw3LCpSpXKvig==,iv:qnLzYh/Boi3NZdzc1/uqAHiPLzhWmRYYT1YKDhYCKjU=,tag:su/7kICyq369Tqt0yh4gqA==,type:str]
 app_rustfs: ENC[AES256_GCM,data:0HtSbQ==,iv:3IEVHGF5r0VVMcCyYoelFgLGbXEA7hOvo1Y4IhyPTW8=,tag:yq1RJDi6b+YUGzsIFLM44w==,type:bool]
+app_rustfs_access_key: ENC[AES256_GCM,data:yTnFfZ0zKg==,iv:J9mtRgqlDtDiuSfV4E+3BGoZmUqfdeiLGsGCEomwdc0=,tag:Q9hwYlFD3RrCayKe9vPRnA==,type:str]
+app_rustfs_secret_key: ENC[AES256_GCM,data:y186Tr95AqPVrUNxBs54CvDlbuzhH0wB7n68Ig==,iv:DGxhXRSliKKgA1cSgIaJ8ADVv/TfAtWbRnDjGEPdmkE=,tag:L7bRo5pKm43fvp1c6CDtow==,type:str]
 app_node_exporter: ENC[AES256_GCM,data:TQ4o2A==,iv:cDMyj+dFV/m1vNddFNmsqdsPF6YaCWCaWRzn7vm/avk=,tag:6w4H3gpXH9pljF82IJSXBA==,type:bool]
 sops:
     age:
@@ -21,7 +23,7 @@ sops:
             Q89QsXLUmbSDwYqyEi+tBLE2NFka5rcdJWhwHXjOtASw+90u+rM2BA==
             -----END AGE ENCRYPTED FILE-----
           recipient: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf
-    lastmodified: "2026-10-30T00:53:24Z"
-    mac: ENC[AES256_GCM,data:fXmNW8iUNGRf/sA6MvR7M0tsHPWYujdPqqcFgG06dOtJ5C1DSVHIol51dh8nJn8nzMhf0/0UbDy2jT7jBCnOEnKNdxCIeukPmGCFqN3FOD+y4rQ0FpomKPbyGKK99LD49tXo4uUn94qWh+1buv7BJTYFT3VcXZY0PjP+Ct3qz9o=,iv:QC4eGNBmUqws6V2rKsyBkQQ4P8Kq1KP348I2BIuHbrU=,tag:FiENB9wxdLvs8c7bs0MslQ==,type:str]
+    lastmodified: "2026-10-30T01:46:52Z"
+    mac: ENC[AES256_GCM,data:5YMi89jnUN/N/WusZO9D9vCKTh4mQ+9YM8QSQ4dNcPrpBeDWFQyhkmoTjrgRpHO3BsaC2jzjpayz59GAH4c8/hPWVbBVFuWsL7G9QtTA7hS9A2LrpqZmKVldj6iKlyQI3kCh/duuVblkd9Km0NscQybEX6miT3kcqagFfH8Jg+U=,iv:y9Uo/z4bIXZ2i+xGy+XSbIfjvGJnaO6d7sMM/qHD7rw=,tag:9Yf71XhdE2sHLMLB6wiTyw==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.13.3

@@ -12,6 +12,7 @@ spec:
   interval: 1h
   path: ./k8s/apps/rustfs/app
   prune: true
+  force: true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
   - repository.yaml
   - credentials.sops.yaml
+  - backup-secret.sops.yaml
   - release.yaml

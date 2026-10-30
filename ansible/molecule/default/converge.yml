@@ -25,3 +25,4 @@
         app_mosquitto_users:
           - username: molecule_user
             password: molecule_password
+        app_rustfs: true

@@ -6,7 +6,6 @@
   when:
     - app_docker_start_service | bool
     - not ansible_check_mode
-
 - name: Restart mosquitto
   community.docker.docker_container:
     name: "{{ app_mosquitto_container_name }}"
@@ -14,4 +13,12 @@
     restart: true
   when:
     - app_mosquitto_start_service | bool
+    - not ansible_check_mode
+- name: Restart rustfs
+  community.docker.docker_container:
+    name: "{{ app_rustfs_container_name }}"
+    image: "{{ app_rustfs_image }}"
+    restart: true
+  when:
+    - app_rustfs_start_service | bool
     - not ansible_check_mode

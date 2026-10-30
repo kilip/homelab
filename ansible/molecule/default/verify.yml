@@ -209,3 +209,20 @@
       check_mode: true
       register: mosquitto_user_check
       failed_when: mosquitto_user_check.changed
+
+    - name: Verify rustfs base directory exists
+      ansible.builtin.stat:
+        path: "{{ app_rustfs_dir }}"
+      register: rustfs_base_dir_stat
+      failed_when: not rustfs_base_dir_stat.stat.exists or not rustfs_base_dir_stat.stat.isdir
+
+    - name: Verify rustfs data directory exists with correct permissions
+      ansible.builtin.stat:
+        path: "{{ app_rustfs_data_dir }}"
+      register: rustfs_data_dir_stat
+      failed_when:
+        - not rustfs_data_dir_stat.stat.exists
+        - not rustfs_data_dir_stat.stat.isdir
+        - rustfs_data_dir_stat.stat.uid != (app_rustfs_uid | int)
+        - rustfs_data_dir_stat.stat.gid != (app_rustfs_gid | int)
+        - rustfs_data_dir_stat.stat.mode != '0750'

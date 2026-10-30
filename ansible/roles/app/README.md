@@ -40,6 +40,23 @@ Variables available in `defaults/main.yml`:
 | `app_mosquitto_users` | List[Dict] | `[]` | List of user dictionaries (`username`, `password`) provisioned in `passwd` file via PBKDF2-SHA512 hashing. |
 | `app_mosquitto_uid` | String | `1883` | Numeric UID of mosquitto container user for directory ownership. |
 | `app_mosquitto_gid` | String | `1883` | Numeric GID of mosquitto container user for directory ownership. |
+| `app_rustfs` | Boolean | `false` | Enable RustFS distributed object storage container deployment. When `false`, removes container (and purges storage if `app_rustfs_purge_data: true`). |
+| `app_rustfs_container_name` | String | `rustfs` | Name of the RustFS Docker container. |
+| `app_rustfs_image` | String | `rustfs/rustfs:1.0.1` | Docker container image for RustFS. |
+| `app_rustfs_start_service` | Boolean | `true` | Start container (set to `false` in unprivileged container/test environments). |
+| `app_rustfs_dir` | String | `/srv/rustfs` | Base persistent storage directory on host. |
+| `app_rustfs_data_dir` | String | `{{ app_rustfs_dir }}/data` | Data storage directory on host. |
+| `app_rustfs_port` | Integer | `9000` | Host S3 API port mapped to container. |
+| `app_rustfs_container_port` | Integer | `9000` | Internal S3 API port inside container. |
+| `app_rustfs_console_port` | Integer | `9001` | Host Web Console port mapped to container. |
+| `app_rustfs_container_console_port` | Integer | `9001` | Internal Web Console port inside container. |
+| `app_rustfs_bind_address` | String | `0.0.0.0` | Host IP address for RustFS listeners to bind. |
+| `app_rustfs_access_key` | String | `rustfsadmin` | Admin access key for S3 API and Console. |
+| `app_rustfs_secret_key` | String | `rustfsadmin` | Admin secret key for S3 API and Console. |
+| `app_rustfs_uid` | String | `10001` | Numeric UID of container user for directory ownership. |
+| `app_rustfs_gid` | String | `10001` | Numeric GID of container user for directory ownership. |
+| `app_rustfs_purge_data` | Boolean | `false` | Purge persistent storage directories upon uninstall when `app_rustfs: false`. |
+
 
 ### Example User Provisioning
 
@@ -64,12 +81,16 @@ None.
   roles:
     - role: app
       vars:
+        app_docker: true
         app_mosquitto: true
         app_mosquitto_port: 1883
         app_mosquitto_allow_anonymous: false
         app_mosquitto_users:
           - username: sensor_node
             password: "supersecretpassword"
+        app_rustfs: true
+        app_rustfs_access_key: "admin"
+        app_rustfs_secret_key: "{{ vault_rustfs_secret_key }}"
 ```
 
 ## License

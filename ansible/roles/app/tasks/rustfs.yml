@@ -1,0 +1,60 @@
+---
+- name: Check if Docker daemon socket exists
+  ansible.builtin.stat:
+    path: /var/run/docker.sock
+  register: app_docker_socket
+
+- name: Ensure rustfs installed and configured
+  when: app_rustfs | bool
+  block:
+    - name: Ensure rustfs persistent directories exist
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ app_rustfs_uid }}"
+        group: "{{ app_rustfs_gid }}"
+        mode: "0750"
+      loop:
+        - "{{ app_rustfs_dir }}"
+        - "{{ app_rustfs_data_dir }}"
+
+    - name: Ensure rustfs container is running
+      community.docker.docker_container:
+        name: "{{ app_rustfs_container_name }}"
+        image: "{{ app_rustfs_image }}"
+        state: started
+        restart_policy: unless-stopped
+        command:
+          - /data
+        env:
+          RUSTFS_ADDRESS: ":{{ app_rustfs_container_port }}"
+          RUSTFS_CONSOLE_ADDRESS: ":{{ app_rustfs_container_console_port }}"
+          RUSTFS_CONSOLE_ENABLE: "true"
+          RUSTFS_ACCESS_KEY: "{{ app_rustfs_access_key }}"
+          RUSTFS_SECRET_KEY: "{{ app_rustfs_secret_key }}"
+        published_ports:
+          - "{{ (app_rustfs_bind_address + ':') if app_rustfs_bind_address else '' }}{{ app_rustfs_port }}:{{ app_rustfs_container_port }}"
+          - "{{ (app_rustfs_bind_address + ':') if app_rustfs_bind_address else '' }}{{ app_rustfs_console_port }}:{{ app_rustfs_container_console_port }}"
+        volumes:
+          - "{{ app_rustfs_data_dir }}:/data:rw"
+      when:
+        - app_rustfs_start_service | bool
+        - not ansible_check_mode or (app_docker_socket.stat.exists | default(false))
+
+- name: Ensure rustfs uninstalled
+  when: not (app_rustfs | bool)
+  block:
+    - name: Ensure rustfs container is stopped and removed
+      community.docker.docker_container:
+        name: "{{ app_rustfs_container_name }}"
+        state: absent
+      when:
+        - app_docker | bool
+        - app_rustfs_start_service | bool
+        - not ansible_check_mode or (app_docker_socket.stat.exists | default(false))
+
+    - name: Remove rustfs persistent directories
+      ansible.builtin.file:
+        path: "{{ app_rustfs_dir }}"
+        state: absent
+      when: app_rustfs_purge_data | bool

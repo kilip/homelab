@@ -7,3 +7,4 @@ resources:
   - ./echo/ks.yaml
   - ./home-assistant/ks.yaml
   - ./omed/ks.yaml
+  - ./rustfs/ks.yaml

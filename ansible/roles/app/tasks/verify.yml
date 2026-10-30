@@ -40,4 +40,12 @@
       - app_rustfs_access_key is string
       - app_rustfs_secret_key is string
       - app_rustfs_purge_data is boolean
+      - app_node_exporter is boolean
+      - app_node_exporter_start_service is boolean
+      - app_node_exporter_service is string
+      - app_node_exporter_port | int > 0
+      - app_node_exporter_port | int < 65536
+      - app_node_exporter_bind_address is string
+      - app_node_exporter_extra_flags is sequence
+      - app_node_exporter_packages is sequence
     quiet: true

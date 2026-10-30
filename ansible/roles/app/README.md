@@ -11,6 +11,7 @@ Deploy and manage host application services and containerized workloads across O
   - [Docker Engine (`app_docker`)](#docker-engine-app_docker)
   - [Mosquitto MQTT Broker (`app_mosquitto`)](#mosquitto-mqtt-broker-app_mosquitto)
   - [RustFS Object Storage (`app_rustfs`)](#rustfs-object-storage-app_rustfs)
+  - [Prometheus Node Exporter (`app_node_exporter`)](#prometheus-node-exporter-app_node_exporter)
 - [Example Playbook](#example-playbook)
 - [License](#license)
 - [Author Information](#author-information)
@@ -32,7 +33,7 @@ Deploy and manage host application services and containerized workloads across O
 The `app` role provides a modular, containerized deployment pattern for host services:
 
 1. **Dependency on Docker**: Containerized services (`mosquitto`, `rustfs`) require the container runtime. An assertion validates that `app_docker: true` when enabling any container service (`app_mosquitto: true` or `app_rustfs: true`).
-2. **Container-Safe Testing**: All systemd service starts and container operations are guarded by `*_start_service` flags (`app_docker_start_service`, `app_mosquitto_start_service`, `app_rustfs_start_service`). In containerized test runners (e.g. Molecule), setting these to `false` allows verifying package installation, directory creation, permissions, and templating without requiring privileged Docker-in-Docker daemons.
+2. **Container-Safe Testing**: All systemd service starts and container operations are guarded by `*_start_service` flags (`app_docker_start_service`, `app_mosquitto_start_service`, `app_rustfs_start_service`, `app_node_exporter_start_service`). In containerized test runners (e.g. Molecule), setting these to `false` allows verifying package installation, directory creation, permissions, and templating without requiring privileged Docker-in-Docker daemons.
 3. **Idempotency & Clean Removal**: Setting any component flag to `false` triggers its respective uninstall routine, stopping and removing containers, disabling services, and cleaning up persistent data according to configured retention policies.
 
 ---
@@ -174,6 +175,33 @@ Deploys RustFS, a lightweight, high-performance S3-compatible distributed object
 When `app_rustfs: false`:
 - Stops and removes the Docker container `{{ app_rustfs_container_name }}`.
 - Storage directory `{{ app_rustfs_dir }}` is retained unless `app_rustfs_purge_data: true`.
+
+---
+
+### Prometheus Node Exporter (`app_node_exporter`)
+
+Installs and configures the Prometheus Node Exporter system metrics collector as a native host systemd service via distro package managers (`apt` on Debian/Ubuntu, `pacman` on CachyOS/Arch Linux).
+
+#### Node Exporter Variables
+
+| Variable | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `app_node_exporter` | Boolean | `false` | Enable Prometheus Node Exporter installation and management. Set to `false` to stop service and uninstall packages. |
+| `app_node_exporter_start_service` | Boolean | `true` | Enable and start `prometheus-node-exporter` systemd service. Set to `false` in unprivileged container environments. |
+| `app_node_exporter_service` | String | `prometheus-node-exporter` | Systemd service name. |
+| `app_node_exporter_port` | Integer | `9100` | Exporter HTTP metrics listener port. |
+| `app_node_exporter_bind_address` | String | `0.0.0.0` | IP address to bind metrics listener. |
+| `app_node_exporter_extra_flags` | List[String] | `[]` | List of extra command-line flags passed to the exporter. |
+| `app_node_exporter_packages` | List[String] | `[]` | Explicit package override list (uses distro defaults when empty). |
+| `app_node_exporter_packages_debian` | List[String] | `["prometheus-node-exporter"]` | Default packages for Debian and Ubuntu. |
+| `app_node_exporter_packages_archlinux` | List[String] | `["prometheus-node-exporter"]` | Default packages for Arch Linux and CachyOS. |
+
+#### Node Exporter Uninstall Lifecycle
+
+When `app_node_exporter: false`:
+- Stops and disables `prometheus-node-exporter` systemd service.
+- Purges/removes packages across Debian/Ubuntu or Arch Linux.
+- Removes configuration file (`/etc/default/prometheus-node-exporter` or `/etc/conf.d/prometheus-node-exporter`).
 
 ---
 

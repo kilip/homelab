@@ -22,3 +22,10 @@
   when:
     - app_rustfs_start_service | bool
     - not ansible_check_mode
+- name: Restart prometheus-node-exporter
+  ansible.builtin.systemd_service:
+    name: "{{ app_node_exporter_service }}"
+    state: restarted
+  when:
+    - app_node_exporter_start_service | bool
+    - not ansible_check_mode

@@ -15,3 +15,7 @@
   ansible.builtin.include_tasks:
     file: "rustfs.yml"
   when: app_docker | bool
+
+- name: Manage prometheus node exporter
+  ansible.builtin.include_tasks:
+    file: "node_exporter.yml"

@@ -58,3 +58,15 @@ app_rustfs_secret_key: "rustfsadmin"
 app_rustfs_uid: "10001"
 app_rustfs_gid: "10001"
 app_rustfs_purge_data: false
+
+app_node_exporter: false
+app_node_exporter_start_service: true
+app_node_exporter_service: prometheus-node-exporter
+app_node_exporter_port: 9100
+app_node_exporter_bind_address: "0.0.0.0"
+app_node_exporter_extra_flags: []
+app_node_exporter_packages_debian:
+  - prometheus-node-exporter
+app_node_exporter_packages_archlinux:
+  - prometheus-node-exporter
+app_node_exporter_packages: []

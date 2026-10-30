@@ -21,17 +21,17 @@ spec:
             - -c
             - |
               set -e
-              echo "Waiting for RustFS endpoint at ${AWS_ENDPOINT_URL}..."
-              until aws --endpoint-url "${AWS_ENDPOINT_URL}" s3 ls >/dev/null 2>&1; do
+              echo "Waiting for RustFS endpoint..."
+              until aws --endpoint-url http://rustfs-svc.apps.svc.cluster.local:9000 s3 ls >/dev/null 2>&1; do
                 echo "RustFS not ready yet, retrying in 2s..."
                 sleep 2
               done
               echo "Creating bucket omed..."
-              aws --endpoint-url "${AWS_ENDPOINT_URL}" s3 mb s3://omed || true
+              aws --endpoint-url http://rustfs-svc.apps.svc.cluster.local:9000 s3 mb s3://omed || true
               echo "Creating bucket omed-ws-default..."
-              aws --endpoint-url "${AWS_ENDPOINT_URL}" s3 mb s3://omed-ws-default || true
+              aws --endpoint-url http://rustfs-svc.apps.svc.cluster.local:9000 s3 mb s3://omed-ws-default || true
               echo "Verifying buckets:"
-              aws --endpoint-url "${AWS_ENDPOINT_URL}" s3 ls
+              aws --endpoint-url http://rustfs-svc.apps.svc.cluster.local:9000 s3 ls
               echo "RustFS initial buckets verified successfully!"
           env:
             - name: AWS_ACCESS_KEY_ID
@@ -46,5 +46,3 @@ spec:
                   key: RUSTFS_SECRET_KEY
             - name: AWS_DEFAULT_REGION
               value: us-east-1
-            - name: AWS_ENDPOINT_URL
-              value: http://rustfs-svc.apps.svc.cluster.local:9000

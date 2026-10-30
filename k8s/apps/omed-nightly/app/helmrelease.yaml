@@ -1,0 +1,95 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: omed-nightly
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: omed-nightly
+  interval: 1h
+  timeout: 10m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: omed-nightly-api
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: omed-nightly-api
+              spec:
+                template:
+                  spec:
+                    initContainers:
+                      - name: wait-for-db
+                        image: postgres:17-alpine
+                        command:
+                          - /bin/sh
+                          - -c
+                          - |
+                            until pg_isready -h paradedb-rw.storage.svc -p 5432 -U omed_nightly -d omed_nightly; do
+                              echo "waiting for db..."
+                              sleep 2
+                            done
+  values:
+    secrets:
+      existingSecret: omed-nightly-secret
+    api:
+      replicaCount: 1
+      image:
+        tag: nightly
+        pullPolicy: Always
+      config:
+        sessionCookieName: omed_nightly_session
+        mailer:
+          driver: memory
+        s3:
+          driver: s3
+          endpoint: "http://rustfs-svc.apps.svc.cluster.local:9000"
+          region: "us-east-1"
+          forcePathStyle: true
+          bucketPrefix: "omed-nightly-ws-"
+      resources:
+        requests:
+          cpu: 50m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
+    web:
+      replicaCount: 1
+      image:
+        tag: nightly
+        pullPolicy: Always
+      resources:
+        requests:
+          cpu: 25m
+          memory: 64Mi
+        limits:
+          memory: 256Mi
+    migrations:
+      enabled: true
+    ingress:
+      enabled: true
+      className: traefik
+      annotations:
+        external-dns.alpha.kubernetes.io/expose: "true"
+        external-dns.kubernetes.io/target: "${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
+      web:
+        host: omed-nightly.${SECRET_DOMAIN}
+      api:
+        host: api-nightly.${SECRET_DOMAIN}
+      tls:
+        - hosts:
+            - omed-nightly.${SECRET_DOMAIN}
+            - api-nightly.${SECRET_DOMAIN}

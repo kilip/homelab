@@ -1,0 +1,25 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zeus
+  namespace: apps
+  annotations:
+    external-dns.alpha.kubernetes.io/expose: "true"
+    external-dns.kubernetes.io/target: "${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: zeus.itstoni.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: zeus
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - zeus.itstoni.com

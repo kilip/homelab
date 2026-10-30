@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zeus
+  namespace: apps
+spec:
+  ports:
+    - name: http
+      port: ${ZEUS_PORT}
+      targetPort: ${ZEUS_PORT}
+      protocol: TCP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: zeus
+  namespace: apps
+subsets:
+  - addresses:
+      - ip: "${ZEUS_IP}"
+    ports:
+      - name: http
+        port: ${ZEUS_PORT}
+        protocol: TCP

@@ -1,0 +1,25 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: DatabaseRole
+metadata:
+  name: omed-nightly
+  namespace: storage
+spec:
+  cluster:
+    name: paradedb
+  name: omed_nightly
+  login: true
+  passwordSecret:
+    name: omed-nightly-db-credentials
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: omed-nightly
+  namespace: storage
+spec:
+  cluster:
+    name: paradedb
+  name: omed_nightly
+  owner: omed_nightly
+  template: template0

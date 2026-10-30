@@ -1,0 +1,44 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: omed-nightly-db-check
+  namespace: storage
+spec:
+  backoffLimit: 15
+  ttlSecondsAfterFinished: 600
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: omed-nightly-db-check
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: check
+          image: postgres:17-alpine
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -e
+              echo "Waiting for PostgreSQL service paradedb-rw.storage.svc:5432..."
+              until pg_isready -h paradedb-rw.storage.svc -p 5432 -U "${PGUSER}" -d "${PGDATABASE}"; do
+                echo "Database not ready yet, retrying in 2s..."
+                sleep 2
+              done
+              echo "Testing query execution on database ${PGDATABASE}..."
+              psql -h paradedb-rw.storage.svc -p 5432 -U "${PGUSER}" -d "${PGDATABASE}" -c "SELECT 1;"
+              echo "Database verification successful!"
+          env:
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: omed-nightly-db-credentials
+                  key: username
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: omed-nightly-db-credentials
+                  key: password
+            - name: PGDATABASE
+              value: omed_nightly

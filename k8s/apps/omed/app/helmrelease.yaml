@@ -17,11 +17,45 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: omed-api
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: omed-api
+              spec:
+                template:
+                  spec:
+                    initContainers:
+                      - name: wait-for-db
+                        image: postgres:17-alpine
+                        command:
+                          - /bin/sh
+                          - -c
+                          - |
+                            until pg_isready -h paradedb-rw.storage.svc -p 5432 -U omed -d omed; do
+                              echo "waiting for db..."
+                              sleep 2
+                            done
   values:
     secrets:
       existingSecret: omed-secret
     api:
       replicaCount: 1
+      config:
+        mailer:
+          driver: memory
+        s3:
+          driver: s3
+          endpoint: "http://rustfs-svc.apps.svc.cluster.local:9000"
+          region: "us-east-1"
+          forcePathStyle: true
+          bucketPrefix: "omed-ws-"
       resources:
         requests:
           cpu: 50m

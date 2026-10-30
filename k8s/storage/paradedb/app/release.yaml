@@ -32,6 +32,17 @@ spec:
       instances: 1
       # Single-node cluster: a PDB on one instance would block node drains.
       enablePDB: false
+      podSecurityContext:
+        appArmorProfile:
+          type: Unconfined
+      inheritedMetadata:
+        annotations:
+          apparmor.security.beta.kubernetes.io/pod: unconfined
+          container.apparmor.security.beta.kubernetes.io/initdb: unconfined
+          container.apparmor.security.beta.kubernetes.io/postgres: unconfined
+      postgresql:
+        parameters:
+          io_method: sync
       storage:
         size: 10Gi
         storageClass: local-path

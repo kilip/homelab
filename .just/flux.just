@@ -132,7 +132,8 @@ validate:
         k8s/apps/home-assistant/app \
         k8s/apps/home-assistant/mcp \
         k8s/apps/omed/app \
-        k8s/apps/omed/db; do
+        k8s/apps/omed/db \
+        k8s/apps/rustfs/app; do
         echo "Validating $dir..."
         kustomize build "{{ justfile_directory() }}/$dir" \
             | yq 'del(.sops)' \

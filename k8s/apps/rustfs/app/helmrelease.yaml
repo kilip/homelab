@@ -1,0 +1,60 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: rustfs
+spec:
+  chart:
+    spec:
+      chart: rustfs
+      version: "1.0.4"
+      sourceRef:
+        kind: HelmRepository
+        name: rustfs
+      interval: 12h
+  interval: 1h
+  timeout: 10m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    mode:
+      standalone:
+        enabled: true
+      distributed:
+        enabled: false
+    secret:
+      existingSecret: rustfs-secret
+    storageclass:
+      name: local-path
+      dataStorageSize: 50Gi
+      logStorageSize: 1Gi
+    ingress:
+      enabled: true
+      className: traefik
+      annotations:
+        external-dns.alpha.kubernetes.io/expose: "true"
+        external-dns.kubernetes.io/target: "${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
+      nginxAnnotations: {}
+      hosts:
+        - host: rustfs.${SECRET_DOMAIN}
+          paths:
+            - path: /
+              pathType: Prefix
+              servicePort: console
+        - host: s3.${SECRET_DOMAIN}
+          paths:
+            - path: /
+              pathType: Prefix
+              servicePort: endpoint
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 1Gi

@@ -81,4 +81,29 @@ spec:
               spec:
                 type: LoadBalancer
     backups:
-      enabled: false
+      enabled: true
+      target: primary
+      method: barmanObjectStore
+      endpointURL: "https://7198c697a46adf002aad31e3156a612b.r2.cloudflarestorage.com"
+      destinationPath: "s3://olympus-postgres-backup/paradedb"
+      provider: s3
+      s3:
+        region: auto
+      secret:
+        create: false
+        name: paradedb-backup-r2
+      wal:
+        compression: gzip
+        encryption: ""
+        maxParallel: 1
+      data:
+        compression: gzip
+        encryption: ""
+        jobs: 2
+      retentionPolicy: "30d"
+      scheduledBackups:
+        -
+          name: daily-backup
+          schedule: "0 0 2 * * *"
+          backupOwnerReference: self
+          method: barmanObjectStore

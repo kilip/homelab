@@ -30,6 +30,10 @@ spec:
               aws --endpoint-url http://rustfs-svc.apps.svc.cluster.local:9000 s3 mb s3://omed || true
               echo "Creating bucket omed-ws-default..."
               aws --endpoint-url http://rustfs-svc.apps.svc.cluster.local:9000 s3 mb s3://omed-ws-default || true
+              echo "Creating bucket omed-nightly..."
+              aws --endpoint-url http://rustfs-svc.apps.svc.cluster.local:9000 s3 mb s3://omed-nightly || true
+              echo "Creating bucket omed-nightly-ws-default..."
+              aws --endpoint-url http://rustfs-svc.apps.svc.cluster.local:9000 s3 mb s3://omed-nightly-ws-default || true
               echo "Verifying buckets:"
               aws --endpoint-url http://rustfs-svc.apps.svc.cluster.local:9000 s3 ls
               echo "RustFS initial buckets verified successfully!"

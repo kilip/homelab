@@ -13,3 +13,6 @@ archlinux_packages:
   - github-cli
 
 debian_packages: []
+
+common_authorized_keys:
+  - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEnBclBPukxGZTGVXTSGw+Y/uIgAqGwnqH05P61JSRze me@itstoni.com"

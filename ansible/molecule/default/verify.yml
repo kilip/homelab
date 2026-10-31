@@ -50,6 +50,17 @@
       register: sudoers_check
       failed_when: sudoers_check.changed
 
+    - name: Verify authorized key exists for ansible_user
+      ansible.posix.authorized_key:
+        user: "{{ ansible_user }}"
+        key: "{{ item }}"
+        state: present
+      check_mode: true
+      register: authorized_keys_check
+      failed_when: authorized_keys_check.changed
+      loop: "{{ common_authorized_keys }}"
+      when: common_authorized_keys | length > 0
+
     - name: Verify system hostname matches inventory_hostname
       ansible.builtin.assert:
         that:

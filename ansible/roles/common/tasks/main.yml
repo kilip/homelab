@@ -53,3 +53,11 @@
     commands: ALL
     nopassword: true
     state: present
+
+- name: Configure authorized keys for ansible_user
+  ansible.posix.authorized_key:
+    user: "{{ ansible_user }}"
+    key: "{{ item }}"
+    state: present
+  loop: "{{ common_authorized_keys }}"
+  when: common_authorized_keys | length > 0

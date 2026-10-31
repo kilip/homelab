@@ -1,0 +1,24 @@
+---
+- name: Ensure BlueZ installed and configured
+  when: app_bluez | bool
+  block:
+    - name: Install BlueZ package (Debian/Ubuntu)
+      ansible.builtin.apt:
+        name: "{{ app_bluez_packages if (app_bluez_packages | length > 0) else app_bluez_packages_debian }}"
+        state: present
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Install BlueZ package (CachyOS)
+      community.general.pacman:
+        name: "{{ app_bluez_packages if (app_bluez_packages | length > 0) else app_bluez_packages_archlinux }}"
+        state: present
+      when: ansible_facts['os_family'] == 'Archlinux'
+
+    - name: Ensure BlueZ service is enabled and started
+      ansible.builtin.systemd_service:
+        name: "{{ app_bluez_service }}"
+        state: started
+        enabled: true
+      when:
+        - app_bluez_start_service | bool
+        - not ansible_check_mode

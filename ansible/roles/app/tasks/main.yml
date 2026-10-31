@@ -23,3 +23,7 @@
 - name: Manage zerotier
   ansible.builtin.include_tasks:
     file: "zerotier.yml"
+
+- name: Manage bluez
+  ansible.builtin.include_tasks:
+    file: "bluez.yml"

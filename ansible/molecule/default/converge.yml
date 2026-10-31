@@ -27,3 +27,4 @@
             password: molecule_password
         app_rustfs: true
         app_node_exporter: true
+        app_zerotier: true

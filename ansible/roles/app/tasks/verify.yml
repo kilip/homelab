@@ -48,4 +48,11 @@
       - app_node_exporter_bind_address is string
       - app_node_exporter_extra_flags is sequence
       - app_node_exporter_packages is sequence
+      - app_zerotier is boolean
+      - app_zerotier_start_service is boolean
+      - app_zerotier_service is string
+      - app_zerotier_packages is sequence
+      - app_zerotier_packages_debian is sequence
+      - app_zerotier_packages_archlinux is sequence
+      - app_zerotier_networks is sequence
     quiet: true

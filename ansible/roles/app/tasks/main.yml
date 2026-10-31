@@ -19,3 +19,7 @@
 - name: Manage prometheus node exporter
   ansible.builtin.include_tasks:
     file: "node_exporter.yml"
+
+- name: Manage zerotier
+  ansible.builtin.include_tasks:
+    file: "zerotier.yml"

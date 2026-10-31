@@ -1,0 +1,129 @@
+---
+- name: Ensure ZeroTier installed and configured
+  when: app_zerotier | bool
+  block:
+    - name: Ensure ZeroTier APT prerequisites are installed (Debian/Ubuntu)
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - curl
+          - gnupg
+        state: present
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Ensure apt keyrings directory exists (Debian/Ubuntu)
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Download ZeroTier official GPG key (Debian/Ubuntu)
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/zerotier/ZeroTierOne/main/doc/contact%40zerotier.com.gpg"
+        dest: /etc/apt/keyrings/zerotier.asc
+        owner: root
+        group: root
+        mode: "0644"
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Configure ZeroTier APT repository (Debian/Ubuntu)
+      ansible.builtin.copy:
+        dest: /etc/apt/sources.list.d/zerotier.list
+        content: >-
+          deb [signed-by=/etc/apt/keyrings/zerotier.asc]
+          https://download.zerotier.com/debian/{{ ansible_facts['distribution_release'] }}
+          {{ ansible_facts['distribution_release'] }}
+          main
+        owner: root
+        group: root
+        mode: "0644"
+      register: app_zerotier_apt_repo
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Update apt cache if ZeroTier repository was changed (Debian/Ubuntu)
+      ansible.builtin.apt:
+        update_cache: true
+      when:
+        - ansible_facts['os_family'] == 'Debian'
+        - app_zerotier_apt_repo.changed
+
+    - name: Install ZeroTier packages (Debian/Ubuntu)
+      ansible.builtin.apt:
+        name: "{{ app_zerotier_packages if (app_zerotier_packages | length > 0) else app_zerotier_packages_debian }}"
+        state: present
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Install ZeroTier packages (CachyOS)
+      community.general.pacman:
+        name: "{{ app_zerotier_packages if (app_zerotier_packages | length > 0) else app_zerotier_packages_archlinux }}"
+        state: present
+      when: ansible_facts['os_family'] == 'Archlinux'
+
+    - name: Ensure ZeroTier service is enabled and started
+      ansible.builtin.systemd_service:
+        name: "{{ app_zerotier_service }}"
+        state: started
+        enabled: true
+      when:
+        - app_zerotier_start_service | bool
+        - not ansible_check_mode
+
+    - name: Get list of joined ZeroTier networks
+      ansible.builtin.command: zerotier-cli listnetworks
+      register: app_zerotier_current_networks
+      changed_when: false
+      failed_when: false
+      when:
+        - app_zerotier_start_service | bool
+        - not ansible_check_mode
+        - app_zerotier_networks | length > 0
+
+    - name: Join configured ZeroTier networks
+      ansible.builtin.command: "zerotier-cli join {{ item }}"
+      register: app_zerotier_join_result
+      changed_when: "'200 join OK' in app_zerotier_join_result.stdout"
+      loop: "{{ app_zerotier_networks }}"
+      when:
+        - app_zerotier_start_service | bool
+        - not ansible_check_mode
+        - app_zerotier_networks | length > 0
+        - item not in (app_zerotier_current_networks.stdout | default(''))
+
+- name: Ensure ZeroTier uninstalled
+  when: not (app_zerotier | bool)
+  block:
+    - name: Ensure ZeroTier service is stopped and disabled
+      ansible.builtin.systemd_service:
+        name: "{{ app_zerotier_service }}"
+        state: stopped
+        enabled: false
+      failed_when: false
+      when: app_zerotier_start_service | bool
+
+    - name: Ensure ZeroTier packages are removed (Debian/Ubuntu)
+      ansible.builtin.apt:
+        name: "{{ app_zerotier_packages if (app_zerotier_packages | length > 0) else app_zerotier_packages_debian }}"
+        state: absent
+        purge: true
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Ensure ZeroTier packages are removed (CachyOS)
+      community.general.pacman:
+        name: "{{ app_zerotier_packages if (app_zerotier_packages | length > 0) else app_zerotier_packages_archlinux }}"
+        state: absent
+      when: ansible_facts['os_family'] == 'Archlinux'
+
+    - name: Remove ZeroTier APT repository file (Debian/Ubuntu)
+      ansible.builtin.file:
+        path: /etc/apt/sources.list.d/zerotier.list
+        state: absent
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Remove ZeroTier GPG key (Debian/Ubuntu)
+      ansible.builtin.file:
+        path: /etc/apt/keyrings/zerotier.asc
+        state: absent
+      when: ansible_facts['os_family'] == 'Debian'

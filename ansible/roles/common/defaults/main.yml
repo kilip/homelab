@@ -8,3 +8,8 @@ common_packages:
   - tmux
   - neovim
   - zsh
+  - pass
+archlinux_packages:
+  - github-cli
+
+debian_packages: []

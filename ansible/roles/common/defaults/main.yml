@@ -3,16 +3,17 @@ common_packages:
   - sudo
   - git
   - btop
-  - just
   - pass
   - tmux
   - neovim
   - zsh
   - pass
+
 archlinux_packages:
   - github-cli
 
-debian_packages: []
+debian_packages:
+  - gh
 
 common_authorized_keys:
   - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEnBclBPukxGZTGVXTSGw+Y/uIgAqGwnqH05P61JSRze me@itstoni.com"

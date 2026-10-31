@@ -55,4 +55,10 @@
       - app_zerotier_packages_debian is sequence
       - app_zerotier_packages_archlinux is sequence
       - app_zerotier_networks is sequence
+      - app_bluez is boolean
+      - app_bluez_start_service is boolean
+      - app_bluez_service is string
+      - app_bluez_packages is sequence
+      - app_bluez_packages_debian is sequence
+      - app_bluez_packages_archlinux is sequence
     quiet: true

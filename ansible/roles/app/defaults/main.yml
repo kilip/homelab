@@ -80,3 +80,13 @@ app_zerotier_packages_archlinux:
   - zerotier-one
 app_zerotier_packages: []
 app_zerotier_networks: []
+
+app_bluez: false
+app_bluez_start_service: true
+app_bluez_service: bluetooth
+app_bluez_packages_debian:
+  - bluez
+app_bluez_packages_archlinux:
+  - bluez
+  - bluez-utils
+app_bluez_packages: []

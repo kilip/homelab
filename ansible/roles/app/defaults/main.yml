@@ -70,3 +70,13 @@ app_node_exporter_packages_debian:
 app_node_exporter_packages_archlinux:
   - prometheus-node-exporter
 app_node_exporter_packages: []
+
+app_zerotier: false
+app_zerotier_start_service: true
+app_zerotier_service: zerotier-one
+app_zerotier_packages_debian:
+  - zerotier-one
+app_zerotier_packages_archlinux:
+  - zerotier-one
+app_zerotier_packages: []
+app_zerotier_networks: []

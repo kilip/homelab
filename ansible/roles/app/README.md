@@ -12,6 +12,7 @@ Deploy and manage host application services and containerized workloads across O
   - [Mosquitto MQTT Broker (`app_mosquitto`)](#mosquitto-mqtt-broker-app_mosquitto)
   - [RustFS Object Storage (`app_rustfs`)](#rustfs-object-storage-app_rustfs)
   - [Prometheus Node Exporter (`app_node_exporter`)](#prometheus-node-exporter-app_node_exporter)
+  - [ZeroTier One Network Daemon (`app_zerotier`)](#zerotier-one-network-daemon-app_zerotier)
 - [Example Playbook](#example-playbook)
 - [License](#license)
 - [Author Information](#author-information)
@@ -33,7 +34,7 @@ Deploy and manage host application services and containerized workloads across O
 The `app` role provides a modular, containerized deployment pattern for host services:
 
 1. **Dependency on Docker**: Containerized services (`mosquitto`, `rustfs`) require the container runtime. An assertion validates that `app_docker: true` when enabling any container service (`app_mosquitto: true` or `app_rustfs: true`).
-2. **Container-Safe Testing**: All systemd service starts and container operations are guarded by `*_start_service` flags (`app_docker_start_service`, `app_mosquitto_start_service`, `app_rustfs_start_service`, `app_node_exporter_start_service`). In containerized test runners (e.g. Molecule), setting these to `false` allows verifying package installation, directory creation, permissions, and templating without requiring privileged Docker-in-Docker daemons.
+2. **Container-Safe Testing**: All systemd service starts and container operations are guarded by `*_start_service` flags (`app_docker_start_service`, `app_mosquitto_start_service`, `app_rustfs_start_service`, `app_node_exporter_start_service`, `app_zerotier_start_service`). In containerized test runners (e.g. Molecule), setting these to `false` allows verifying package installation, directory creation, permissions, and templating without requiring privileged Docker-in-Docker daemons or kernel network devices.
 3. **Idempotency & Clean Removal**: Setting any component flag to `false` triggers its respective uninstall routine, stopping and removing containers, disabling services, and cleaning up persistent data according to configured retention policies.
 
 ---
@@ -202,6 +203,31 @@ When `app_node_exporter: false`:
 - Stops and disables `prometheus-node-exporter` systemd service.
 - Purges/removes packages across Debian/Ubuntu or Arch Linux.
 - Removes configuration file (`/etc/default/prometheus-node-exporter` or `/etc/conf.d/prometheus-node-exporter`).
+
+---
+
+### ZeroTier One Network Daemon (`app_zerotier`)
+
+Installs and configures the ZeroTier One endpoint service (`zerotier-one`) and automatically joins configured ZeroTier network IDs. Supports Debian/Ubuntu (via official ZeroTier APT repository and GPG key) and Arch Linux/CachyOS (native package repository).
+
+#### ZeroTier Variables
+
+| Variable | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `app_zerotier` | Boolean | `false` | Enable ZeroTier One installation and management. Set to `false` to stop service and uninstall packages. |
+| `app_zerotier_start_service` | Boolean | `true` | Enable and start `zerotier-one` systemd service. Set to `false` in unprivileged container environments. |
+| `app_zerotier_service` | String | `zerotier-one` | Systemd service unit name. |
+| `app_zerotier_networks` | List[String] | `[]` | List of ZeroTier network IDs to join automatically. |
+| `app_zerotier_packages` | List[String] | `[]` | Explicit package override list (uses distro defaults when empty). |
+| `app_zerotier_packages_debian` | List[String] | `["zerotier-one"]` | Default packages for Debian and Ubuntu. |
+| `app_zerotier_packages_archlinux` | List[String] | `["zerotier-one"]` | Default packages for Arch Linux and CachyOS. |
+
+#### ZeroTier Uninstall Lifecycle
+
+When `app_zerotier: false`:
+- Stops and disables `zerotier-one` systemd service.
+- Purges/removes packages across Debian/Ubuntu or Arch Linux.
+- Removes APT repository (`/etc/apt/sources.list.d/zerotier.list`) and keyrings (`/etc/apt/keyrings/zerotier.asc`) on Debian/Ubuntu.
 
 ---
 

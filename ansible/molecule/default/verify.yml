@@ -250,3 +250,23 @@
       register: node_exporter_arch_config_check
       failed_when: node_exporter_arch_config_check.changed
       when: ansible_facts['os_family'] == 'Archlinux'
+
+    - name: Verify zerotier APT repository file exists (Debian/Ubuntu)
+      ansible.builtin.stat:
+        path: /etc/apt/sources.list.d/zerotier.list
+      register: zerotier_apt_repo_stat
+      failed_when: not zerotier_apt_repo_stat.stat.exists
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Verify zerotier GPG keyring exists (Debian/Ubuntu)
+      ansible.builtin.stat:
+        path: /etc/apt/keyrings/zerotier.asc
+      register: zerotier_keyring_stat
+      failed_when: not zerotier_keyring_stat.stat.exists
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Verify zerotier-one binary exists
+      ansible.builtin.stat:
+        path: "{{ '/usr/sbin/zerotier-one' if ansible_facts['os_family'] == 'Debian' else '/usr/bin/zerotier-one' }}"
+      register: zerotier_bin_stat
+      failed_when: not zerotier_bin_stat.stat.exists

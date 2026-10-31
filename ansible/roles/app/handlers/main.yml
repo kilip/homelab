@@ -29,3 +29,10 @@
   when:
     - app_node_exporter_start_service | bool
     - not ansible_check_mode
+- name: Restart zerotier-one
+  ansible.builtin.systemd_service:
+    name: "{{ app_zerotier_service }}"
+    state: restarted
+  when:
+    - app_zerotier_start_service | bool
+    - not ansible_check_mode

@@ -99,5 +99,11 @@ spec:
         existingClaim: home-assistant-cache
         globalMounts:
           - path: /config/.venv
+      dbus:
+        type: hostPath
+        hostPath: /run/dbus
+        globalMounts:
+          - path: /run/dbus
+            readOnly: true
       tmp:
         type: emptyDir

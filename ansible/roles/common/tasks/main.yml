@@ -38,6 +38,14 @@
     state: present
   when: common_packages | length > 0
 
+- name: Install archlinux packages
+  ansible.builtin.package:
+    name: "{{ archlinux_packages }}"
+    state: present
+  when:
+    - archlinux_packages | length > 0
+    - ansible_facts['os_family'] == 'Archlinux'
+
 - name: Configure passwordless sudo for ansible_user
   community.general.sudoers:
     name: "{{ ansible_user }}"

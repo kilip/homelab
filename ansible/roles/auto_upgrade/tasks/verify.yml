@@ -1,0 +1,12 @@
+---
+- name: Verify auto_upgrade role variables
+  ansible.builtin.assert:
+    that:
+      - auto_upgrade_enabled is boolean
+      - auto_upgrade_start_timer is boolean
+      - auto_upgrade_persistent is boolean
+      - auto_upgrade_script_path is string
+      - auto_upgrade_script_path | length > 0
+      - auto_upgrade_calendar is string
+      - auto_upgrade_calendar | length > 0
+    fail_msg: "Invalid auto_upgrade role variable configuration."

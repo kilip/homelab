@@ -281,3 +281,23 @@
         path: "{{ '/usr/sbin/zerotier-one' if ansible_facts['os_family'] == 'Debian' else '/usr/bin/zerotier-one' }}"
       register: zerotier_bin_stat
       failed_when: not zerotier_bin_stat.stat.exists
+
+    - name: Verify auto-upgrade runner script exists and is executable
+      ansible.builtin.stat:
+        path: /usr/local/bin/auto-upgrade.sh
+      register: auto_upgrade_script_stat
+      failed_when:
+        - not auto_upgrade_script_stat.stat.exists
+        - auto_upgrade_script_stat.stat.mode != '0750'
+
+    - name: Verify auto-upgrade systemd service file exists
+      ansible.builtin.stat:
+        path: /etc/systemd/system/auto-upgrade.service
+      register: auto_upgrade_service_stat
+      failed_when: not auto_upgrade_service_stat.stat.exists
+
+    - name: Verify auto-upgrade systemd timer file exists
+      ansible.builtin.stat:
+        path: /etc/systemd/system/auto-upgrade.timer
+      register: auto_upgrade_timer_stat
+      failed_when: not auto_upgrade_timer_stat.stat.exists

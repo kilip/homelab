@@ -6,6 +6,9 @@
     - role: common
       tags:
         - common
+    - role: auto_upgrade
+      tags:
+        - auto_upgrade
     - role: app
       tags:
         - app

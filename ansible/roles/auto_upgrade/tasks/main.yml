@@ -1,0 +1,49 @@
+---
+- name: Verify role variables
+  ansible.builtin.import_tasks: verify.yml
+
+- name: Ensure curl package is installed
+  ansible.builtin.package:
+    name: curl
+    state: present
+  when: auto_upgrade_enabled
+
+- name: Deploy auto-upgrade runner script
+  ansible.builtin.template:
+    src: auto-upgrade.sh.j2
+    dest: "{{ auto_upgrade_script_path }}"
+    owner: root
+    group: root
+    mode: "0750"
+  when: auto_upgrade_enabled
+
+- name: Deploy auto-upgrade systemd service
+  ansible.builtin.template:
+    src: auto-upgrade.service.j2
+    dest: /etc/systemd/system/auto-upgrade.service
+    owner: root
+    group: root
+    mode: "0644"
+  when: auto_upgrade_enabled
+  notify: Systemd daemon reload
+
+- name: Deploy auto-upgrade systemd timer
+  ansible.builtin.template:
+    src: auto-upgrade.timer.j2
+    dest: /etc/systemd/system/auto-upgrade.timer
+    owner: root
+    group: root
+    mode: "0644"
+  when: auto_upgrade_enabled
+  notify:
+    - Systemd daemon reload
+    - Restart auto-upgrade timer
+
+- name: Enable and start auto-upgrade systemd timer
+  ansible.builtin.systemd_service:
+    name: auto-upgrade.timer
+    enabled: true
+    state: started
+  when:
+    - auto_upgrade_enabled
+    - auto_upgrade_start_timer

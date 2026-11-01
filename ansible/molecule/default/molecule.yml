@@ -43,6 +43,7 @@ provisioner:
     group_vars:
       all:
         ansible_user: root
+        auto_upgrade_start_timer: false
         app_docker_start_service: false
         app_mosquitto_start_service: false
         app_rustfs_start_service: false

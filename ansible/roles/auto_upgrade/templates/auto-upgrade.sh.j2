@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+TELEGRAM_BOT_TOKEN="{{ auto_upgrade_telegram_bot_token }}"
+TELEGRAM_CHAT_ID="{{ auto_upgrade_telegram_chat_id }}"
+REBOOT_ENABLED="{{ 'true' if auto_upgrade_reboot else 'false' }}"
+NODE_NAME="{{ inventory_hostname }}"
+
+send_telegram() {
+    local msg="$1"
+    if [ -n "${TELEGRAM_BOT_TOKEN}" ] && [ -n "${TELEGRAM_CHAT_ID}" ]; then
+        curl -s -m 10 -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${TELEGRAM_CHAT_ID}" \
+            -d "text=${msg}" \
+            -d "parse_mode=Markdown" > /dev/null || true
+    fi
+}
+
+on_error() {
+    local lineno="$1"
+    echo "ERROR: Auto-upgrade failed on line ${lineno}" >&2
+    send_telegram "🚨 *[${NODE_NAME}]* Auto-upgrade GAGAL pada baris ${lineno}!"
+    exit 1
+}
+
+trap 'on_error $LINENO' ERR
+
+START_TIME=$(date +%s)
+echo "=== Starting auto-upgrade on ${NODE_NAME} at $(date) ==="
+send_telegram "🚀 *[${NODE_NAME}]* Auto-upgrade dimulai..."
+
+PACKAGES_UPGRADED=0
+REBOOT_REQUIRED=false
+
+if command -v apt-get >/dev/null 2>&1; then
+    echo "Detected Debian/Ubuntu system (apt-get)"
+    export DEBIAN_FRONTEND=noninteractive
+    
+    apt-get update
+    
+    # Count packages to be upgraded
+    UPGRADE_LIST=$(apt-get -s dist-upgrade | grep "^Inst " || true)
+    if [ -n "${UPGRADE_LIST}" ]; then
+        PACKAGES_UPGRADED=$(echo "${UPGRADE_LIST}" | wc -l)
+    fi
+    
+    apt-get dist-upgrade -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
+    apt-get autoremove -y
+    apt-get clean
+    
+    if [ -f /var/run/reboot-required ]; then
+        REBOOT_REQUIRED=true
+    fi
+
+elif command -v pacman >/dev/null 2>&1; then
+    echo "Detected Archlinux/CachyOS system (pacman)"
+    
+    # Try updating keyring first if present
+    pacman -Sy --noconfirm archlinux-keyring || true
+    
+    # Execute full system upgrade and log output
+    UPGRADE_OUT=$(pacman -Syu --noconfirm 2>&1)
+    echo "${UPGRADE_OUT}"
+    
+    PACKAGES_UPGRADED=$(echo "${UPGRADE_OUT}" | grep -c "upgrading " || true)
+    
+    # Check if a running kernel differs or kernel package was upgraded
+    if echo "${UPGRADE_OUT}" | grep -Eq "upgrading linux(-cachyos|-zen|-lts)? "; then
+        REBOOT_REQUIRED=true
+    fi
+else
+    echo "Unsupported package manager" >&2
+    exit 1
+fi
+
+END_TIME=$(date +%s)
+DURATION=$(( END_TIME - START_TIME ))
+
+echo "=== Auto-upgrade completed in ${DURATION}s. Packages upgraded: ${PACKAGES_UPGRADED} ==="
+
+SUMMARY="✅ *[${NODE_NAME}]* Auto-upgrade selesai!
+⏱ *Durasi:* ${DURATION}s
+📦 *Paket diperbarui:* ${PACKAGES_UPGRADED}"
+
+if [ "${REBOOT_REQUIRED}" = "true" ]; then
+    SUMMARY="${SUMMARY}
+⚠️ *Reboot diperlukan!*"
+    if [ "${REBOOT_ENABLED}" = "true" ]; then
+        SUMMARY="${SUMMARY} (Rebooting sistem sekarang...)"
+        send_telegram "${SUMMARY}"
+        sleep 5
+        systemctl reboot
+        exit 0
+    fi
+fi
+
+send_telegram "${SUMMARY}"

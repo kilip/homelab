@@ -126,6 +126,7 @@ validate:
         k8s/storage/paradedb/app \
         k8s/storage/redis/app \
         k8s/security \
+        k8s/security/infisical-operator/app \
         k8s/monitoring \
         k8s/monitoring/newrelic/app \
         k8s/monitoring/external-nodes/app \

@@ -5,6 +5,7 @@ resources:
   - settings.sops.yaml
   - network.yaml
   - storage.yaml
+  - security.yaml
   - monitoring.yaml
   - apps.yaml
 patches:

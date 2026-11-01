@@ -9,10 +9,10 @@ common_packages:
   - zsh
   - pass
 
-archlinux_packages:
+common_archlinux_packages:
   - github-cli
 
-debian_packages:
+common_debian_packages:
   - gh
 
 common_authorized_keys:

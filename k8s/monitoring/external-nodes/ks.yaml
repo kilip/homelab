@@ -5,8 +5,6 @@ metadata:
   name: external-nodes-monitoring
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: newrelic
   interval: 10m0s
   retryInterval: 1m0s
   path: ./k8s/monitoring/external-nodes/app

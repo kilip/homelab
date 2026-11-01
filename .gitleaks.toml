@@ -1,0 +1,12 @@
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Global allowlist for local uncommitted secret files and dependencies"
+paths = [
+  '''(?i)age\.key$''',
+  '''(?i)kubeconfig$''',
+  '''(?i)cloudflare-tunnel\.json$''',
+  '''\.cache/''',
+  '''\.venv/''',
+]

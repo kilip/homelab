@@ -159,3 +159,5 @@ validate:
         fi
         echo "✔ Encrypted: $file"
     done < <(find "{{ justfile_directory() }}/k8s" -name "*.sops.y*ml" -print0)
+    echo "Scanning repository for leaked secrets with gitleaks..."
+    gitleaks dir "{{ justfile_directory() }}" --verbose

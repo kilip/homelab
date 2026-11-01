@@ -1,0 +1,17 @@
+# Lefthook Git Hooks Configuration
+# Refer to https://github.com/evilmartians/lefthook for documentation
+
+pre-commit:
+  parallel: true
+  commands:
+    gitleaks:
+      run: mise exec -- gitleaks git --staged --verbose
+    sops-check:
+      glob: "*.sops.{yaml,yml}"
+      run: |
+        for file in {staged_files}; do
+          if ! grep -q '^sops:' "$file"; then
+            echo "❌ Unencrypted SOPS file staged: $file"
+            exit 1
+          fi
+        done

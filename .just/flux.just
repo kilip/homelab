@@ -127,6 +127,7 @@ validate:
         k8s/storage/redis/app \
         k8s/monitoring \
         k8s/monitoring/newrelic/app \
+        k8s/monitoring/external-nodes/app \
         k8s/apps \
         k8s/apps/echo/app \
         k8s/apps/home-assistant/app \

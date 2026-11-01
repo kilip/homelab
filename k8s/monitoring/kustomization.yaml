@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./newrelic/ks.yaml
+  - ./external-nodes/ks.yaml

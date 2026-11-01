@@ -17,6 +17,8 @@ stringData:
     R2_ACCESS_KEY: ENC[AES256_GCM,data:MeNtRkxXIWG8sKFG0JXmXuW8jVLYSiBfBYLn8wfg3bCxK2rkrQ8xTTI++0uChn2AaxlRYzdx2KMK3i6JSVO+Qw==,iv:AyofS1AiLmKfKArWWxlpx8NrULRAZkaF2e5cKnp0Kfw=,tag:khlkCdXL/n23dOpU3zs2rQ==,type:str]
     R2_ACCESS_TOKEN: ENC[AES256_GCM,data:Ifz5sGaTPs4AhWQxYKrhM7n5piDgfTXk9ww5dqGNlyYwA4v/TfNlKMw+qjXk3sLUZGlXAEU=,iv:8YAJVoA8S4dAU4/ibBKxK9v/lYRYCEH4Nr88W+Cy3F0=,tag:tx55sfLQSSEAU7O4D39wUg==,type:str]
     R2_API_URL: ENC[AES256_GCM,data:eLqmXZ74zCa1mzXJBA5eQ4jP6lPNN3FeXd5l7qbtj0ileh7p/0pcWAwS0iw+rnFz/8ZtiuPDc1lymoRvB+GW9Qk=,iv:FdpW3DxmdvLNkhjuRZscuwfzr+P/0U0KmDPgOp0+jkg=,tag:W/05NFil97Y6VDH1qDfTug==,type:str]
+    ZEUS_IP: ENC[AES256_GCM,data:qygbfBOGv+U=,iv:Zpb1iTPSxz3hUBbbJPheJ4eFfNYMHj7pUODXeAvHcGY=,tag:9Pp3t4+adExlPnHqbLXNpA==,type:str]
+    EROS_IP: ENC[AES256_GCM,data:2oEmf57+Iz5v,iv:3NiimqOgDqXI2Ke4tzICXa5UPY5maO9md743VT9ayk0=,tag:EtgHZLSeE2d4IZErQbprrQ==,type:str]
 sops:
     age:
         - enc: |
@@ -29,6 +31,6 @@ sops:
             -----END AGE ENCRYPTED FILE-----
           recipient: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf
     encrypted_regex: ^(data|stringData)$
-    lastmodified: "2026-10-30T17:27:32Z"
-    mac: ENC[AES256_GCM,data:ZLtgLynx3wWHrWtv9bz3U99xO95wCTCXtALhLE9H66mW+zdr/A0kV9lpHUB8PvugCFV0rMP3qfNu8ObEYQOVgoHmkq1EUxxjg0pWJvp3N7dDPmLccgfFYAUjGzGpqMHfEyitfHW5tmxRMs+yejkJi3JrzLWuLLGMGjHgv8eBA3A=,iv:H++FAjkwk6KYD5pH/nCECFuW1ZJnkU6fZBTr3+T2ki4=,tag:Ga4MOyg1nnnOou6R0QAwgA==,type:str]
+    lastmodified: "2026-11-01T14:43:23Z"
+    mac: ENC[AES256_GCM,data:zsCFyvgLOMU+tRJQKv/OKSbtEdn1Uvoj2oc4jjaIygKXXO/zpSgJ6WE2P/vc4ZynBG1z8nb5m397ZXorN3dm3WP7fDCwDeA7KYxFHw8s9ojJ5h0ytqz1jXWtezLFLDjQJVd0GWNogevKQy/fgogjPe3EYeBDYa5mdvO/Hpxqdok=,iv:wPDYmSXzLjGeL2WY5RCGF26Gi9EIDoq81bIHoSkbvLU=,tag:Up3BLadFR8dpjf7iRm109g==,type:str]
     version: 3.13.3

@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-exporter-eros
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: node-exporter
+    app.kubernetes.io/instance: eros
+    prometheus.io/scrape: "true"
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9100"
+    prometheus.io/path: "/metrics"
+spec:
+  clusterIP: None
+  ports:
+    - name: metrics
+      port: 9100
+      targetPort: 9100
+      protocol: TCP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: node-exporter-eros
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: node-exporter
+    app.kubernetes.io/instance: eros
+    prometheus.io/scrape: "true"
+subsets:
+  - addresses:
+      - ip: "${EROS_IP}"
+    ports:
+      - name: metrics
+        port: 9100
+        protocol: TCP

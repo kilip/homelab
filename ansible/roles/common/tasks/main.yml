@@ -40,11 +40,19 @@
 
 - name: Install archlinux packages
   ansible.builtin.package:
-    name: "{{ archlinux_packages }}"
+    name: "{{ common_archlinux_packages }}"
     state: present
   when:
-    - archlinux_packages | length > 0
+    - common_archlinux_packages | length > 0
     - ansible_facts['os_family'] == 'Archlinux'
+
+- name: Install debian packages
+  ansible.builtin.package:
+    name: "{{ common_debian_packages }}"
+    state: present
+  when:
+    - common_debian_packages | length > 0
+    - ansible_facts['os_family'] == 'Debian'
 
 - name: Configure passwordless sudo for ansible_user
   community.general.sudoers:

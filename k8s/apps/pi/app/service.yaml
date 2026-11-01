@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pi
+  labels:
+    app.kubernetes.io/name: pi
+spec:
+  ports:
+    - name: http
+      port: 8504
+      targetPort: 8504
+      protocol: TCP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: pi
+  labels:
+    app.kubernetes.io/name: pi
+subsets:
+  - addresses:
+      - ip: 10.0.0.5
+    ports:
+      - name: http
+        port: 8504
+        protocol: TCP

@@ -1,0 +1,8 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: pi-basic-auth
+spec:
+  basicAuth:
+    secret: pi-basic-auth

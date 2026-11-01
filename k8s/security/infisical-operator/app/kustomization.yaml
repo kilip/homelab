@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - ./repository.yaml
   - ./release.yaml
+  - ./universal-auth.sops.yaml

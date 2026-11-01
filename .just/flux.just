@@ -136,7 +136,8 @@ validate:
         k8s/apps/omed-nightly/app \
         k8s/apps/omed-nightly/db \
         k8s/apps/rustfs/app \
-        k8s/apps/termix/app; do
+        k8s/apps/termix/app \
+        k8s/apps/pi/app; do
         echo "Validating $dir..."
         kustomize build "{{ justfile_directory() }}/$dir" \
             | yq 'del(.sops)' \

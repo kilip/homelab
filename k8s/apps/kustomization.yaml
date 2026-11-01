@@ -10,3 +10,4 @@ resources:
   - ./omed-nightly/ks.yaml
   - ./rustfs/ks.yaml
   - ./termix/ks.yaml
+  - ./pi/ks.yaml

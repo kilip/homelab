@@ -1,0 +1,19 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: pi
+  annotations:
+    external-dns.alpha.kubernetes.io/expose: "true"
+    external-dns.kubernetes.io/target: "${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`pi.${SECRET_DOMAIN}`)
+      kind: Rule
+      middlewares:
+        - name: pi-basic-auth
+      services:
+        - name: pi
+          port: 8504

@@ -146,7 +146,8 @@ validate:
     echo "Checking SOPS encryption on *.sops.yaml manifests..."
     while IFS= read -r -d '' file; do
         if [[ "$(basename "$file")" == .decrypted~* ]]; then
-            echo "⚠️  Warning: temporary decrypted file present in working tree: $file"
+            echo "🧹 Auto-removing temporary decrypted file: $file"
+            rm -f "$file"
             continue
         fi
         if ! grep -q '^sops:' "$file"; then

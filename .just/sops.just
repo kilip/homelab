@@ -16,3 +16,12 @@ init-key:
     pass hl/age-key > "$key_path"
     chmod 600 "$key_path"
     echo "age.key created at $key_path."
+
+# Clean temporary decrypted SOPS files (.decrypted~*)
+clean:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "Cleaning temporary decrypted files..."
+    find "{{ justfile_directory() }}" -name ".decrypted~*" -type f -exec rm -v -f {} + 2>/dev/null || true
+    echo "✔ Decrypted files cleanup completed."
+

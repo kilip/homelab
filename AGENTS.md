@@ -128,3 +128,5 @@ Before considering any Ansible or infrastructure change complete:
 - **NEVER** read, print, log, or commit `age.key`, `kubeconfig`, `.decrypted~*`, or any unencrypted secret files.
 - **NEVER** commit plaintext secrets. All secrets in `ansible/inventory/host_vars/*.sops.yml` and `k8s/**/*.sops.yaml` must be encrypted with SOPS using the rules in `.sops.yaml`.
 - Notice if any `.decrypted~*` temporary file exists in the working tree: do not read or stage it, and warn the user so it can be cleaned up safely.
+- **Infisical & SOPS Coexistence**: `k8s/infra/settings.sops.yaml` is retained for cluster-level post-build substitutions (`${SECRET_DOMAIN}`). Dynamic application runtime secrets are managed via Infisical Cloud and synchronized into Kubernetes Secrets using the Infisical Secrets Operator (`k8s/security/infisical-operator/`).
+

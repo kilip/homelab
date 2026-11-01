@@ -1,0 +1,11 @@
+[Unit]
+Description=Automated system upgrade timer
+Documentation=https://github.com/itstoni/homelab
+
+[Timer]
+OnCalendar={{ auto_upgrade_calendar }}
+Persistent={{ auto_upgrade_persistent | lower }}
+RandomizedDelaySec=60
+
+[Install]
+WantedBy=timers.target

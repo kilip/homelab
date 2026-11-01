@@ -1,5 +1,7 @@
 app_zerotier_networks:
     - ENC[AES256_GCM,data:RaD8fxhbHiZ48EehIpP6cw==,iv:ciDZo18FgmHAC9o1BE/pTtCplNIwqGn2AI3PGcA7gzM=,tag:2pkfHG/07AwOVMpioDm9GA==,type:str]
+auto_upgrade_telegram_bot_token: ENC[AES256_GCM,data:h02bSDr+r5jDPRER7VWBPwCf4Yrdc6XQCW9VAgj1lKbqdReb3hhBp5em9vXbiQ==,iv:I/BMQwMTqpdl8XT4a+1qjAwH5n2lQQlkis4Km/RH+AA=,tag:qrlFQEDjCsi7zLS4bv1pfQ==,type:str]
+auto_upgrade_telegram_chat_id: ENC[AES256_GCM,data:pEfttVAZ34BVNQ==,iv:Bs/Xu3GI+G1Sylj74UbLsJpOyQb5+lwGoNNFO4SOtEg=,tag:u4yvXyI9FrVkoQAUdDZr7g==,type:str]
 sops:
     age:
         - enc: |
@@ -11,7 +13,7 @@ sops:
             vmtHXuwNLEmSC3/ieLHh67ivQsAM2Ysfz1hACYYK2ONfzdDclKtRbA==
             -----END AGE ENCRYPTED FILE-----
           recipient: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf
-    lastmodified: "2026-10-31T10:17:11Z"
-    mac: ENC[AES256_GCM,data:4Cvv2EyN/ESI7ZgHLUGm7+tqwKjZJFe/3WT3NdgSX+CT1wWQOTNbN0y8m2IM7NpEC4Crvpz37tS9a/UCa4IojxkWIM0ifBG30jsJqzKbM6ZU8/Gaq5xdLgsmtMHEZwTXud7P5lbwzSNP8y/oC/8bNuWHL1aYsvuxqxczD6ttSjE=,iv:qX3PGlN+hXAxKFWSYjx9GfOGwXJMUYgP2048yDEBW+I=,tag:IpLKz6WNOy7MMy/7gIQivg==,type:str]
+    lastmodified: "2026-11-01T07:52:40Z"
+    mac: ENC[AES256_GCM,data:K6wkEAsECiDKxYYZFGBTXUyrSGvnhGAuV9Kss1R45ziB9u/BzRDBUoeZIfVBnhv5RBuua6AxBUv4yO8HsgojVdKVbcSJOGq4Yq0j8UGdQ0FfZEnnId16pr3+NpgCt9kunQNTvQiUfr4ds1XmVWSDXPpH0XRStOoeO2zfTtwcjBY=,iv:6lj+snv2fnYJKFmWw9Q1MAp8exf3YIFV+APkUMPfjE8=,tag:7qz3bczdIgBfkKdjMNzr5g==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.13.3

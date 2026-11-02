@@ -5,6 +5,8 @@ pre-commit:
   parallel: true
   commands:
     gitleaks:
+      env:
+        PATH: "$HOME/.local/bin:$PATH"
       run: mise exec -- gitleaks git --staged --verbose
     sops-check:
       glob: "*.sops.{yaml,yml}"

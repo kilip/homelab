@@ -70,6 +70,10 @@
   loop: "{{ common_authorized_keys }}"
   when: common_authorized_keys | length > 0
 
+- name: Manage SSH key for ansible_user
+  ansible.builtin.import_tasks: ssh.yml
+  when: common_ssh_key_enabled | bool
+
 - name: Manage chezmoi dotfiles
   ansible.builtin.import_tasks: chezmoi.yml
   when: common_chezmoi_enabled | bool

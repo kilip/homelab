@@ -25,18 +25,12 @@
     path: "{{ common_pass_resolved_ssh_key }}"
   register: common_pass_ssh_key_stat
 
-- name: Assert SSH private key exists for password store
-  ansible.builtin.assert:
-    that:
-      - common_pass_ssh_key_stat.stat.exists
-    fail_msg: "SSH key {{ common_pass_resolved_ssh_key }} is required to clone password store repository."
-
 - name: Clone password store repository for ansible_user
   ansible.builtin.git:
     repo: "{{ common_pass_repo }}"
     dest: "{{ common_pass_resolved_dir }}"
     version: "{{ common_pass_version }}"
-    key_file: "{{ common_pass_resolved_ssh_key }}"
+    key_file: "{{ common_pass_resolved_ssh_key if (common_pass_ssh_key_stat.stat.exists | default(false)) else omit }}"
     accept_hostkey: true
     update: "{{ common_pass_update | bool }}"
   become: true

@@ -21,6 +21,7 @@ common_authorized_keys:
 # Chezmoi dotfiles management
 common_chezmoi_enabled: false
 common_chezmoi_init: true
+common_chezmoi_apply: true
 common_chezmoi_repo: "git@github.com:kilip/dotfiles.git"
 common_chezmoi_version: "2.73.3"
 common_chezmoi_age_sops_file: "{{ role_path }}/files/chezmoi-age-key.sops.yml"
@@ -41,3 +42,9 @@ common_pass_version: "main"
 common_pass_update: false
 common_pass_dir: ""
 common_pass_ssh_key: ""
+
+# SSH private key management
+common_ssh_key_enabled: false
+common_ssh_key_sops_file: "{{ role_path }}/files/ssh-{{ inventory_hostname }}.sops.yml"
+common_ssh_private_key: ""
+common_ssh_public_key: ""

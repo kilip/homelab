@@ -63,8 +63,35 @@
     - name: Initialize chezmoi with dotfiles repository
       ansible.builtin.command:
         cmd: "chezmoi init {{ common_chezmoi_repo }}"
-        creates: "{{ common_user_home }}/.local/share/chezmoi"
+        creates: "{{ common_user_home }}/.local/share/chezmoi/.git"
       become: true
       become_user: "{{ ansible_user }}"
       environment:
         HOME: "{{ common_user_home }}"
+
+- name: Apply chezmoi dotfiles
+  when: common_chezmoi_apply | bool
+  block:
+    - name: Check for chezmoi dotfiles changes
+      ansible.builtin.command:
+        cmd: chezmoi status
+      become: true
+      become_user: "{{ ansible_user }}"
+      environment:
+        HOME: "{{ common_user_home }}"
+      register: common_chezmoi_status
+      changed_when: false
+      failed_when: false
+      check_mode: false
+
+    - name: Apply chezmoi dotfiles state
+      ansible.builtin.command:
+        cmd: chezmoi apply --force
+      become: true
+      become_user: "{{ ansible_user }}"
+      environment:
+        HOME: "{{ common_user_home }}"
+      changed_when: true
+      when:
+        - common_chezmoi_status.rc == 0
+        - common_chezmoi_status.stdout | length > 0

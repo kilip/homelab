@@ -5,6 +5,7 @@ auto_upgrade_telegram_chat_id: ENC[AES256_GCM,data:pEfttVAZ34BVNQ==,iv:Bs/Xu3GI+
 common_gpg: ENC[AES256_GCM,data:MDJjMw==,iv:lNgbypNOFCLhV/oX5Jj9lNoHaJihHZGzuV+WS04TCZ4=,tag:G/mcbLloLwm8yxBgKQGPcQ==,type:bool]
 common_chezmoi_enabled: ENC[AES256_GCM,data:K0+avQ==,iv:Fdd9R0lyQ1oKrJiob5BgR11xbtQL739dgEVJjcdEKnk=,tag:3nY6pZiHnfJTqmsBRSEy6w==,type:bool]
 common_pass: ENC[AES256_GCM,data:FvnGEQ==,iv:spp0jz+8HCCB8qD95BfkbZJn7T7xq7usTmfaBHSWjcc=,tag:D+QVxDOwcz+e7fjUb3Srsg==,type:bool]
+common_ssh_key_enabled: ENC[AES256_GCM,data:CGnLbg==,iv:8To4z2uDuwrwuyU1bkimyZZLX6FU6ZCU/fm04WArBqk=,tag:bdnlZWx9BlGI/7TBZK24cA==,type:bool]
 sops:
     age:
         - enc: |
@@ -16,7 +17,7 @@ sops:
             vmtHXuwNLEmSC3/ieLHh67ivQsAM2Ysfz1hACYYK2ONfzdDclKtRbA==
             -----END AGE ENCRYPTED FILE-----
           recipient: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf
-    lastmodified: "2026-11-02T17:57:43Z"
-    mac: ENC[AES256_GCM,data:HkcvcN8zwpGcJD4H9kg7u/CX9XrzMLvqFEnsO8pkN4zueSdAb5Jgay82IDRxTRPO6eTn9xKjrXZIgHaFT5jIQwAP6Q35bEBJcPxuNnRmRfsaaRYHSvcKLaaMs0plampYFhqjw17iH5zQMzaHShypB8GxiwvGEqDDJjmcEQAbjt0=,iv:Te4/+9yLUEqYyKyKbthP1qb2WtVskoVZSP/62+moTgM=,tag:lAQeXQ/5gbbZzIlAwipz3w==,type:str]
+    lastmodified: "2026-11-02T19:37:11Z"
+    mac: ENC[AES256_GCM,data:UBGwzy8K39p1Byojtai0EzoAkhAThY5aZLnM1G6Mal5cVNLL3uoBLD9zhpivrt/eEmn/Xb+ie3AKvuIevi3EKPORepWUS8vZlVPDgy6KjNkbAEz/AjqWYe7gmkdnJlD67ioORvI9TRwK5ac8adN8N2dibxH8wHNE/ve/7jMy5n8=,iv:to64M++ZDWT84o4sBVoKIWj7T0lsk0QPj0tpCDpOXiQ=,tag:Yhhb7YjAJEsp5ix9kwnQQA==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.13.3

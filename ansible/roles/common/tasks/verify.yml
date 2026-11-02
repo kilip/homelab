@@ -11,6 +11,7 @@
     that:
       - common_chezmoi_enabled is boolean
       - common_chezmoi_init is boolean
+      - common_chezmoi_apply is boolean
       - common_chezmoi_repo is string
       - common_chezmoi_repo | length > 0
       - common_chezmoi_version is string
@@ -46,3 +47,14 @@
       - common_pass_ssh_key is string
     fail_msg: "Invalid common password store variable configuration."
   when: common_pass | bool
+
+- name: Verify SSH key configuration variables
+  ansible.builtin.assert:
+    that:
+      - common_ssh_key_enabled is boolean
+      - common_ssh_key_sops_file is string
+      - common_ssh_key_sops_file | length > 0
+      - common_ssh_private_key is string
+      - common_ssh_public_key is string
+    fail_msg: "Invalid common SSH key variable configuration."
+  when: common_ssh_key_enabled | bool

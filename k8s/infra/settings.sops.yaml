@@ -20,6 +20,8 @@ stringData:
     TIMEZONE: ENC[AES256_GCM,data:lwfoMe0SgyLpASVK8Q==,iv:qO4i2bhD0p8+emDUADxGhGm0+p1sGemXoRFIIFzL39M=,tag:ythBPHoMOxydizoOErdrWg==,type:str]
     TRAEFIK_LB_IP: ENC[AES256_GCM,data:Z9w6grgpnCm+9g==,iv:I2LGWbCXa3BvLWQs541zO9MIweprEQjT0nSWytH3ASc=,tag:7ZnR38Qb2V8ROHgsyrKKoQ==,type:str]
     ZEUS_IP: ENC[AES256_GCM,data:pDBdLFQ6raI=,iv:nVvf1besO5LWNAOrVsduVGS1g8dgIzZvtzEqfv2N8gA=,tag:MQODDiX4Z5gukc2RgxUheQ==,type:str]
+    PI_HOST: ENC[AES256_GCM,data:fRN6GHWHW9sN,iv:HWA6ZCYKWu/VxrW5ZUt71hkMrXyxUqVSGyEqC386+Yo=,tag:/9MOflasLt3h4hbpNwLv4A==,type:str]
+    PI_PORT: ENC[AES256_GCM,data:nO1Rmw==,iv:Qcw+eAu8SFLdUEc6880IpxBikSbg/IS9Rj6AVqVsv1Y=,tag:i9/8cEGFlh89krrmgq3nNQ==,type:str]
 type: Opaque
 sops:
     age:
@@ -33,6 +35,6 @@ sops:
             -----END AGE ENCRYPTED FILE-----
           recipient: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf
     encrypted_regex: ^(data|stringData)$
-    lastmodified: "2026-11-02T05:14:05Z"
-    mac: ENC[AES256_GCM,data:d/4MShl9eaASCEyo0+gEVT+jIbbnW87GpicpHW1skNX2Y445avcVexhFBu6itHLmOv0wj/sLN2gDpFOtRnVpX8f0rcSjh+Kul0ejNlK/VyzvBcKySyyrrHclecwxvjvtQrx7ma5suYN1lfJtRCYcN4yiKxCkZW/nEjGxGmPi6Wk=,iv:0P9gYMDo0SDRiFCVK1pCFk0o7+pXu7c8vT6f21P9qKM=,tag:z3UXXgZjwmddIfT+dREgKQ==,type:str]
+    lastmodified: "2026-11-02T18:56:07Z"
+    mac: ENC[AES256_GCM,data:83k0SZuwrqqw0rKVHIIhXOsVHhSp/C7fdPTLMjTKqmE9CZyN2cdfNBd8vcQRhqa7XU93Dn2GEyJcO34/kYGAolV0OSqLfxhqEQNIeYNK36EvHx+27NB0GaiqS604XYh1mic+BZiNmptrA4vtEeXYXoyZYfXaBFwsjLdkEzLwImc=,iv:v9DwAZfLLkBfRarGli6/7LDydeJilvRyAFPU+dpVRuk=,tag:BbVQisnFBh+1gL6lq8RNbQ==,type:str]
     version: 3.13.3

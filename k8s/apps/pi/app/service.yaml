@@ -20,7 +20,7 @@ metadata:
     app.kubernetes.io/name: pi
 subsets:
   - addresses:
-      - ip: 10.0.0.5
+      - ip: "${PI_HOST}"
     ports:
       - name: http
         port: 8504

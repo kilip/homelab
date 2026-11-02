@@ -23,5 +23,5 @@ subsets:
       - ip: "${PI_HOST}"
     ports:
       - name: http
-        port: 8504
+        port: "${PI_PORT}"
         protocol: TCP

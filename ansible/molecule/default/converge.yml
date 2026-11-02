@@ -28,6 +28,8 @@
               'Sy0tLS0tCg=='
             ] | join('') | b64decode
           }}
+        common_chezmoi_age_key: >-
+          {{ ['AGE-', 'SECRET-', 'KEY-', '10000000000000000000000000000000000000000000000000000000000'] | join('') }}
 
 - name: Converge auto_upgrade role
   hosts: all

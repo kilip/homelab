@@ -23,6 +23,8 @@ common_chezmoi_enabled: true
 common_chezmoi_init: true
 common_chezmoi_repo: "git@github.com:kilip/dotfiles.git"
 common_chezmoi_version: "2.73.3"
+common_chezmoi_age_sops_file: "{{ role_path }}/files/chezmoi-age-key.sops.yml"
+common_chezmoi_age_key: ""
 
 # GPG key management
 common_gpg: false

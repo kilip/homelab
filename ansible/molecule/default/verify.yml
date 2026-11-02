@@ -81,6 +81,14 @@
       register: chezmoi_bin_stat
       failed_when: not chezmoi_bin_stat.stat.exists or chezmoi_bin_stat.stat.mode != '0755'
 
+    - name: Verify chezmoi age key exists and has correct permissions
+      ansible.builtin.stat:
+        path: /root/.config/chezmoi/age.key
+      register: chezmoi_age_key_stat
+      failed_when:
+        - not chezmoi_age_key_stat.stat.exists
+        - chezmoi_age_key_stat.stat.mode != '0600'
+
     - name: Verify GPG secret key is imported with ultimate trust for ansible_user
       ansible.builtin.command:
         cmd: gpg --batch --list-secret-keys --with-colons 66A2ADEA08E7632BDC7D6F49F2A25489EA4AD91D

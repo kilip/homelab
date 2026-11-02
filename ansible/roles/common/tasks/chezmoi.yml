@@ -21,18 +21,45 @@
     state: present
   when: ansible_facts['os_family'] == 'Archlinux'
 
+- name: Load chezmoi backup from SOPS file
+  community.sops.load_vars:
+    file: "{{ common_chezmoi_age_sops_file }}"
+  when:
+    - common_chezmoi_age_key | length == 0
+    - common_chezmoi_age_sops_file | length > 0
+  no_log: true
+
+- name: Retrieve passwd entry for ansible_user
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ ansible_user }}"
+
+- name: Set ansible_user home directory for chezmoi
+  ansible.builtin.set_fact:
+    common_user_home: "{{ ansible_facts.getent_passwd[ansible_user][4] }}"
+
+- name: Ensure chezmoi config directory exists
+  ansible.builtin.file:
+    path: "{{ common_user_home }}/.config/chezmoi"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0700"
+  when: common_chezmoi_age_key | length > 0
+
+- name: Copy age key for chezmoi
+  ansible.builtin.copy:
+    content: "{{ (common_chezmoi_age_key | trim) ~ '\n' }}"
+    dest: "{{ common_user_home }}/.config/chezmoi/age.key"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0600"
+  when: common_chezmoi_age_key | length > 0
+  no_log: true
+
 - name: Initialize chezmoi dotfiles repository
   when: common_chezmoi_init | bool
   block:
-    - name: Retrieve passwd entry for ansible_user
-      ansible.builtin.getent:
-        database: passwd
-        key: "{{ ansible_user }}"
-
-    - name: Set ansible_user home directory
-      ansible.builtin.set_fact:
-        common_user_home: "{{ ansible_facts.getent_passwd[ansible_user][4] }}"
-
     - name: Initialize chezmoi with dotfiles repository
       ansible.builtin.command:
         cmd: "chezmoi init {{ common_chezmoi_repo }}"

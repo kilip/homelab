@@ -31,15 +31,3 @@
   when:
     - zeus_enabled | bool
     - zeus_deepcool_enabled | bool
-
-- name: Verify chezmoi configuration variables
-  ansible.builtin.assert:
-    that:
-      - zeus_chezmoi_enabled is boolean
-      - zeus_chezmoi_init is boolean
-      - zeus_chezmoi_repo is string
-      - zeus_chezmoi_repo | length > 0
-    fail_msg: "Invalid zeus chezmoi variable configuration."
-  when:
-    - zeus_enabled | bool
-    - zeus_chezmoi_enabled | bool

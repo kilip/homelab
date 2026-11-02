@@ -75,6 +75,12 @@
       register: hosts_check
       failed_when: hosts_check.changed
 
+    - name: Verify chezmoi binary exists and is executable
+      ansible.builtin.stat:
+        path: /usr/bin/chezmoi
+      register: chezmoi_bin_stat
+      failed_when: not chezmoi_bin_stat.stat.exists or chezmoi_bin_stat.stat.mode != '0755'
+
 - name: Verify k3s role installation and configuration
   hosts: k3s
   gather_facts: true
@@ -338,9 +344,3 @@
         path: /etc/systemd/system/deepcool-digital.service
       register: deepcool_service_stat
       failed_when: not deepcool_service_stat.stat.exists
-
-    - name: Verify chezmoi binary exists and is executable
-      ansible.builtin.stat:
-        path: /usr/bin/chezmoi
-      register: chezmoi_bin_stat
-      failed_when: not chezmoi_bin_stat.stat.exists or chezmoi_bin_stat.stat.mode != '0755'

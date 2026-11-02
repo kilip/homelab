@@ -17,3 +17,9 @@ common_debian_packages:
 
 common_authorized_keys:
   - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEnBclBPukxGZTGVXTSGw+Y/uIgAqGwnqH05P61JSRze me@itstoni.com"
+
+# Chezmoi dotfiles management
+common_chezmoi_enabled: true
+common_chezmoi_init: true
+common_chezmoi_repo: "git@github.com:kilip/dotfiles.git"
+common_chezmoi_version: "2.73.3"

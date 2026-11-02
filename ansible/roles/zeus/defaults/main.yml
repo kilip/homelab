@@ -15,8 +15,3 @@ zeus_deepcool_version: "v0.11.0-alpha"
 zeus_deepcool_binary_url: "https://github.com/Nortank12/deepcool-digital-linux/releases/download/{{ zeus_deepcool_version }}/deepcool-digital-linux"
 zeus_deepcool_install_dir: "/usr/local/bin"
 zeus_deepcool_extra_args: ""
-
-# Chezmoi dotfiles management
-zeus_chezmoi_enabled: true
-zeus_chezmoi_repo: "git@github.com:kilip/dotfiles.git"
-zeus_chezmoi_init: true

@@ -51,12 +51,13 @@ provisioner:
         app_rustfs_start_service: false
         app_node_exporter_start_service: false
         app_zerotier_start_service: false
+        common_chezmoi_init: false
       k3s:
         k3s_start_service: false
         k3s_fetch_kubeconfig: false
       workstations:
         zeus_deepcool_start_service: false
-        zeus_chezmoi_init: false
+
 
   config_options:
     defaults:

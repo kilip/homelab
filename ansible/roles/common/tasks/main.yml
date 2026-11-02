@@ -69,3 +69,7 @@
     state: present
   loop: "{{ common_authorized_keys }}"
   when: common_authorized_keys | length > 0
+
+- name: Manage chezmoi dotfiles
+  ansible.builtin.import_tasks: chezmoi.yml
+  when: common_chezmoi_enabled | bool

@@ -5,3 +5,15 @@
       - ansible_user is defined
       - ansible_user | length > 0
     fail_msg: "ansible_user must be defined"
+
+- name: Verify chezmoi configuration variables
+  ansible.builtin.assert:
+    that:
+      - common_chezmoi_enabled is boolean
+      - common_chezmoi_init is boolean
+      - common_chezmoi_repo is string
+      - common_chezmoi_repo | length > 0
+      - common_chezmoi_version is string
+      - common_chezmoi_version | length > 0
+    fail_msg: "Invalid common chezmoi variable configuration."
+  when: common_chezmoi_enabled | bool

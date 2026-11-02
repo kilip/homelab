@@ -81,6 +81,14 @@
       register: chezmoi_bin_stat
       failed_when: not chezmoi_bin_stat.stat.exists or chezmoi_bin_stat.stat.mode != '0755'
 
+    - name: Verify GPG secret key is imported with ultimate trust for ansible_user
+      ansible.builtin.command:
+        cmd: gpg --batch --list-secret-keys --with-colons 66A2ADEA08E7632BDC7D6F49F2A25489EA4AD91D
+      register: gpg_secret_key_check
+      changed_when: false
+      failed_when:
+        - gpg_secret_key_check.rc != 0 or ('sec:u:' not in gpg_secret_key_check.stdout)
+
 - name: Verify k3s role installation and configuration
   hosts: k3s
   gather_facts: true

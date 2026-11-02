@@ -17,3 +17,16 @@
       - common_chezmoi_version | length > 0
     fail_msg: "Invalid common chezmoi variable configuration."
   when: common_chezmoi_enabled | bool
+
+- name: Verify gpg configuration variables
+  ansible.builtin.assert:
+    that:
+      - common_gpg is boolean
+      - common_gpg_key_id is string
+      - common_gpg_key_id | length > 0
+      - common_gpg_ownertrust is string
+      - common_gpg_ownertrust | length > 0
+      - common_gpg_sops_file is string
+      - common_gpg_sops_file | length > 0
+    fail_msg: "Invalid common gpg variable configuration."
+  when: common_gpg | bool

@@ -23,3 +23,11 @@ common_chezmoi_enabled: true
 common_chezmoi_init: true
 common_chezmoi_repo: "git@github.com:kilip/dotfiles.git"
 common_chezmoi_version: "2.73.3"
+
+# GPG key management
+common_gpg: false
+common_gpg_key_id: "42E34F2B646B57AF0B21881B639868122DBC20F9"
+common_gpg_ownertrust: |
+  42E34F2B646B57AF0B21881B639868122DBC20F9:6:
+common_gpg_sops_file: "{{ role_path }}/files/gpg.sops.yml"
+common_gpg_private_key: ""

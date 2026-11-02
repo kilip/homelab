@@ -73,3 +73,7 @@
 - name: Manage chezmoi dotfiles
   ansible.builtin.import_tasks: chezmoi.yml
   when: common_chezmoi_enabled | bool
+
+- name: Manage GPG key for password store
+  ansible.builtin.import_tasks: gpg.yml
+  when: common_gpg | bool

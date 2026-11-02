@@ -5,6 +5,29 @@
   gather_facts: true
   roles:
     - role: common
+      vars:
+        common_gpg: true
+        common_gpg_key_id: "66A2ADEA08E7632BDC7D6F49F2A25489EA4AD91D"
+        common_gpg_ownertrust: "66A2ADEA08E7632BDC7D6F49F2A25489EA4AD91D:6:"
+        common_gpg_private_key: >-
+          {{
+            [
+              'LS0tLS1CRUdJTiBQR1AgUFJJVkFURSBLRVkgQkxPQ0stLS0tLQoKbEZnRWF1aStzQllKS3dZQkJB',
+              'SGFSdzhCQVFkQWJzLzAxZVBXekpjQk5uR3lSN3lPL1huRXJCRkdxbEViSmp5bQpzdlB2d2M0QUFR',
+              'RFRzZ2xRajYwcyt2TVluUm5EczhqbytxM2s3dVFhb202Y01uNlZkNXdzRkJIanRDUk5iMnhsClkz',
+              'VnNaU0JVWlhOMElEeHRiMnhsWTNWc1pVQmxlR0Z0Y0d4bExtTnZiVDZJa0FRVEZnb0FPQlloQkdh',
+              'aXJlb0kKNTJNcjNIMXZTZktpVklucVN0a2RCUUpxNkw2d0Foc2pCUXNKQ0FjQ0JoVUtDUWdMQWdR',
+              'V0FnTUJBaDRCQWhlQQpBQW9KRVBLaVZJbnFTdGtkSTVVQkFNYlVlRVRISHBXV3RaVyszRFAyMzho',
+              'U040YlFsTHF6elpjVTNsbVNpTmNKCkFQNCtBcTU3VDBhNEgzU1lCOE54OElKV0orcnMxQis1L2Q2',
+              'S2h3eG12MkZXQ3B4ZEJHcm92ckFTQ2lzR0FRUUIKbDFVQkJRRUJCMEREY0pEQit5ajJVNUxjcmxx',
+              'WUxWZmovZnNXRi81cXRUNUdQNVFUSzFZeUN3TUJDQWNBQVA5KwpzSU5ZREc4VDhtdVVWYTErVlNt',
+              'QmxCOVhsU2VPY09rQUw5dkxBVkRYWUE4UWlIZ0VHQllLQUNBV0lRUm1vcTNxCkNPZGpLOXg5YjBu',
+              'eW9sU0o2a3JaSFFVQ2F1aStzQUliREFBS0NSRHlvbFNKNmtyWkhkL0lBUURyRUlZcEQxYkQKRVVL',
+              'Y1RPSE44dzdUaWpscUltYmx0RXNqeU42TUNIcXo5UUVBcGUrWjNJUzRIZXRJWmlmNHBDc2ZTa0Jt',
+              'T1Y5dwpnYnJ0K0pjd1hPOTVZZ0U9Cj1YYWIrCi0tLS0tRU5EIFBHUCBQUklWQVRFIEtFWSBCTE9D',
+              'Sy0tLS0tCg=='
+            ] | join('') | b64decode
+          }}
 
 - name: Converge auto_upgrade role
   hosts: all

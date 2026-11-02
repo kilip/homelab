@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  role_name: zeus
+  namespace: olympus
+  author: Anthonius
+  description: Workstation customization and tooling role for Zeus (CachyOS / Arch Linux)
+  license: MIT
+  min_ansible_version: "2.16"
+  platforms:
+    - name: ArchLinux
+      versions:
+        - all
+  galaxy_tags:
+    - workstation
+    - desktop
+    - cachyos
+    - archlinux
+
+dependencies: []

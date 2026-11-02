@@ -1,0 +1,13 @@
+[Unit]
+Description=DeepCool Digital Cooler Display Service
+Documentation=https://github.com/Nortank12/deepcool-digital-linux
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart={{ zeus_deepcool_install_dir }}/deepcool-digital-linux{{ ' ' ~ zeus_deepcool_extra_args if (zeus_deepcool_extra_args | length > 0) else '' }}
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,21 @@
+---
+- name: Verify role variables
+  ansible.builtin.import_tasks: verify.yml
+
+- name: Install Zeus workstation packages
+  community.general.pacman:
+    name: "{{ zeus_packages }}"
+    state: present
+  when:
+    - zeus_enabled | bool
+    - zeus_packages | length > 0
+
+- name: Manage DeepCool digital display service
+  ansible.builtin.import_tasks: deepcool.yml
+  when: zeus_enabled | bool
+
+- name: Manage chezmoi dotfiles
+  ansible.builtin.import_tasks: chezmoi.yml
+  when:
+    - zeus_enabled | bool
+    - zeus_chezmoi_enabled | bool

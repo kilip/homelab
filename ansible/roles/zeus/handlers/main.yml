@@ -1,0 +1,19 @@
+---
+- name: Systemd daemon reload
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+  when: zeus_deepcool_start_service | bool
+
+- name: Reload udev rules
+  ansible.builtin.command:
+    cmd: udevadm control --reload-rules
+  changed_when: true
+  when: zeus_deepcool_start_service | bool
+
+- name: Restart deepcool-digital
+  ansible.builtin.systemd_service:
+    name: deepcool-digital
+    state: restarted
+  when:
+    - zeus_deepcool_enabled | bool
+    - zeus_deepcool_start_service | bool

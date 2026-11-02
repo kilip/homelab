@@ -1,0 +1,25 @@
+---
+- name: Ensure chezmoi package is installed
+  community.general.pacman:
+    name: chezmoi
+    state: present
+
+- name: Retrieve passwd entry for zeus_user
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ zeus_user }}"
+
+- name: Set zeus user home directory
+  ansible.builtin.set_fact:
+    zeus_user_home: "{{ ansible_facts.getent_passwd[zeus_user][4] }}"
+
+- name: Initialize chezmoi with dotfiles repository
+  ansible.builtin.command:
+    cmd: "chezmoi init {{ zeus_chezmoi_repo }}"
+    creates: "{{ zeus_user_home }}/.local/share/chezmoi"
+  become: true
+  become_user: "{{ zeus_user }}"
+  environment:
+    HOME: "{{ zeus_user_home }}"
+  when:
+    - zeus_chezmoi_init | bool

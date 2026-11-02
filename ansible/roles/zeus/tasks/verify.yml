@@ -1,0 +1,45 @@
+---
+- name: Verify zeus role variables
+  ansible.builtin.assert:
+    that:
+      - zeus_enabled is boolean
+      - zeus_packages is sequence
+      - zeus_user is string
+      - zeus_user | length > 0
+    fail_msg: "Invalid zeus role variable configuration."
+
+- name: Verify target OS family is Archlinux
+  ansible.builtin.assert:
+    that:
+      - ansible_facts['os_family'] == 'Archlinux'
+    fail_msg: "The zeus role only supports Archlinux/CachyOS workstations (detected: {{ ansible_facts['os_family'] }})."
+  when: zeus_enabled | bool
+
+- name: Verify deepcool configuration variables
+  ansible.builtin.assert:
+    that:
+      - zeus_deepcool_enabled is boolean
+      - zeus_deepcool_start_service is boolean
+      - zeus_deepcool_version is string
+      - zeus_deepcool_version | length > 0
+      - zeus_deepcool_binary_url is string
+      - zeus_deepcool_binary_url | length > 0
+      - zeus_deepcool_install_dir is string
+      - zeus_deepcool_install_dir | length > 0
+      - zeus_deepcool_extra_args is string
+    fail_msg: "Invalid zeus deepcool variable configuration."
+  when:
+    - zeus_enabled | bool
+    - zeus_deepcool_enabled | bool
+
+- name: Verify chezmoi configuration variables
+  ansible.builtin.assert:
+    that:
+      - zeus_chezmoi_enabled is boolean
+      - zeus_chezmoi_init is boolean
+      - zeus_chezmoi_repo is string
+      - zeus_chezmoi_repo | length > 0
+    fail_msg: "Invalid zeus chezmoi variable configuration."
+  when:
+    - zeus_enabled | bool
+    - zeus_chezmoi_enabled | bool

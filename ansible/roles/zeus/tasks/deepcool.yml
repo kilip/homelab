@@ -1,0 +1,80 @@
+---
+- name: Ensure udev rules directory exists
+  ansible.builtin.file:
+    path: /etc/udev/rules.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  when: zeus_deepcool_enabled | bool
+
+- name: Deploy DeepCool udev rules
+  ansible.builtin.template:
+    src: 99-deepcool-digital.rules.j2
+    dest: /etc/udev/rules.d/99-deepcool-digital.rules
+    owner: root
+    group: root
+    mode: "0644"
+  when: zeus_deepcool_enabled | bool
+  notify: Reload udev rules
+
+- name: Download DeepCool Digital Linux binary
+  ansible.builtin.get_url:
+    url: "{{ zeus_deepcool_binary_url }}"
+    dest: "{{ zeus_deepcool_install_dir }}/deepcool-digital-linux"
+    owner: root
+    group: root
+    mode: "0755"
+  when: zeus_deepcool_enabled | bool
+  notify: Restart deepcool-digital
+
+- name: Deploy DeepCool Digital systemd service
+  ansible.builtin.template:
+    src: deepcool-digital.service.j2
+    dest: /etc/systemd/system/deepcool-digital.service
+    owner: root
+    group: root
+    mode: "0644"
+  when: zeus_deepcool_enabled | bool
+  notify:
+    - Systemd daemon reload
+    - Restart deepcool-digital
+
+- name: Ensure DeepCool Digital service is enabled and started
+  ansible.builtin.systemd_service:
+    name: deepcool-digital
+    state: started
+    enabled: true
+  when:
+    - zeus_deepcool_enabled | bool
+    - zeus_deepcool_start_service | bool
+
+- name: Ensure DeepCool Digital service is stopped and disabled
+  ansible.builtin.systemd_service:
+    name: deepcool-digital
+    state: stopped
+    enabled: false
+  failed_when: false
+  when:
+    - not (zeus_deepcool_enabled | bool)
+    - zeus_deepcool_start_service | bool
+
+- name: Remove DeepCool Digital systemd service unit
+  ansible.builtin.file:
+    path: /etc/systemd/system/deepcool-digital.service
+    state: absent
+  when: not (zeus_deepcool_enabled | bool)
+  notify: Systemd daemon reload
+
+- name: Remove DeepCool Digital binary
+  ansible.builtin.file:
+    path: "{{ zeus_deepcool_install_dir }}/deepcool-digital-linux"
+    state: absent
+  when: not (zeus_deepcool_enabled | bool)
+
+- name: Remove DeepCool udev rules
+  ansible.builtin.file:
+    path: /etc/udev/rules.d/99-deepcool-digital.rules
+    state: absent
+  when: not (zeus_deepcool_enabled | bool)
+  notify: Reload udev rules

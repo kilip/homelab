@@ -34,6 +34,8 @@ platforms:
     volumes:
       - "${MOLECULE_PROJECT_DIRECTORY}/../.cache/molecule/cachyos/pacman-pkg:/var/cache/pacman/pkg:rw"
       - "${MOLECULE_PROJECT_DIRECTORY}/../.cache/molecule/cachyos/pacman-sync:/var/lib/pacman/sync:rw"
+    groups:
+      - workstations
 
 provisioner:
   name: ansible
@@ -52,6 +54,10 @@ provisioner:
       k3s:
         k3s_start_service: false
         k3s_fetch_kubeconfig: false
+      workstations:
+        zeus_deepcool_start_service: false
+        zeus_chezmoi_init: false
+
   config_options:
     defaults:
       interpreter_python: auto_silent

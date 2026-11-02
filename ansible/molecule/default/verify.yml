@@ -301,3 +301,50 @@
         path: /etc/systemd/system/auto-upgrade.timer
       register: auto_upgrade_timer_stat
       failed_when: not auto_upgrade_timer_stat.stat.exists
+
+- name: Verify zeus role installation and configuration
+  hosts: workstations
+  gather_facts: true
+  vars_files:
+    - ../../roles/zeus/defaults/main.yml
+  tasks:
+    - name: Verify workstation target is Archlinux
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['os_family'] == 'Archlinux'
+
+    - name: Verify sample package from zeus_packages is installed
+      community.general.pacman:
+        name: tree
+        state: present
+      check_mode: true
+      register: zeus_package_check
+      failed_when: zeus_package_check.changed
+
+    - name: Verify DeepCool udev rules file exists
+      ansible.builtin.stat:
+        path: /etc/udev/rules.d/99-deepcool-digital.rules
+      register: deepcool_udev_stat
+      failed_when: not deepcool_udev_stat.stat.exists
+
+    - name: Verify DeepCool Digital binary exists and is executable
+      ansible.builtin.stat:
+        path: "{{ zeus_deepcool_install_dir }}/deepcool-digital-linux"
+      register: deepcool_bin_stat
+      failed_when:
+        - not deepcool_bin_stat.stat.exists
+        - deepcool_bin_stat.stat.mode != '0755'
+
+    - name: Verify DeepCool Digital systemd service unit exists
+      ansible.builtin.stat:
+        path: /etc/systemd/system/deepcool-digital.service
+      register: deepcool_service_stat
+      failed_when: not deepcool_service_stat.stat.exists
+
+    - name: Verify chezmoi binary exists and is executable
+      ansible.builtin.stat:
+        path: /usr/bin/chezmoi
+      register: chezmoi_bin_stat
+      failed_when:
+        - not chezmoi_bin_stat.stat.exists
+        - chezmoi_bin_stat.stat.mode != '0755'

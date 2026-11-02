@@ -1,0 +1,5 @@
+---
+- name: Install Zeus workstation packages
+  community.general.pacman:
+    name: "{{ zeus_packages }}"
+    state: present

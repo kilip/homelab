@@ -2,10 +2,8 @@
 - name: Verify role variables
   ansible.builtin.import_tasks: verify.yml
 
-- name: Install Zeus workstation packages
-  community.general.pacman:
-    name: "{{ zeus_packages }}"
-    state: present
+- name: Manage Zeus workstation packages
+  ansible.builtin.import_tasks: packages.yml
   when:
     - zeus_enabled | bool
     - zeus_packages | length > 0

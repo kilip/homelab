@@ -57,6 +57,7 @@ provisioner:
         k3s_fetch_kubeconfig: false
       workstations:
         zeus_deepcool_start_service: false
+        zeus_paru_enabled: false
 
 
   config_options:

@@ -8,6 +8,7 @@ Customization, package provisioning, environment setup, and hardware display dae
 - [Supported Platforms](#supported-platforms)
 - [Role Variables](#role-variables)
   - [General Variables](#general-variables)
+  - [Paru AUR Packages (`zeus_paru`)](#paru-aur-packages-zeus_paru)
   - [DeepCool Digital Display (`zeus_deepcool`)](#deepcool-digital-display-zeus_deepcool)
 - [Hardware Integration](#hardware-integration)
 - [Example Playbook](#example-playbook)
@@ -35,6 +36,15 @@ Defined in `defaults/main.yml`:
 | `zeus_enabled` | Boolean | `true` | Master toggle to enable or disable execution of the role. |
 | `zeus_user` | String | `{{ ansible_user }}` | Primary workstation user account. |
 | `zeus_packages` | List[String] | `[]` | List of packages to install via `pacman`. |
+
+### Paru AUR Packages (`zeus_paru`)
+
+Manages AUR packages using the `paru` helper for the primary workstation user.
+
+| Variable | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `zeus_paru_enabled` | Boolean | `true` | Enable Paru AUR package management. Set to `false` in unprivileged container test environments. |
+| `zeus_paru_packages` | List[String] | `["google-chrome", "visual-studio-code-bin", "pgadmin4-desktop"]` | List of packages to install via `paru`. |
 
 ### DeepCool Digital Display (`zeus_deepcool`)
 

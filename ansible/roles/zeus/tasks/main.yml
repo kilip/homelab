@@ -10,6 +10,13 @@
     - zeus_enabled | bool
     - zeus_packages | length > 0
 
+- name: Manage Paru AUR packages
+  ansible.builtin.import_tasks: paru.yml
+  when:
+    - zeus_enabled | bool
+    - zeus_paru_enabled | bool
+    - zeus_paru_packages | length > 0
+
 - name: Manage DeepCool digital display service
   ansible.builtin.import_tasks: deepcool.yml
   when: zeus_enabled | bool

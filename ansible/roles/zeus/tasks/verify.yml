@@ -6,6 +6,8 @@
       - zeus_packages is sequence
       - zeus_user is string
       - zeus_user | length > 0
+      - zeus_paru_enabled is boolean
+      - zeus_paru_packages is sequence
     fail_msg: "Invalid zeus role variable configuration."
 
 - name: Verify target OS family is Archlinux

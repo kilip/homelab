@@ -1,0 +1,40 @@
+---
+- name: Ensure paru is installed
+  community.general.pacman:
+    name: paru
+    state: present
+  register: zeus_paru_pacman_install
+  failed_when: false
+
+- name: Check if paru is available
+  ansible.builtin.command:
+    cmd: paru --version
+  register: zeus_paru_check
+  changed_when: false
+  failed_when: false
+  check_mode: false
+
+- name: Assert paru is installed
+  ansible.builtin.assert:
+    that:
+      - zeus_paru_check.rc == 0
+    fail_msg: "Paru is required to install zeus_paru_packages but was not found on the system."
+
+- name: Retrieve passwd entry for zeus_user
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ zeus_user }}"
+
+- name: Set zeus_user home directory
+  ansible.builtin.set_fact:
+    zeus_user_home: "{{ ansible_facts.getent_passwd[zeus_user][4] }}"
+
+- name: Install Paru AUR packages
+  ansible.builtin.command:
+    cmd: "paru -S --needed --noconfirm --skipreview {{ zeus_paru_packages | join(' ') }}"
+  register: zeus_paru_install
+  changed_when: "'there is nothing to do' not in zeus_paru_install.stdout"
+  become: true
+  become_user: "{{ zeus_user }}"
+  environment:
+    HOME: "{{ zeus_user_home }}"

@@ -331,9 +331,7 @@
       ansible.builtin.stat:
         path: "{{ zeus_deepcool_install_dir }}/deepcool-digital-linux"
       register: deepcool_bin_stat
-      failed_when:
-        - not deepcool_bin_stat.stat.exists
-        - deepcool_bin_stat.stat.mode != '0755'
+      failed_when: not deepcool_bin_stat.stat.exists or deepcool_bin_stat.stat.mode != '0755'
 
     - name: Verify DeepCool Digital systemd service unit exists
       ansible.builtin.stat:
@@ -345,6 +343,4 @@
       ansible.builtin.stat:
         path: /usr/bin/chezmoi
       register: chezmoi_bin_stat
-      failed_when:
-        - not chezmoi_bin_stat.stat.exists
-        - chezmoi_bin_stat.stat.mode != '0755'
+      failed_when: not chezmoi_bin_stat.stat.exists or chezmoi_bin_stat.stat.mode != '0755'

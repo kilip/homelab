@@ -44,7 +44,7 @@ Manages user dotfiles initialization using [chezmoi](https://www.chezmoi.io/).
 | Variable | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `zeus_chezmoi_enabled` | Boolean | `true` | Enable chezmoi package installation and initialization. |
-| `zeus_chezmoi_repo` | String | `git@github.com:kilip/dotfiles.git` | Git repository URL to clone dotfiles from. |
+| `zeus_chezmoi_repo` | String | `git@github.com:kilip/dotfiles.git` | Git repository URL to clone dotfiles from. Requires SSH agent or credentials for `git@...`; can use HTTPS (`https://github.com/...`) for bootstrapping without SSH keys. |
 | `zeus_chezmoi_init` | Boolean | `true` | Run `chezmoi init` for `zeus_user` if `~/.local/share/chezmoi` is missing. Set to `false` in testing environments without git/SSH credentials. |
 
 ### DeepCool Digital Display (`zeus_deepcool`)

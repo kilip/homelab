@@ -6,6 +6,7 @@
   roles:
     - role: common
       vars:
+        common_chezmoi_enabled: true
         common_gpg: true
         common_gpg_key_id: "66A2ADEA08E7632BDC7D6F49F2A25489EA4AD91D"
         common_gpg_ownertrust: "66A2ADEA08E7632BDC7D6F49F2A25489EA4AD91D:6:"

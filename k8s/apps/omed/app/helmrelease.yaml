@@ -28,6 +28,8 @@ spec:
               kind: Deployment
               metadata:
                 name: omed-api
+                annotations:
+                  secrets.infisical.com/auto-reload: "true"
               spec:
                 template:
                   spec:

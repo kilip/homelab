@@ -23,6 +23,8 @@ spec:
     remediation:
       retries: 3
   values:
+    deploymentAnnotations:
+      secrets.infisical.com/auto-reload: "true"
     provider:
       name: cloudflare
     env:

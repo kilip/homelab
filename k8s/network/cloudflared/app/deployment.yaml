@@ -4,6 +4,8 @@ kind: Deployment
 metadata:
   name: cloudflared
   namespace: network
+  annotations:
+    secrets.infisical.com/auto-reload: "true"
   labels:
     app.kubernetes.io/name: cloudflared
 spec:

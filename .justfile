@@ -36,3 +36,34 @@ doctor: sops::init-key
     else
         echo "⚠️  SOPS_AGE_KEY_FILE not exported"
     fi
+
+# Run Ansible playbook (shortcut for ans::play)
+[arg("host", long="host", short="h")]
+[arg("tags", long="tags", short="t")]
+[arg("check", long="check", short="c", value="true")]
+play host="" tags="" check="":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    args=()
+    if [ -n "{{ host }}" ]; then
+        args+=(--host "{{ host }}")
+    fi
+    if [ -n "{{ tags }}" ]; then
+        args+=(--tags "{{ tags }}")
+    fi
+    if [ "{{ check }}" = "true" ]; then
+        args+=(--check)
+    fi
+    just ans::play "${args[@]}"
+
+# Run Ansible playbook targeting Zeus workstation (shortcut for ans::play --host zeus --tags zeus)
+[arg("tags", long="tags", short="t")]
+[arg("check", long="check", short="c", value="true")]
+zeus tags="zeus" check="":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    args=(--host zeus --tags "{{ tags }}")
+    if [ "{{ check }}" = "true" ]; then
+        args+=(--check)
+    fi
+    just ans::play "${args[@]}"

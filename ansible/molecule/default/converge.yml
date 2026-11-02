@@ -35,3 +35,13 @@
         app_rustfs: true
         app_node_exporter: true
         app_zerotier: true
+
+- name: Converge zeus role
+  hosts: workstations
+  become: true
+  gather_facts: true
+  roles:
+    - role: zeus
+      vars:
+        zeus_packages:
+          - tree

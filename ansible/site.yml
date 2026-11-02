@@ -19,3 +19,11 @@
     - role: k3s
       tags:
         - k3s
+
+- name: Configure Zeus workstation
+  hosts: workstations
+  become: true
+  roles:
+    - role: zeus
+      tags:
+        - zeus

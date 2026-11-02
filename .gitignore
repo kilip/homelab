@@ -9,3 +9,4 @@ cloudflare-tunnel.json
 __pycache__/
 *.pyc
 .superpowers/
+.env

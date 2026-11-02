@@ -8,6 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: traefik
+    - name: infisical-operator
   interval: 1h
   path: ./k8s/apps/pi/app
   prune: true
@@ -15,10 +16,6 @@ spec:
     kind: GitRepository
     name: flux-system
   targetNamespace: apps
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
   postBuild:
     substituteFrom:
       - kind: Secret

@@ -5,6 +5,8 @@ metadata:
   name: cert-manager
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: infisical-operator
   interval: 10m0s
   retryInterval: 1m0s
   path: ./k8s/network/cert-manager/app
@@ -15,10 +17,10 @@ spec:
     kind: GitRepository
     name: flux-system
   targetNamespace: cert-manager
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: settings
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

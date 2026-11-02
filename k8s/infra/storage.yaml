@@ -5,6 +5,8 @@ metadata:
   name: storage
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: security
   interval: 10m0s
   retryInterval: 1m0s
   path: ./k8s/storage

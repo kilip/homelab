@@ -4,8 +4,6 @@ This repository contains infrastructure-as-code (IaC) for homelab management usi
 
 ## 🏗️ Architecture & Technology
 
-Olympus leverages an automated Infrastructure-as-Code (IaC) and GitOps pipeline designed for minimal node footprint, declarative configuration, zero-trust security, and reproducibility.
-
 - **Configuration Management**: **Ansible** for multi-OS node provisioning (`Ubuntu`, `Debian`, `Archlinux`/`CachyOS`) and initial host hardening.
 - **Orchestration**: **K3s** (Kubernetes) lightweight container orchestration engine running on homelab server nodes.
 - **GitOps Delivery**: **Flux CD** (v2) managing declarative continuous deployment, dependency graphs, and automatic state reconciliation.
@@ -19,11 +17,14 @@ Olympus leverages an automated Infrastructure-as-Code (IaC) and GitOps pipeline 
   - **Local Path Provisioner**: Lightweight host-based persistent volume management.
 - **Observability & Logging**:
   - **New Relic**: SaaS-based observability collecting node metrics (`newrelic-infrastructure`), cluster state (`kube-state-metrics`), custom Prometheus endpoints (`nri-prometheus`), and real-time container logs (`newrelic-logging` via Fluent Bit) with an ultra-low cluster footprint (~185 MiB RAM).
-- **Secrets Management**: **SOPS + Age** for end-to-end repository encryption, transparently decrypted at runtime by Ansible and Flux CD.
+- **Secrets Management**:
+  - **Infisical Cloud**: Centralized secret management for dynamic application runtime secrets, database credentials, and service tokens synchronized into native Kubernetes Secrets via the **Infisical Secrets Operator**.
+  - **SOPS + Age**: GitOps bootstrap encryption for cluster-level post-build substitutions (`settings.sops.yaml`), operator credentials (`universal-auth.sops.yaml`), and Ansible host inventory variables.
 - **Developer Toolchain**:
   - **`just`**: Modular task runner (`.just/`) orchestrating cluster diagnostics, linting, and GitOps workflows.
   - **`mise`**: Polyglot runtime version manager ensuring pinned, deterministic CLI environments.
   - **`uv`**: Fast Python virtual environment and package manager.
+  - **`infisical`**: CLI tool for secret management and machine identity operations.
 
 ## 🖥️ Hardware Infrastructure
 

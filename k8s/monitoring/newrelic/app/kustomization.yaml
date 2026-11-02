@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - ./repository.yaml
   - ./release.yaml
-  - ./newrelic-secret.sops.yaml
+  - ./newrelic-secret.yaml

@@ -6,4 +6,4 @@ resources:
   - ./service.yaml
   - ./middleware.yaml
   - ./ingress.yaml
-  - ./secret.sops.yaml
+  - ./secret.yaml

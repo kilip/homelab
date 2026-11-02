@@ -5,8 +5,8 @@ metadata:
     namespace: security
 type: Opaque
 stringData:
-    clientId: ENC[AES256_GCM,data:SQ8mq2a6cEWFBvaUB4IF8eM62JqHPTr6ClMg/BEUiA4dmRwx,iv:uC1Dx8EWKsmbG9O4vFHPhsNOmXWdfgRrLGpoQy64AGc=,tag:Ex2IANZdv8Cd33J9Jpm06A==,type:str]
-    clientSecret: ENC[AES256_GCM,data:kJ7zCt68c0FK64PoXAODH0YEg8XUe8XKppFinhG3ZJ24iulgH7Jot7Xgz8rrvtmL77ctv0YDLIjkgTtP5ialcg==,iv:VPv99GjHPB9ojMfjBOQMrSG5QgnlT/VjGwicee/bwE4=,tag:Ff54k8Qi09pUHzo2K6npnw==,type:str]
+    clientId: ENC[AES256_GCM,data:55SPyWPQCmNnzSP5yw1q/6iqklvFyPJPQgEJK+IKRV/G3UK1,iv:B4YfhrsEYuKP5QvGMEhXc2lhmDqVgPs3zF3t9ssJOwQ=,tag:ZEGbJuRE6W0SlbVMvL3ivw==,type:str]
+    clientSecret: ENC[AES256_GCM,data:kwUlfFTyJDJO+EWsuxbjJwNaE5oellnmlfryJbpAxV1oKUGygfjc9JY0bBLWFKOmXrqTGAl4awwVtZKdO9Umvw==,iv:BnkoclRRRSAfd8+c7c6diPHXUCuJsSl/j5NmjLP9LyE=,tag:BxkxEK5PQWv1e4R2KEMoxw==,type:str]
 sops:
     age:
         - enc: |
@@ -19,6 +19,6 @@ sops:
             -----END AGE ENCRYPTED FILE-----
           recipient: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf
     encrypted_regex: ^(data|stringData)$
-    lastmodified: "2026-11-01T15:46:38Z"
-    mac: ENC[AES256_GCM,data:s6Z1X8KMFDqAcRUShdOr9VfhUKlexCmva33mfNCKFKSgEGYi3wThMGdI/ktCGNH72QdmZPb3UOQf6WvhIXrQN1isUDBSbztFSOK+JMaAYXW4dUud3+JfHoivuRXLv3bDDbkuNTWOGl7VmuWbUXsUixmXonEVQimQN6PFygMWWPU=,iv:jvsaR1HVIpKeq96+tdbhFfa3y6VhYsjnGEnsARUrzpo=,tag:hEoGgPQGneMuOVW5HMleKw==,type:str]
+    lastmodified: "2026-11-02T04:39:49Z"
+    mac: ENC[AES256_GCM,data:v7XqWOSK3Xv0WQ1cNnCacfImezNWGdSGE6BjW0r7I7ddAYJTBioovX8u+Ds/5afjdKKUZdklUZbmd5FZTSqClHfCRHJTbCPsNws8df6HqwSgfxeKR8QBXvmwMNE7ZLzykVC7UmDc8+rhxTk+bYLq51/gHEBLA4lQ7TRETmDy75Q=,iv:svA7Rea9s8Mzt5/8TubrO4mB9vuk0D8h7K56Gds+iSc=,tag:VuRU0DuP0xnKB2gk9GQLHQ==,type:str]
     version: 3.13.3

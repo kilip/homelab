@@ -2,6 +2,7 @@
 # IaC & Secrets
 sops = "3.13.3"
 age = "1.3.2"
+infisical = "0.44.11"
 
 # Kubernetes, Cluster & GitOps
 kubectl = "1.37.2"

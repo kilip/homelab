@@ -16,6 +16,12 @@ patches:
           provider: sops
           secretRef:
             name: sops-age
+      - op: add
+        path: /spec/postBuild
+        value:
+          substituteFrom:
+            - kind: Secret
+              name: settings
     target:
       kind: Kustomization
       name: flux-system

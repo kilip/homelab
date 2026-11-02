@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - config.yaml
-  - tunnel-token.sops.yaml
+  - tunnel-token.yaml

@@ -7,6 +7,7 @@ paths = [
   '''(?i)age\.key$''',
   '''(?i)kubeconfig$''',
   '''(?i)cloudflare-tunnel\.json$''',
+  '''\.mise\.local\.toml$''',
   '''\.cache/''',
   '''\.venv/''',
 ]

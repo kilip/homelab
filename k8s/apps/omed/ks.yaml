@@ -8,6 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: paradedb
+    - name: infisical-operator
   interval: 1h
   path: ./k8s/apps/omed/db
   prune: true
@@ -17,10 +18,10 @@ spec:
     kind: GitRepository
     name: flux-system
   targetNamespace: storage
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
+  postBuild:
+    substituteFrom:
+      - kind: Secret
+        name: settings
 ---
 # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -40,10 +41,6 @@ spec:
     kind: GitRepository
     name: flux-system
   targetNamespace: apps
-  decryption:
-    provider: sops
-    secretRef:
-      name: sops-age
   postBuild:
     substituteFrom:
       - kind: Secret

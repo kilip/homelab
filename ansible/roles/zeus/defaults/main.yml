@@ -6,7 +6,9 @@ zeus_enabled: true
 zeus_user: "{{ ansible_user }}"
 
 # Custom pacman packages for Zeus workstation
-zeus_packages: []
+zeus_packages:
+  - rofi
+  - waybar
 
 # Paru AUR packages for Zeus workstation
 zeus_paru_enabled: true
@@ -14,6 +16,7 @@ zeus_paru_packages:
   - google-chrome
   - visual-studio-code-bin
   - pgadmin4-desktop
+  - openrgb
 
 # DeepCool Digital display service (Nortank12/deepcool-digital-linux)
 zeus_deepcool_enabled: true

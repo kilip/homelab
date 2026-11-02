@@ -1,0 +1,45 @@
+---
+- name: Retrieve passwd entry for ansible_user
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ ansible_user }}"
+
+- name: Set ansible_user home and password store paths
+  ansible.builtin.set_fact:
+    common_user_home: "{{ ansible_facts.getent_passwd[ansible_user][4] }}"
+    common_pass_resolved_dir: >-
+      {{
+        common_pass_dir
+        if (common_pass_dir | length > 0)
+        else (ansible_facts.getent_passwd[ansible_user][4] ~ '/.password-store')
+      }}
+    common_pass_resolved_ssh_key: >-
+      {{
+        common_pass_ssh_key
+        if (common_pass_ssh_key | length > 0)
+        else (ansible_facts.getent_passwd[ansible_user][4] ~ '/.ssh/id_ed25519')
+      }}
+
+- name: Check if SSH private key exists for password store
+  ansible.builtin.stat:
+    path: "{{ common_pass_resolved_ssh_key }}"
+  register: common_pass_ssh_key_stat
+
+- name: Assert SSH private key exists for password store
+  ansible.builtin.assert:
+    that:
+      - common_pass_ssh_key_stat.stat.exists
+    fail_msg: "SSH key {{ common_pass_resolved_ssh_key }} is required to clone password store repository."
+
+- name: Clone password store repository for ansible_user
+  ansible.builtin.git:
+    repo: "{{ common_pass_repo }}"
+    dest: "{{ common_pass_resolved_dir }}"
+    version: "{{ common_pass_version }}"
+    key_file: "{{ common_pass_resolved_ssh_key }}"
+    accept_hostkey: true
+    update: "{{ common_pass_update | bool }}"
+  become: true
+  become_user: "{{ ansible_user }}"
+  environment:
+    HOME: "{{ common_user_home }}"

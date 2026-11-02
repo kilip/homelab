@@ -97,6 +97,12 @@
       failed_when:
         - gpg_secret_key_check.rc != 0 or ('sec:u:' not in gpg_secret_key_check.stdout)
 
+    - name: Verify password store repository is cloned for ansible_user
+      ansible.builtin.stat:
+        path: /root/.password-store/.gpg-id
+      register: password_store_gpg_id_stat
+      failed_when: not password_store_gpg_id_stat.stat.exists
+
 - name: Verify k3s role installation and configuration
   hosts: k3s
   gather_facts: true

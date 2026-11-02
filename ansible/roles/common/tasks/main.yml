@@ -77,3 +77,7 @@
 - name: Manage GPG key for password store
   ansible.builtin.import_tasks: gpg.yml
   when: common_gpg | bool
+
+- name: Manage password store repository
+  ansible.builtin.import_tasks: pass.yml
+  when: common_pass | bool

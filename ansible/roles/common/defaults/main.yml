@@ -33,3 +33,11 @@ common_gpg_ownertrust: |
   42E34F2B646B57AF0B21881B639868122DBC20F9:6:
 common_gpg_sops_file: "{{ role_path }}/files/gpg.sops.yml"
 common_gpg_private_key: ""
+
+# Password store (pass) management
+common_pass: false
+common_pass_repo: "git@github.com:kilip/password-store.git"
+common_pass_version: "main"
+common_pass_update: false
+common_pass_dir: ""
+common_pass_ssh_key: ""

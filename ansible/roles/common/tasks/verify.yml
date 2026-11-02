@@ -32,3 +32,17 @@
       - common_gpg_sops_file | length > 0
     fail_msg: "Invalid common gpg variable configuration."
   when: common_gpg | bool
+
+- name: Verify password store configuration variables
+  ansible.builtin.assert:
+    that:
+      - common_pass is boolean
+      - common_pass_repo is string
+      - common_pass_repo | length > 0
+      - common_pass_version is string
+      - common_pass_version | length > 0
+      - common_pass_update is boolean
+      - common_pass_dir is string
+      - common_pass_ssh_key is string
+    fail_msg: "Invalid common password store variable configuration."
+  when: common_pass | bool

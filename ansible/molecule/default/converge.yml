@@ -30,6 +30,46 @@
           }}
         common_chezmoi_age_key: >-
           {{ ['AGE-', 'SECRET-', 'KEY-', '10000000000000000000000000000000000000000000000000000000000'] | join('') }}
+  post_tasks:
+    - name: Create test SSH key for molecule password store
+      ansible.builtin.copy:
+        content: "molecule-test-ssh-key\n"
+        dest: /root/.ssh/id_ed25519
+        owner: root
+        group: root
+        mode: "0600"
+
+    - name: Create local bare password-store git repository for molecule
+      ansible.builtin.shell:
+        cmd: |
+          set -eu
+          git init --bare --initial-branch=main /srv/molecule-password-store.git
+          tmpdir=$(mktemp -d)
+          git -C "$tmpdir" init --initial-branch=main
+          git -C "$tmpdir" config user.name "Molecule"
+          git -C "$tmpdir" config user.email "molecule@example.com"
+          printf '66A2ADEA08E7632BDC7D6F49F2A25489EA4AD91D\n' > "$tmpdir/.gpg-id"
+          git -C "$tmpdir" add .gpg-id
+          git -C "$tmpdir" commit -m "Initialize password store"
+          git -C "$tmpdir" push /srv/molecule-password-store.git main
+          rm -rf "$tmpdir"
+        creates: /srv/molecule-password-store.git/HEAD
+
+    - name: Verify common password store variables
+      ansible.builtin.include_role:
+        name: common
+        tasks_from: verify.yml
+      vars:
+        common_pass: true
+        common_pass_repo: /srv/molecule-password-store.git
+
+    - name: Converge common password store tasks
+      ansible.builtin.include_role:
+        name: common
+        tasks_from: pass.yml
+      vars:
+        common_pass: true
+        common_pass_repo: /srv/molecule-password-store.git
 
 - name: Converge auto_upgrade role
   hosts: all

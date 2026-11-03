@@ -50,7 +50,7 @@ spec:
     api:
       replicaCount: 1
       image:
-        tag: sha-1a277c3
+        tag: sha-daeb1bc
         pullPolicy: Always
       config:
         sessionCookieName: omed_nightly_session
@@ -71,7 +71,7 @@ spec:
     web:
       replicaCount: 1
       image:
-        tag: sha-1a277c3
+        tag: sha-daeb1bc
         pullPolicy: Always
       resources:
         requests:

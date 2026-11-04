@@ -13,6 +13,7 @@ Deploy and manage host application services and containerized workloads across O
   - [RustFS Object Storage (`app_rustfs`)](#rustfs-object-storage-app_rustfs)
   - [Prometheus Node Exporter (`app_node_exporter`)](#prometheus-node-exporter-app_node_exporter)
   - [ZeroTier One Network Daemon (`app_zerotier`)](#zerotier-one-network-daemon-app_zerotier)
+  - [Wake-on-LAN Utility (`app_wakeonlan`)](#wake-on-lan-utility-app_wakeonlan)
 - [Example Playbook](#example-playbook)
 - [License](#license)
 - [Author Information](#author-information)
@@ -228,6 +229,22 @@ When `app_zerotier: false`:
 - Stops and disables `zerotier-one` systemd service.
 - Purges/removes packages across Debian/Ubuntu or Arch Linux.
 - Removes APT repository (`/etc/apt/sources.list.d/zerotier.list`) and keyrings (`/etc/apt/keyrings/zerotier.asc`) on Debian/Ubuntu.
+
+---
+
+### Wake-on-LAN Utility (`app_wakeonlan`)
+
+Installs the `wakeonlan` package and deploys helper execution scripts (e.g. `/usr/local/bin/wake-<target>`) for target workstations. Also exposes an Ansible task to send magic packets via tags `wake` or `wakeonlan`.
+
+#### Wake-on-LAN Variables
+
+| Variable | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `app_wakeonlan` | Boolean | `false` | Enable Wake-on-LAN installation and management. |
+| `app_wakeonlan_targets` | List[Dict] | `[{"name": "zeus", "mac": "08:bf:b8:14:34:aa", "broadcast": "10.0.0.255"}]` | List of target hosts with `name`, `mac`, and optional `broadcast`. |
+| `app_wakeonlan_packages` | List[String] | `[]` | Explicit package override list (uses distro defaults when empty). |
+| `app_wakeonlan_packages_debian` | List[String] | `["wakeonlan"]` | Default packages for Debian and Ubuntu. |
+| `app_wakeonlan_packages_archlinux` | List[String] | `["wakeonlan"]` | Default packages for Arch Linux and CachyOS. |
 
 ---
 

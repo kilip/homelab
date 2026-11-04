@@ -61,4 +61,10 @@
       - app_bluez_packages is sequence
       - app_bluez_packages_debian is sequence
       - app_bluez_packages_archlinux is sequence
+      - app_wakeonlan is boolean
+      - app_wakeonlan_send is boolean
+      - app_wakeonlan_packages is sequence
+      - app_wakeonlan_packages_debian is sequence
+      - app_wakeonlan_packages_archlinux is sequence
+      - app_wakeonlan_targets is sequence
     quiet: true

@@ -1,0 +1,39 @@
+---
+- name: Ensure Wake-on-LAN installed and configured
+  when: app_wakeonlan | bool
+  block:
+    - name: Install Wake-on-LAN package (Debian/Ubuntu)
+      ansible.builtin.apt:
+        name: "{{ app_wakeonlan_packages if (app_wakeonlan_packages | length > 0) else app_wakeonlan_packages_debian }}"
+        state: present
+      when: ansible_facts['os_family'] == 'Debian'
+
+    - name: Install Wake-on-LAN package (Archlinux/CachyOS)
+      community.general.pacman:
+        name: "{{ app_wakeonlan_packages if (app_wakeonlan_packages | length > 0) else app_wakeonlan_packages_archlinux }}"
+        state: present
+      when: ansible_facts['os_family'] == 'Archlinux'
+
+    - name: Deploy Wake-on-LAN target helper scripts
+      ansible.builtin.template:
+        src: wake-host.sh.j2
+        dest: "/usr/local/bin/wake-{{ item.name }}"
+        owner: root
+        group: root
+        mode: "0755"
+      loop: "{{ app_wakeonlan_targets }}"
+      when: app_wakeonlan_targets | length > 0
+
+- name: Send Wake-on-LAN magic packet to target hosts
+  community.general.wakeonlan:
+    mac: "{{ item.mac }}"
+    broadcast: "{{ item.broadcast | default('255.255.255.255') }}"
+  loop: "{{ app_wakeonlan_targets }}"
+  when:
+    - not ansible_check_mode
+    - app_wakeonlan_targets | length > 0
+    - app_wakeonlan_send | bool
+  tags:
+    - never
+    - wake
+    - wakeonlan

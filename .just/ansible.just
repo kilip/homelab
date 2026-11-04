@@ -104,3 +104,17 @@ clean-cache:
 # Fetch K3s kubeconfig from cluster node to local kubeconfig
 kubeconfig:
     cd "{{ ansible_dir }}" && ansible-playbook site.yml --tags kubeconfig
+
+# Send Wake-on-LAN magic packet to wake Zeus workstation
+wake:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if command -v wakeonlan >/dev/null 2>&1; then
+        echo "Sending Wake-on-LAN magic packet to Zeus (08:bf:b8:14:34:aa)..."
+        wakeonlan -i 10.0.0.255 08:bf:b8:14:34:aa
+    else
+        cd "{{ ansible_dir }}"
+        ansible hera -m community.general.wakeonlan -a "mac=08:bf:b8:14:34:aa broadcast=10.0.0.255"
+    fi
+
+

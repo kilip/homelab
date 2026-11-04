@@ -310,6 +310,15 @@
       register: zerotier_bin_stat
       failed_when: not zerotier_bin_stat.stat.exists
 
+    - name: Verify Wake-on-LAN helper script exists
+      ansible.builtin.stat:
+        path: /usr/local/bin/wake-zeus
+      register: wake_zeus_script_stat
+      failed_when:
+        - not wake_zeus_script_stat.stat.exists
+        - wake_zeus_script_stat.stat.mode != '0755'
+
+
     - name: Verify auto-upgrade runner script exists and is executable
       ansible.builtin.stat:
         path: /usr/local/bin/auto-upgrade.sh
@@ -366,3 +375,15 @@
         path: /etc/systemd/system/deepcool-digital.service
       register: deepcool_service_stat
       failed_when: not deepcool_service_stat.stat.exists
+
+    - name: Verify NetworkManager wake-on-lan configuration file exists
+      ansible.builtin.stat:
+        path: /etc/NetworkManager/conf.d/wake-on-lan.conf
+      register: nm_wol_stat
+      failed_when: not nm_wol_stat.stat.exists
+
+    - name: Verify systemd.link wake-on-lan configuration file exists
+      ansible.builtin.stat:
+        path: /etc/systemd/network/50-wake-on-lan.link
+      register: systemd_link_wol_stat
+      failed_when: not systemd_link_wol_stat.stat.exists

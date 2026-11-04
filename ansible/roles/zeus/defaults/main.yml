@@ -25,3 +25,8 @@ zeus_deepcool_version: "v0.11.0-alpha"
 zeus_deepcool_binary_url: "https://github.com/Nortank12/deepcool-digital-linux/releases/download/{{ zeus_deepcool_version }}/deepcool-digital-linux"
 zeus_deepcool_install_dir: "/usr/local/bin"
 zeus_deepcool_extra_args: ""
+
+# Wake-on-LAN configuration for Zeus workstation
+zeus_wakeonlan_enabled: true
+zeus_wakeonlan_start_service: true
+zeus_wakeonlan_mac: "08:bf:b8:14:34:aa"

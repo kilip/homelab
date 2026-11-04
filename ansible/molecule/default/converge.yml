@@ -101,6 +101,7 @@
         app_rustfs: true
         app_node_exporter: true
         app_zerotier: true
+        app_wakeonlan: true
 
 - name: Converge zeus role
   hosts: workstations

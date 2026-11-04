@@ -1,0 +1,24 @@
+---
+- name: Ensure NetworkManager wake-on-lan configuration is present
+  ansible.builtin.copy:
+    content: |
+      [connection]
+      ethernet.wake-on-lan=magic
+    dest: /etc/NetworkManager/conf.d/wake-on-lan.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload NetworkManager
+
+- name: Ensure systemd.link wake-on-lan configuration is present
+  ansible.builtin.copy:
+    content: |
+      [Match]
+      MACAddress={{ zeus_wakeonlan_mac }}
+
+      [Link]
+      WakeOnLan=magic
+    dest: /etc/systemd/network/50-wake-on-lan.link
+    owner: root
+    group: root
+    mode: "0644"

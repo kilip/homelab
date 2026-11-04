@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Managed by Ansible - do not edit directly
+set -euo pipefail
+
+TARGET_NAME="{{ item.name }}"
+MAC="{{ item.mac }}"
+BROADCAST="{{ item.broadcast | default('255.255.255.255') }}"
+
+echo "Sending Wake-on-LAN magic packet to ${TARGET_NAME} (${MAC}) via ${BROADCAST}..."
+if command -v wakeonlan >/dev/null 2>&1; then
+    wakeonlan -i "${BROADCAST}" "${MAC}"
+else
+    echo "Error: wakeonlan binary not found in PATH" >&2
+    exit 1
+fi

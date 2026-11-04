@@ -90,3 +90,15 @@ app_bluez_packages_archlinux:
   - bluez
   - bluez-utils
 app_bluez_packages: []
+
+app_wakeonlan: false
+app_wakeonlan_send: false
+app_wakeonlan_packages_debian:
+  - wakeonlan
+app_wakeonlan_packages_archlinux:
+  - wakeonlan
+app_wakeonlan_packages: []
+app_wakeonlan_targets:
+  - name: zeus
+    mac: "08:bf:b8:14:34:aa"
+    broadcast: "10.0.0.255"

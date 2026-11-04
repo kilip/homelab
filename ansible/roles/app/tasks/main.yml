@@ -27,3 +27,7 @@
 - name: Manage bluez
   ansible.builtin.include_tasks:
     file: "bluez.yml"
+
+- name: Manage wakeonlan
+  ansible.builtin.include_tasks:
+    file: "wakeonlan.yml"

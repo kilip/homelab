@@ -67,3 +67,10 @@ zeus tags="zeus" check="":
         args+=(--check)
     fi
     just ans::play "${args[@]}"
+
+# Send Wake-on-LAN magic packet to wake Zeus workstation
+wake:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    just ans::wake
+

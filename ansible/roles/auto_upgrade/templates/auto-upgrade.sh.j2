@@ -24,6 +24,68 @@ on_error() {
 }
 
 trap 'on_error $LINENO' ERR
+wait_for_apt_locks() {
+    local max_wait=300
+    local waited=0
+    local lock_files=(
+        /var/lib/apt/lists/lock
+        /var/lib/dpkg/lock
+        /var/lib/dpkg/lock-frontend
+        /var/cache/apt/archives/lock
+    )
+    while true; do
+        local locked=false
+        for lock in "${lock_files[@]}"; do
+            if [ -e "${lock}" ]; then
+                if command -v fuser >/dev/null 2>&1; then
+                    if fuser "${lock}" >/dev/null 2>&1; then
+                        locked=true
+                        break
+                    fi
+                elif command -v lsof >/dev/null 2>&1; then
+                    if lsof "${lock}" >/dev/null 2>&1; then
+                        locked=true
+                        break
+                    fi
+                fi
+            fi
+        done
+        if [ "${locked}" = "false" ]; then
+            break
+        fi
+        if [ "${waited}" -ge "${max_wait}" ]; then
+            echo "ERROR: Timeout waiting for apt/dpkg locks after ${waited}s" >&2
+            return 1
+        fi
+        echo "Waiting for apt/dpkg lock to be released... (${waited}s/${max_wait}s)"
+        sleep 5
+        waited=$((waited + 5))
+    done
+}
+
+wait_for_pacman_lock() {
+    local lock="/var/lib/pacman/db.lck"
+    local max_wait=300
+    local waited=0
+    while [ -f "${lock}" ]; do
+        local holding_pid=""
+        if command -v fuser >/dev/null 2>&1; then
+            holding_pid=$(fuser "${lock}" 2>/dev/null || true)
+        fi
+        if [ -z "${holding_pid}" ]; then
+            echo "Warning: Stale pacman lock file found at ${lock} (no active process). Removing..."
+            rm -f "${lock}"
+            break
+        fi
+        if [ "${waited}" -ge "${max_wait}" ]; then
+            echo "ERROR: Timeout waiting for pacman lock held by PID ${holding_pid} after ${waited}s" >&2
+            return 1
+        fi
+        echo "Waiting for pacman lock held by PID ${holding_pid}... (${waited}s/${max_wait}s)"
+        sleep 5
+        waited=$((waited + 5))
+    done
+}
 
 START_TIME=$(date +%s)
 echo "=== Starting auto-upgrade on ${NODE_NAME} at $(date) ==="
@@ -36,19 +98,39 @@ if command -v apt-get >/dev/null 2>&1; then
     echo "Detected Debian/Ubuntu system (apt-get)"
     export DEBIAN_FRONTEND=noninteractive
     
-    APT_OPTS=("-o" "DPkg::Lock::Timeout=300" "-o" "APT::Get::Lock-Timeout=300")
-    apt-get update "${APT_OPTS[@]}"
-    
+    APT_OPTS=("-o" "DPkg::Lock::Timeout=300")
+
+    # Wait for any active apt/dpkg processes to complete
+    wait_for_apt_locks
+
+    # Retry apt-get update in case of transient mirror, network, or lock contention
+    UPDATE_SUCCESS=false
+    for attempt in 1 2 3; do
+        if apt-get update "${APT_OPTS[@]}"; then
+            UPDATE_SUCCESS=true
+            break
+        fi
+        echo "apt-get update failed (attempt ${attempt}/3). Retrying in 10s..." >&2
+        sleep 10
+        wait_for_apt_locks
+    done
+    if [ "${UPDATE_SUCCESS}" != "true" ]; then
+        echo "ERROR: apt-get update failed after 3 attempts" >&2
+        exit 1
+    fi
+
     # Count packages to be upgraded
     UPGRADE_LIST=$(apt-get -s dist-upgrade "${APT_OPTS[@]}" | grep "^Inst " || true)
     if [ -n "${UPGRADE_LIST}" ]; then
         PACKAGES_UPGRADED=$(echo "${UPGRADE_LIST}" | wc -l)
     fi
-    
+
+    wait_for_apt_locks
     apt-get dist-upgrade -y "${APT_OPTS[@]}" -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
+    wait_for_apt_locks
     apt-get autoremove -y "${APT_OPTS[@]}"
     apt-get clean
-    
+
     if [ -f /var/run/reboot-required ]; then
         REBOOT_REQUIRED=true
     fi
@@ -56,9 +138,11 @@ if command -v apt-get >/dev/null 2>&1; then
 elif command -v pacman >/dev/null 2>&1; then
     echo "Detected Archlinux/CachyOS system (pacman)"
     
+    wait_for_pacman_lock
     # Try updating keyring first if present
     pacman -Sy --noconfirm archlinux-keyring || true
-    
+
+    wait_for_pacman_lock
     # Execute full system upgrade and log output
     UPGRADE_OUT=$(pacman -Syu --noconfirm 2>&1)
     echo "${UPGRADE_OUT}"

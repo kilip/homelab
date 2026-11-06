@@ -2,9 +2,11 @@
 - name: Verify role variables
   ansible.builtin.import_tasks: verify.yml
 
-- name: Ensure curl package is installed
+- name: Ensure required packages are installed
   ansible.builtin.package:
-    name: curl
+    name:
+      - curl
+      - psmisc
     state: present
   when: auto_upgrade_enabled
 

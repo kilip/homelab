@@ -11,4 +11,4 @@ resources:
   - ./rustfs/ks.yaml
   - ./termix/ks.yaml
   - ./pi/ks.yaml
-  - ./ompweb/ks.yaml
+  - ./omp/ks.yaml

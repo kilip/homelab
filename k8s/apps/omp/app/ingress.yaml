@@ -2,7 +2,7 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: ompweb
+  name: omp
   annotations:
     external-dns.alpha.kubernetes.io/expose: "true"
     external-dns.kubernetes.io/target: "${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
@@ -10,8 +10,8 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`ompweb.${SECRET_DOMAIN}`)
+    - match: Host(`omp.${SECRET_DOMAIN}`)
       kind: Rule
       services:
-        - name: ompweb
+        - name: omp
           port: 30177

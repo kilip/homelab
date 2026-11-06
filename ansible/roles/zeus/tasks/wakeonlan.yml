@@ -1,4 +1,12 @@
 ---
+- name: Ensure NetworkManager conf.d directory exists
+  ansible.builtin.file:
+    path: /etc/NetworkManager/conf.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
 - name: Ensure NetworkManager wake-on-lan configuration is present
   ansible.builtin.copy:
     content: |
@@ -9,6 +17,14 @@
     group: root
     mode: "0644"
   notify: Reload NetworkManager
+
+- name: Ensure systemd network directory exists
+  ansible.builtin.file:
+    path: /etc/systemd/network
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
 
 - name: Ensure systemd.link wake-on-lan configuration is present
   ansible.builtin.copy:

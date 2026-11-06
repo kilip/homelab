@@ -7,7 +7,6 @@ common_packages:
   - tmux
   - neovim
   - zsh
-  - pass
 
 common_archlinux_packages:
   - github-cli
@@ -37,7 +36,7 @@ common_gpg_private_key: ""
 
 # Password store (pass) management
 common_pass: false
-common_pass_repo: "git@github.com:kilip/password-store.git"
+common_pass_repo: "git@github.com:kilip/pass.git"
 common_pass_version: "main"
 common_pass_update: false
 common_pass_dir: ""

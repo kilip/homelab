@@ -35,7 +35,7 @@ taplo = "0.10.0"
 oxfmt = "0.75.0"
 
 [env]
-ANSIBLE_SOPS_AGE_KEYFILE = "config_root}}/age.key"
+ANSIBLE_SOPS_AGE_KEYFILE = "{{config_root}}/age.key"
 SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
 KUBECONFIG = "{{config_root}}/kubeconfig"
 _.python.venv = { path = ".venv", create = true }

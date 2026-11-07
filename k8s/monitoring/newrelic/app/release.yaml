@@ -59,7 +59,23 @@ spec:
         scrape_services: false
         scrape_endpoints: true
         scrape_enabled_label: "prometheus.io/scrape"
-
+        transformations:
+          - description: "Ignore noisy runtime, controller, and high-cardinality latency metrics"
+            ignore_metrics:
+              - prefixes:
+                  - "go_"
+                  - "process_"
+                  - "node_systemd_"
+                  - "node_scrape_collector_"
+                  - "gotk_"
+                  - "controller_runtime_"
+                  - "workqueue_"
+                  - "redis_commands_latencies_"
+                  - "redis_latency_"
+                  - "traefik_service_request_duration_"
+                  - "traefik_entrypoint_request_duration_"
+                  - "coredns_proxy_request_duration_"
+                  - "rest_client_"
     newrelic-logging:
       enabled: true
       resources:

@@ -71,7 +71,7 @@ Run commands through `just` (or `mise exec -- just ...` if `mise` shims are not 
 - **Fetch K3s `kubeconfig` from server**: `just ans::kubeconfig`
 - **Bootstrap Flux CD onto cluster**: `just fl::bootstrap`
 - **Verify Flux CD installation & sync status**: `just fl::doctor`
-- **Reconcile Flux CD state immediately**: `just fl::reconcile [name]`
+- **Reconcile Flux CD state immediately**: `just fl::reconcile [name]` (note: pushing to `main` automatically triggers cluster auto-reconciliation via Flux webhook receiver)
 - **Validate Kustomize overlays & K8s manifests**: `just fl::validate`
 
 ## Coding & Architecture Conventions
@@ -87,6 +87,9 @@ Run commands through `just` (or `mise exec -- just ...` if `mise` shims are not 
 4. **Linting & SOPS**:
    - `ansible/ansible.cfg` configures `community.sops.sops` with `vars_stage = inventory`.
    - When running `ansible-lint` without decrypting inventory secrets, set `ANSIBLE_VARS_SOPS_PLUGIN_STAGE=task` (handled automatically by `just ans::lint`).
+
+### Kubernetes & Flux CD (`k8s/`)
+1. **Automated Webhook Reconciliation**: The cluster runs a Flux webhook receiver (`k8s/network/flux-webhook/`). Every push to the `main` branch automatically triggers immediate Git repository reconciliation, eliminating the need to run `just fl::reconcile` manually.
 
 ### Formatting (`.editorconfig`)
 - Default indentation: **2 spaces**, LF line endings, UTF-8, trim trailing whitespace, final newline.

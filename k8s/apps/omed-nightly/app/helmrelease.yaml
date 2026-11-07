@@ -65,8 +65,6 @@ spec:
         sentry:
           environment: staging
       extraEnv:
-        - name: OMED_ENV
-          value: staging
         - name: OMED_SENTRY_ENVIRONMENT
           value: staging
       resources:

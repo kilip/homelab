@@ -62,8 +62,6 @@ spec:
         sentry:
           environment: production
       extraEnv:
-        - name: OMED_ENV
-          value: production
         - name: OMED_SENTRY_ENVIRONMENT
           value: production
       resources:

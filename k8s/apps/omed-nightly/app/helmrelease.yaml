@@ -50,7 +50,7 @@ spec:
     api:
       replicaCount: 1
       image:
-        tag: sha-11b014b
+        tag: sha-d419c6c
         pullPolicy: Always
       config:
         sessionCookieName: omed_nightly_session
@@ -76,7 +76,7 @@ spec:
     web:
       replicaCount: 1
       image:
-        tag: sha-11b014b
+        tag: sha-d419c6c
         pullPolicy: Always
       config:
         sentryEnvironment: staging

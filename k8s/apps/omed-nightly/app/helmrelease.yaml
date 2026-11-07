@@ -62,6 +62,13 @@ spec:
           region: "us-east-1"
           forcePathStyle: true
           bucketPrefix: "omed-nightly-ws-"
+        sentry:
+          environment: staging
+      extraEnv:
+        - name: OMED_ENV
+          value: staging
+        - name: OMED_SENTRY_ENVIRONMENT
+          value: staging
       resources:
         requests:
           cpu: 50m
@@ -73,6 +80,11 @@ spec:
       image:
         tag: sha-da3ca17
         pullPolicy: Always
+      config:
+        sentryEnvironment: staging
+      extraEnv:
+        - name: OMED_WEB_SENTRY_ENVIRONMENT
+          value: staging
       resources:
         requests:
           cpu: 25m

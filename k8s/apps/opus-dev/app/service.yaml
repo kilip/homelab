@@ -8,8 +8,8 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 8080
-      targetPort: 8080
+      port: 5173
+      targetPort: 5173
       protocol: TCP
 ---
 apiVersion: v1
@@ -23,5 +23,5 @@ subsets:
       - ip: "${ZEUS_IP}"
     ports:
       - name: http
-        port: 8080
+        port: 5173
         protocol: TCP

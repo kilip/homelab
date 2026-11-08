@@ -12,3 +12,4 @@ resources:
   - ./termix/ks.yaml
   - ./pi/ks.yaml
   - ./omp/ks.yaml
+  - ./opus-dev/ks.yaml

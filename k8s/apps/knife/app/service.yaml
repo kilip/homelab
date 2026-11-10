@@ -20,7 +20,7 @@ metadata:
     app.kubernetes.io/name: knife
 subsets:
   - addresses:
-      - ip: "${EROS_IP}"
+      - ip: "${ZEUS_IP}"
     ports:
       - name: http
         port: 2222

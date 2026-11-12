@@ -25,6 +25,8 @@ spec:
               value: "20128"
             - name: DATA_DIR
               value: /app/data
+            - name: INITIAL_PASSWORD
+              value: "123456"
           ports:
             - name: http
               containerPort: 20128

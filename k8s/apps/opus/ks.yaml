@@ -9,6 +9,7 @@ spec:
   dependsOn:
     - name: local-path
     - name: traefik
+    - name: infisical-operator
   interval: 1h
   path: ./k8s/apps/opus/app
   prune: true

@@ -142,7 +142,6 @@ validate:
         k8s/apps/termix/app \
         k8s/apps/pi/app \
         k8s/apps/omp/app \
-        k8s/apps/opus-dev/app \
         k8s/apps/knife/app \
         k8s/apps/llm/app; do
         echo "Validating $dir..."

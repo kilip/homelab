@@ -10,6 +10,7 @@ Customization, package provisioning, environment setup, and hardware display dae
   - [General Variables](#general-variables)
   - [Paru AUR Packages (`zeus_paru`)](#paru-aur-packages-zeus_paru)
   - [DeepCool Digital Display (`zeus_deepcool`)](#deepcool-digital-display-zeus_deepcool)
+  - [Headroom Proxy Service (`zeus_headroom`)](#headroom-proxy-service-zeus_headroom)
 - [Hardware Integration](#hardware-integration)
 - [Example Playbook](#example-playbook)
 - [License](#license)
@@ -58,6 +59,28 @@ Integrates [Nortank12/deepcool-digital-linux](https://github.com/Nortank12/deepc
 | `zeus_deepcool_binary_url` | String | See `defaults/main.yml` | Download URL for the standalone release binary. |
 | `zeus_deepcool_install_dir` | String | `/usr/local/bin` | Path where the executable binary is placed. |
 | `zeus_deepcool_extra_args` | String | `""` | Optional command-line flags (e.g., `--update 1000`, `--fahrenheit`, `--mode`). |
+
+### Headroom Proxy Service (`zeus_headroom`)
+
+Deploys the Headroom context optimization proxy container (`ghcr.io/headroomlabs-ai/headroom`) on the Zeus workstation.
+
+| Variable | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `zeus_headroom_enabled` | Boolean | `false` | Enable Headroom proxy container service. |
+| `zeus_headroom_start_service` | Boolean | `true` | Start container service. Guarded for containerized tests (Molecule). |
+| `zeus_headroom_container_name` | String | `headroom` | Name of the Docker container. |
+| `zeus_headroom_image` | String | `ghcr.io/headroomlabs-ai/headroom:latest` | Container image. |
+| `zeus_headroom_port` | Integer | `8787` | Host published port. |
+| `zeus_headroom_container_port` | Integer | `8787` | Internal container port. |
+| `zeus_headroom_bind_address` | String | `""` | IP address to bind (e.g. secret workstation API IP). |
+| `zeus_headroom_mode` | String | `cache` | Optimization mode (`cache` or `token`). |
+| `zeus_headroom_savings_profile` | String | `coding` | Compression profile (`coding`, `balanced`, `agent-90`, `general`). |
+| `zeus_headroom_upstream_openai_url` | String | `""` | Upstream OpenAI-compatible API URL (e.g. 9router). |
+| `zeus_headroom_upstream_anthropic_url` | String | `""` | Upstream Anthropic API URL. |
+| `zeus_headroom_allow_unauthenticated_bind` | Boolean | `true` | Allow non-loopback bind without proxy token. |
+| `zeus_headroom_telemetry` | Boolean | `false` | Enable or disable Headroom telemetry. |
+| `zeus_headroom_firewall_enabled` | Boolean | `true` | Manage UFW firewall rule for Headroom proxy port. |
+| `zeus_headroom_extra_env` | Dict | `{}` | Additional environment variables for the container. |
 
 ## Hardware Integration
 

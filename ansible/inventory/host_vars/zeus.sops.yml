@@ -3,6 +3,9 @@ ansible_user: ENC[AES256_GCM,data:9555nA==,iv:dekwY5c9bUjQCZ0BcL4UlxV7WI/1XrBId2
 ansible_become_password: ENC[AES256_GCM,data:fhz7+9BT0gbENVQ3,iv:BCbMvXIU6wseH3OsPIaE1YBF0DGPnAS1oC5YwZ3Q7jo=,tag:voXK7ee0N7Zb1td9jzNYVA==,type:str]
 app_docker: ENC[AES256_GCM,data:sDPuHw==,iv:5auFUWjr1hvLk1tBySeQhWasG0pVSm2sRdUwhrV6DyU=,tag:56e+SPlQdHQ4myVzl1imJg==,type:bool]
 app_node_exporter: ENC[AES256_GCM,data:LjqK1g==,iv:f1SE2zcDxJsdVqnLIiWE9b1wRs24CmYVn5O+uJ7euP4=,tag:HBoV3qgcLCXDPMyI9i6vXg==,type:bool]
+zeus_headroom_enabled: ENC[AES256_GCM,data:WLoFIQ==,iv:syeXfAhWPXGySsgoQ2BuBAJLGnTvTqQGk5CCC9E8uSw=,tag:o+8J6L92qpuIJXAF5UPjzA==,type:bool]
+zeus_headroom_bind_address: ENC[AES256_GCM,data:ktziBJiE5Q==,iv:QWXYMrpfPw/svKim/R5yx+DrC3A/Eu3ZgE05SuMLI9I=,tag:PSYXmWMR8LkabYxJDP4wEA==,type:str]
+zeus_headroom_upstream_openai_url: ENC[AES256_GCM,data:OAjgZIbh19gkDh9Al5Cmgy/xOot5s11B8g==,iv:F8vcziDCy26cvePYUiwYKeeCvZbRg3QOlYrv8ZDnSKo=,tag:QxpH/4ALg6P01rB+U4DRtQ==,type:str]
 sops:
     age:
         - enc: |
@@ -14,7 +17,7 @@ sops:
             53xO0aouIwybEz8VyAdiOL9nWdxuo30uJA9q5UKj0OUz75wKFPWE2Q==
             -----END AGE ENCRYPTED FILE-----
           recipient: age1h6dhysy07e88zz7xt6vgfaag97enz0fl0q0290zx9m6z8w4kypmqzj49vf
-    lastmodified: "2026-10-30T00:53:35Z"
-    mac: ENC[AES256_GCM,data:Iq7lGiF/sikagv9k65t+BC/0NYK1+aaiCdU9E2VktuZCZAkfPJqZJ7XEFYN0b4aMeEeKsvX6wXZ2nPtaM1LMBLoDkOSkubzbZURvXES6y7F3IJ0CB4mODGW09iHvPC11U4GDK0CuCjeHmEi1fxRsIu3Y4p4zj0jwx8+071JV1xE=,iv:wZwjGRBZE/CEk4Rt03PgGMETMrZOBD+rw65KCgaZW+0=,tag:bVHWvFER7N7cRqJhoDQeAw==,type:str]
+    lastmodified: "2026-11-12T03:53:32Z"
+    mac: ENC[AES256_GCM,data:zNGQQes3aSmZBLs7DhTcWMYplHs19ilEgJSt0n+2/mvcO2KeMz1BLhGOViyQgeqJwIuk9PtAtrObxKUpPx/wmHL7o8QgVFtrZTUsMGEl00pLi9e1kj+VBwjbedp+YpKWMz5JGFeAtmz+f3p9Ks5mKVumr0Igg0w/3wprogf3vKA=,iv:AjV+n+B+E56AQtIXeik8VbtWBJDG0/XBNF9Afa3KF6Y=,tag:FkwoT3JxMt68ik1u5Q7Bdg==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.13.3

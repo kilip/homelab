@@ -45,3 +45,30 @@
   when:
     - zeus_enabled | bool
     - zeus_wakeonlan_enabled | bool
+
+- name: Verify headroom configuration variables
+  ansible.builtin.assert:
+    that:
+      - zeus_headroom_enabled is boolean
+      - zeus_headroom_start_service is boolean
+      - zeus_headroom_container_name is string
+      - zeus_headroom_container_name | length > 0
+      - zeus_headroom_image is string
+      - zeus_headroom_image | length > 0
+      - zeus_headroom_port is integer
+      - zeus_headroom_port > 0
+      - zeus_headroom_port < 65536
+      - zeus_headroom_container_port is integer
+      - zeus_headroom_container_port > 0
+      - zeus_headroom_container_port < 65536
+      - zeus_headroom_bind_address is string
+      - zeus_headroom_mode in ['cache', 'token']
+      - zeus_headroom_savings_profile is string
+      - zeus_headroom_upstream_openai_url is string
+      - zeus_headroom_upstream_anthropic_url is string
+      - zeus_headroom_allow_unauthenticated_bind is boolean
+      - zeus_headroom_telemetry is boolean
+      - zeus_headroom_firewall_enabled is boolean
+      - zeus_headroom_extra_env is mapping
+    fail_msg: "Invalid zeus headroom variable configuration."
+  when: zeus_enabled | bool

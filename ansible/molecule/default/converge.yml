@@ -112,3 +112,5 @@
       vars:
         zeus_packages:
           - tree
+        zeus_headroom_enabled: true
+        zeus_headroom_start_service: false

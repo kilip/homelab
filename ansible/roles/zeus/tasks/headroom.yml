@@ -1,0 +1,78 @@
+---
+- name: Check if Docker daemon socket exists
+  ansible.builtin.stat:
+    path: /var/run/docker.sock
+  register: zeus_docker_socket
+
+- name: Check if UFW firewall binary exists
+  ansible.builtin.stat:
+    path: /usr/bin/ufw
+  register: zeus_ufw_bin
+
+- name: Ensure Headroom proxy service is configured and running
+  when: zeus_headroom_enabled | bool
+  block:
+    - name: Ensure Headroom proxy container is running
+      community.docker.docker_container:
+        name: "{{ zeus_headroom_container_name }}"
+        image: "{{ zeus_headroom_image }}"
+        state: started
+        restart_policy: unless-stopped
+        command:
+          - --host
+          - "0.0.0.0"
+          - --port
+          - "{{ zeus_headroom_container_port | string }}"
+          - --mode
+          - "{{ zeus_headroom_mode }}"
+        env: >-
+          {{
+            {
+              'HEADROOM_TELEMETRY': 'on' if (zeus_headroom_telemetry | bool) else 'off',
+              'HEADROOM_SAVINGS_PROFILE': zeus_headroom_savings_profile,
+              'HEADROOM_ALLOW_UNAUTHENTICATED_BIND': '1' if (zeus_headroom_allow_unauthenticated_bind | bool) else '0',
+            }
+            | combine({'OPENAI_TARGET_API_URL': zeus_headroom_upstream_openai_url} if zeus_headroom_upstream_openai_url else {})
+            | combine({'ANTHROPIC_TARGET_API_URL': zeus_headroom_upstream_anthropic_url} if zeus_headroom_upstream_anthropic_url else {})
+            | combine(zeus_headroom_extra_env)
+          }}
+        published_ports:
+          - "{{ (zeus_headroom_bind_address + ':') if zeus_headroom_bind_address else '' }}{{ zeus_headroom_port }}:{{ zeus_headroom_container_port }}"
+      when:
+        - zeus_headroom_start_service | bool
+        - not ansible_check_mode or (zeus_docker_socket.stat.exists | default(false))
+
+    - name: Configure UFW firewall rule for Headroom proxy
+      community.general.ufw:
+        rule: allow
+        port: "{{ zeus_headroom_port | string }}"
+        proto: tcp
+        comment: Headroom proxy
+      when:
+        - zeus_headroom_firewall_enabled | bool
+        - zeus_headroom_start_service | bool
+        - zeus_ufw_bin.stat.exists | default(false)
+        - not ansible_check_mode
+
+- name: Ensure Headroom proxy service is removed
+  when: not (zeus_headroom_enabled | bool)
+  block:
+    - name: Ensure Headroom proxy container is stopped and removed
+      community.docker.docker_container:
+        name: "{{ zeus_headroom_container_name }}"
+        state: absent
+      when:
+        - zeus_headroom_start_service | bool
+        - not ansible_check_mode or (zeus_docker_socket.stat.exists | default(false))
+
+    - name: Remove UFW firewall rule for Headroom proxy
+      community.general.ufw:
+        rule: allow
+        port: "{{ zeus_headroom_port | string }}"
+        proto: tcp
+        delete: true
+      when:
+        - zeus_headroom_firewall_enabled | bool
+        - zeus_headroom_start_service | bool
+        - zeus_ufw_bin.stat.exists | default(false)
+        - not ansible_check_mode

@@ -24,3 +24,7 @@
   when:
     - zeus_enabled | bool
     - zeus_wakeonlan_enabled | bool
+
+- name: Manage Headroom proxy service
+  ansible.builtin.import_tasks: headroom.yml
+  when: zeus_enabled | bool

@@ -30,3 +30,20 @@ zeus_deepcool_extra_args: ""
 zeus_wakeonlan_enabled: true
 zeus_wakeonlan_start_service: true
 zeus_wakeonlan_mac: "08:bf:b8:14:34:aa"
+
+# Headroom proxy service (ghcr.io/headroomlabs-ai/headroom)
+zeus_headroom_enabled: false
+zeus_headroom_start_service: true
+zeus_headroom_container_name: "headroom"
+zeus_headroom_image: "ghcr.io/headroomlabs-ai/headroom:latest"
+zeus_headroom_port: 8787
+zeus_headroom_container_port: 8787
+zeus_headroom_bind_address: ""
+zeus_headroom_mode: "cache"
+zeus_headroom_savings_profile: "coding"
+zeus_headroom_upstream_openai_url: ""
+zeus_headroom_upstream_anthropic_url: ""
+zeus_headroom_allow_unauthenticated_bind: true
+zeus_headroom_telemetry: false
+zeus_headroom_firewall_enabled: true
+zeus_headroom_extra_env: {}

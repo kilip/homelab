@@ -48,3 +48,6 @@ spec:
         memory: 128Mi
       limits:
         memory: 512Mi
+    image:
+      repository: ghcr.io/kilip/opus
+      tag: sha-e141a6a

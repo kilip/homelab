@@ -1,0 +1,56 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llm
+  labels:
+    app.kubernetes.io/name: llm
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: llm
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: llm
+    spec:
+      containers:
+        - name: 9router
+          image: ghcr.io/decolua/9router:latest
+          env:
+            - name: PORT
+              value: "20128"
+            - name: DATA_DIR
+              value: /app/data
+          ports:
+            - name: http
+              containerPort: 20128
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 10m
+              memory: 128Mi
+            limits:
+              memory: 1Gi
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: llm-data

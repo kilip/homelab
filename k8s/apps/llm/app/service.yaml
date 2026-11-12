@@ -6,22 +6,10 @@ metadata:
   labels:
     app.kubernetes.io/name: llm
 spec:
+  selector:
+    app.kubernetes.io/name: llm
   ports:
     - name: http
       port: 20128
       targetPort: 20128
       protocol: TCP
----
-apiVersion: v1
-kind: Endpoints
-metadata:
-  name: llm
-  labels:
-    app.kubernetes.io/name: llm
-subsets:
-  - addresses:
-      - ip: "${EROS_IP}"
-    ports:
-      - name: http
-        port: 20128
-        protocol: TCP

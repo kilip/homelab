@@ -14,4 +14,4 @@ resources:
   - ./omp/ks.yaml
   - ./knife/ks.yaml
   - ./llm/ks.yaml
-  - ./opus/ks.yaml
+  - ./dev/ks.yaml

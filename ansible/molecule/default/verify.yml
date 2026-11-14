@@ -392,6 +392,6 @@
       ansible.builtin.assert:
         that:
           - zeus_headroom_enabled is boolean
-          - zeus_headroom_enabled | bool
+          - not (zeus_headroom_enabled | bool)
           - zeus_headroom_container_name == 'headroom'
           - zeus_headroom_port == 8787

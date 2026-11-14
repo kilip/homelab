@@ -24,6 +24,11 @@ spec:
       repository: ghcr.io/kilip/opus
       tag: staging
       pullPolicy: Always
+    config:
+      bodyLimit: "4194304"
+    extraEnv:
+      - name: DATABASE_URL
+        value: "file:/data/opus.db?_pragma=foreign_keys(ON)&_pragma=busy_timeout(5000)"
     podAnnotations:
       secrets.infisical.com/auto-reload: "true"
     extraEnvFrom:

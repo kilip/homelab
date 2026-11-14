@@ -6,6 +6,8 @@ metadata:
   labels:
     app.kubernetes.io/name: llm
 spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.0.0.103
   selector:
     app.kubernetes.io/name: llm
   ports:

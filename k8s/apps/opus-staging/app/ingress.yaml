@@ -1,0 +1,27 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: opus-staging
+  labels:
+    app.kubernetes.io/name: opus
+    app.kubernetes.io/instance: opus-staging
+  annotations:
+    external-dns.alpha.kubernetes.io/expose: "true"
+    external-dns.kubernetes.io/target: "${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: opus-staging.${SECRET_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: opus-staging
+                port:
+                  number: 7880
+  tls:
+    - hosts:
+        - opus-staging.${SECRET_DOMAIN}

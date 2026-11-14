@@ -144,7 +144,7 @@ validate:
         k8s/apps/omp/app \
         k8s/apps/knife/app \
         k8s/apps/llm/app \
-        k8s/apps/opus/app; do
+        k8s/apps/opus-staging/app; do
         echo "Validating $dir..."
         kustomize build "{{ justfile_directory() }}/$dir" \
             | yq 'del(.sops)' \

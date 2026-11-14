@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: opus-staging
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: opus-staging
+  interval: 1h
+  timeout: 10m
+  install:
+    strategy:
+      name: RetryOnFailure
+      retryInterval: 5m
+  upgrade:
+    cleanupOnFail: true
+    strategy:
+      name: RetryOnFailure
+      retryInterval: 5m
+  values:
+    image:
+      repository: ghcr.io/kilip/opus
+      tag: staging
+      pullPolicy: Always
+    podAnnotations:
+      secrets.infisical.com/auto-reload: "true"
+    extraEnvFrom:
+      - secretRef:
+          name: opus-staging-secret
+          optional: true
+    ingress:
+      enabled: false
+    persistence:
+      enabled: true
+      storageClass: local-path
+      size: 10Gi
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        memory: 512Mi

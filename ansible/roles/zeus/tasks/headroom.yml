@@ -31,6 +31,7 @@
               'HEADROOM_TELEMETRY': 'on' if (zeus_headroom_telemetry | bool) else 'off',
               'HEADROOM_SAVINGS_PROFILE': zeus_headroom_savings_profile,
               'HEADROOM_ALLOW_UNAUTHENTICATED_BIND': '1' if (zeus_headroom_allow_unauthenticated_bind | bool) else '0',
+              'HEADROOM_COMPRESS_ALLOW_REMOTE': '1' if (zeus_headroom_allow_unauthenticated_bind | bool) else '0',
             }
             | combine({'OPENAI_TARGET_API_URL': zeus_headroom_upstream_openai_url} if zeus_headroom_upstream_openai_url else {})
             | combine({'ANTHROPIC_TARGET_API_URL': zeus_headroom_upstream_anthropic_url} if zeus_headroom_upstream_anthropic_url else {})

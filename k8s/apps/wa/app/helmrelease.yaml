@@ -28,6 +28,8 @@ spec:
             image:
               repository: ghcr.io/aldinokemal/go-whatsapp-web-multidevice
               tag: latest
+            command:
+              - /app/whatsapp
             args:
               - rest
             env:

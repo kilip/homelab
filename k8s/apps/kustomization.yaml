@@ -16,3 +16,4 @@ resources:
   - ./llm/ks.yaml
   - ./dev/ks.yaml
   - ./opus-staging/ks.yaml
+  - ./wa/ks.yaml

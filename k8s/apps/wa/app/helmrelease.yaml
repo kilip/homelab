@@ -1,0 +1,103 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: wa
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: wa
+  interval: 1h
+  timeout: 10m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      wa:
+        annotations:
+          reloader.stakater.com/auto: "true"
+          secrets.infisical.com/auto-reload: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/aldinokemal/go-whatsapp-web-multidevice
+              tag: latest
+            args:
+              - rest
+            env:
+              APP_PORT: &port 3000
+              TZ: ${TIMEZONE}
+            envFrom:
+              - secretRef:
+                  name: wa-secret
+            probes:
+              liveness:
+                enabled: true
+                spec:
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: *port
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        ports:
+          http:
+            appProtocol: kubernetes.io/ws
+            port: *port
+    ingress:
+      app:
+        className: traefik
+        annotations:
+          external-dns.alpha.kubernetes.io/expose: "true"
+          external-dns.kubernetes.io/target: "${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
+        hosts:
+          - host: wa.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - wa.${SECRET_DOMAIN}
+    persistence:
+      storages:
+        existingClaim: wa-storages
+        globalMounts:
+          - path: /app/storages
+      tmp:
+        type: emptyDir

@@ -19,28 +19,46 @@ spec:
     strategy:
       name: RetryOnFailure
       retryInterval: 5m
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: opus-staging
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: opus-staging
+              spec:
+                template:
+                  spec:
+                    containers:
+                      - name: opus
+                        volumeMounts:
+                          - name: data
+                            mountPath: /data
+                    volumes:
+                      - name: data
+                        persistentVolumeClaim:
+                          claimName: opus-staging-data
   values:
     image:
-      repository: ghcr.io/kilip/opus
+      repository: kilip/opus
       tag: staging
       pullPolicy: Always
     config:
       bodyLimit: "4194304"
-    extraEnv:
-      - name: DATABASE_URL
-        value: "file:/data/opus.db?_pragma=foreign_keys(ON)&_pragma=busy_timeout(5000)"
     podAnnotations:
       secrets.infisical.com/auto-reload: "true"
+    podSecurityContext:
+      fsGroup: 65532
     extraEnvFrom:
       - secretRef:
           name: opus-staging-secret
           optional: true
     ingress:
       enabled: false
-    persistence:
-      enabled: true
-      storageClass: local-path
-      size: 10Gi
     resources:
       requests:
         cpu: 50m

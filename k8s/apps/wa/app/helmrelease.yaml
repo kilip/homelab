@@ -47,11 +47,7 @@ spec:
                   failureThreshold: 5
               readiness:
                 enabled: true
-                custom: true
                 spec:
-                  httpGet:
-                    path: /
-                    port: *port
                   timeoutSeconds: 5
                   failureThreshold: 5
               startup:

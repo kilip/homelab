@@ -34,6 +34,9 @@ spec:
               - rest
             env:
               APP_PORT: &port 3000
+              MCP_ENABLED: "true"
+              MCP_OAUTH_ENABLED: "true"
+              MCP_OAUTH_ISSUER_URL: "https://wa.${SECRET_DOMAIN}"
               TZ: ${TIMEZONE}
             envFrom:
               - secretRef:

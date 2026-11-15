@@ -99,5 +99,9 @@ spec:
         existingClaim: wa-storages
         globalMounts:
           - path: /app/storages
+      statics:
+        type: emptyDir
+        globalMounts:
+          - path: /app/statics
       tmp:
         type: emptyDir

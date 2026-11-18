@@ -10,4 +10,5 @@ paths = [
   '''\.mise\.local\.toml$''',
   '''\.cache/''',
   '''\.venv/''',
+  '''\.agents/''',
 ]

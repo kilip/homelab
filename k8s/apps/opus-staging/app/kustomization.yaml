@@ -11,5 +11,5 @@ resources:
   - ./imageautomation.yaml
   - ./receiver-secret.sops.yaml
   - ./receiver.yaml
-  - ./github-dispatch-secret.sops.yaml
+  - ./github-dispatch-token.yaml
   - ./alert.yaml

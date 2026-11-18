@@ -17,8 +17,8 @@ spec:
   imageRepositoryRef:
     name: opus-staging
   filterTags:
-    pattern: '^staging-(?P<num>\d+)$'
-    extract: $num
+    pattern: '^staging-(?P<ts>\d{14})$'
+    extract: $ts
   policy:
     numerical:
       order: asc

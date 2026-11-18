@@ -8,3 +8,6 @@ resources:
   - ./pvc.yaml
   - ./helmrelease.yaml
   - ./ingress.yaml
+  - ./imageautomation.yaml
+  - ./receiver-secret.sops.yaml
+  - ./receiver.yaml

@@ -19,40 +19,24 @@ spec:
     strategy:
       name: RetryOnFailure
       retryInterval: 5m
-  postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              kind: Deployment
-              name: opus-staging
-            patch: |
-              apiVersion: apps/v1
-              kind: Deployment
-              metadata:
-                name: opus-staging
-              spec:
-                template:
-                  spec:
-                    containers:
-                      - name: opus
-                        volumeMounts:
-                          - name: data
-                            mountPath: /data
-                    volumes:
-                      - name: data
-                        persistentVolumeClaim:
-                          claimName: opus-staging-data
   values:
     image:
       repository: kilip/opus
       tag: staging
       pullPolicy: Always
+    baseUrl: "https://opus-staging.${SECRET_DOMAIN}"
     config:
-      bodyLimit: "4194304"
+      bodyLimit: 4194304
+    persistence:
+      enabled: true
+      existingClaim: opus-staging-data
     podAnnotations:
       secrets.infisical.com/auto-reload: "true"
     podSecurityContext:
       fsGroup: 65532
+    extraEnv:
+      - name: APP_HOME
+        value: /data
     extraEnvFrom:
       - secretRef:
           name: opus-staging-secret

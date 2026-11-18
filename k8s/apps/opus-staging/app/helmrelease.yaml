@@ -26,7 +26,7 @@ spec:
       pullPolicy: Always
     baseUrl: "https://opus-staging.${SECRET_DOMAIN}"
     config:
-      bodyLimit: 4194304
+      bodyLimit: "4194304"
     persistence:
       enabled: true
       existingClaim: opus-staging-data

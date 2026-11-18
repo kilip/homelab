@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/notification.toolkit.fluxcd.io/provider_v1.json
+apiVersion: notification.toolkit.fluxcd.io/v1
+kind: Provider
+metadata:
+  name: opus-github
+spec:
+  type: githubdispatch
+  address: https://github.com/kilip/opus
+  secretRef:
+    name: opus-github-dispatch-token
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/notification.toolkit.fluxcd.io/alert_v1.json
+apiVersion: notification.toolkit.fluxcd.io/v1
+kind: Alert
+metadata:
+  name: opus-staging-deploy
+spec:
+  providerRef:
+    name: opus-github
+  eventSeverity: info
+  eventSources:
+    - kind: HelmRelease
+      name: opus-staging
+  inclusionList:
+    - "(?i).*(succeeded|failed).*"

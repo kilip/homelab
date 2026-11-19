@@ -23,19 +23,15 @@ spec:
       repository: kilip/opus
       tag: "20261119161836" # {"$imagepolicy": "apps:opus-staging:tag"}
       pullPolicy: Always
-    baseUrl: "https://opus-staging.${SECRET_DOMAIN}"
     config:
-      bodyLimit: "4194304"
+      baseUrl: "https://opus-staging.${SECRET_DOMAIN}"
+    auth:
+      existingSecret: opus-staging-secret
     persistence:
       enabled: true
       existingClaim: opus-staging-data
     podAnnotations:
       secrets.infisical.com/auto-reload: "true"
-    podSecurityContext:
-      fsGroup: 65532
-    extraEnv:
-      - name: APP_HOME
-        value: /data
     extraEnvFrom:
       - secretRef:
           name: opus-staging-secret
@@ -47,4 +43,5 @@ spec:
         cpu: 50m
         memory: 128Mi
       limits:
+        cpu: 500m
         memory: 512Mi

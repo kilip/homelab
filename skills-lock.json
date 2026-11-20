@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "skills": {
+    "gitops-cluster-debug": {
+      "source": "fluxcd/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gitops-cluster-debug/SKILL.md",
+      "computedHash": "7c2bb0b5e1c90c09f940d966d4b34c188ae60d7061f70a51bfd8cfc14e81b847"
+    },
+    "gitops-knowledge": {
+      "source": "fluxcd/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gitops-knowledge/SKILL.md",
+      "computedHash": "8af9ae00f498637fe1430c627fd393fd39975927488f308f389233190696ed40"
+    },
+    "kubernetes-specialist": {
+      "source": "Jeffallan/claude-skills",
+      "sourceType": "github",
+      "skillPath": "skills/kubernetes-specialist/SKILL.md",
+      "computedHash": "46677ba4c3592a398704ec909679369280eebd7aa798a9aa43c130e9a1491627"
+    }
+  }
+}

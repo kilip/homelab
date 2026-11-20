@@ -21,7 +21,7 @@ spec:
   values:
     image:
       repository: kilip/opus
-      tag: "20261120012914" # {"$imagepolicy": "apps:opus-staging:tag"}
+      tag: "20261120013512" # {"$imagepolicy": "apps:opus-staging:tag"}
       pullPolicy: Always
     config:
       baseUrl: "https://opus-staging.${SECRET_DOMAIN}"

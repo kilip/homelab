@@ -55,6 +55,10 @@ spec:
       sentry:
         environment: staging
     existingSecret: domus-staging-secret
+    extraEnvFrom:
+      - secretRef:
+          name: domus-staging-secret
+          optional: true
     podAnnotations:
       secrets.infisical.com/auto-reload: "true"
     ingress:

@@ -1,0 +1,81 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: domus-staging
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: domus-staging
+  interval: 1h
+  timeout: 10m
+  install:
+    strategy:
+      name: RetryOnFailure
+      retryInterval: 5m
+  upgrade:
+    cleanupOnFail: true
+    strategy:
+      name: RetryOnFailure
+      retryInterval: 5m
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: domus-staging
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: domus-staging
+              spec:
+                template:
+                  spec:
+                    initContainers:
+                      - name: wait-for-db
+                        image: postgres:18-alpine
+                        command:
+                          - /bin/sh
+                          - -c
+                          - |
+                            until pg_isready -h paradedb-rw.storage.svc -p 5432 -U domus -d domus-staging; do
+                              echo "waiting for db..."
+                              sleep 2
+                            done
+  values:
+    image:
+      repository: paroki/domus
+      tag: "staging@sha256:a9276d339ec9f3d4271b78f1ca892a5ea7777461796387ee73db704b4c4c7ef7" # {"$imagepolicy": "apps:domus-staging"}
+      pullPolicy: Always
+    config:
+      user:
+        superAdminEmail: toni.munthi@gmail.com
+        superAdminName: Anthonius
+      sentry:
+        environment: staging
+    existingSecret: domus-staging-secret
+    podAnnotations:
+      secrets.infisical.com/auto-reload: "true"
+    ingress:
+      enabled: true
+      className: traefik
+      annotations:
+        external-dns.alpha.kubernetes.io/expose: "true"
+        external-dns.kubernetes.io/target: "${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
+      hosts:
+        - host: domus-staging.${SECRET_DOMAIN}
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - domus-staging.${SECRET_DOMAIN}
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi

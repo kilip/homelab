@@ -1,0 +1,25 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: DatabaseRole
+metadata:
+  name: domus-staging
+  namespace: storage
+spec:
+  cluster:
+    name: paradedb
+  name: domus
+  login: true
+  passwordSecret:
+    name: domus-staging-db-credentials
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: domus-staging
+  namespace: storage
+spec:
+  cluster:
+    name: paradedb
+  name: domus-staging
+  owner: domus
+  template: template0

@@ -17,3 +17,4 @@ resources:
   - ./dev/ks.yaml
   - ./opus-staging/ks.yaml
   - ./wa/ks.yaml
+  - ./domus-staging/ks.yaml

@@ -1,0 +1,51 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/image.toolkit.fluxcd.io/imagerepository_v1.json
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: domus-staging
+spec:
+  image: ghcr.io/paroki/domus
+  interval: 10m
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/image.toolkit.fluxcd.io/imagepolicy_v1.json
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: domus-staging
+spec:
+  imageRepositoryRef:
+    name: domus-staging
+  interval: 10m
+  digestReflectionPolicy: Always
+  filterTags:
+    pattern: '^staging$'
+  policy:
+    alphabetical:
+      order: asc
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/image.toolkit.fluxcd.io/imageupdateautomation_v1.json
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageUpdateAutomation
+metadata:
+  name: domus-staging
+spec:
+  interval: 10m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: 'chore: 🔧 update domus-staging image to {{range .Changed.Changes}}{{.NewValue}}{{end}}'
+    push:
+      branch: main
+  update:
+    path: ./k8s/apps/domus-staging/app
+    strategy: Setters

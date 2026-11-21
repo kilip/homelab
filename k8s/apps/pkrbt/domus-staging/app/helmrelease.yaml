@@ -45,7 +45,7 @@ spec:
                             done
                     containers:
                       - name: domus
-                        image: ghcr.io/paroki/domus:staging@sha256:a9276d339ec9f3d4271b78f1ca892a5ea7777461796387ee73db704b4c4c7ef7 # {"$imagepolicy": "apps:domus-staging"}
+                        image: ghcr.io/paroki/domus:staging@sha256:ff62291a8da2e48ded2a9920fa0464c3a8da84edb405eeb6e411b46c098bff12 # {"$imagepolicy": "apps:domus-staging"}
   values:
     image:
       repository: paroki/domus

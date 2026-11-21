@@ -15,7 +15,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: check
-          image: postgres:18-alpine
+          image: postgres:19-alpine
           command:
             - /bin/sh
             - -c

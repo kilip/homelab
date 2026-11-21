@@ -42,12 +42,12 @@ spec:
     txtPrefix: _external-dns.
     domainFilters:
       - "${SECRET_DOMAIN}"
+      - "pkrbt.id"
     annotationFilter: external-dns.alpha.kubernetes.io/expose=true
     triggerLoopOnEvent: true
     extraArgs:
       - --cloudflare-proxied
       - --default-targets=${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com
-      - --force-default-targets
     resources:
       requests:
         cpu: 10m

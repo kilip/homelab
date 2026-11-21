@@ -34,7 +34,7 @@ spec:
                   spec:
                     initContainers:
                       - name: wait-for-db
-                        image: postgres:18-alpine
+                        image: postgres:19-alpine
                         command:
                           - /bin/sh
                           - -c

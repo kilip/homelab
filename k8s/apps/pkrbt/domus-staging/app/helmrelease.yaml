@@ -43,13 +43,11 @@ spec:
                               echo "waiting for db..."
                               sleep 2
                             done
-                    containers:
-                      - name: domus
-                        image: ghcr.io/paroki/domus:staging@sha256:ff62291a8da2e48ded2a9920fa0464c3a8da84edb405eeb6e411b46c098bff12 # {"$imagepolicy": "apps:domus-staging"}
   values:
     image:
       repository: paroki/domus
-      tag: "staging"
+      tag: "staging" # {"$imagepolicy": "apps:domus-staging:tag"}
+      digest: "sha256:ff62291a8da2e48ded2a9920fa0464c3a8da84edb405eeb6e411b46c098bff12" # {"$imagepolicy": "apps:domus-staging:digest"}
       pullPolicy: Always
     config:
       sentry:

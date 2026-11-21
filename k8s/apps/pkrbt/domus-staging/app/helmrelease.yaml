@@ -56,7 +56,13 @@ spec:
         superAdminEmail: toni.munthi@gmail.com
         superAdminName: Anthonius
       sentry:
+        dsn: "https://5f38c577fd038e12e23366f8cd7f4d63@o4507164991684608.ingest.us.sentry.io/4512459590467584"
         environment: staging
+      smtp:
+        host: smtp.gmail.com
+        port: 587
+        user: toni.munthi@gmail.com
+        from: toni.munthi@gmail.com
     existingSecret: domus-staging-secret
     extraEnvFrom:
       - secretRef:
@@ -68,16 +74,18 @@ spec:
       enabled: true
       className: traefik
       annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
         external-dns.alpha.kubernetes.io/expose: "true"
-        external-dns.kubernetes.io/target: "${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"
+        external-dns.kubernetes.io/target: "${PKRBT_TUNNEL_ID}.cfargotunnel.com"
       hosts:
-        - host: domus-staging.${SECRET_DOMAIN}
+        - host: domus-staging.pkrbt.id
           paths:
             - path: /
               pathType: Prefix
       tls:
-        - hosts:
-            - domus-staging.${SECRET_DOMAIN}
+        - secretName: domus-staging-tls
+          hosts:
+            - domus-staging.pkrbt.id
     resources:
       requests:
         cpu: 50m

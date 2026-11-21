@@ -47,5 +47,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./k8s/apps/domus-staging/app
+    path: ./k8s/apps/pkrbt/domus-staging/app
     strategy: Setters

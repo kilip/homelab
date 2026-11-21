@@ -12,3 +12,30 @@ paths = [
   '''\.venv/''',
   '''\.agents/''',
 ]
+
+[[rules]]
+id = "pii-email"
+description = "Email address (potential PII)"
+regex = '''(?i)\b[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}\b'''
+tags = ["pii", "email"]
+[[rules.allowlists]]
+regexTarget = "line"
+regexes = [
+  '''git@github\.com:''',
+  '''ssh://git@''',
+  '''me@itstoni\.com''',
+  '''contact@zerotier\.com''',
+  '''@(example\.com|users\.noreply\.github\.com)\b''',
+  '''@[^/\s]+\.ingest(\.us)?\.sentry\.io/''',
+]
+
+[[rules]]
+id = "pii-person-name"
+description = "Personal name (potential PII)"
+regex = '''(?i)\b(anthonius|munthi)\b'''
+tags = ["pii", "name"]
+[[rules.allowlists]]
+paths = [
+  '''^LICENSE$''',
+  '''^ansible/roles/.*/(meta/main\.yml|README\.md)$''',
+]

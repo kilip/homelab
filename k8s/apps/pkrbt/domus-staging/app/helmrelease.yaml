@@ -45,29 +45,41 @@ spec:
                             done
                     containers:
                       - name: domus
-                        image: ghcr.io/paroki/domus:staging@sha256:a9276d339ec9f3d4271b78f1ca892a5ea7777461796387ee73db704b4c4c7ef7 # {"$imagepolicy": "apps:domus-staging"}
+                        image: ghcr.io/paroki/domus:staging@sha256:ff62291a8da2e48ded2a9920fa0464c3a8da84edb405eeb6e411b46c098bff12 # {"$imagepolicy": "apps:domus-staging"}
   values:
     image:
       repository: paroki/domus
       tag: "staging"
       pullPolicy: Always
     config:
-      user:
-        superAdminEmail: toni.munthi@gmail.com
-        superAdminName: Anthonius
       sentry:
         dsn: "https://5f38c577fd038e12e23366f8cd7f4d63@o4507164991684608.ingest.us.sentry.io/4512459590467584"
         environment: staging
       smtp:
         host: smtp.gmail.com
         port: 587
-        user: toni.munthi@gmail.com
-        from: toni.munthi@gmail.com
     existingSecret: domus-staging-secret
-    extraEnvFrom:
-      - secretRef:
-          name: domus-staging-secret
-          optional: true
+    extraEnv:
+      - name: USER_SUPER_ADMIN_EMAIL
+        valueFrom:
+          secretKeyRef:
+            name: domus-staging-secret
+            key: USER_SUPER_ADMIN_EMAIL
+      - name: USER_SUPER_ADMIN_NAME
+        valueFrom:
+          secretKeyRef:
+            name: domus-staging-secret
+            key: USER_SUPER_ADMIN_NAME
+      - name: APP_SMTP_USER
+        valueFrom:
+          secretKeyRef:
+            name: domus-staging-secret
+            key: APP_SMTP_USER
+      - name: APP_SMTP_FROM
+        valueFrom:
+          secretKeyRef:
+            name: domus-staging-secret
+            key: APP_SMTP_FROM
     podAnnotations:
       secrets.infisical.com/auto-reload: "true"
     ingress:

@@ -23,3 +23,6 @@ spec:
   name: domus-staging
   owner: domus
   template: template0
+  extensions:
+    - name: vector
+      ensure: present

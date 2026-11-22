@@ -26,3 +26,5 @@ spec:
   extensions:
     - name: vector
       ensure: present
+    - name: pg_search
+      ensure: present

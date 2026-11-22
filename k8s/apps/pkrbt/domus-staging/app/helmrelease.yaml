@@ -49,7 +49,7 @@ spec:
     image:
       repository: paroki/domus
       tag: "staging" # {"$imagepolicy": "apps:domus-staging:tag"}
-      digest: "sha256:25f4a8abbccc493e0ca7d989529f4ade13f15048e7f90e99e7f6632603bb6fe5" # {"$imagepolicy": "apps:domus-staging:digest"}
+      digest: "sha256:3f1560e7d7e292b9416e9e58b83925fda48b32da3d8985c12eb429c69854e8b8" # {"$imagepolicy": "apps:domus-staging:digest"}
       pullPolicy: Always
     config:
       sentry:

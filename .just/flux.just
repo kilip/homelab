@@ -144,7 +144,6 @@ validate:
         k8s/apps/omp/app \
         k8s/apps/knife/app \
         k8s/apps/llm/app \
-        k8s/apps/opus-staging/app \
         k8s/apps/pkrbt/tunnel \
         k8s/apps/pkrbt/domus-staging/app \
         k8s/apps/pkrbt/domus-staging/db; do

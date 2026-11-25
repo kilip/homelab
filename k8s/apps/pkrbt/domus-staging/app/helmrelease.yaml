@@ -52,6 +52,7 @@ spec:
       digest: "sha256:370bcc9ee255b5598b4bb4e589d78e1db7d38999ef067fd567f4dbdd35d2178c" # {"$imagepolicy": "apps:domus-staging:digest"}
       pullPolicy: Always
     config:
+      autoMigrate: true
       sentry:
         dsn: "https://5f38c577fd038e12e23366f8cd7f4d63@o4507164991684608.ingest.us.sentry.io/4512459590467584"
         environment: staging
